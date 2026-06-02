@@ -50,13 +50,13 @@ export default function App() {
   const translations = {
     ru: {
       brand: "SVTL Nails & Aesthetic",
-      heroSuperTitle: "МАНИКЮР, КОТОРЫЙ ВЫГЛЯДИТ ДОРОГО 4 НЕДЕЛИ",
-      heroTitle: "Маникюр в Атырау без порезов.",
-      heroSubtitle: "Гарантия носки 14 дней.",
+      heroSuperTitle: "БЕЗОПАСНЫЙ МАНИКЮР В АТЫРАУ",
+      heroTitle: "МАНИКЮР, КОТОРЫЙ ВЫГЛЯДИТ ДОРОГО 4 НЕДЕЛИ",
+      heroSubtitle: "БЕЗ ПОРЕЗОВ • ГАРАНТИЯ 14 ДНЕЙ",
       heroDesc: "Если покрытие сколется или отслоится в течение двух недель, мы бесплатно переделаем работу в день обращения — без споров, долгих разборов и игнорирования в мессенджерах. Вы получите предсказуемый результат на руках, полностью соответствующий ожиданиям, а не красивую картинку из соцсетей, под которой скрывается неаккуратная работа.",
       heroCta: "Рассчитать точную стоимость и время визита",
       
-      trustTitle: "Почему нам доверяют в Атырау",
+      trustTitle: "ПОЧЕМУ ДОВЕРЯЮТ",
       trustSubtitle: "Мы решаем главные страхи клиентов на деле, а не на словах",
       trust1Title: "100% одноразовые расходники",
       trust1Desc: "Пилочки, бафы и апельсиновые палочки используются строго индивидуально и утилизируются после процедуры. Герметичный крафт-пакет, прошедший полный цикл стерилизации в медицинском сухожаре, мастер вскрывает исключительно в вашем присутствии.",
@@ -65,7 +65,7 @@ export default function App() {
       trust3Title: "Строго до 2 часов на комплекс в 4 руки",
       trust3Desc: "Процедура одновременного маникюра и педикюра занимает ровно заявленное время. Если мастера не уложатся в тайминг, вы получаете автоматическую скидку за ожидание, а не проводите в салоне половину дня.",
 
-      servicesTitle: "Наши услуги и фиксированные цены",
+      servicesTitle: "МОИ УСЛУГИ",
       servicesSubtitle: "Все опции уже включены в стоимость. Никаких доплат за снятие или выравнивание.",
       service1Name: "Аппаратный и комбинированный маникюр",
       service1Desc: "Безопасная и безболезненная обработка кутикулы без ран, глубоких порезов и прожигов ногтевой пластины. В стоимость фиксированного прайса по умолчанию входят безопасное снятие предыдущего покрытия, гигиенический уход и выравнивание под кутикулу.",
@@ -78,7 +78,7 @@ export default function App() {
       service3Price: "от 12 000 ₸",
       serviceCta: "Записаться на услугу",
 
-      guaranteesTitle: "Наши жесткие стандарты и гарантии",
+      guaranteesTitle: "ГАРАНТИИ",
       guaranteesSubtitle: "Что бы ни случилось, вы защищены юридически и репутационно",
       g1Title: "Защита от подмены мастера",
       g1Desc: "Вы гарантированно попадаете именно к тому специалисту, к которому записались через систему. Мы не производим скрытых замен в расписании и не отменяем бронь в одностороннем порядке.",
@@ -89,10 +89,10 @@ export default function App() {
       g4Title: "Прозрачное ценообразование",
       g4Desc: "Мастер не выполняет никаких дополнительных платных манипуляций без предварительного обсуждения стоимости с вами. Вы защищены от любых финансовых сюрпризов при расчете.",
 
-      fearTitle: "Отвечаем на ваши главные сомнения",
+      fearTitle: "ОТЗЫВЫ • СТРАХИ",
       fearSubtitle: "Разбираем частые вопросы и страхи клиентов из Атырау",
 
-      formTitle: "Зафиксировать стоимость визита",
+      formTitle: "ЗАПИСЬ • BOOK NOW",
       formComfort: "В Атырау прогнозируется сильная жара, но в нашей студии всегда поддерживается комфортный микроклимат (кондиционер), идеальная чистота и есть прохладные напитки для гостей.",
       formHelp: "Оставьте свой номер телефона (WhatsApp) и имя. Администратор зафиксирует за вами персональную цену со всеми включенными опциями, свяжется в течение 5 минут и подберет оптимальное время.",
       namePlaceholder: "Ваше имя",
@@ -108,13 +108,13 @@ export default function App() {
     },
     kk: {
       brand: "SVTL Nails & Aesthetic",
-      heroSuperTitle: "4 АПТА БОЙЫ ҚЫМБАТ КӨРІНЕТІН МАНИКЮР",
-      heroTitle: "Атыраудағы кесіксіз маникюр.",
-      heroSubtitle: "14 күнге жабын кепілдігі.",
+      heroSuperTitle: "АТЫРАУДАҒЫ ҚАУІПСІЗ МАНИКЮР",
+      heroTitle: "4 АПТА БОЙЫ ҚЫМБАТ КӨРІНЕТІН МАНИКЮР",
+      heroSubtitle: "КЕСІКСІЗ • 14 КҮН КЕПІЛДІК",
       heroDesc: "Егер екі апта ішінде жабын сылынса немесе түсіп қалса, біз өтініш білдірген күні жұмысты тегін қайта жасап береміз — дау-дамайсыз, ұзақ талқылаусыз және мессенджерлерде елеусіз қалдырусыз. Сіз әлеуметтік желідегі әдемі, бірақ астында ұқыпсыз жұмыс жасырылған суретке емес, күткеніңізге толық сәйкес келетін қолдарыңыздағы болжамды нәтижеге қол жеткізесіз.",
       heroCta: "Нақты құны мен келу уақытын есептеу",
       
-      trustTitle: "Неліктен Атырауда бізге сенеді",
+      trustTitle: "СЕНІМ • TRUST",
       trustSubtitle: "Біз клиенттердің басты қорқыныштарын сөзбен емес, іспен шешеміз",
       trust1Title: "100% бір реттік шығын материалдары",
       trust1Desc: "Егеулер, бафтар мен апельсин таяқшалары қатаң түрде жеке қолданылады және процедурадан кейін кәдеге жаратылады. Медициналық құрғақ ыстық шкафта стерилизацияның толық циклінен өткен герметикалық крафт-пакетті шебер тек сіздің көзіңізше ашады.",
@@ -123,10 +123,10 @@ export default function App() {
       trust3Title: "4 қолмен жасалатын кешенге қатаң түрде 2 сағатқа дейін",
       trust3Desc: "Бір уақытта жасалатын маникюр мен педикюр процедурасы белгіленген уақытты ғана алады. Егер шеберлер бұл уақытқа үлгермесе, сіз салонда жарты күніңізді өткізбейсіз, керісінше күткеніңіз үшін автоматты жеңілдік аласыз.",
 
-      servicesTitle: "Біздің қызметтер және бекітілген бағалар",
+      servicesTitle: "ҚЫЗМЕТТЕРІМ",
       servicesSubtitle: "Барлық опциялар құнына енгізілген. Алып тастау немесе тегістеу үшін қосымша төлемдер жоқ.",
       service1Name: "Аппараттық және аралас маникюр",
-      service1Desc: "Тырнақ пластинасын күйдірмей, жарақатсыз және терең кесіксіз кутикуланы қауіпсіз және ауырсынусыз өңдеу. Бекітілген прайс құнына әдепкі бойынша алдыңғы жабынды қауіпсіз алып тастау, гигиеналық күтім және кутикула астын тегістеу кіреді.",
+      service1Desc: "Тырнақ пластинасын күйдірмей, жарақатсыз и терең кесіксіз кутикуланы қауіпсіз және ауырсынусыз өңдеу. Бекітілген прайс құнына әдепкі бойынша алдыңғы жабынды қауіпсіз алып тастау, гигиеналық күтім және кутикула астын тегістеу кіреді.",
       service1Price: "7 000 ₸ бастап",
       service2Name: "4 қолмен жасалатын кешен (Маникюр + Педикюр)",
       service2Desc: "Жеке уақытыңыздың екі сағатына дейін үнемдейтін екі білікті шебердің қатар жүретін жұмысы. Процедура терең анатомиялық реклайнер-креслоларымен жабдықталған аймақта өтеді. Жабынның сапасы, ұқыптылығы мен беріктігі мінсіз болып қалады.",
@@ -284,13 +284,13 @@ export default function App() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-bronze-500/5 rounded-full blur-[120px] pointer-events-none"></div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <span className="text-bronze-500 font-semibold tracking-[0.25em] text-xs sm:text-sm uppercase mb-4 block font-serif">
+          <span className="text-bronze-500 font-bold tracking-[0.3em] text-xs sm:text-sm uppercase mb-6 block font-sans">
             {t.heroSuperTitle}
           </span>
           
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-none">
+          <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter text-white mb-6 leading-[0.85] uppercase">
             {t.heroTitle} <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-bronze-500 via-bronze-200 to-bronze-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-bronze-500 via-bronze-200 to-bronze-500 font-sans font-light text-xl sm:text-3xl tracking-widest block mt-4">
               {t.heroSubtitle}
             </span>
           </h1>
@@ -314,7 +314,7 @@ export default function App() {
       {/* Trust Block */}
       <section className="py-20 px-4 sm:px-8 max-w-6xl mx-auto border-b border-white/5">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-3 tracking-wide">{t.trustTitle}</h2>
+          <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.trustTitle}</h2>
           <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto">{t.trustSubtitle}</p>
         </div>
 
@@ -324,7 +324,7 @@ export default function App() {
             <div className="bg-bronze-500/10 p-3 rounded-xl w-fit mb-6">
               <ShieldCheckIcon />
             </div>
-            <h3 className="text-lg font-serif font-semibold text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust1Title}</h3>
+            <h3 className="text-lg font-display font-bold uppercase tracking-wider text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust1Title}</h3>
             <p className="text-neutral-400 text-sm leading-relaxed">{t.trust1Desc}</p>
           </div>
 
@@ -333,7 +333,7 @@ export default function App() {
             <div className="bg-bronze-500/10 p-3 rounded-xl w-fit mb-6">
               <WalletIcon />
             </div>
-            <h3 className="text-lg font-serif font-semibold text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust2Title}</h3>
+            <h3 className="text-lg font-display font-bold uppercase tracking-wider text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust2Title}</h3>
             <p className="text-neutral-400 text-sm leading-relaxed">{t.trust2Desc}</p>
           </div>
 
@@ -342,7 +342,7 @@ export default function App() {
             <div className="bg-bronze-500/10 p-3 rounded-xl w-fit mb-6">
               <ClockIcon />
             </div>
-            <h3 className="text-lg font-serif font-semibold text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust3Title}</h3>
+            <h3 className="text-lg font-display font-bold uppercase tracking-wider text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust3Title}</h3>
             <p className="text-neutral-400 text-sm leading-relaxed">{t.trust3Desc}</p>
           </div>
         </div>
@@ -352,7 +352,7 @@ export default function App() {
       <section className="py-20 px-4 sm:px-8 bg-charcoal-950 border-b border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-3 tracking-wide">{t.servicesTitle}</h2>
+            <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.servicesTitle}</h2>
             <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto">{t.servicesSubtitle}</p>
           </div>
 
@@ -360,13 +360,13 @@ export default function App() {
             {/* Service 1 */}
             <div className="bg-charcoal-900 border border-white/5 hover:border-bronze-500/30 rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300">
               <div>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-4">{t.service1Name}</h3>
+                <h3 className="font-display text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white mb-4">{t.service1Name}</h3>
                 <p className="text-neutral-400 text-sm leading-relaxed mb-6">{t.service1Desc}</p>
               </div>
               <div>
                 <div className="flex justify-between items-baseline mb-6 border-t border-white/5 pt-6">
                   <span className="text-neutral-400 text-xs tracking-wider uppercase font-semibold">Фикс цена</span>
-                  <span className="text-bronze-500 font-serif text-2xl font-bold">{t.service1Price}</span>
+                  <span className="text-bronze-500 font-display text-2xl font-black tracking-tight">{t.service1Price}</span>
                 </div>
                 <button 
                   onClick={scrollToForm} 
@@ -383,13 +383,13 @@ export default function App() {
                 Popular & Fast
               </span>
               <div>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-4 mt-2">{t.service2Name}</h3>
+                <h3 className="font-display text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white mb-4 mt-2">{t.service2Name}</h3>
                 <p className="text-neutral-300 text-sm leading-relaxed mb-6">{t.service2Desc}</p>
               </div>
               <div>
                 <div className="flex justify-between items-baseline mb-6 border-t border-bronze-500/20 pt-6">
                   <span className="text-bronze-300 text-xs tracking-wider uppercase font-semibold">Фикс цена</span>
-                  <span className="text-bronze-400 font-serif text-3xl font-bold">{t.service2Price}</span>
+                  <span className="text-bronze-400 font-display text-3xl font-black tracking-tight">{t.service2Price}</span>
                 </div>
                 <button 
                   onClick={scrollToForm} 
@@ -403,13 +403,13 @@ export default function App() {
             {/* Service 3 */}
             <div className="bg-charcoal-900 border border-white/5 hover:border-bronze-500/30 rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300">
               <div>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-4">{t.service3Name}</h3>
+                <h3 className="font-display text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white mb-4">{t.service3Name}</h3>
                 <p className="text-neutral-400 text-sm leading-relaxed mb-6">{t.service3Desc}</p>
               </div>
               <div>
                 <div className="flex justify-between items-baseline mb-6 border-t border-white/5 pt-6">
                   <span className="text-neutral-400 text-xs tracking-wider uppercase font-semibold">Фикс цена</span>
-                  <span className="text-bronze-500 font-serif text-2xl font-bold">{t.service3Price}</span>
+                  <span className="text-bronze-500 font-display text-2xl font-black tracking-tight">{t.service3Price}</span>
                 </div>
                 <button 
                   onClick={scrollToForm} 
@@ -426,50 +426,50 @@ export default function App() {
       {/* Guarantees Section */}
       <section className="py-20 px-4 sm:px-8 max-w-6xl mx-auto border-b border-white/5">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-3 tracking-wide">{t.guaranteesTitle}</h2>
+          <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.guaranteesTitle}</h2>
           <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto">{t.guaranteesSubtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
-            <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
-              <CheckIcon />
+            <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
+              <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
+                <CheckIcon />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white mb-2">{t.g1Title}</h3>
+                <p className="text-neutral-400 text-sm leading-relaxed">{t.g1Desc}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-serif text-lg font-semibold text-white mb-2">{t.g1Title}</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">{t.g1Desc}</p>
-            </div>
-          </div>
 
-          <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
-            <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
-              <CheckIcon />
+            <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
+              <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
+                <CheckIcon />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white mb-2">{t.g2Title}</h3>
+                <p className="text-neutral-400 text-sm leading-relaxed">{t.g2Desc}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-serif text-lg font-semibold text-white mb-2">{t.g2Title}</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">{t.g2Desc}</p>
-            </div>
-          </div>
 
-          <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
-            <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
-              <CheckIcon />
+            <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
+              <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
+                <CheckIcon />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white mb-2">{t.g3Title}</h3>
+                <p className="text-neutral-400 text-sm leading-relaxed">{t.g3Desc}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-serif text-lg font-semibold text-white mb-2">{t.g3Title}</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">{t.g3Desc}</p>
-            </div>
-          </div>
 
-          <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
-            <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
-              <CheckIcon />
+            <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
+              <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
+                <CheckIcon />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white mb-2">{t.g4Title}</h3>
+                <p className="text-neutral-400 text-sm leading-relaxed">{t.g4Desc}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-serif text-lg font-semibold text-white mb-2">{t.g4Title}</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">{t.g4Desc}</p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -477,7 +477,7 @@ export default function App() {
       <section className="py-20 px-4 sm:px-8 bg-charcoal-950/60 border-b border-white/5">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-3 tracking-wide">{t.fearTitle}</h2>
+            <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.fearTitle}</h2>
             <p className="text-neutral-400 text-sm sm:text-base">{t.fearSubtitle}</p>
           </div>
 
@@ -493,7 +493,7 @@ export default function App() {
                     onClick={() => setActiveFaq(isOpen ? null : index)}
                     className="w-full flex justify-between items-center p-6 text-left hover:text-bronze-500 transition-colors"
                   >
-                    <span className="font-serif font-semibold text-white text-sm sm:text-base leading-snug">{item.question}</span>
+                    <span className="font-display font-bold uppercase text-xs sm:text-sm tracking-wide text-white leading-snug">{item.question}</span>
                     <ChevronDownIcon className={isOpen ? 'rotate-180 text-bronze-500' : 'text-neutral-400'} />
                   </button>
                   
@@ -518,7 +518,7 @@ export default function App() {
           <div className="absolute -top-24 -right-24 w-60 h-60 bg-bronze-500/5 rounded-full blur-[80px]"></div>
           
           <div className="max-w-2xl mx-auto text-center relative z-10">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4 tracking-wide">{t.formTitle}</h2>
+            <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.formTitle}</h2>
             
             <div className="bg-bronze-500/10 border border-bronze-500/20 p-4 rounded-xl text-bronze-300 text-xs sm:text-sm mb-6 leading-relaxed flex items-center gap-3 text-left">
               <span className="text-xl">❄️</span>
@@ -597,7 +597,7 @@ export default function App() {
             <div className="w-16 h-16 bg-bronze-500/10 text-bronze-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
               ✓
             </div>
-            <h3 className="font-serif text-2xl font-bold text-white mb-3">{t.modalSuccessTitle}</h3>
+            <h3 className="font-display text-2xl font-black uppercase tracking-tight text-white mb-3">{t.modalSuccessTitle}</h3>
             <p className="text-neutral-400 text-sm leading-relaxed mb-6">
               {t.modalSuccessDesc}
             </p>
