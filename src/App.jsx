@@ -49,7 +49,7 @@ export default function App() {
   // Translations object containing Russian and Kazakh versions
   const translations = {
     ru: {
-      brand: "ATFOVA NAILS",
+      brand: "SVTL Nails & Aesthetic",
       heroSuperTitle: "МАНИКЮР, КОТОРЫЙ ВЫГЛЯДИТ ДОРОГО 4 НЕДЕЛИ",
       heroTitle: "Маникюр в Атырау без порезов.",
       heroSubtitle: "Гарантия носки 14 дней.",
@@ -107,7 +107,7 @@ export default function App() {
       rights: "Все права защищены."
     },
     kk: {
-      brand: "ATFOVA NAILS",
+      brand: "SVTL Nails & Aesthetic",
       heroSuperTitle: "4 АПТА БОЙЫ ҚЫМБАТ КӨРІНЕТІН МАНИКЮР",
       heroTitle: "Атыраудағы кесіксіз маникюр.",
       heroSubtitle: "14 күнге жабын кепілдігі.",
@@ -243,9 +243,9 @@ export default function App() {
       {/* Header */}
       <header className="sticky top-0 z-40 backdrop-blur-md bg-charcoal-900/80 border-b border-white/5 py-4 px-4 sm:px-8">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <div className="flex flex-col">
-            <span className="font-serif text-2xl tracking-widest text-bronze-500 font-bold">{t.brand}</span>
-            <span className="text-[9px] tracking-[0.25em] text-neutral-400 uppercase hidden sm:inline">Atyrau • Premium Beauty Studio</span>
+          <div className="flex flex-col items-start leading-none">
+            <span className="font-sans font-bold text-3xl tracking-widest text-white">SVTL</span>
+            <span className="font-serif text-[9px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-1">Nails &amp; Aesthetic</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -572,7 +572,10 @@ export default function App() {
       <footer className="border-t border-white/5 py-12 px-4 sm:px-8 bg-charcoal-950">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col items-center md:items-start gap-2">
-            <span className="font-serif text-xl tracking-widest text-bronze-500 font-bold">{t.brand}</span>
+            <div className="flex flex-col items-center md:items-start leading-none mb-2">
+              <span className="font-sans font-bold text-2xl tracking-widest text-white">SVTL</span>
+              <span className="font-serif text-[9px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-1">Nails &amp; Aesthetic</span>
+            </div>
             <p className="text-neutral-500 text-xs text-center md:text-left max-w-sm">{t.footerText}</p>
           </div>
 
