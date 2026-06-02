@@ -26,6 +26,61 @@ export default function App() {
   const [name, setName] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Interactive Calculator State
+  const [selectedService, setSelectedService] = useState('manicure'); // 'manicure', 'pedicure', 'extensions'
+  const [selectedOptions, setSelectedOptions] = useState([]); // array of option IDs
+
+  const baseServices = {
+    manicure: {
+      id: 'manicure',
+      nameKey: 'serviceManicureName',
+      descKey: 'serviceManicureDesc',
+      price: 7000,
+      time: 75, // minutes
+    },
+    pedicure: {
+      id: 'pedicure',
+      nameKey: 'servicePedicureName',
+      descKey: 'servicePedicureDesc',
+      price: 10000,
+      time: 90, // minutes
+    },
+    extensions: {
+      id: 'extensions',
+      nameKey: 'serviceExtensionsName',
+      descKey: 'serviceExtensionsDesc',
+      price: 12000,
+      time: 120, // minutes
+    }
+  };
+
+  const extraOptions = [
+    {
+      id: 'design',
+      nameKey: 'optionDesign',
+      price: 2000,
+      time: 20,
+    },
+    {
+      id: 'strengthen',
+      nameKey: 'optionStrengthen',
+      price: 1500,
+      time: 15,
+    },
+    {
+      id: 'repair',
+      nameKey: 'optionRepair',
+      price: 1000,
+      time: 10,
+    },
+    {
+      id: 'spa',
+      nameKey: 'optionSpa',
+      price: 1500,
+      time: 15,
+    }
+  ];
 
   // Translations object containing Russian and Kazakh versions
   const translations = {
@@ -47,17 +102,24 @@ export default function App() {
       trust3Desc: "Я ценю ваше время и не растягиваю процедуру на полдня. Любой маникюр с покрытием и дизайном занимает не более 1.5–2 часов. Если я не уложусь в заявленный тайминг, вы получаете скидку за ожидание.",
  
       servicesTitle: "МОИ УСЛУГИ",
-      servicesSubtitle: "Все опции уже включены в стоимость. Никаких доплат за снятие или выравнивание.",
-      service1Name: "Аппаратный и комбинированный маникюр",
-      service1Desc: "Безопасная и безболезненная обработка кутикулы без ран, глубоких порезов и прожигов ногтевой пластины. В стоимость фиксированного прайса по умолчанию входят безопасное снятие предыдущего покрытия, гигиенический уход и выравнивание под кутикулу.",
-      service1Price: "от 7 000 ₸",
-      service2Name: "Эстетический Smart-педикюр",
-      service2Desc: "Безопасная обработка стопы по технологии Smart-дисков и пальчиков с покрытием гель-лаком. Полное избавление от трещин, шелушений и натоптышей. Комфортное кресло, премиальный уход и идеальный результат.",
-      service2Price: "от 10 000 ₸",
-      service3Name: "Наращивание ногтей и кастомный дизайн",
-      service3Desc: "Моделирование правильной архитектуры ногтя, длины и чистой формы (квадрат, овал, миндаль) в точном соответствии с вашим референсом. В вашем распоряжении палитра из 200+ актуальных оттенков, плотных камуфлирующих баз и светоотражающих покрытий.",
-      service3Price: "от 12 000 ₸",
-      serviceCta: "Записаться на услугу",
+      servicesSubtitle: "Интерактивный конструктор визита. Выберите основную услугу и добавьте нужные опции — стоимость и время рассчитаются автоматически.",
+      servicesSelectBase: "1. Выберите основную услугу:",
+      servicesSelectOptions: "2. Добавьте дополнительные опции к процедуре:",
+      servicesTotal: "Итоговый расчет сеанса:",
+      servicesTotalPrice: "Стоимость визита",
+      servicesTotalTime: "Время выполнения",
+      servicesSelectedPreview: "Выбранный сеанс",
+      serviceManicureName: "Аппаратный и комбинированный маникюр",
+      serviceManicureDesc: "Безопасная обработка кутикулы без порезов. Включает безопасное снятие покрытия, гигиенический уход и выравнивание пластины под кутикулу.",
+      servicePedicureName: "Эстетический Smart-педикюр",
+      servicePedicureDesc: "Премиальная обработка стопы с помощью Smart-дисков и пальчиков с покрытием гель-лаком. Полное удаление натоптышей и трещин.",
+      serviceExtensionsName: "Наращивание ногтей",
+      serviceExtensionsDesc: "Моделирование правильной архитектуры, длины и чистой формы (квадрат, овал, миндаль) гелем или полигелем по вашему референсу.",
+      optionDesign: "Сложный дизайн (френч, градиент, втирка)",
+      optionStrengthen: "Дополнительное укрепление гелем",
+      optionRepair: "Ремонт / донаращивание (1-2 ногтя)",
+      optionSpa: "Парафинотерапия и СПА-уход за кожей",
+      serviceCta: "Зафиксировать расчет и записаться",
  
       guaranteesTitle: "ГАРАНТИИ",
       guaranteesSubtitle: "Что бы ни случилось, вы защищены моими личными гарантиями",
@@ -75,14 +137,14 @@ export default function App() {
  
       formTitle: "ЗАПИСЬ • BOOK NOW",
       formComfort: "В Атырау прогнозируется сильная жара, но в моем кабинете всегда поддерживается комфортный микроклимат (кондиционер), идеальная чистота, и вас ждут прохладные напитки.",
-      formHelp: "Оставьте свой номер телефона (WhatsApp) и имя. Я лично зафиксирую за вами персональную цену со всеми включенными опциями, свяжусь в течение 5 минут и подберу оптимальное время.",
+      formHelp: "Оставьте свой номер телефона (WhatsApp) и имя. Я лично свяжусь с вами в течение 5 минут для подтверждения времени и деталей.",
       namePlaceholder: "Ваше имя",
       phonePlaceholder: "Номер телефона (WhatsApp)",
       formCta: "Зафиксировать цену и записаться",
       
       modalSuccessTitle: "Заявка успешно принята!",
       modalSuccessDesc: "Я свяжусь с вами в течение 5 минут в WhatsApp для подтверждения времени и фиксации цены. До встречи в моем прохладном кабинете!",
-      modalClose: "Отлично",
+      modalClose: "Перейти в WhatsApp чат",
  
       footerText: "Кабинет безопасного маникюра в Атырау. Работаю для вашей уверенности в каждом пальчике.",
       rights: "Все права защищены."
@@ -92,7 +154,7 @@ export default function App() {
       heroSuperTitle: "АТЫРАУДАҒЫ ҚАУІПСІЗ МАНИКЮР",
       heroTitle: "4 АПТА БОЙЫ ҚЫМБАТ КӨРІНЕТІН МАНИКЮР",
       heroSubtitle: "КЕСІКСІЗ • 28 КҮН КЕПІЛДІК",
-      heroDesc: "Егер 28 күн ішінде жабын сылынса немесе түсіп қалса, мен өтініш білдірген күні жұмысты тегін қайта жасап беремін — дау-дамайсыз, ұзақ талқылаусыз және мессенджерлерде елеусіз қалдырусыз. Сіз әлеуметтік желідегі әдемі, бірақ астында ұқыпсыз жұмыс жасырылған суретке емес, күткеніңізге толық сәйкес келетін қолдарыңыздағы болжамды нәтижеге қол жеткізесіз.",
+      heroDesc: "Егер екі апта ішінде жабын сылынса немесе түсіп қалса, мен өтініш білдірген күні жұмысты тегін қайта жасап беремін — дау-дамайсыз, ұзақ талқылаусыз және мессенджерлерде елеусіз қалдырусыз. Сіз әлеуметтік желідегі әдемі, бірақ астында ұқыпсыз жұмыс жасырылған суретке емес, күткеніңізге толық сәйкес келетін қолдарыңыздағы болжамды нәтижеге қол жеткізесіз.",
       heroCta: "Нақты құны мен келу уақытын есептеу",
       
       trustTitle: "МАҒАН НЕГЕ СЕНЕДІ",
@@ -105,17 +167,24 @@ export default function App() {
       trust3Desc: "Мен сіздің уақытыңызды бағалаймын және визитті жарты күнге созбаймын. Жабыны мен дизайны бар кез келген маникюр 1.5–2 сағаттан аспайды. Егер мен белгіленген уақытқа үлгермесем, сіз күткеніңіз үшін жеңілдік аласыз.",
  
       servicesTitle: "ҚЫЗМЕТТЕРІМ",
-      servicesSubtitle: "Барлық опциялар құнына енгізілген. Алып тастау немесе тегістеу үшін қосымша төлемдер жоқ.",
-      service1Name: "Аппараттық және аралас маникюр",
-      service1Desc: "Тырнақ пластинасын күйдірмей, жарақатсыз и терең кесіксіз кутикуланы қауіпсіз және ауырсынусыз өңдеу. Бекітілген прайс құнына әдепкі бойынша алдыңғы жабынды қауіпсіз алып тастау, гигиеналық күтім және кутикула астын тегістеу кіреді.",
-      service1Price: "7 000 ₸ бастап",
-      service2Name: "Эстетикалық Smart-педикюр",
-      service2Desc: "Smart-дискілер технологиясы бойынша табанды және гель-лак жабынымен саусақтарды қауіпсіз өңдеу. Жарықтардан, қабыршақтанудан және сүйелдерден толық арылу. Жайлы кресло, премиалды күтім және мінсіз нәтиже.",
-      service2Price: "10 000 ₸ бастап",
-      service3Name: "Тырнақ өсіру және кастомды дизайн",
-      service3Desc: "Тырнақтың дұрыс архитектурасын, ұзындығын және таза пішінін (шаршы, сопақ, бадам) сіздің референсіңізге сәйкес модельдеу. Сіздің қолыңызда 200+ өзекті реңктер палитрасы, тығыз камуфляжды базалар мен жарық шағылыстыратын жабындар бар.",
-      service3Price: "12 000 ₸ бастап",
-      serviceCta: "Қызметке жазылу",
+      servicesSubtitle: "Келудің интерактивті конструкторы. Негізгі қызметті таңдап, қажетті опцияларды қосыңыз — құны мен уақыты автоматты түрде есептеледі.",
+      servicesSelectBase: "1. Негізгі қызметті таңдаңыз:",
+      servicesSelectOptions: "2. Процедураға қосымша опцияларды қосыңыз:",
+      servicesTotal: "Сеанстың қорытынды есебі:",
+      servicesTotalPrice: "Келу құны",
+      servicesTotalTime: "Орындау уақыты",
+      servicesSelectedPreview: "Таңдалған сеанс",
+      serviceManicureName: "Аппараттық және аралас маникюр",
+      serviceManicureDesc: "Кутикуланы кесіксіз қауіпсіз өңдеу. Жабынды қауіпсіз алып тастауды, гигиеналық күтімді және кутикула астын тегістеуді қамтиды.",
+      servicePedicureName: "Эстетикалық Smart-педикюр",
+      servicePedicureDesc: "Smart дискілерінің көмегімен табанды және гель-лак жабынымен саусақтарды премиалды өңдеу. Сүйелдер мен жарықтарды толық кетіру.",
+      serviceExtensionsName: "Тырнақ өсіру",
+      serviceExtensionsDesc: "Гельмен немесе полигельмен сіздің референсіңізге сәйкес дұрыс архитектураны, ұзындықты және таза пішінді (шаршы, сопақ, бадам) модельдеу.",
+      optionDesign: "Күрделі дизайн (френч, градиент, втирка)",
+      optionStrengthen: "Гельмен қосымша нығайту",
+      optionRepair: "Жөндеу / ұзарту (1-2 тырнақ)",
+      optionSpa: "Парафинотерапия және теріге СПА-күтім",
+      serviceCta: "Есептеуді бекіту және жазылу",
  
       guaranteesTitle: "КЕПІЛДІКТЕР",
       guaranteesSubtitle: "Не болса да, сіз менің жеке кепілдіктеріммен қорғалғансыз",
@@ -133,14 +202,14 @@ export default function App() {
  
       formTitle: "ЖАЗЫЛУ • BOOK NOW",
       formComfort: "Атырауда қатты ыстық болады деп болжануда, бірақ менің кабинетімде әрқашан жайлы микроклимат (кондиционер), мінсіз тазалық сақталады және салқын сусындар дайындалған.",
-      formHelp: "Телефон нөміріңізді (WhatsApp) және есіміңізді қалдырыңыз. Мен жеке сіз үшін барлық қосылған опциялары бар дербес бағаны бекітемін, 5 минут ішінде хабарласып, оңтайлы уақытты таңдаймын.",
+      formHelp: "Телефон нөміріңізді (WhatsApp) және есіміңізді қалдырыңыз. Мен жеке сізбен 5 минут ішінде уақытты және егжей-тегжейлерді растау үшін хабарласамын.",
       namePlaceholder: "Сіздің есіміңіз",
       phonePlaceholder: "Телефон нөмірі (WhatsApp)",
       formCta: "Бағаны бекіту және жазылу",
       
       modalSuccessTitle: "Өтінім сәтті қабылданды!",
       modalSuccessDesc: "Мен сізбен уақытты растау және бағаны бекіту үшін 5 минут ішінде WhatsApp арқылы хабарласамын. Салқын кабинетімде кездескенше!",
-      modalClose: "Тамаша",
+      modalClose: "WhatsApp чатқа өту",
  
       footerText: "Атыраудағы қауіпсіз маникюр кабинеті. Әрбір саусағыңыздың сенімділігі үшін жұмыс істеймін.",
       rights: "Барлық құқықтар қорғалған."
@@ -197,18 +266,68 @@ export default function App() {
 
   const t = translations[lang];
 
+  // Dynamic calculations
+  const baseServiceObj = baseServices[selectedService];
+  const totalPrice = baseServiceObj.price + selectedOptions.reduce((sum, optId) => {
+    const opt = extraOptions.find(o => o.id === optId);
+    return sum + (opt ? opt.price : 0);
+  }, 0);
+  
+  const totalTime = baseServiceObj.time + selectedOptions.reduce((sum, optId) => {
+    const opt = extraOptions.find(o => o.id === optId);
+    return sum + (opt ? opt.time : 0);
+  }, 0);
+
+  const formatTime = (minutes) => {
+    const hrs = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    if (lang === 'ru') {
+      return `${hrs > 0 ? `${hrs} ч. ` : ''}${mins > 0 ? `${mins} мин.` : ''}`;
+    } else {
+      return `${hrs > 0 ? `${hrs} сағ. ` : ''}${mins > 0 ? `${mins} мин.` : ''}`;
+    }
+  };
+
+  const toggleOption = (optId) => {
+    if (selectedOptions.includes(optId)) {
+      setSelectedOptions(selectedOptions.filter(id => id !== optId));
+    } else {
+      setSelectedOptions([...selectedOptions, optId]);
+    }
+  };
+
+  const getWhatsAppMessage = () => {
+    const serviceName = t[baseServiceObj.nameKey];
+    const optionsList = selectedOptions.map(optId => t[extraOptions.find(o => o.id === optId).nameKey]).join(', ');
+    const optionsPart = optionsList ? ` + ${optionsList}` : '';
+    
+    if (lang === 'ru') {
+      return `Привет! Хочу записаться к вам на маникюр:\n\n💅 *${serviceName}${optionsPart}*\n💰 Стоимость: *${totalPrice} ₸*\n⏱️ Время: *${formatTime(totalTime)}*\n\nМеня зовут: ${name}\nТелефон: ${phone}`;
+    } else {
+      return `Сәлеметсіз бе! Мен маникюрге жазылғым келеді:\n\n💅 *${serviceName}${optionsPart}*\n💰 Құны: *${totalPrice} ₸*\n⏱️ Уақыты: *${formatTime(totalTime)}*\n\nМенің есімім: ${name}\nТелефон: ${phone}`;
+    }
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!phone) return;
     setIsSubmitting(true);
     
-    // Simulate API request
+    // Simulate API request and open WhatsApp
     setTimeout(() => {
       setIsSubmitting(false);
       setShowModal(true);
-      setName('');
-      setPhone('');
-    }, 1200);
+    }, 1000);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    // Open WhatsApp link with prefilled text
+    const waUrl = `https://wa.me/77016698086?text=${encodeURIComponent(getWhatsAppMessage())}`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    
+    setName('');
+    setPhone('');
   };
 
   const scrollToForm = () => {
@@ -344,77 +463,136 @@ export default function App() {
             </div>
           </section>
 
-          {/* Service Block (Structured Price List like Ref 4) */}
+          {/* Interactive Service Block (Interactive Calculator) */}
           <section className="py-12 px-4 bg-charcoal-950/40 border-b border-white/10">
             {/* Section Tag */}
             <div className="flex items-center gap-1.5 mb-2">
               <span className="font-display text-[9px] tracking-wider text-bronze-500 font-bold uppercase">✦ SERVICES ✦</span>
             </div>
 
-            <h2 className="font-display text-3xl font-black text-white leading-none tracking-tighter uppercase mb-6">
+            <h2 className="font-display text-3xl font-black text-white leading-none tracking-tighter uppercase mb-2">
               {t.servicesTitle}
             </h2>
+            
+            <p className="text-neutral-400 text-[11px] leading-relaxed mb-6">
+              {t.servicesSubtitle}
+            </p>
 
-            <div className="border border-white/10 rounded-xl overflow-hidden bg-charcoal-900 shadow-lg">
+            <div className="space-y-6">
               
-              {/* Service item 1 */}
-              <div className="border-b border-white/10 p-5 hover:bg-white/5 transition-all">
-                <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-bronze-500 font-bold text-xs">*</span>
-                    <h3 className="font-display font-bold uppercase tracking-wide text-white text-xs sm:text-sm">{t.service1Name}</h3>
-                  </div>
-                  <span className="font-display font-black text-bronze-500 text-xs sm:text-sm">{t.service1Price}</span>
-                </div>
-                <p className="text-neutral-400 text-[11px] leading-relaxed pl-3">{t.service1Desc}</p>
-                <div className="mt-4 pl-3">
-                  <button 
-                    onClick={scrollToForm} 
-                    className="bg-white/5 hover:bg-bronze-500 hover:text-charcoal-950 text-neutral-300 font-bold px-4 py-1.5 rounded-full text-[9px] tracking-wider uppercase border border-white/10 hover:border-bronze-500 transition-all"
-                  >
-                    {t.serviceCta}
-                  </button>
+              {/* 1. Base Service Selection */}
+              <div>
+                <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-3">
+                  {t.servicesSelectBase}
+                </h3>
+                
+                <div className="space-y-3">
+                  {Object.values(baseServices).map((service) => {
+                    const isActive = selectedService === service.id;
+                    return (
+                      <div 
+                        key={service.id}
+                        onClick={() => setSelectedService(service.id)}
+                        className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 relative overflow-hidden bg-charcoal-900/50 ${
+                          isActive 
+                            ? 'border-bronze-500 shadow-[0_0_15px_rgba(197,168,128,0.1)] bg-charcoal-900' 
+                            : 'border-white/5 opacity-70 hover:opacity-100 hover:border-white/10'
+                        }`}
+                      >
+                        {/* Selected Indicator */}
+                        {isActive && (
+                          <div className="absolute top-0 right-0 w-8 h-8 bg-bronze-500/10 border-b border-l border-bronze-500/30 rounded-bl-xl flex items-center justify-center">
+                            <span className="text-bronze-400 font-bold text-[10px]">✓</span>
+                          </div>
+                        )}
+                        
+                        <div className="flex justify-between items-center mb-1.5 pr-6">
+                          <h4 className="font-display font-bold uppercase tracking-wide text-white text-xs sm:text-sm">
+                            {t[service.nameKey]}
+                          </h4>
+                          <span className="font-display font-black text-bronze-500 text-xs sm:text-sm">
+                            {service.price} ₸
+                          </span>
+                        </div>
+                        <p className="text-neutral-400 text-[10px] leading-relaxed mb-2.5">
+                          {t[service.descKey]}
+                        </p>
+                        <div className="flex items-center gap-1 text-[9px] text-bronze-400 font-bold uppercase tracking-wider">
+                          <span>⏱️ {formatTime(service.time)}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Service item 2 (Featured) */}
-              <div className="border-b border-white/10 p-5 bg-bronze-950/10 hover:bg-bronze-950/20 transition-all">
-                <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-bronze-400 font-bold text-xs">✦</span>
-                    <h3 className="font-display font-bold uppercase tracking-wide text-white text-xs sm:text-sm">{t.service2Name}</h3>
-                  </div>
-                  <span className="font-display font-black text-bronze-400 text-xs sm:text-sm">{t.service2Price}</span>
-                </div>
-                <p className="text-neutral-300 text-[11px] leading-relaxed pl-3">{t.service2Desc}</p>
-                <div className="mt-4 pl-3">
-                  <button 
-                    onClick={scrollToForm} 
-                    className="bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 font-bold px-5 py-1.8 rounded-full text-[9px] tracking-wider uppercase transition-all shadow-sm"
-                  >
-                    {t.serviceCta}
-                  </button>
+              {/* 2. Extra Options Selection */}
+              <div>
+                <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-3">
+                  {t.servicesSelectOptions}
+                </h3>
+                
+                <div className="grid grid-cols-1 gap-2">
+                  {extraOptions.map((option) => {
+                    const isChecked = selectedOptions.includes(option.id);
+                    return (
+                      <div 
+                        key={option.id}
+                        onClick={() => toggleOption(option.id)}
+                        className={`border rounded-xl p-3 cursor-pointer transition-all duration-300 flex items-center justify-between bg-charcoal-900/30 ${
+                          isChecked 
+                            ? 'border-bronze-500/50 bg-charcoal-900/80 shadow-[0_0_10px_rgba(197,168,128,0.05)]' 
+                            : 'border-white/5 opacity-80 hover:opacity-100 hover:border-white/10'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          {/* Custom Checkbox */}
+                          <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                            isChecked ? 'bg-bronze-500 border-bronze-500 text-charcoal-950' : 'border-white/20'
+                          }`}>
+                            {isChecked && <span className="font-bold text-[10px]">✓</span>}
+                          </div>
+                          
+                          <div>
+                            <span className="text-white text-[11px] font-bold block">{t[option.nameKey]}</span>
+                            <span className="text-[9px] text-neutral-400">⏱️ +{formatTime(option.time)}</span>
+                          </div>
+                        </div>
+                        <span className="font-display text-bronze-400 text-xs font-black">+{option.price} ₸</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Service item 3 */}
-              <div className="p-5 hover:bg-white/5 transition-all">
-                <div className="flex justify-between items-center mb-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-bronze-500 font-bold text-xs">*</span>
-                    <h3 className="font-display font-bold uppercase tracking-wide text-white text-xs sm:text-sm">{t.service3Name}</h3>
+              {/* 3. Live Total Summary Panel */}
+              <div className="border border-bronze-500/30 rounded-2xl p-5 bg-charcoal-950/80 shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-bronze-500/5 rounded-full blur-xl"></div>
+                
+                <h4 className="font-display font-black text-[10px] uppercase tracking-wider text-bronze-400 mb-3">
+                  {t.servicesTotal}
+                </h4>
+                
+                <div className="space-y-2 mb-5">
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-400 text-[11px]">{t.servicesTotalPrice}:</span>
+                    <span className="font-display font-black text-white text-lg">{totalPrice} ₸</span>
                   </div>
-                  <span className="font-display font-black text-bronze-500 text-xs sm:text-sm">{t.service3Price}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-400 text-[11px]">{t.servicesTotalTime}:</span>
+                    <span className="font-display font-bold text-bronze-300 text-xs tracking-wider uppercase">
+                      ~ {formatTime(totalTime)}
+                    </span>
+                  </div>
                 </div>
-                <p className="text-neutral-400 text-[11px] leading-relaxed pl-3">{t.service3Desc}</p>
-                <div className="mt-4 pl-3">
-                  <button 
-                    onClick={scrollToForm} 
-                    className="bg-white/5 hover:bg-bronze-500 hover:text-charcoal-950 text-neutral-300 font-bold px-4 py-1.5 rounded-full text-[9px] tracking-wider uppercase border border-white/10 hover:border-bronze-500 transition-all"
-                  >
-                    {t.serviceCta}
-                  </button>
-                </div>
+
+                <button 
+                  onClick={scrollToForm}
+                  className="w-full bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 py-3 rounded-xl font-bold tracking-wider uppercase text-[10px] transition-all duration-300 shadow-md flex justify-center items-center gap-1.5"
+                >
+                  <span>{t.serviceCta}</span>
+                  <span>✦</span>
+                </button>
               </div>
 
             </div>
@@ -533,6 +711,34 @@ export default function App() {
                 <p>{t.formComfort}</p>
               </div>
 
+              {/* Dynamic Interactive Preview inside Form */}
+              <div className="bg-bronze-500/5 border border-bronze-500/20 rounded-xl p-3.5 mb-5 text-[11px] text-neutral-300">
+                <span className="text-bronze-400 font-bold block mb-1.5 uppercase tracking-wider text-[9px]">
+                  {t.servicesSelectedPreview}:
+                </span>
+                
+                <div className="flex justify-between items-center font-bold text-white mb-0.5">
+                  <span>{t[baseServiceObj.nameKey]}</span>
+                  <span className="text-bronze-500">{baseServiceObj.price} ₸</span>
+                </div>
+                
+                {selectedOptions.map(optId => {
+                  const opt = extraOptions.find(o => o.id === optId);
+                  if (!opt) return null;
+                  return (
+                    <div key={optId} className="flex justify-between items-center text-[10px] text-neutral-400 pl-3">
+                      <span>+ {t[opt.nameKey]}</span>
+                      <span>+{opt.price} ₸</span>
+                    </div>
+                  );
+                })}
+                
+                <div className="border-t border-white/10 mt-2.5 pt-2 flex justify-between items-center font-black text-white uppercase text-[10px] tracking-wider">
+                  <span>Итого / Жиыны:</span>
+                  <span className="text-bronze-400 text-xs sm:text-sm">{totalPrice} ₸ ({formatTime(totalTime)})</span>
+                </div>
+              </div>
+
               <p className="text-neutral-400 text-[11px] text-center mb-6 leading-normal">
                 {t.formHelp}
               </p>
@@ -605,7 +811,7 @@ export default function App() {
                 {t.modalSuccessDesc}
               </p>
               <button 
-                onClick={() => setShowModal(false)}
+                onClick={handleModalClose}
                 className="w-full bg-bronze-500 hover:bg-bronze-600 text-charcoal-950 font-bold py-2.5 rounded-xl text-xs tracking-wide transition-all"
               >
                 {t.modalClose}
