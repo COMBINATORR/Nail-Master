@@ -254,7 +254,7 @@ export default function App() {
             </div>
 
             <a 
-              href="https://wa.me/77010000000" 
+              href="https://wa.me/77016698086" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center bg-bronze-500/10 border border-bronze-500/30 text-bronze-300 px-3 py-1 rounded-full text-[9px] font-bold tracking-wider uppercase hover:bg-bronze-500/20 transition-all"
@@ -585,8 +585,8 @@ export default function App() {
             
             <div className="flex gap-4 text-[10px] text-neutral-400">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-bronze-500 transition-colors">Instagram</a>
-              <a href="https://wa.me/77010000000" target="_blank" rel="noopener noreferrer" className="hover:text-bronze-500 transition-colors">WhatsApp</a>
-              <a href="tel:+77010000000" className="hover:text-bronze-500 transition-colors">+7 (701) 000-00-00</a>
+              <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer" className="hover:text-bronze-500 transition-colors">WhatsApp</a>
+              <a href="tel:+77016698086" className="hover:text-bronze-500 transition-colors">+7 (701) 669-80-86</a>
             </div>
 
             <p className="text-neutral-600 text-[9px] mt-2">© {new Date().getFullYear()} {t.brand}. {t.rights}</p>
