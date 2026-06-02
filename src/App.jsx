@@ -7,33 +7,14 @@ const ShieldCheckIcon = () => (
   </svg>
 );
 
-const SparklesIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-bronze-500">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21L8.188 15.904L3 15L8.188 14.096L9 9L9.813 14.096L15 15L9.813 15.904Z" />
-    <path strokeLinecap="round" strokeLinejoin="round" d="M19.071 4.929a10 10 0 00-14.142 0M12 3v2M12 19v2M3 12h2M19 12h2" />
-  </svg>
-);
-
-const ClockIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-bronze-500">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
-
 const CheckIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-bronze-500">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 text-bronze-500">
     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
   </svg>
 );
 
-const WalletIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-bronze-500">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
-  </svg>
-);
-
 const ChevronDownIcon = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={`w-5 h-5 transition-transform ${className}`}>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`w-4 h-4 transition-transform ${className}`}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
   </svg>
 );
@@ -64,7 +45,7 @@ export default function App() {
       trust2Desc: "Окончательная стоимость услуги фиксируется до того, как мастер возьмет в руки аппарат. Никаких внезапных наценок постфактум за снятие старого материала, укрепление или финишный уход.",
       trust3Title: "Строго до 2 часов на комплекс в 4 руки",
       trust3Desc: "Процедура одновременного маникюра и педикюра занимает ровно заявленное время. Если мастера не уложатся в тайминг, вы получаете автоматическую скидку за ожидание, а не проводите в салоне половину дня.",
-
+ 
       servicesTitle: "МОИ УСЛУГИ",
       servicesSubtitle: "Все опции уже включены в стоимость. Никаких доплат за снятие или выравнивание.",
       service1Name: "Аппаратный и комбинированный маникюр",
@@ -77,7 +58,7 @@ export default function App() {
       service3Desc: "Моделирование правильной архитектуры ногтя, длины и чистой формы (квадрат, овал, миндаль) в точном соответствии с вашим референсом. В вашем распоряжении палитра из 200+ актуальных оттенков, плотных камуфлирующих баз и светоотражающих покрытий.",
       service3Price: "от 12 000 ₸",
       serviceCta: "Записаться на услугу",
-
+ 
       guaranteesTitle: "ГАРАНТИИ",
       guaranteesSubtitle: "Что бы ни случилось, вы защищены юридически и репутационно",
       g1Title: "Защита от подмены мастера",
@@ -88,10 +69,10 @@ export default function App() {
       g3Desc: "Мы ценим ваши планы. Салон всегда открыт вовремя, а мастера готовы к началу работы строго в назначенную минуту. Если визит задерживается по нашей вине, вы получаете прямую скидку на услугу.",
       g4Title: "Прозрачное ценообразование",
       g4Desc: "Мастер не выполняет никаких дополнительных платных манипуляций без предварительного обсуждения стоимости с вами. Вы защищены от любых финансовых сюрпризов при расчете.",
-
+ 
       fearTitle: "ОТЗЫВЫ • СТРАХИ",
       fearSubtitle: "Разбираем частые вопросы и страхи клиентов из Атырау",
-
+ 
       formTitle: "ЗАПИСЬ • BOOK NOW",
       formComfort: "В Атырау прогнозируется сильная жара, но в нашей студии всегда поддерживается комфортный микроклимат (кондиционер), идеальная чистота и есть прохладные напитки для гостей.",
       formHelp: "Оставьте свой номер телефона (WhatsApp) и имя. Администратор зафиксирует за вами персональную цену со всеми включенными опциями, свяжется в течение 5 минут и подберет оптимальное время.",
@@ -102,7 +83,7 @@ export default function App() {
       modalSuccessTitle: "Заявка успешно принята!",
       modalSuccessDesc: "Администратор свяжется с вами в течение 5 минут в WhatsApp для подтверждения времени и фиксации цены. До встречи в нашей прохладной студии!",
       modalClose: "Отлично",
-
+ 
       footerText: "Студия безопасного маникюра в Атырау. Работаем для вашей уверенности в каждом пальчике.",
       rights: "Все права защищены."
     },
@@ -121,8 +102,8 @@ export default function App() {
       trust2Title: "Кассада 0 теңге жасырын қосымша төлемдер",
       trust2Desc: "Қызметтің түпкілікті құны шебер аппаратты қолға алғанға дейін белгіленеді. Ескі материалды алып тастау, нығайту немесе фиништік күтім үшін кейіннен кенеттен қосылатын үстемелер жоқ.",
       trust3Title: "4 қолмен жасалатын кешенге қатаң түрде 2 сағатқа дейін",
-      trust3Desc: "Бір уақытта жасалатын маникюр мен педикюр процедурасы белгіленген уақытты ғана алады. Егер шеберлер бұл уақытқа үлгермесе, сіз салонда жарты күніңізді өткізбейсіз, керісінше күткеніңіз үшін автоматты жеңілдік аласыз.",
-
+      trust3Desc: "Бір уақытта жасалатын маникюр мен педикюр процедурасы белгіленген уақытты ғана алады. Егер шеберлер бұл уақытқа үлгермесе, сіз салонда жарты күнді өткізбейсіз, керісінше күткеніңіз үшін автоматты жеңілдік аласыз.",
+ 
       servicesTitle: "ҚЫЗМЕТТЕРІМ",
       servicesSubtitle: "Барлық опциялар құнына енгізілген. Алып тастау немесе тегістеу үшін қосымша төлемдер жоқ.",
       service1Name: "Аппараттық және аралас маникюр",
@@ -135,8 +116,8 @@ export default function App() {
       service3Desc: "Тырнақтың дұрыс архитектурасын, ұзындығын және таза пішінін (шаршы, сопақ, бадам) сіздің референсіңізге сәйкес модельдеу. Сіздің қолыңызда 200+ өзекті реңктер палитрасы, тығыз камуфляжды базалар мен жарық шағылыстыратын жабындар бар.",
       service3Price: "12 000 ₸ бастап",
       serviceCta: "Қызметке жазылу",
-
-      guaranteesTitle: "Біздің қатаң стандарттарымыз бен кепілдіктеріміз",
+ 
+      guaranteesTitle: "КЕПІЛДІКТЕР",
       guaranteesSubtitle: "Не болса да, сіз заңды түрде және беделдік жағынан қорғалғансыз",
       g1Title: "Шеберді ауыстырудан қорғау",
       g1Desc: "Сіз жүйе арқылы жазылған маманға нақты баратыныңызға кепілдік береміз. Біз кестеде жасырын ауыстырулар жасамаймыз және броньды біржақты тәртіппен жоймаймыз.",
@@ -146,12 +127,12 @@ export default function App() {
       g3Desc: "Біз сіздің жоспарларыңызды бағалаймыз. Салон әрқашан уақытында ашылады, ал шеберлер жұмысты белгіленген минутта бастауға дайын. Егер келу біздің кінәмізден кешіктірілсе, сіз қызметке тікелей жеңілдік аласыз.",
       g4Title: "Ашық баға белгілеу",
       g4Desc: "Шебер сізбен алдын ала құнын талқыламай, ешқандай қосымша ақылы манипуляцияларды орындамайды. Сіз есептесу кезінде кез келген қаржылық тосынсыйлардан қорғалғансыз.",
-
-      fearTitle: "Сіздің басты күмәндарыңызға жауап береміз",
+ 
+      fearTitle: "КЕПІЛДІКТЕР",
       fearSubtitle: "Атыраудағы клиенттердің жиі қойылатын сұрақтары мен қорқыныштарын талдаймыз",
-
-      formTitle: "Келу құнын бекіту",
-      formComfort: "Атырауда қатты ыстық болады деп болжануда, бірақ біздің студиямызда әрқашан жайлы микроклимат (кондиционер), мінсіз тазалық сақталады және қонақтар үшін салқын сусындар бар.",
+ 
+      formTitle: "ЖАЗЫЛУ • BOOK NOW",
+      formComfort: "Атырауда қатты ыстық болады деп болжануда, бірақ біздің студиямызда әрқашан жайлы микроклимат (кондиционер), мінсіз тазалық сақталады және бос слоттар бар.",
       formHelp: "Телефон нөміріңізді (WhatsApp) және есіміңізді қалдырыңыз. Администратор сіз үшін барлық қосылған опциялары бар дербес бағаны бекітеді, 5 минут ішінде хабарласып, оңтайлы уақытты таңдайды.",
       namePlaceholder: "Сіздің есіміңіз",
       phonePlaceholder: "Телефон нөмірі (WhatsApp)",
@@ -160,7 +141,7 @@ export default function App() {
       modalSuccessTitle: "Өтінім сәтті қабылданды!",
       modalSuccessDesc: "Администратор сізбен уақытты растау және бағаны бекіту үшін 5 минут ішінде WhatsApp арқылы хабарласады. Салқын студиямызда кездескенше!",
       modalClose: "Тамаша",
-
+ 
       footerText: "Атыраудағы қауіпсіз маникюр студиясы. Әрбір саусағыңыздың сенімділігі үшін жұмыс істейміз.",
       rights: "Барлық құқықтар қорғалған."
     }
@@ -238,29 +219,34 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-charcoal-900 text-neutral-100 font-sans selection:bg-bronze-500 selection:text-charcoal-950">
+    <div className="min-h-screen bg-charcoal-900 text-neutral-100 font-sans selection:bg-bronze-500 selection:text-charcoal-950 flex flex-col items-center">
       
-      {/* Header */}
-      <header className="sticky top-0 z-40 backdrop-blur-md bg-charcoal-900/80 border-b border-white/5 py-4 px-4 sm:px-8">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
+      {/* Container simulating a premium mobile-focused layout */}
+      <div className="w-full max-w-md min-h-screen bg-charcoal-900 border-x border-white/10 flex flex-col justify-between shadow-2xl relative">
+        
+        {/* Top Glow Accent */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-72 bg-bronze-500/5 rounded-full blur-[80px] pointer-events-none"></div>
+
+        {/* Header */}
+        <header className="sticky top-0 z-40 backdrop-blur-md bg-charcoal-900/95 border-b border-white/10 py-3 px-4 flex justify-between items-center">
           <div className="flex flex-col items-start leading-none">
-            <span className="font-sans font-bold text-3xl tracking-widest text-white">SVTL</span>
-            <span className="font-serif text-[9px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-1">Nails &amp; Aesthetic</span>
+            <span className="font-sans font-bold text-2xl tracking-widest text-white">SVTL</span>
+            <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {/* Language Switcher */}
             <div className="flex items-center bg-white/5 border border-white/10 rounded-full p-0.5">
               <button 
                 onClick={() => setLang('ru')} 
-                className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${lang === 'ru' ? 'bg-bronze-500 text-charcoal-950' : 'text-neutral-300 hover:text-white'}`}
+                className={`px-2.5 py-0.5 text-[10px] font-bold rounded-full transition-all ${lang === 'ru' ? 'bg-bronze-500 text-charcoal-950' : 'text-neutral-400 hover:text-white'}`}
                 id="lang-ru-btn"
               >
                 RU
               </button>
               <button 
                 onClick={() => setLang('kk')} 
-                className={`px-3 py-1 text-xs font-semibold rounded-full transition-all ${lang === 'kk' ? 'bg-bronze-500 text-charcoal-950' : 'text-neutral-300 hover:text-white'}`}
+                className={`px-2.5 py-0.5 text-[10px] font-bold rounded-full transition-all ${lang === 'kk' ? 'bg-bronze-500 text-charcoal-950' : 'text-neutral-400 hover:text-white'}`}
                 id="lang-kk-btn"
               >
                 KZ
@@ -271,273 +257,294 @@ export default function App() {
               href="https://wa.me/77010000000" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 border border-bronze-500/30 hover:border-bronze-500 hover:bg-bronze-500/10 text-neutral-200 px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-all"
+              className="inline-flex items-center bg-bronze-500/10 border border-bronze-500/30 text-bronze-300 px-3 py-1 rounded-full text-[9px] font-bold tracking-wider uppercase hover:bg-bronze-500/20 transition-all"
             >
-              <span>WhatsApp</span>
+              WA
             </a>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-20 px-4 sm:px-8 bg-gradient-to-b from-charcoal-950 via-charcoal-900 to-charcoal-900 border-b border-white/5">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-bronze-500/5 rounded-full blur-[120px] pointer-events-none"></div>
-        
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <span className="text-bronze-500 font-bold tracking-[0.3em] text-xs sm:text-sm uppercase mb-6 block font-sans">
-            {t.heroSuperTitle}
-          </span>
-          
-          <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter text-white mb-6 leading-[0.85] uppercase">
-            {t.heroTitle} <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-bronze-500 via-bronze-200 to-bronze-500 font-sans font-light text-xl sm:text-3xl tracking-widest block mt-4">
-              {t.heroSubtitle}
-            </span>
-          </h1>
+        {/* Main Content */}
+        <main className="flex-1">
 
-          <p className="text-neutral-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            {t.heroDesc}
-          </p>
+          {/* Hero Section */}
+          <section className="relative overflow-hidden pt-10 pb-12 px-4 border-b border-white/10 text-center">
+            {/* Pill Badge */}
+            <div className="inline-flex items-center gap-1 border border-bronze-500/30 bg-bronze-500/5 px-3 py-1 rounded-full mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-bronze-500 animate-pulse"></span>
+              <span className="text-bronze-300 font-bold tracking-widest text-[9px] uppercase font-sans">
+                {t.heroSuperTitle}
+              </span>
+            </div>
+            
+            <h1 className="font-display text-4xl font-black tracking-tighter text-white mb-4 leading-[0.9] uppercase">
+              {t.heroTitle}
+            </h1>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <div className="border border-bronze-500/20 bg-bronze-950/20 rounded-xl p-3 mb-6 inline-block">
+              <span className="text-bronze-400 font-sans font-bold text-xs tracking-wider uppercase block">
+                ✦ {t.heroSubtitle} ✦
+              </span>
+            </div>
+
+            <p className="text-neutral-400 text-xs leading-relaxed max-w-sm mx-auto mb-8">
+              {t.heroDesc}
+            </p>
+
             <button 
               onClick={scrollToForm}
-              className="w-full sm:w-auto bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 px-8 py-4 rounded-full font-bold tracking-wide transition-all duration-300 shadow-[0_4px_20px_rgba(197,168,128,0.25)] hover:shadow-[0_4px_30px_rgba(197,168,128,0.4)] transform hover:-translate-y-0.5"
+              className="w-full bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 py-3.5 rounded-xl font-bold tracking-wider uppercase text-xs transition-all duration-300 shadow-[0_4px_20px_rgba(197,168,128,0.2)]"
               id="hero-cta-btn"
             >
               {t.heroCta}
             </button>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Trust Block */}
-      <section className="py-20 px-4 sm:px-8 max-w-6xl mx-auto border-b border-white/5">
-        <div className="text-center mb-16">
-          <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.trustTitle}</h2>
-          <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto">{t.trustSubtitle}</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white/5 border border-white/10 hover:border-bronze-500/40 p-8 rounded-2xl transition-all duration-300 relative group overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-bronze-500/5 rounded-bl-full group-hover:bg-bronze-500/10 transition-all pointer-events-none"></div>
-            <div className="bg-bronze-500/10 p-3 rounded-xl w-fit mb-6">
-              <ShieldCheckIcon />
+          {/* Trust Block (Modular Numbered Cards like Ref 4) */}
+          <section className="py-12 px-4 border-b border-white/10">
+            {/* Section Tag */}
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="font-display text-[9px] tracking-wider text-bronze-500 font-bold uppercase">✦ INFO ✦</span>
             </div>
-            <h3 className="text-lg font-display font-bold uppercase tracking-wider text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust1Title}</h3>
-            <p className="text-neutral-400 text-sm leading-relaxed">{t.trust1Desc}</p>
-          </div>
+            
+            <h2 className="font-display text-3xl font-black text-white leading-none tracking-tighter uppercase mb-6">
+              {t.trustTitle}
+            </h2>
 
-          <div className="bg-white/5 border border-white/10 hover:border-bronze-500/40 p-8 rounded-2xl transition-all duration-300 relative group overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-bronze-500/5 rounded-bl-full group-hover:bg-bronze-500/10 transition-all pointer-events-none"></div>
-            <div className="bg-bronze-500/10 p-3 rounded-xl w-fit mb-6">
-              <WalletIcon />
-            </div>
-            <h3 className="text-lg font-display font-bold uppercase tracking-wider text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust2Title}</h3>
-            <p className="text-neutral-400 text-sm leading-relaxed">{t.trust2Desc}</p>
-          </div>
-
-          <div className="bg-white/5 border border-white/10 hover:border-bronze-500/40 p-8 rounded-2xl transition-all duration-300 relative group overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-bronze-500/5 rounded-bl-full group-hover:bg-bronze-500/10 transition-all pointer-events-none"></div>
-            <div className="bg-bronze-500/10 p-3 rounded-xl w-fit mb-6">
-              <ClockIcon />
-            </div>
-            <h3 className="text-lg font-display font-bold uppercase tracking-wider text-white mb-3 group-hover:text-bronze-500 transition-all">{t.trust3Title}</h3>
-            <p className="text-neutral-400 text-sm leading-relaxed">{t.trust3Desc}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Service Cards */}
-      <section className="py-20 px-4 sm:px-8 bg-charcoal-950 border-b border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.servicesTitle}</h2>
-            <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto">{t.servicesSubtitle}</p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Service 1 */}
-            <div className="bg-charcoal-900 border border-white/5 hover:border-bronze-500/30 rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300">
-              <div>
-                <h3 className="font-display text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white mb-4">{t.service1Name}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed mb-6">{t.service1Desc}</p>
-              </div>
-              <div>
-                <div className="flex justify-between items-baseline mb-6 border-t border-white/5 pt-6">
-                  <span className="text-neutral-400 text-xs tracking-wider uppercase font-semibold">Фикс цена</span>
-                  <span className="text-bronze-500 font-display text-2xl font-black tracking-tight">{t.service1Price}</span>
+            <div className="space-y-3">
+              {/* Card 1 */}
+              <div className="border border-white/10 rounded-xl p-4 flex items-start gap-3.5 bg-charcoal-950/40 relative group hover:border-bronze-500/25 transition-all">
+                <span className="font-display font-black text-2xl text-bronze-500 leading-none">01</span>
+                <div className="flex-1">
+                  <h3 className="font-display font-bold text-xs tracking-wider uppercase text-white mb-1">{t.trust1Title}</h3>
+                  <p className="text-neutral-400 text-[11px] leading-relaxed">{t.trust1Desc}</p>
                 </div>
-                <button 
-                  onClick={scrollToForm} 
-                  className="w-full bg-white/5 hover:bg-bronze-500 hover:text-charcoal-950 text-neutral-300 font-bold py-3 rounded-full text-xs tracking-wider uppercase border border-white/10 hover:border-bronze-500 transition-all duration-300"
-                >
-                  {t.serviceCta}
-                </button>
+                <span className="text-bronze-500/40 font-bold self-start mt-0.5 text-xs">*</span>
               </div>
-            </div>
 
-            {/* Service 2 - Featured */}
-            <div className="bg-gradient-to-b from-bronze-950/40 to-charcoal-900 border border-bronze-500/40 rounded-2xl p-6 sm:p-8 flex flex-col justify-between relative shadow-[0_4px_30px_rgba(197,168,128,0.05)] transition-all duration-300 scale-100 lg:scale-[1.03]">
-              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-bronze-500 text-charcoal-950 text-[10px] font-extrabold uppercase px-4 py-1 rounded-full tracking-widest shadow-md">
-                Popular & Fast
-              </span>
-              <div>
-                <h3 className="font-display text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white mb-4 mt-2">{t.service2Name}</h3>
-                <p className="text-neutral-300 text-sm leading-relaxed mb-6">{t.service2Desc}</p>
-              </div>
-              <div>
-                <div className="flex justify-between items-baseline mb-6 border-t border-bronze-500/20 pt-6">
-                  <span className="text-bronze-300 text-xs tracking-wider uppercase font-semibold">Фикс цена</span>
-                  <span className="text-bronze-400 font-display text-3xl font-black tracking-tight">{t.service2Price}</span>
+              {/* Card 2 */}
+              <div className="border border-white/10 rounded-xl p-4 flex items-start gap-3.5 bg-charcoal-950/40 relative group hover:border-bronze-500/25 transition-all">
+                <span className="font-display font-black text-2xl text-bronze-500 leading-none">02</span>
+                <div className="flex-1">
+                  <h3 className="font-display font-bold text-xs tracking-wider uppercase text-white mb-1">{t.trust2Title}</h3>
+                  <p className="text-neutral-400 text-[11px] leading-relaxed">{t.trust2Desc}</p>
                 </div>
-                <button 
-                  onClick={scrollToForm} 
-                  className="w-full bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 font-bold py-4 rounded-full text-xs tracking-wider uppercase transition-all duration-300 shadow-md"
-                >
-                  {t.serviceCta}
-                </button>
+                <span className="text-bronze-500/40 font-bold self-start mt-0.5 text-xs">*</span>
               </div>
-            </div>
 
-            {/* Service 3 */}
-            <div className="bg-charcoal-900 border border-white/5 hover:border-bronze-500/30 rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300">
-              <div>
-                <h3 className="font-display text-xl sm:text-2xl font-extrabold uppercase tracking-tight text-white mb-4">{t.service3Name}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed mb-6">{t.service3Desc}</p>
-              </div>
-              <div>
-                <div className="flex justify-between items-baseline mb-6 border-t border-white/5 pt-6">
-                  <span className="text-neutral-400 text-xs tracking-wider uppercase font-semibold">Фикс цена</span>
-                  <span className="text-bronze-500 font-display text-2xl font-black tracking-tight">{t.service3Price}</span>
+              {/* Card 3 */}
+              <div className="border border-white/10 rounded-xl p-4 flex items-start gap-3.5 bg-charcoal-950/40 relative group hover:border-bronze-500/25 transition-all">
+                <span className="font-display font-black text-2xl text-bronze-500 leading-none">03</span>
+                <div className="flex-1">
+                  <h3 className="font-display font-bold text-xs tracking-wider uppercase text-white mb-1">{t.trust3Title}</h3>
+                  <p className="text-neutral-400 text-[11px] leading-relaxed">{t.trust3Desc}</p>
                 </div>
-                <button 
-                  onClick={scrollToForm} 
-                  className="w-full bg-white/5 hover:bg-bronze-500 hover:text-charcoal-950 text-neutral-300 font-bold py-3 rounded-full text-xs tracking-wider uppercase border border-white/10 hover:border-bronze-500 transition-all duration-300"
-                >
-                  {t.serviceCta}
-                </button>
+                <span className="text-bronze-500/40 font-bold self-start mt-0.5 text-xs">*</span>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Guarantees Section */}
-      <section className="py-20 px-4 sm:px-8 max-w-6xl mx-auto border-b border-white/5">
-        <div className="text-center mb-16">
-          <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.guaranteesTitle}</h2>
-          <p className="text-neutral-400 text-sm sm:text-base max-w-xl mx-auto">{t.guaranteesSubtitle}</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
-              <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
-                <CheckIcon />
-              </div>
-              <div>
-                <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white mb-2">{t.g1Title}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">{t.g1Desc}</p>
-              </div>
+          {/* Service Block (Structured Price List like Ref 4) */}
+          <section className="py-12 px-4 bg-charcoal-950/40 border-b border-white/10">
+            {/* Section Tag */}
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="font-display text-[9px] tracking-wider text-bronze-500 font-bold uppercase">✦ SERVICES ✦</span>
             </div>
 
-            <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
-              <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
-                <CheckIcon />
-              </div>
-              <div>
-                <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white mb-2">{t.g2Title}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">{t.g2Desc}</p>
-              </div>
-            </div>
+            <h2 className="font-display text-3xl font-black text-white leading-none tracking-tighter uppercase mb-6">
+              {t.servicesTitle}
+            </h2>
 
-            <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
-              <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
-                <CheckIcon />
-              </div>
-              <div>
-                <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white mb-2">{t.g3Title}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">{t.g3Desc}</p>
-              </div>
-            </div>
-
-            <div className="flex gap-4 items-start p-6 bg-white/5 border border-white/10 rounded-2xl">
-              <div className="bg-bronze-500/10 p-2 rounded-lg mt-1">
-                <CheckIcon />
-              </div>
-              <div>
-                <h3 className="font-display text-lg font-bold uppercase tracking-wider text-white mb-2">{t.g4Title}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed">{t.g4Desc}</p>
-              </div>
-            </div>
-        </div>
-      </section>
-
-      {/* Interactive Objections Accordion */}
-      <section className="py-20 px-4 sm:px-8 bg-charcoal-950/60 border-b border-white/5">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.fearTitle}</h2>
-            <p className="text-neutral-400 text-sm sm:text-base">{t.fearSubtitle}</p>
-          </div>
-
-          <div className="space-y-4">
-            {interactivePains[lang].map((item, index) => {
-              const isOpen = activeFaq === index;
-              return (
-                <div 
-                  key={index}
-                  className="bg-charcoal-900 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300"
-                >
+            <div className="border border-white/10 rounded-xl overflow-hidden bg-charcoal-900 shadow-lg">
+              
+              {/* Service item 1 */}
+              <div className="border-b border-white/10 p-5 hover:bg-white/5 transition-all">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-bronze-500 font-bold text-xs">*</span>
+                    <h3 className="font-display font-bold uppercase tracking-wide text-white text-xs sm:text-sm">{t.service1Name}</h3>
+                  </div>
+                  <span className="font-display font-black text-bronze-500 text-xs sm:text-sm">{t.service1Price}</span>
+                </div>
+                <p className="text-neutral-400 text-[11px] leading-relaxed pl-3">{t.service1Desc}</p>
+                <div className="mt-4 pl-3">
                   <button 
-                    onClick={() => setActiveFaq(isOpen ? null : index)}
-                    className="w-full flex justify-between items-center p-6 text-left hover:text-bronze-500 transition-colors"
+                    onClick={scrollToForm} 
+                    className="bg-white/5 hover:bg-bronze-500 hover:text-charcoal-950 text-neutral-300 font-bold px-4 py-1.5 rounded-full text-[9px] tracking-wider uppercase border border-white/10 hover:border-bronze-500 transition-all"
                   >
-                    <span className="font-display font-bold uppercase text-xs sm:text-sm tracking-wide text-white leading-snug">{item.question}</span>
-                    <ChevronDownIcon className={isOpen ? 'rotate-180 text-bronze-500' : 'text-neutral-400'} />
+                    {t.serviceCta}
                   </button>
-                  
-                  <div 
-                    className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-40 border-t border-white/5' : 'max-h-0'}`}
-                    style={{ overflow: 'hidden' }}
+                </div>
+              </div>
+
+              {/* Service item 2 (Featured) */}
+              <div className="border-b border-white/10 p-5 bg-bronze-950/10 hover:bg-bronze-950/20 transition-all">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-bronze-400 font-bold text-xs">✦</span>
+                    <h3 className="font-display font-bold uppercase tracking-wide text-white text-xs sm:text-sm">{t.service2Name}</h3>
+                  </div>
+                  <span className="font-display font-black text-bronze-400 text-xs sm:text-sm">{t.service2Price}</span>
+                </div>
+                <p className="text-neutral-300 text-[11px] leading-relaxed pl-3">{t.service2Desc}</p>
+                <div className="mt-4 pl-3">
+                  <button 
+                    onClick={scrollToForm} 
+                    className="bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 font-bold px-5 py-1.8 rounded-full text-[9px] tracking-wider uppercase transition-all shadow-sm"
                   >
-                    <div className="p-6 text-neutral-400 text-sm leading-relaxed bg-charcoal-900/50">
-                      {item.answer}
+                    {t.serviceCta}
+                  </button>
+                </div>
+              </div>
+
+              {/* Service item 3 */}
+              <div className="p-5 hover:bg-white/5 transition-all">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-bronze-500 font-bold text-xs">*</span>
+                    <h3 className="font-display font-bold uppercase tracking-wide text-white text-xs sm:text-sm">{t.service3Name}</h3>
+                  </div>
+                  <span className="font-display font-black text-bronze-500 text-xs sm:text-sm">{t.service3Price}</span>
+                </div>
+                <p className="text-neutral-400 text-[11px] leading-relaxed pl-3">{t.service3Desc}</p>
+                <div className="mt-4 pl-3">
+                  <button 
+                    onClick={scrollToForm} 
+                    className="bg-white/5 hover:bg-bronze-500 hover:text-charcoal-950 text-neutral-300 font-bold px-4 py-1.5 rounded-full text-[9px] tracking-wider uppercase border border-white/10 hover:border-bronze-500 transition-all"
+                  >
+                    {t.serviceCta}
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* Guarantees Section (Grid/Modular list) */}
+          <section className="py-12 px-4 border-b border-white/10">
+            {/* Section Tag */}
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="font-display text-[9px] tracking-wider text-bronze-500 font-bold uppercase">✦ RULES ✦</span>
+            </div>
+
+            <h2 className="font-display text-3xl font-black text-white leading-none tracking-tighter uppercase mb-6">
+              {t.guaranteesTitle}
+            </h2>
+
+            <div className="space-y-3">
+              <div className="flex gap-3 items-start p-4 bg-white/5 border border-white/10 rounded-xl">
+                <div className="bg-bronze-500/10 p-1.5 rounded-lg mt-0.5">
+                  <CheckIcon />
+                </div>
+                <div>
+                  <h3 className="font-display text-xs font-bold uppercase tracking-wider text-white mb-1">{t.g1Title}</h3>
+                  <p className="text-neutral-400 text-[11px] leading-relaxed">{t.g1Desc}</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 items-start p-4 bg-white/5 border border-white/10 rounded-xl">
+                <div className="bg-bronze-500/10 p-1.5 rounded-lg mt-0.5">
+                  <CheckIcon />
+                </div>
+                <div>
+                  <h3 className="font-display text-xs font-bold uppercase tracking-wider text-white mb-1">{t.g2Title}</h3>
+                  <p className="text-neutral-400 text-[11px] leading-relaxed">{t.g2Desc}</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 items-start p-4 bg-white/5 border border-white/10 rounded-xl">
+                <div className="bg-bronze-500/10 p-1.5 rounded-lg mt-0.5">
+                  <CheckIcon />
+                </div>
+                <div>
+                  <h3 className="font-display text-xs font-bold uppercase tracking-wider text-white mb-1">{t.g3Title}</h3>
+                  <p className="text-neutral-400 text-[11px] leading-relaxed">{t.g3Desc}</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 items-start p-4 bg-white/5 border border-white/10 rounded-xl">
+                <div className="bg-bronze-500/10 p-1.5 rounded-lg mt-0.5">
+                  <CheckIcon />
+                </div>
+                <div>
+                  <h3 className="font-display text-xs font-bold uppercase tracking-wider text-white mb-1">{t.g4Title}</h3>
+                  <p className="text-neutral-400 text-[11px] leading-relaxed">{t.g4Desc}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Interactive Objections FAQ (Modular Accordions) */}
+          <section className="py-12 px-4 bg-charcoal-950/60 border-b border-white/10">
+            {/* Section Tag */}
+            <div className="flex items-center gap-1.5 mb-2">
+              <span className="font-display text-[9px] tracking-wider text-bronze-500 font-bold uppercase">✦ FAQ ✦</span>
+            </div>
+
+            <h2 className="font-display text-3xl font-black text-white leading-none tracking-tighter uppercase mb-6">
+              {t.fearTitle}
+            </h2>
+
+            <div className="space-y-2">
+              {interactivePains[lang].map((item, index) => {
+                const isOpen = activeFaq === index;
+                return (
+                  <div 
+                    key={index}
+                    className="bg-charcoal-900 border border-white/5 rounded-xl overflow-hidden transition-all duration-300"
+                  >
+                    <button 
+                      onClick={() => setActiveFaq(isOpen ? null : index)}
+                      className="w-full flex justify-between items-center p-4 text-left hover:text-bronze-500 transition-colors"
+                    >
+                      <span className="font-display font-bold uppercase text-[10px] sm:text-xs tracking-wide text-white leading-snug">{item.question}</span>
+                      <ChevronDownIcon className={isOpen ? 'rotate-180 text-bronze-500' : 'text-neutral-400'} />
+                    </button>
+                    
+                    <div 
+                      className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-40 border-t border-white/5' : 'max-h-0'}`}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div className="p-4 text-neutral-400 text-[11px] leading-relaxed bg-charcoal-900/50">
+                        {item.answer}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Lead Form */}
-      <section id="appointment-form" className="py-24 px-4 sm:px-8 max-w-4xl mx-auto">
-        <div className="bg-gradient-to-tr from-charcoal-900 via-charcoal-800 to-charcoal-900 border border-bronze-500/20 rounded-3xl p-8 sm:p-12 relative overflow-hidden shadow-2xl">
-          <div className="absolute -top-24 -right-24 w-60 h-60 bg-bronze-500/5 rounded-full blur-[80px]"></div>
-          
-          <div className="max-w-2xl mx-auto text-center relative z-10">
-            <h2 className="font-display text-5xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter uppercase mb-4">{t.formTitle}</h2>
-            
-            <div className="bg-bronze-500/10 border border-bronze-500/20 p-4 rounded-xl text-bronze-300 text-xs sm:text-sm mb-6 leading-relaxed flex items-center gap-3 text-left">
-              <span className="text-xl">❄️</span>
-              <p>{t.formComfort}</p>
+                );
+              })}
             </div>
+          </section>
 
-            <p className="text-neutral-300 text-sm mb-8 leading-relaxed">
-              {t.formHelp}
-            </p>
+          {/* Lead Form Section */}
+          <section id="appointment-form" className="py-14 px-4 bg-charcoal-900">
+            <div className="border border-bronze-500/20 rounded-2xl p-6 bg-charcoal-950/80 shadow-xl relative overflow-hidden">
+              
+              {/* Form header tag */}
+              <div className="flex justify-center mb-3">
+                <span className="font-display text-[8px] tracking-widest text-bronze-500 font-bold uppercase border border-bronze-500/30 px-3 py-0.5 rounded-full">
+                  BOOK APPOINTMENT
+                </span>
+              </div>
 
-            <form onSubmit={handleFormSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <h2 className="font-display text-2xl font-black text-center text-white mb-3 uppercase tracking-tight">{t.formTitle}</h2>
+              
+              <div className="bg-bronze-500/10 border border-bronze-500/20 p-3 rounded-lg text-bronze-300 text-[10px] mb-5 leading-relaxed flex items-start gap-2.5">
+                <span className="text-sm mt-0.5">❄️</span>
+                <p>{t.formComfort}</p>
+              </div>
+
+              <p className="text-neutral-400 text-[11px] text-center mb-6 leading-normal">
+                {t.formHelp}
+              </p>
+
+              <form onSubmit={handleFormSubmit} className="space-y-3">
                 <input 
                   type="text" 
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={t.namePlaceholder}
                   required
-                  className="bg-charcoal-950 border border-white/10 rounded-full px-6 py-4 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-bronze-500 transition-all w-full"
+                  className="bg-charcoal-900 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-bronze-500 transition-all w-full"
                 />
                 <input 
                   type="tel" 
@@ -545,71 +552,69 @@ export default function App() {
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder={t.phonePlaceholder}
                   required
-                  className="bg-charcoal-950 border border-white/10 rounded-full px-6 py-4 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-bronze-500 transition-all w-full"
+                  className="bg-charcoal-900 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-bronze-500 transition-all w-full"
                 />
-              </div>
 
-              <button 
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 disabled:from-neutral-700 disabled:to-neutral-800 disabled:text-neutral-400 text-charcoal-950 font-bold py-4 rounded-full text-sm tracking-wider uppercase transition-all duration-300 shadow-lg hover:shadow-[0_4px_25px_rgba(197,168,128,0.3)] flex justify-center items-center gap-2"
-                id="form-submit-btn"
-              >
-                {isSubmitting ? (
-                  <span className="w-5 h-5 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin"></span>
-                ) : (
-                  <>
+                <button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 disabled:from-neutral-700 disabled:to-neutral-800 disabled:text-neutral-400 text-charcoal-950 font-bold py-3.5 rounded-xl text-[10px] tracking-widest uppercase transition-all duration-300 shadow-md flex justify-center items-center gap-2"
+                  id="form-submit-btn"
+                >
+                  {isSubmitting ? (
+                    <span className="w-4 h-4 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin"></span>
+                  ) : (
                     <span>{t.formCta}</span>
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-white/5 py-12 px-4 sm:px-8 bg-charcoal-950">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <div className="flex flex-col items-center md:items-start leading-none mb-2">
-              <span className="font-sans font-bold text-2xl tracking-widest text-white">SVTL</span>
-              <span className="font-serif text-[9px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-1">Nails &amp; Aesthetic</span>
+                  )}
+                </button>
+              </form>
             </div>
-            <p className="text-neutral-500 text-xs text-center md:text-left max-w-sm">{t.footerText}</p>
-          </div>
+          </section>
 
-          <div className="flex flex-col items-center md:items-end gap-2 text-xs text-neutral-500">
-            <div className="flex gap-4 mb-2">
+        </main>
+
+        {/* Footer */}
+        <footer className="border-t border-white/10 py-8 px-4 bg-charcoal-950 text-center">
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center leading-none">
+              <span className="font-sans font-bold text-2xl tracking-widest text-white">SVTL</span>
+              <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
+            </div>
+            
+            <p className="text-neutral-500 text-[10px] max-w-xs">{t.footerText}</p>
+            
+            <div className="flex gap-4 text-[10px] text-neutral-400">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-bronze-500 transition-colors">Instagram</a>
               <a href="https://wa.me/77010000000" target="_blank" rel="noopener noreferrer" className="hover:text-bronze-500 transition-colors">WhatsApp</a>
               <a href="tel:+77010000000" className="hover:text-bronze-500 transition-colors">+7 (701) 000-00-00</a>
             </div>
-            <p>© {new Date().getFullYear()} {t.brand}. {t.rights}</p>
-          </div>
-        </div>
-      </footer>
 
-      {/* Success Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-charcoal-800 border border-bronze-500/30 rounded-3xl p-8 max-w-md w-full text-center relative shadow-2xl">
-            <div className="w-16 h-16 bg-bronze-500/10 text-bronze-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
-              ✓
-            </div>
-            <h3 className="font-display text-2xl font-black uppercase tracking-tight text-white mb-3">{t.modalSuccessTitle}</h3>
-            <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-              {t.modalSuccessDesc}
-            </p>
-            <button 
-              onClick={() => setShowModal(false)}
-              className="w-full bg-bronze-500 hover:bg-bronze-600 text-charcoal-950 font-bold py-3.5 rounded-full text-sm tracking-wide transition-all"
-            >
-              {t.modalClose}
-            </button>
+            <p className="text-neutral-600 text-[9px] mt-2">© {new Date().getFullYear()} {t.brand}. {t.rights}</p>
           </div>
-        </div>
-      )}
+        </footer>
+
+        {/* Success Modal */}
+        {showModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+            <div className="bg-charcoal-800 border border-bronze-500/30 rounded-2xl p-6 max-w-[280px] w-full text-center relative shadow-2xl">
+              <div className="w-12 h-12 bg-bronze-500/10 text-bronze-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                ✓
+              </div>
+              <h3 className="font-display text-lg font-black uppercase tracking-tight text-white mb-2">{t.modalSuccessTitle}</h3>
+              <p className="text-neutral-400 text-xs leading-relaxed mb-5">
+                {t.modalSuccessDesc}
+              </p>
+              <button 
+                onClick={() => setShowModal(false)}
+                className="w-full bg-bronze-500 hover:bg-bronze-600 text-charcoal-950 font-bold py-2.5 rounded-xl text-xs tracking-wide transition-all"
+              >
+                {t.modalClose}
+              </button>
+            </div>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }
