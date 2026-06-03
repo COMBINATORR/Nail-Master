@@ -834,9 +834,14 @@ export default function App() {
   const toggleOption = (id) => setSelectedOptions(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
 
   const generateWhatsAppText = (includeNameAndPhone = false) => {
-    const categoryName = t[catObj.nameKey];
-    const baseServiceName = t[baseServiceObj.nameKey];
-    const optionNames = selectedOptions.map(id => t[catObj.options.find(o => o.id === id).nameKey]);
+    const categoryName = t[catObj?.nameKey] || '';
+    const baseServiceName = t[baseServiceObj?.nameKey] || '';
+    const optionNames = selectedOptions
+      .map(id => {
+        const o = catObj?.options?.find(opt => opt.id === id);
+        return o ? t[o.nameKey] : null;
+      })
+      .filter(Boolean);
     const allServicesText = [baseServiceName, ...optionNames].join(' + ');
 
     const shapeObj = nailShapes.find(s => s.id === nailShape);
@@ -861,8 +866,17 @@ export default function App() {
   };
 
   const handleCalculatorCta = () => {
-    const waUrl = `https://wa.me/77016698086?text=${encodeURIComponent(generateWhatsAppText(false))}`;
-    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    const waText = generateWhatsAppText(false);
+    const waUrl = `https://wa.me/77016698086?text=${encodeURIComponent(waText)}`;
+    
+    // Direct navigation is often less blocked by popups than window.open
+    const link = document.createElement('a');
+    link.href = waUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleSubmit = (e) => {
