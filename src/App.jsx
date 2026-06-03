@@ -725,7 +725,7 @@ export default function App() {
 
           <div className="max-w-3xl mx-auto">
             {/* Tabs for switching works */}
-            <div className="flex gap-2 mb-8 overflow-x-auto pb-3 scrollbar-none snap-x snap-mandatory">
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
               {works.map((w, index) => {
                 const isActive = activeWork === index;
                 return (
