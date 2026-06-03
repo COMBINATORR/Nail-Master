@@ -1613,7 +1613,7 @@ export default function App() {
       </section>
 
       {/* ═══════════ FOOTER ═══════════ */}
-      <footer className={`border-t ${border} py-10 ${bgDeep} transition-colors duration-300`}>
+      <footer className={`border-t ${border} py-10 ${bgDeep} transition-colors duration-300 spcwlkr-mesh-bg`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
             {/* Logo */}
