@@ -692,14 +692,14 @@ export default function App() {
         title={theme === 'dark' ? 'Тёмная' : theme === 'light' ? 'Светлая' : 'Системная'}>
         <ThemeIcon />
       </button>
-      <div className="relative animate-fadeIn" ref={langPopupRef}>
+      <div className="relative" ref={langPopupRef}>
         <button onClick={() => setShowLangPopup(!showLangPopup)}
           className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors flex items-center gap-1`}>
           <GlobeIcon />
           <span className="text-[9px] font-bold uppercase">{lang === 'ru' ? 'RU' : 'KZ'}</span>
         </button>
         {showLangPopup && (
-          <div className={`absolute right-0 top-full mt-2 ${isDark ? 'bg-charcoal-800 border-white/10' : 'bg-white border-charcoal-200'} border rounded-xl shadow-xl overflow-hidden z-50 popup-backdrop min-w-[130px]`}>
+          <div className={`absolute right-0 top-full mt-2 ${isDark ? 'bg-charcoal-800 border-white/10' : 'bg-white border-charcoal-200'} border rounded-xl shadow-xl overflow-hidden z-50 popup-backdrop min-w-[130px] animate-fadeIn`}>
             <button onClick={() => { setLang('ru'); setShowLangPopup(false); }}
               className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'ru' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} ${isDark ? 'hover:bg-white/5' : 'hover:bg-charcoal-50'}`}`}>
               <span>🇷🇺</span> Русский
@@ -745,9 +745,10 @@ export default function App() {
               style={{
                 top: item.top,
                 ...(item.left ? { left: item.left } : { right: item.right }),
+                opacity: 0.3
               }}
             >
-              <IconComp className="w-5 h-5 sm:w-6 sm:h-6 text-bronze-500" style={{ opacity: isDark ? 0.022 : 0.045 }} />
+              <IconComp className="w-5 h-5 sm:w-6 sm:h-6 text-bronze-500" />
             </div>
           );
         })}
