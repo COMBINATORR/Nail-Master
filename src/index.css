@@ -211,3 +211,65 @@ body.light .bg-grid-lines {
 .animate-fadeIn {
   animation: fadeIn 0.2s ease forwards;
 }
+
+/* ══════════════════════════════════════════
+   SPCWLKR DIGITAL STUDIO — LETTERPRESS CREDIT
+══════════════════════════════════════════ */
+.spcwlkr-credit {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: transparent;
+  background: linear-gradient(135deg, #6b5a48 0%, #4a3d30 50%, #6b5a48 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Letterpress — text appears engraved into the surface */
+  text-shadow:
+    1px 1px 1px rgba(255, 255, 255, 0.04),
+    -1px -1px 1px rgba(0, 0, 0, 0.6);
+  cursor: default;
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    text-shadow 0.4s ease,
+    background 0.4s ease,
+    color 0.4s ease;
+  will-change: transform, text-shadow;
+}
+
+.spcwlkr-credit:hover {
+  /* Lifted 3D emboss on hover */
+  color: transparent;
+  background: linear-gradient(135deg, #c5a880 0%, #e8d5b7 50%, #c5a880 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: translateY(-2px);
+  text-shadow:
+    0px 1px 0px rgba(197, 168, 128, 0.25),
+    0px 2px 3px rgba(0, 0, 0, 0.4),
+    0px 4px 8px rgba(0, 0, 0, 0.25),
+    0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Light theme variant */
+body.light .spcwlkr-credit {
+  background: linear-gradient(135deg, #b49368 0%, #8e6c46 50%, #b49368 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    1px 1px 1px rgba(255, 255, 255, 0.7),
+    -1px -1px 1px rgba(0, 0, 0, 0.15);
+}
+
+body.light .spcwlkr-credit:hover {
+  background: linear-gradient(135deg, #8e6c46 0%, #c5a880 50%, #8e6c46 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    0px 1px 0px rgba(255, 255, 255, 0.8),
+    0px 2px 3px rgba(0, 0, 0, 0.15),
+    0px 4px 8px rgba(0, 0, 0, 0.08),
+    0px 8px 16px rgba(0, 0, 0, 0.04);
+}

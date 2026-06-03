@@ -1643,6 +1643,7 @@ export default function App() {
 
           <div className={`border-t ${borderSubtle} mt-8 pt-6 text-center`}>
             <p className={`${textFaint} text-[10px]`}>© {new Date().getFullYear()} {t.brand}. {t.rights}</p>
+            <p className="spcwlkr-credit mt-3">Powered by SPCWLKR Digital Studio</p>
           </div>
         </div>
       </footer>
