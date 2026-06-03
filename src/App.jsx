@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import beforeImage from './assets/before_manicure.png';
+import afterImage from './assets/after_manicure.png';
 
 /* ─── SVG Icon Components ─── */
 const CheckIcon = () => (
@@ -59,6 +61,49 @@ export default function App() {
   const langPopupRef = useRef(null);
   const [selectedService, setSelectedService] = useState('manicure');
   const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const sliderRef = useRef(null);
+
+  const handleSliderMove = (clientX) => {
+    if (!sliderRef.current) return;
+    const rect = sliderRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    let percentage = (x / rect.width) * 100;
+    if (percentage < 0) percentage = 0;
+    if (percentage > 100) percentage = 100;
+    setSliderPosition(percentage);
+  };
+
+  const handleStart = (clientX) => {
+    setIsDragging(true);
+    handleSliderMove(clientX);
+  };
+
+  useEffect(() => {
+    const handleMove = (e) => {
+      if (!isDragging) return;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      handleSliderMove(clientX);
+    };
+
+    const handleUp = () => setIsDragging(false);
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMove);
+      window.addEventListener('touchmove', handleMove, { passive: true });
+      window.addEventListener('mouseup', handleUp);
+      window.addEventListener('touchend', handleUp);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('touchmove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+      window.removeEventListener('touchend', handleUp);
+    };
+  }, [isDragging]);
 
   const systemPrefersDark = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-color-scheme: dark)').matches : true;
@@ -182,6 +227,10 @@ export default function App() {
       footerText: "Кабинет безопасного маникюра в Атырау.",
       rights: "Все права защищены.",
       total: "Итого",
+      portfolioTitle: "РЕЗУЛЬТАТЫ РАБОТ",
+      portfolioSubtitle: "Интерактивное сравнение: потяните ползунок в стороны, чтобы оценить качество маникюра.",
+      beforeText: "ДО",
+      afterText: "ПОСЛЕ",
     },
     kk: {
       brand: "SVTL Nails & Aesthetic",
@@ -227,7 +276,7 @@ export default function App() {
       fearSubtitle: "Атыраудағы клиенттердің жиі сұрақтарын талдаймын",
       formTitle: "ЖАЗЫЛУ",
       formComfort: "Кабинетімде салқын (кондиционер), таза және сусындар бар.",
-      formHelp: "Нөміріңізді (WhatsApp) және есіміңізді қалдырыңыз. 5 минутта хабарласамын.",
+      formHelp: "Нөміріңізді (WhatsApp) ие есіміңізді қалдырыңыз. 5 минутта хабарласамын.",
       namePlaceholder: "Сіздің есіміңіз",
       phonePlaceholder: "Телефон нөмірі (WhatsApp)",
       formCta: "Бағаны бекіту және жазылу",
@@ -237,6 +286,10 @@ export default function App() {
       footerText: "Атыраудағы қауіпсіз маникюр кабинеті.",
       rights: "Барлық құқықтар қорғалған.",
       total: "Жиыны",
+      portfolioTitle: "ЖҰМЫС НӘТИЖЕЛЕРІ",
+      portfolioSubtitle: "Интерактивті салыстыру: маникюр сапасын бағалау үшін жүгірткіні екі жаққа тартыңыз.",
+      beforeText: "ДЕЙІН",
+      afterText: "КЕЙІН",
     }
   };
 
@@ -363,8 +416,11 @@ export default function App() {
           </div>
           {/* Desktop nav links */}
           <nav className="hidden lg:flex items-center gap-8">
-            {['#trust','#services','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
-              const labels = { ru: ['О мне','Услуги','Гарантии','FAQ','Адрес','Запись'], kk: ['Мен туралы','Қызметтер','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] };
+            {['#trust','#services','#portfolio','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
+              const labels = { 
+                ru: ['О мне','Услуги','Работы','Гарантии','FAQ','Адрес','Запись'], 
+                kk: ['Мен туралы','Қызметтер','Жұмыстар','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] 
+              };
               return (
                 <a key={href} href={href}
                    className={`text-xs font-bold uppercase tracking-wider ${textMuted} hover:text-bronze-500 transition-colors`}>
@@ -565,6 +621,97 @@ export default function App() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ PORTFOLIO BEFORE/AFTER SLIDER ═══════════ */}
+      <section id="portfolio" className={`border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <SectionLabel text="PORTFOLIO" />
+          <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>
+            {t.portfolioTitle}
+          </h2>
+          <p className={`${textSecondary} text-sm mb-10`}>
+            {t.portfolioSubtitle}
+          </p>
+
+          <div className="max-w-3xl mx-auto">
+            {/* The interactive container */}
+            <div 
+              ref={sliderRef}
+              className={`relative h-[320px] sm:h-[400px] md:h-[480px] w-full rounded-3xl overflow-hidden border ${border} shadow-2xl select-none touch-none cursor-ew-resize`}
+              onMouseDown={(e) => {
+                if (e.button === 0) handleStart(e.clientX);
+              }}
+              onTouchStart={(e) => {
+                if (e.touches && e.touches[0]) {
+                  handleStart(e.touches[0].clientX);
+                }
+              }}
+            >
+              {/* After Image (Full width background) */}
+              <img 
+                src={afterImage} 
+                alt="After manicure" 
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                draggable="false"
+              />
+              {/* After label */}
+              <div className="absolute right-6 top-6 bg-bronze-500/90 backdrop-blur-md text-charcoal-950 font-display font-black text-[10px] sm:text-xs px-4 py-2 rounded-xl z-20 tracking-widest shadow-lg">
+                {t.afterText}
+              </div>
+
+              {/* Before Image (Positioned absolutely, clipped horizontally) */}
+              <div 
+                className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none"
+                style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
+              >
+                <img 
+                  src={beforeImage} 
+                  alt="Before manicure" 
+                  className="absolute inset-0 w-full h-full object-cover select-none"
+                  style={{ width: sliderRef.current ? `${sliderRef.current.offsetWidth}px` : '100%' }}
+                  draggable="false"
+                />
+              </div>
+              {/* Before label */}
+              <div className="absolute left-6 top-6 bg-charcoal-950/80 backdrop-blur-md text-white border border-white/10 font-display font-black text-[10px] sm:text-xs px-4 py-2 rounded-xl z-20 tracking-widest shadow-lg">
+                {t.beforeText}
+              </div>
+
+              {/* Slide Line Divider */}
+              <div 
+                className="absolute top-0 bottom-0 w-[3px] bg-gradient-to-b from-bronze-400 via-bronze-500 to-bronze-600 z-30 cursor-ew-resize shadow-[0_0_10px_rgba(197,168,128,0.5)]"
+                style={{ left: `${sliderPosition}%` }}
+              >
+                {/* Drag handle */}
+                <div 
+                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-charcoal-950/95 border-2 border-bronze-500 shadow-2xl flex items-center justify-center cursor-ew-resize transition-transform duration-150 ${isDragging ? 'scale-110' : 'hover:scale-105'}`}
+                >
+                  {/* Left arrow */}
+                  <svg className="w-3 h-3 text-bronze-500 -ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                  </svg>
+                  {/* Right arrow */}
+                  <svg className="w-3 h-3 text-bronze-500 -mr-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Instructions tooltip overlay that disappears when dragging starts */}
+              {sliderPosition === 50 && !isDragging && (
+                <div className="absolute inset-0 bg-charcoal-950/40 backdrop-blur-[2px] flex items-center justify-center z-10 pointer-events-none transition-opacity duration-300">
+                  <div className="bg-charcoal-950/90 border border-bronze-500/30 px-6 py-3.5 rounded-2xl text-center shadow-2xl max-w-xs mx-4">
+                    <div className="text-bronze-400 text-lg mb-1.5 animate-bounce">↔</div>
+                    <p className="text-white text-xs font-bold uppercase tracking-wider leading-snug">
+                      {lang === 'ru' ? 'Потяните ползунок' : 'Жүгірткіні тартыңыз'}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
