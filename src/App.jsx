@@ -160,6 +160,12 @@ const scatteredIconsList = [
   { top: '96%', right: '10%', rotate: '-rotate-30', Icon: NailPolishIcon },
 ];
 
+const SectionLabel = ({ text }) => (
+  <div className="flex items-center gap-1.5 mb-2">
+    <span className="font-display text-[9px] tracking-wider text-bronze-500 font-bold uppercase">✦ {text} ✦</span>
+  </div>
+);
+
 export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem('svtl-lang') || 'ru');
   const [theme, setTheme] = useState(() => localStorage.getItem('svtl-theme') || 'dark');
@@ -837,58 +843,6 @@ export default function App() {
 
   const scrollToForm = () => document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
 
-  /* ─── Shared subcomponents ─── */
-  const SectionLabel = ({ text }) => (
-    <div className="flex items-center gap-1.5 mb-2">
-      <span className="font-display text-[9px] tracking-wider text-bronze-500 font-bold uppercase">✦ {text} ✦</span>
-    </div>
-  );
-
-  const NavControls = () => (
-    <div className="flex items-center gap-1.5">
-      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-         className={`hidden sm:inline-flex p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#E1306C]' : 'text-charcoal-400 hover:text-[#E1306C]'} transition-colors`}>
-        <InstagramIcon className="w-4 h-4" />
-      </a>
-      <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
-         className={`hidden sm:inline-flex p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#25D366]' : 'text-charcoal-400 hover:text-[#25D366]'} transition-colors`}>
-        <WhatsAppIcon className="w-4 h-4" />
-      </a>
-      <div className={`hidden sm:block h-5 w-px ${isDark ? 'bg-white/10' : 'bg-charcoal-200'} mx-0.5`}></div>
-      <button onClick={cycleTheme}
-        className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors`}
-        title={theme === 'dark' ? 'Тёмная' : theme === 'light' ? 'Светлая' : 'Системная'}>
-        <ThemeIcon />
-      </button>
-      <div className="relative" ref={langPopupRef}>
-        <button onClick={() => setShowLangPopup(!showLangPopup)}
-          className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors flex items-center gap-1`}>
-          <GlobeIcon />
-          <span className="text-[9px] font-bold uppercase">{lang === 'ru' ? 'RU' : 'KZ'}</span>
-        </button>
-        {showLangPopup && (
-          <div className={`absolute right-0 top-full mt-2 ${isDark ? 'bg-charcoal-800 border-white/10' : 'bg-white border-charcoal-200'} border rounded-xl shadow-xl overflow-hidden z-50 popup-backdrop min-w-[130px] animate-fadeIn`}>
-            <button onClick={() => { setLang('ru'); setShowLangPopup(false); }}
-              className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'ru' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} ${isDark ? 'hover:bg-white/5' : 'hover:bg-charcoal-50'}`}`}>
-              <span>🇷🇺</span> Русский
-            </button>
-            <button onClick={() => { setLang('kk'); setShowLangPopup(false); }}
-              className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'kk' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} ${isDark ? 'hover:bg-white/5' : 'hover:bg-charcoal-50'}`}`}>
-              <span>🇰🇿</span> Қазақша
-            </button>
-          </div>
-        )}
-      </div>
-      <div className={`h-5 w-px ${isDark ? 'bg-white/10' : 'bg-charcoal-200'} mx-0.5 lg:hidden`}></div>
-      <button onClick={() => setIsMobileMenuOpen(true)}
-        className={`lg:hidden p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors`}
-        aria-label="Toggle mobile menu"
-      >
-        <MenuIcon className="w-4 h-4" />
-      </button>
-    </div>
-  );
-
   /* ─── RENDER ─── */
   return (
     <div className={`relative min-h-screen ${bg} bg-grain ${isDark ? 'text-neutral-100' : 'text-charcoal-800'} font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950`}>
@@ -950,7 +904,48 @@ export default function App() {
               );
             })}
           </nav>
-          <NavControls />
+          <div className="flex items-center gap-1.5">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+               className={`hidden sm:inline-flex p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#E1306C]' : 'text-charcoal-400 hover:text-[#E1306C]'} transition-colors`}>
+              <InstagramIcon className="w-4 h-4" />
+            </a>
+            <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
+               className={`hidden sm:inline-flex p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#25D366]' : 'text-charcoal-400 hover:text-[#25D366]'} transition-colors`}>
+              <WhatsAppIcon className="w-4 h-4" />
+            </a>
+            <div className={`hidden sm:block h-5 w-px ${isDark ? 'bg-white/10' : 'bg-charcoal-200'} mx-0.5`}></div>
+            <button onClick={cycleTheme}
+              className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors`}
+              title={theme === 'dark' ? 'Тёмная' : theme === 'light' ? 'Светлая' : 'Системная'}>
+              {theme === 'dark' ? <MoonIcon /> : theme === 'light' ? <SunIcon /> : <SystemIcon />}
+            </button>
+            <div className="relative" ref={langPopupRef}>
+              <button onClick={() => setShowLangPopup(!showLangPopup)}
+                className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors flex items-center gap-1`}>
+                <GlobeIcon />
+                <span className="text-[9px] font-bold uppercase">{lang === 'ru' ? 'RU' : 'KZ'}</span>
+              </button>
+              {showLangPopup && (
+                <div className={`absolute right-0 top-full mt-2 ${isDark ? 'bg-charcoal-800 border-white/10' : 'bg-white border-charcoal-200'} border rounded-xl shadow-xl overflow-hidden z-50 popup-backdrop min-w-[130px] animate-fadeIn`}>
+                  <button onClick={() => { setLang('ru'); setShowLangPopup(false); }}
+                    className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'ru' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} ${isDark ? 'hover:bg-white/5' : 'hover:bg-charcoal-50'}`}`}>
+                    <span>🇷🇺</span> Русский
+                  </button>
+                  <button onClick={() => { setLang('kk'); setShowLangPopup(false); }}
+                    className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'kk' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} ${isDark ? 'hover:bg-white/5' : 'hover:bg-charcoal-50'}`}`}>
+                    <span>🇰🇿</span> Қазақша
+                  </button>
+                </div>
+              )}
+            </div>
+            <div className={`h-5 w-px ${isDark ? 'bg-white/10' : 'bg-charcoal-200'} mx-0.5 lg:hidden`}></div>
+            <button onClick={() => setIsMobileMenuOpen(true)}
+              className={`lg:hidden p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors`}
+              aria-label="Toggle mobile menu"
+            >
+              <MenuIcon className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </header>
 
