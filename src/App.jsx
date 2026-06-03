@@ -67,8 +67,64 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showLangPopup, setShowLangPopup] = useState(false);
   const langPopupRef = useRef(null);
-  const [selectedService, setSelectedService] = useState('manicure');
+  const categories = {
+    manicure: {
+      id: 'manicure',
+      nameKey: 'catManicureName',
+      services: [
+        { id: 'classic', nameKey: 'serviceManicureClassicName', descKey: 'serviceManicureClassicDesc', price: 7000, time: 60 },
+        { id: 'gel', nameKey: 'serviceManicureGelName', descKey: 'serviceManicureGelDesc', price: 10000, time: 90 },
+        { id: 'extensions', nameKey: 'serviceManicureExtName', descKey: 'serviceManicureExtDesc', price: 14000, time: 120 }
+      ],
+      options: [
+        { id: 'design', nameKey: 'optManiDesign', price: 2000, time: 20 },
+        { id: 'strengthen', nameKey: 'optManiStrengthen', price: 1500, time: 15 },
+        { id: 'repair', nameKey: 'optManiRepair', price: 1000, time: 10 },
+        { id: 'spa', nameKey: 'optManiSpa', price: 1500, time: 15 }
+      ]
+    },
+    pedicure: {
+      id: 'pedicure',
+      nameKey: 'catPedicureName',
+      services: [
+        { id: 'express', nameKey: 'servicePediExpressName', descKey: 'servicePediExpressDesc', price: 8000, time: 60 },
+        { id: 'smart', nameKey: 'servicePediSmartName', descKey: 'servicePediSmartDesc', price: 12000, time: 90 },
+        { id: 'hygiene', nameKey: 'servicePediHygieneName', descKey: 'servicePediHygieneDesc', price: 9000, time: 60 }
+      ],
+      options: [
+        { id: 'design', nameKey: 'optPediDesign', price: 2000, time: 20 },
+        { id: 'cracks', nameKey: 'optPediCracks', price: 3000, time: 20 },
+        { id: 'spa', nameKey: 'optPediSpa', price: 2000, time: 20 }
+      ]
+    },
+    sugaring: {
+      id: 'sugaring',
+      nameKey: 'catSugaringName',
+      services: [
+        { id: 'bikini', nameKey: 'serviceSugarBikiniName', descKey: 'serviceSugarBikiniDesc', price: 8000, time: 30 },
+        { id: 'legs', nameKey: 'serviceSugarLegsName', descKey: 'serviceSugarLegsDesc', price: 7000, time: 40 },
+        { id: 'underarms', nameKey: 'serviceSugarUnderarmsName', descKey: 'serviceSugarUnderarmsDesc', price: 3000, time: 15 },
+        { id: 'arms', nameKey: 'serviceSugarArmsName', descKey: 'serviceSugarArmsDesc', price: 5000, time: 25 }
+      ],
+      options: [
+        { id: 'mask', nameKey: 'optSugarMask', price: 2000, time: 15 },
+        { id: 'peeling', nameKey: 'optSugarPeeling', price: 2500, time: 15 },
+        { id: 'face', nameKey: 'optSugarFace', price: 1500, time: 10 }
+      ]
+    }
+  };
+
+  const [activeCategory, setActiveCategory] = useState('manicure');
+  const [selectedServiceId, setSelectedServiceId] = useState('classic');
   const [selectedOptions, setSelectedOptions] = useState([]);
+
+  useEffect(() => {
+    if (categories[activeCategory]) {
+      setSelectedServiceId(categories[activeCategory].services[0].id);
+    }
+    setSelectedOptions([]);
+  }, [activeCategory]);
+
 
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -222,71 +278,49 @@ export default function App() {
     }
   ];
 
-  const baseServices = {
-    manicure:   { id: 'manicure',   nameKey: 'serviceManicureName',   descKey: 'serviceManicureDesc',   price: 7000,  time: 75  },
-    pedicure:   { id: 'pedicure',   nameKey: 'servicePedicureName',   descKey: 'servicePedicureDesc',   price: 10000, time: 90  },
-    extensions: { id: 'extensions', nameKey: 'serviceExtensionsName', descKey: 'serviceExtensionsDesc', price: 12000, time: 120 },
-  };
-  const extraOptions = [
-    { id: 'design',    nameKey: 'optionDesign',    price: 2000, time: 20 },
-    { id: 'strengthen',nameKey: 'optionStrengthen',price: 1500, time: 15 },
-    { id: 'repair',    nameKey: 'optionRepair',    price: 1000, time: 10 },
-    { id: 'spa',       nameKey: 'optionSpa',       price: 1500, time: 15 },
-  ];
-
   const translations = {
     ru: {
       brand: "SVTL Nails & Aesthetic",
-      heroSuperTitle: "БЕЗОПАСНЫЙ МАНИКЮР В АТЫРАУ",
-      heroTitle: "МАНИКЮР, КОТОРЫЙ ВЫГЛЯДИТ ДОРОГО 4 НЕДЕЛИ",
-      heroSubtitle: "БЕЗ ПОРЕЗОВ • ГАРАНТИЯ 28 ДНЕЙ",
-      heroDesc: "Если покрытие сколется или отслоится в течение 28 дней, я бесплатно переделаю работу в день обращения — без споров, долгих разборов и игнорирования в мессенджерах.",
-      heroCta: "Рассчитать точную стоимость и время визита",
+      heroSuperTitle: "МАНИКЮР • ПЕДИКЮР • ШУГАРИНГ В АТЫРАУ",
+      heroTitle: "ПРЕМИАЛЬНЫЙ УХОД И ЭСТЕТИКА ДЛЯ ВАШЕЙ КРАСОТЫ",
+      heroSubtitle: "БЕЗУПРЕЧНОЕ КАЧЕСТВО • 100% СТЕРИЛЬНОСТЬ",
+      heroDesc: "Индивидуальный подход от сертифицированного мастера Светланы. Безопасные процедуры, премиальные материалы и уютный кабинет с заботой о вашем комфорте и красоте.",
+      heroCta: "Рассчитать стоимость и зафиксировать скидку",
       trustTitle: "ПОЧЕМУ МНЕ ДОВЕРЯЮТ",
-      trustSubtitle: "Я решаю главные страхи клиентов на деле, а не на словах",
-      trust1Title: "100% одноразовые расходники",
-      trust1Desc: "Пилочки, бафы и апельсиновые палочки используются строго индивидуально и утилизируются после процедуры. Крафт-пакет я вскрываю исключительно в вашем присутствии.",
-      trust2Title: "0 тенге скрытых доплат",
-      trust2Desc: "Окончательная стоимость фиксируется до начала работы. Никаких внезапных наценок за снятие старого материала, укрепление или финишный уход.",
-      trust3Title: "Строго до 2 часов",
-      trust3Desc: "Я ценю ваше время. Любой маникюр с покрытием и дизайном занимает не более 1.5–2 часов. Если я не уложусь — скидка за ожидание.",
+      trustSubtitle: "Я гарантирую безопасность, прозрачность и высокий уровень сервиса",
+      trust1Title: "100% стерильные инструменты",
+      trust1Desc: "3-этапная дезинфекция по стандартам СанПиН. Инструменты стерилизуются в сухожаре ГП-10, крафт-пакет вскрывается исключительно при вас.",
+      trust2Title: "0 скрытых наценок",
+      trust2Desc: "Стоимость процедур фиксируется до их начала. Вы всегда знаете точную сумму без внезапных доплат в конце визита.",
+      trust3Title: "Цените ваше время",
+      trust3Desc: "Строгий тайминг процедур. Маникюр или шугаринг проходят быстро, аккуратно и без задержек по времени.",
       servicesTitle: "МОИ УСЛУГИ",
-      servicesSubtitle: "Выберите услугу и опции — стоимость и время рассчитаются автоматически.",
-      servicesSelectBase: "1. Основная услуга:",
+      servicesSubtitle: "Выберите направление, услугу и опции — стоимость и время рассчитаются автоматически.",
+      servicesSelectBase: "1. Выберите услугу:",
       servicesSelectOptions: "2. Дополнительные опции:",
       servicesTotal: "Итоговый расчет:",
       servicesTotalPrice: "Стоимость",
       servicesTotalTime: "Время",
-      servicesSelectedPreview: "Ваш сеанс",
-      serviceManicureName: "Аппаратный маникюр",
-      serviceManicureDesc: "Безопасная обработка кутикулы. Включает снятие покрытия, гигиенический уход и выравнивание.",
-      servicePedicureName: "Эстетический Smart-педикюр",
-      servicePedicureDesc: "Обработка стопы Smart-дисками + покрытие пальчиков гель-лаком. Удаление натоптышей и трещин.",
-      serviceExtensionsName: "Наращивание ногтей",
-      serviceExtensionsDesc: "Моделирование архитектуры, длины и формы (квадрат, овал, миндаль) по вашему референсу.",
-      optionDesign: "Сложный дизайн (френч, градиент, втирка)",
-      optionStrengthen: "Укрепление гелем",
-      optionRepair: "Ремонт / донаращивание (1-2 ногтя)",
-      optionSpa: "Парафинотерапия и СПА-уход",
+      servicesSelectedPreview: "Ваш визит",
       serviceCta: "Зафиксировать расчет и записаться",
       guaranteesTitle: "ГАРАНТИИ",
-      guaranteesSubtitle: "Вы защищены моими личными гарантиями",
-      g1Title: "Личная ответственность", g1Desc: "Вы попадаете именно ко мне. Я не перепоручаю работу и не отменяю запись.",
-      g2Title: "Фиксация формы",         g2Desc: "Форма и длина согласуются пошагово до нанесения базы. «Только освежить → срезали длину» исключено.",
-      g3Title: "Пунктуальность",         g3Desc: "Мой кабинет открыт вовремя. Если визит задержится по моей вине — прямая скидка.",
-      g4Title: "Прозрачная цена",        g4Desc: "Никаких доп. манипуляций без обсуждения стоимости. 0 финансовых сюрпризов.",
+      guaranteesSubtitle: "Вы защищены моими личными стандартами качества",
+      g1Title: "Личная ответственность", g1Desc: "Вы записываетесь лично ко мне. Я отвечаю за каждый этап процедуры и ваш комфорт.",
+      g2Title: "Абсолютная безопасность", g2Desc: "Только сертифицированные гипоаллергенные материалы и 100% одноразовые расходники.",
+      g3Title: "Пунктуальность",         g3Desc: "Прием строго в назначенное время. Никаких очередей или томительного ожидания.",
+      g4Title: "Прозрачный прайс",        g4Desc: "Все доп. манипуляции обсуждаются заранее. Полная финансовая честность.",
       fearTitle: "СТРАХИ • FAQ",
-      fearSubtitle: "Разбираю частые страхи клиентов из Атырау",
-      formTitle: "ЗАПИСЬ",
-      formComfort: "В моем кабинете всегда прохладно (кондиционер), чисто и есть напитки.",
-      formHelp: "Оставьте номер (WhatsApp) и имя. Я свяжусь в течение 5 минут.",
+      fearSubtitle: "Отвечаю на частые вопросы клиентов",
+      formTitle: "ЗАПИСЬ НА ВИЗИТ",
+      formComfort: "Кабинет оборудован кондиционером. Всегда свежий кофе, чай, приятная музыка и заботливый сервис.",
+      formHelp: "Оставьте ваши данные, я свяжусь с вами в WhatsApp в течение 5 минут для подтверждения времени.",
       namePlaceholder: "Ваше имя",
       phonePlaceholder: "Номер телефона (WhatsApp)",
-      formCta: "Зафиксировать цену и записаться",
-      modalSuccessTitle: "Заявка принята!",
-      modalSuccessDesc: "Я свяжусь с вами в течение 5 минут в WhatsApp.",
+      formCta: "Подтвердить запись через WhatsApp",
+      modalSuccessTitle: "Заявка отправлена!",
+      modalSuccessDesc: "Я уже готовлюсь связаться с вами в WhatsApp. До встречи на процедуре!",
       modalClose: "Перейти в WhatsApp",
-      footerText: "Кабинет безопасного маникюра в Атырау.",
+      footerText: "Студия эстетики SVTL в Атырау. Маникюр, педикюр, шугаринг.",
       rights: "Все права защищены.",
       total: "Итого",
       portfolioTitle: "РЕЗУЛЬТАТЫ РАБОТ",
@@ -305,35 +339,71 @@ export default function App() {
       workRedDesc: "Классический маникюр с безупречным глубоким красным покрытием «под кутикулу». Идеальная архитектура и стойкий глянец.",
       ageLabel: "Возраст рук",
       timeLabel: "Время работы",
+
+      // Categories & services names
+      catManicureName: "Маникюр",
+      catPedicureName: "Педикюр",
+      catSugaringName: "Шугаринг",
+      
+      serviceManicureClassicName: "Гигиенический маникюр",
+      serviceManicureClassicDesc: "Аппаратный/комбинированный маникюр с обработкой кутикулы и формой ногтей без покрытия.",
+      serviceManicureGelName: "Маникюр с гель-лаком",
+      serviceManicureGelDesc: "Маникюр + укрепление, выравнивание пластины базой и покрытие премиальным гель-лаком под кутикулу.",
+      serviceManicureExtName: "Наращивание ногтей",
+      serviceManicureExtDesc: "Моделирование длины и архитектуры ногтей гелем на формах с подбором идеальной формы.",
+      
+      optManiDesign: "Дизайн (френч/градиент/рисунки)",
+      optManiStrengthen: "Доп. укрепление гелем / акрилом",
+      optManiRepair: "Ремонт ногтя (1-2 шт)",
+      optManiSpa: "СПА-уход (парафинотерапия и массаж)",
+
+      servicePediExpressName: "Экспресс-педикюр",
+      servicePediExpressDesc: "Обработка пальчиков ног с покрытием гель-лаком. Быстрый и красивый уход.",
+      servicePediSmartName: "Полный Smart-педикюр",
+      servicePediSmartDesc: "Обработка всей стопы Smart-дисками (удаление трещин, натоптышей) + обработка пальчиков с гель-лаком.",
+      servicePediHygieneName: "Гигиенический педикюр",
+      servicePediHygieneDesc: "Аппаратная обработка стоп и пальчиков без покрытия лаком. Здоровье и чистота ваших ног.",
+      
+      optPediDesign: "Дизайн ногтей на ногах",
+      optPediCracks: "Удаление стержневых мозолей / глубоких трещин",
+      optPediSpa: "СПА-уход (пилинг, питательная маска, массаж)",
+
+      serviceSugarBikiniName: "Глубокое бикини",
+      serviceSugarBikiniDesc: "Деликатное и бережное удаление волос сахарной пастой в интимной зоне с антисептическим уходом.",
+      serviceSugarLegsName: "Ноги полностью",
+      serviceSugarLegsDesc: "Депиляция ног по всей длине сахарной пастой (бедра, голени). Гладкая кожа до 4 недель.",
+      serviceSugarUnderarmsName: "Подмышки",
+      serviceSugarUnderarmsDesc: "Быстрое удаление волос в подмышечной зоне гипоаллергенной пастой.",
+      serviceSugarArmsName: "Руки полностью",
+      serviceSugarArmsDesc: "Шугаринг рук по всей длине (до плеча). Кожа становится идеально гладкой.",
+      
+      optSugarMask: "Успокаивающая альгинатная маска",
+      optSugarPeeling: "Энзимный пилинг против вросших волос",
+      optSugarFace: "Депиляция зоны на лице (усики/подбородок)",
     },
     kk: {
       brand: "SVTL Nails & Aesthetic",
-      heroSuperTitle: "АТЫРАУДАҒЫ ҚАУІПСІЗ МАНИКЮР",
-      heroTitle: "4 АПТА БОЙЫ ҚЫМБАТ КӨРІНЕТІН МАНИКЮР",
-      heroSubtitle: "КЕСІКСІЗ • 28 КҮН КЕПІЛДІК",
-      heroDesc: "Егер 28 күн ішінде жабын сылынса немесе түсіп қалса, мен өтініш білдірген күні жұмысты тегін қайта жасап беремін — дау-дамайсыз, ұзақ талқылаусыз.",
-      heroCta: "Нақты құны мен келу уақытын есептеу",
+      heroSuperTitle: "АТЫРАУДАҒЫ МАНИКЮР • ПЕДИКЮР • ШУГАРИНГ",
+      heroTitle: "СІЗДІҢ СҰЛУЛЫҢЫЗ ҮШІН ПРЕМИУМ КҮТІМ ЖӘНЕ ЭСТЕТИКА",
+      heroSubtitle: "МІНСІЗ САПА • 100% СТЕРИЛЬДІЛІК",
+      heroDesc: "Сертификатталған шебер Светланадан жеке тәсіл. Қауіпсіз процедуралар, премиум материалдар және сіздің жайлылығыңыз бен сұлулығыңызға қамқорлық жасайтын кабинет.",
+      heroCta: "Құнын есептеу және жеңілдікті бекіту",
       trustTitle: "МАҒАН НЕГЕ СЕНЕДІ",
-      trustSubtitle: "Мен клиенттердің қорқыныштарын іспен шешемін",
-      trust1Title: "100% бір реттік материалдар",
-      trust1Desc: "Егеулер мен бафтар жеке қолданылады. Крафт-пакетті мен тек сіздің көзіңізше ашамын.",
-      trust2Title: "0 теңге жасырын төлемдер",
-      trust2Desc: "Құны аппаратты алғанға дейін белгіленеді. Кенеттен қосылатын үстемелер жоқ.",
-      trust3Title: "2 сағатқа дейін",
-      trust3Desc: "Мен уақытыңызды бағалаймын. Үлгермесем — күткеніңіз үшін жеңілдік.",
+      trustSubtitle: "Мен қауіпсіздікке, ашықтыққа және жоғары қызмет көрсету деңгейіне кепілдік беремін",
+      trust1Title: "100% стерильді құралдар",
+      trust1Desc: "СанПиН стандарттары бойынша 3 кезеңді дезинфекция. Құралдар ГП-10 сухожарында стерильденеді, крафт-пакет тек сіздің көзіңізше ашамын.",
+      trust2Title: "0 жасырын үстемелер",
+      trust2Desc: "Процедуралардың құны жұмыс басталғанға дейін бекітіледі. Сіз әрқашан визит соңында ешқандай қосымша төлемсіз нақты соманы білесіз.",
+      trust3Title: "Уақытыңызды бағалаңыз",
+      trust3Desc: "Процедуралардың қатаң таймингі. Маникюр немесе шугаринг тез, ұқыпты және уақытты кешіктірмей өтеді.",
       servicesTitle: "ҚЫЗМЕТТЕРІМ",
-      servicesSubtitle: "Қызметті және опцияларды таңдаңыз — құны мен уақыты автоматты есептеледі.",
-      servicesSelectBase: "1. Негізгі қызмет:",
+      servicesSubtitle: "Бағытты, қызметті және опцияларды таңдаңыз — құны мен уақыты автоматты түрде есептеледі.",
+      servicesSelectBase: "1. Қызметті таңдаңыз:",
       servicesSelectOptions: "2. Қосымша опциялар:",
       servicesTotal: "Қорытынды есеп:",
       servicesTotalPrice: "Құны",
       servicesTotalTime: "Уақыты",
       servicesSelectedPreview: "Сіздің сеанс",
-      serviceManicureName: "Аппараттық маникюр",
-      serviceManicureDesc: "Кутикуланы кесіксіз қауіпсіз өңдеу. Жабынды алу, күтім және тегістеу кіреді.",
-      servicePedicureName: "Эстетикалық Smart-педикюр",
-      servicePedicureDesc: "Smart дискілерімен табанды өңдеу + гель-лак жабынымен саусақтар. Сүйелдерді кетіру.",
-      serviceExtensionsName: "Тырнақ өсіру",
       serviceExtensionsDesc: "Сіздің референсіңізге сәйкес архитектура, ұзындық және пішінді модельдеу.",
       optionDesign: "Күрделі дизайн (френч, градиент, втирка)",
       optionStrengthen: "Гельмен нығайту",
@@ -399,12 +469,13 @@ export default function App() {
   const t = translations[lang];
 
   /* ─── Calculator ─── */
-  const baseServiceObj = baseServices[selectedService];
+  const catObj = categories[activeCategory];
+  const baseServiceObj = catObj.services.find(s => s.id === selectedServiceId) || catObj.services[0];
   const totalPrice = baseServiceObj.price + selectedOptions.reduce((s, id) => {
-    const o = extraOptions.find(x => x.id === id); return s + (o ? o.price : 0);
+    const o = catObj.options.find(x => x.id === id); return s + (o ? o.price : 0);
   }, 0);
   const totalTime = baseServiceObj.time + selectedOptions.reduce((s, id) => {
-    const o = extraOptions.find(x => x.id === id); return s + (o ? o.time : 0);
+    const o = catObj.options.find(x => x.id === id); return s + (o ? o.time : 0);
   }, 0);
   const fmtTime = (m) => {
     const h = Math.floor(m / 60), mn = m % 60, hl = lang === 'ru' ? 'ч.' : 'сағ.';
@@ -413,11 +484,12 @@ export default function App() {
   const toggleOption = (id) => setSelectedOptions(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
 
   const getWAMessage = () => {
+    const categoryName = t[catObj.nameKey];
     const sn = t[baseServiceObj.nameKey];
-    const ol = selectedOptions.map(id => t[extraOptions.find(o => o.id === id).nameKey]).join(', ');
+    const ol = selectedOptions.map(id => t[catObj.options.find(o => o.id === id).nameKey]).join(', ');
     return lang === 'ru'
-      ? `Привет! Хочу записаться:\n💅 ${sn}${ol ? ' + ' + ol : ''}\n💰 ${totalPrice} ₸\n⏱️ ${fmtTime(totalTime)}\nИмя: ${name}\nТел: ${phone}`
-      : `Сәлем! Жазылғым келеді:\n💅 ${sn}${ol ? ' + ' + ol : ''}\n💰 ${totalPrice} ₸\n⏱️ ${fmtTime(totalTime)}\nЕсімім: ${name}\nТел: ${phone}`;
+      ? `Привет! Хочу записаться на ${categoryName.toLowerCase()}:\n💅 ${sn}${ol ? ' + ' + ol : ''}\n💰 ${totalPrice} ₸\n⏱️ ${fmtTime(totalTime)}\nИмя: ${name}\nТел: ${phone}`
+      : `Сәлем! ${categoryName.toLowerCase()} қызметіне жазылғым келеді:\n💅 ${sn}${ol ? ' + ' + ol : ''}\n💰 ${totalPrice} ₸\n⏱️ ${fmtTime(totalTime)}\nЕсімім: ${name}\nТел: ${phone}`;
   };
 
   const handleSubmit = (e) => {
@@ -594,6 +666,26 @@ export default function App() {
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>{t.servicesTitle}</h2>
           <p className={`${textSecondary} text-sm mb-10`}>{t.servicesSubtitle}</p>
 
+          {/* Category Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {Object.values(categories).map((cat) => {
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-6 py-3 rounded-xl font-display font-bold text-[11px] uppercase tracking-wider border transition-all duration-300 cursor-pointer
+                    ${isActive 
+                      ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 border-bronze-500 shadow-lg shadow-bronze-500/10' 
+                      : `${border} ${isDark ? 'bg-charcoal-900/50 hover:bg-charcoal-900 text-neutral-400 hover:text-white' : 'bg-white hover:bg-charcoal-50 text-charcoal-600 hover:text-charcoal-900'}`
+                    }`}
+                >
+                  {t[cat.nameKey]}
+                </button>
+              );
+            })}
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left col: selection */}
             <div className="space-y-8">
@@ -601,10 +693,10 @@ export default function App() {
               <div>
                 <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">{t.servicesSelectBase}</h3>
                 <div className="space-y-3">
-                  {Object.values(baseServices).map((svc) => {
-                    const isActive = selectedService === svc.id;
+                  {catObj.services.map((svc) => {
+                    const isActive = selectedServiceId === svc.id;
                     return (
-                      <div key={svc.id} onClick={() => setSelectedService(svc.id)}
+                      <div key={svc.id} onClick={() => setSelectedServiceId(svc.id)}
                         className={`border rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden
                           ${isDark ? 'bg-charcoal-900/50' : 'bg-white/80'}
                           ${isActive
@@ -631,7 +723,7 @@ export default function App() {
               <div>
                 <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">{t.servicesSelectOptions}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2">
-                  {extraOptions.map((opt) => {
+                  {catObj.options.map((opt) => {
                     const isChecked = selectedOptions.includes(opt.id);
                     return (
                       <div key={opt.id} onClick={() => toggleOption(opt.id)}
@@ -669,7 +761,7 @@ export default function App() {
                     <span className="text-bronze-500">{baseServiceObj.price.toLocaleString()} ₸</span>
                   </div>
                   {selectedOptions.map(id => {
-                    const o = extraOptions.find(x => x.id === id); if (!o) return null;
+                    const o = catObj.options.find(x => x.id === id); if (!o) return null;
                     return (
                       <div key={id} className={`flex justify-between items-center text-xs ${textMuted} pl-4`}>
                         <span>+ {t[o.nameKey]}</span>
@@ -1050,7 +1142,7 @@ export default function App() {
                   <span className="text-bronze-500">{baseServiceObj.price.toLocaleString()} ₸</span>
                 </div>
                 {selectedOptions.map(id => {
-                  const o = extraOptions.find(x => x.id === id); if (!o) return null;
+                  const o = catObj.options.find(x => x.id === id); if (!o) return null;
                   return <div key={id} className={`flex justify-between text-xs ${textMuted} pl-3`}><span>+ {t[o.nameKey]}</span><span>+{o.price.toLocaleString()} ₸</span></div>;
                 })}
                 <div className={`border-t ${border} mt-3 pt-2.5 flex justify-between font-black ${textPrimary}`}>
