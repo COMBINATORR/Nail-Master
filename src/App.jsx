@@ -637,13 +637,14 @@ export default function App() {
             {/* Map iframe — takes 2/3 width on desktop */}
             <div className={`lg:col-span-2 rounded-2xl overflow-hidden border ${border} shadow-xl`} style={{height: '380px'}}>
               <iframe
-                title="2GIS Map — Shade, Проспект Азаттык 93, Атырау"
-                src="https://widgets.2gis.com/widget?type=firmsonmap&options=%7B%22pos%22%3A%7B%22lat%22%3A47.1086%2C%22lon%22%3A51.9154%2C%22zoom%22%3A17%7D%2C%22opt%22%3A%7B%22city%22%3A%22atyrau%22%7D%2C%22markers%22%3A%5B%7B%22lat%22%3A47.1086%2C%22lon%22%3A51.9154%2C%22hint%22%3A%22SVTL%20Nails%20%26%20Aesthetic%20%E2%80%94%20%D0%A1%D0%B0%D0%BB%D0%BE%D0%BD%20Shade%22%7D%5D%7D"
+                title="Google Maps — Shade, Проспект Азаттык 93, Атырау"
+                src="https://maps.google.com/maps?q=%D0%9F%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82+%D0%90%D0%B7%D0%B0%D1%82%D1%82%D1%8B%D0%BA+93+%D0%90%D1%82%D1%8B%D1%80%D0%B0%D1%83+%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD&t=m&z=17&output=embed&hl=ru"
                 width="100%"
                 height="100%"
                 style={{border:'none', display:'block'}}
                 loading="lazy"
                 allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
 
