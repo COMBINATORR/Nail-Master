@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import beforeImage from './assets/before_manicure.png';
-import afterImage from './assets/after_manicure.png';
+import work1_before from './assets/work1_before.png';
+import work1_after from './assets/work1_after.png';
+import work2_before from './assets/work2_before.png';
+import work2_after from './assets/work2_after.png';
+import work3_before from './assets/work3_before.png';
+import work3_after from './assets/work3_after.png';
+import work4_before from './assets/work4_before.png';
+import work4_after from './assets/work4_after.png';
+import work5_before from './assets/work5_before.png';
+import work5_after from './assets/work5_after.png';
 
 /* ─── SVG Icon Components ─── */
 const CheckIcon = () => (
@@ -65,6 +73,12 @@ export default function App() {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef(null);
+  const [activeWork, setActiveWork] = useState(0);
+
+  useEffect(() => {
+    setSliderPosition(50);
+    setIsDragging(false);
+  }, [activeWork]);
 
   const handleSliderMove = (clientX) => {
     if (!sliderRef.current) return;
@@ -160,6 +174,54 @@ export default function App() {
   const borderSubtle = isDark ? 'border-white/5'   : 'border-charcoal-100';
 
   /* ─── Data ─── */
+  const works = [
+    {
+      id: 'nude',
+      titleKey: 'workNudeTitle',
+      descKey: 'workNudeDesc',
+      before: work1_before,
+      after: work1_after,
+      age: '20+',
+      time: '1 ч 15 мин'
+    },
+    {
+      id: 'french',
+      titleKey: 'workFrenchTitle',
+      descKey: 'workFrenchDesc',
+      before: work2_before,
+      after: work2_after,
+      age: '35+',
+      time: '1 ч 30 мин'
+    },
+    {
+      id: 'bordeaux',
+      titleKey: 'workBordeauxTitle',
+      descKey: 'workBordeauxDesc',
+      before: work3_before,
+      after: work3_after,
+      age: '55+',
+      time: '1 ч 20 мин'
+    },
+    {
+      id: 'lavender',
+      titleKey: 'workLavenderTitle',
+      descKey: 'workLavenderDesc',
+      before: work4_before,
+      after: work4_after,
+      age: '25+',
+      time: '1 ч 15 мин'
+    },
+    {
+      id: 'red',
+      titleKey: 'workRedTitle',
+      descKey: 'workRedDesc',
+      before: work5_before,
+      after: work5_after,
+      age: '45+',
+      time: '1 ч 15 мин'
+    }
+  ];
+
   const baseServices = {
     manicure:   { id: 'manicure',   nameKey: 'serviceManicureName',   descKey: 'serviceManicureDesc',   price: 7000,  time: 75  },
     pedicure:   { id: 'pedicure',   nameKey: 'servicePedicureName',   descKey: 'servicePedicureDesc',   price: 10000, time: 90  },
@@ -231,6 +293,18 @@ export default function App() {
       portfolioSubtitle: "Интерактивное сравнение: потяните ползунок в стороны, чтобы оценить качество маникюра.",
       beforeText: "ДО",
       afterText: "ПОСЛЕ",
+      workNudeTitle: "Классический нюд",
+      workNudeDesc: "Деликатная обработка кутикулы без порезов, выравнивание ногтевой пластины и покрытие премиальным нюдовым базовым гелем.",
+      workFrenchTitle: "Элегантный френч",
+      workFrenchDesc: "Классический французский маникюр на средней длине. Идеально ровная линия улыбки и укрепление структуры ногтя.",
+      workBordeauxTitle: "Глубокий бордо",
+      workBordeauxDesc: "Комплексный антивозрастной уход за кожей рук и кутикулой, укрепление ослабленных ногтей и покрытие благородным винным оттенком.",
+      workLavenderTitle: "Нежная лаванда",
+      workLavenderDesc: "Свежий дизайн с использованием пастельно-лавандового оттенка. Тонкое, но прочное покрытие гель-лаком.",
+      workRedTitle: "Яркий красный",
+      workRedDesc: "Классический маникюр с безупречным глубоким красным покрытием «под кутикулу». Идеальная архитектура и стойкий глянец.",
+      ageLabel: "Возраст рук",
+      timeLabel: "Время работы",
     },
     kk: {
       brand: "SVTL Nails & Aesthetic",
@@ -290,6 +364,18 @@ export default function App() {
       portfolioSubtitle: "Интерактивті салыстыру: маникюр сапасын бағалау үшін жүгірткіні екі жаққа тартыңыз.",
       beforeText: "ДЕЙІН",
       afterText: "КЕЙІН",
+      workNudeTitle: "Классикалық нюд",
+      workNudeDesc: "Кутикуланы кесіксіз нәзік өңдеу, тырнақ пластинасын тегістеу және премиум нюд базалық гельмен жабу.",
+      workFrenchTitle: "Элегантты френч",
+      workFrenchDesc: "Орташа ұзындықтағы классикалық француз маникюрі. Тырнақ құрылымын нығайту және мінсіз күлімсіреу сызығы.",
+      workBordeauxTitle: "Терең бордо",
+      workBordeauxDesc: "Қол терісі мен кутикулаға арналған кешенді қартаюға қарсы күтім, әлсіреген тырнақтарды нығайту және асыл шарап түсті жабын.",
+      workLavenderTitle: "Нәзік лаванда",
+      workLavenderDesc: "Пастельді лаванда реңкін қолданатын жаңа дизайн. Гель-лакпен жұқа, бірақ берік жабын.",
+      workRedTitle: "Ашық қызыл",
+      workRedDesc: "Кутикула астына мінсіз қанық қызыл түспен жабылған классикалық маникюр. Мінсіз архитектура және тұрақты жылтыр.",
+      ageLabel: "Қол жасы",
+      timeLabel: "Жұмыс уақыты",
     }
   };
 
@@ -633,11 +719,31 @@ export default function App() {
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>
             {t.portfolioTitle}
           </h2>
-          <p className={`${textSecondary} text-sm mb-10`}>
+          <p className={`${textSecondary} text-sm mb-8`}>
             {t.portfolioSubtitle}
           </p>
 
           <div className="max-w-3xl mx-auto">
+            {/* Tabs for switching works */}
+            <div className="flex gap-2 mb-8 overflow-x-auto pb-3 scrollbar-none snap-x snap-mandatory">
+              {works.map((w, index) => {
+                const isActive = activeWork === index;
+                return (
+                  <button
+                    key={w.id}
+                    onClick={() => setActiveWork(index)}
+                    className={`flex-shrink-0 snap-start px-5 py-2.5 rounded-xl font-display font-bold text-[10px] uppercase tracking-wider border transition-all duration-300 cursor-pointer
+                      ${isActive 
+                        ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 border-bronze-500 shadow-lg shadow-bronze-500/10' 
+                        : `${border} ${isDark ? 'bg-charcoal-900/50 hover:bg-charcoal-900 text-neutral-400 hover:text-white' : 'bg-white hover:bg-charcoal-50 text-charcoal-600 hover:text-charcoal-900'}`
+                      }`}
+                  >
+                    {t[w.titleKey]}
+                  </button>
+                );
+              })}
+            </div>
+
             {/* The interactive container */}
             <div 
               ref={sliderRef}
@@ -653,7 +759,7 @@ export default function App() {
             >
               {/* After Image (Full width background) */}
               <img 
-                src={afterImage} 
+                src={works[activeWork].after} 
                 alt="After manicure" 
                 className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
                 draggable="false"
@@ -669,7 +775,7 @@ export default function App() {
                 style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
               >
                 <img 
-                  src={beforeImage} 
+                  src={works[activeWork].before} 
                   alt="Before manicure" 
                   className="absolute inset-0 w-full h-full object-cover select-none"
                   style={{ width: sliderRef.current ? `${sliderRef.current.offsetWidth}px` : '100%' }}
@@ -712,6 +818,31 @@ export default function App() {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Work details block */}
+            <div className={`mt-6 p-5 border ${border} rounded-2xl ${bgCard} flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl transition-all duration-300`}>
+              <div className="max-w-xl">
+                <h4 className={`font-display font-bold text-sm ${textPrimary} uppercase tracking-wider mb-1`}>
+                  {t[works[activeWork].titleKey]}
+                </h4>
+                <p className={`${textSecondary} text-xs leading-relaxed`}>
+                  {t[works[activeWork].descKey]}
+                </p>
+              </div>
+              <div className="flex gap-6 flex-shrink-0 text-xs font-bold uppercase tracking-wider w-full md:w-auto pt-3 md:pt-0 border-t md:border-t-0 ${borderSubtle}">
+                <div className="flex flex-col gap-1">
+                  <span className={`${textMuted} text-[9px]`}>{t.ageLabel}</span>
+                  <span className="text-bronze-400 font-display text-sm">{works[activeWork].age}</span>
+                </div>
+                <div className={`h-8 w-px ${isDark ? 'bg-white/10' : 'bg-charcoal-200'} hidden md:block`}></div>
+                <div className="flex flex-col gap-1">
+                  <span className={`${textMuted} text-[9px]`}>{t.timeLabel}</span>
+                  <span className="text-bronze-400 font-display text-sm">
+                    {lang === 'ru' ? works[activeWork].time : works[activeWork].time.replace('ч', 'сағ').replace('мин', 'мин')}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
