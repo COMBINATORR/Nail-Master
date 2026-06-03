@@ -229,17 +229,20 @@ export default function App() {
   const [activeCareTab, setActiveCareTab] = useState('manicure');
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        setScrollProgress((window.scrollY / totalScroll) * 100);
-      } else {
-        setScrollProgress(0);
-      }
-      if (window.scrollY > 300) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+          if (totalScroll > 0) {
+            setScrollProgress((window.scrollY / totalScroll) * 100);
+          } else {
+            setScrollProgress(0);
+          }
+          setShowBackToTop(window.scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -878,7 +881,7 @@ export default function App() {
 
       {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}
       <div 
-        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-bronze-700 via-bronze-400 to-bronze-200 z-[100] transition-all duration-100 ease-out" 
+        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-bronze-700 via-bronze-400 to-bronze-200 z-[100] pointer-events-none" 
         style={{ width: `${scrollProgress}%` }}
       ></div>
 
