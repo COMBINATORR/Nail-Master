@@ -220,6 +220,7 @@ export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [activeCareTab, setActiveCareTab] = useState('manicure');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -446,6 +447,8 @@ export default function App() {
       modalSuccessTitle: "Заявка отправлена!",
       modalSuccessDesc: "Я уже готовлюсь связаться с вами в WhatsApp. До встречи на процедуре!",
       modalClose: "Перейти в WhatsApp",
+      careTitle: "ПАМЯТКА КЛИЕНТА",
+      careSubtitle: "Простые и эффективные правила ухода за кожей и ногтями после визита",
       footerText: "Студия эстетики SVTL в Атырау. Маникюр, педикюр, шугаринг.",
       rights: "Все права защищены.",
       total: "Итого",
@@ -548,6 +551,8 @@ export default function App() {
       modalSuccessTitle: "Өтінім жіберілді!",
       modalSuccessDesc: "Мен WhatsApp арқылы хабарласуға дайынмын. Процедурада кездескенше!",
       modalClose: "WhatsApp-қа өту",
+      careTitle: "КЛИЕНТ ЖАДЫНАМАСЫ",
+      careSubtitle: "Қабылдаудан кейінгі тері мен тырнақты күтудің қарапайым және тиімді ережелері",
       footerText: "Атыраудағы SVTL эстетика студиясы. Маникюр, педикюр, шугаринг.",
       rights: "Барлық құқықтар қорғалған.",
       total: "Жиыны",
@@ -626,6 +631,169 @@ export default function App() {
       { q: "Жасырын үстемелер бола ма?", a: "Құны жұмыс алдында бекітіледі. Алып тастау мен тегістеу прайске кіреді." },
       { q: "Пішіні басқаша бола ма?",    a: "Пішін мен ұзындық базаны жаққанға дейін сізбен келісіледі." }
     ]
+  };
+
+  const careTipsData = {
+    ru: {
+      manicure: [
+        {
+          title: "Первые 24 часа",
+          desc: "Избегайте длительного контакта с горячей водой (бани, сауны, горячие ванны), чтобы покрытие зафиксировалось.",
+          badge: "Важно",
+          icon: "time"
+        },
+        {
+          title: "Домашние дела",
+          desc: "Пользуйтесь резиновыми перчатками при контакте с бытовой химией, чтобы сохранить идеальный блеск топа.",
+          badge: "Защита",
+          icon: "protect"
+        },
+        {
+          title: "Ежедневный уход",
+          desc: "Наносите масло для кутикулы и увлажняющий крем каждый день — это предотвратит сухость и заусенцы.",
+          badge: "Уход",
+          icon: "care"
+        },
+        {
+          title: "Срок носки",
+          desc: "Рекомендуемый срок носки — 3–4 недели. Не перенашивайте покрытие во избежание трещин ногтевого ложа.",
+          badge: "Сроки",
+          icon: "calendar"
+        }
+      ],
+      pedicure: [
+        {
+          title: "Комфортная обувь",
+          desc: "Избегайте тесной обуви и узких носков в первые дни, чтобы не создавать лишнего давления на пальцы.",
+          badge: "Свобода",
+          icon: "shoe"
+        },
+        {
+          title: "Глубокое увлажнение",
+          desc: "Используйте питательный крем для ног перед сном (желательно с мочевиной для максимальной мягкости).",
+          badge: "Мягкость",
+          icon: "cream"
+        },
+        {
+          title: "Сухость и чистота",
+          desc: "Тщательно вытирайте кожу между пальцами после душа, чтобы предотвратить опрелости и трещины.",
+          badge: "Гигиена",
+          icon: "dry"
+        },
+        {
+          title: "Коррекция ногтей",
+          desc: "Подрезайте ногти строго прямо, без закругления уголков, чтобы избежать проблемы вросшего ногтя.",
+          badge: "Форма",
+          icon: "shape"
+        }
+      ],
+      sugaring: [
+        {
+          title: "Ограничения на 24 часа",
+          desc: "Исключите спортзал, сауну, бассейн и солярий, чтобы не вызвать раздражение открытых волосяных фолликулов.",
+          badge: "Запрет",
+          icon: "ban"
+        },
+        {
+          title: "Свободный гардероб",
+          desc: "Носите свободное белье и одежду из натуральных тканей в первые сутки во избежание излишнего трения.",
+          badge: "Комфорт",
+          icon: "cloth"
+        },
+        {
+          title: "Профилактика",
+          desc: "Через 3–5 дней начните делать легкий энзимный пилинг, чтобы отшелушить кожу и избежать вросших волос.",
+          badge: "Пилинг",
+          icon: "peel"
+        },
+        {
+          title: "Увлажнение",
+          desc: "Используйте легкий увлажняющий лосьон без комедогенных масел и спирта для восстановления кожи.",
+          badge: "Лосьон",
+          icon: "lotion"
+        }
+      ]
+    },
+    kk: {
+      manicure: [
+        {
+          title: "Алғашқы 24 сағат",
+          desc: "Жабын толық бекуі үшін ыстық сумен ұзақ жанасудан (монша, сауна, ыстық ванна) аулақ болыңыз.",
+          badge: "Маңызды",
+          icon: "time"
+        },
+        {
+          title: "Үй шаруасы",
+          desc: "Топтың мінсіз жылтырлығын сақтау үшін тұрмыстық химиямен тазалау кезінде резеңке қолғап киіңіз.",
+          badge: "Қорғау",
+          icon: "protect"
+        },
+        {
+          title: "Күнделікті күтім",
+          desc: "Күн сайын кутикула майын және ылғалдандырғыш кремді қолданыңыз — бұл терінің құрғауы мен сынуын болдырмайды.",
+          badge: "Күтім",
+          icon: "care"
+        },
+        {
+          title: "Жүру мерзімі",
+          desc: "Ұсынылатын жүру мерзімі — 3-4 апта. Тырнақ пластинасының зақымдалуын болдырмау үшін тым ұзақ кимеңіз.",
+          badge: "Мерзімі",
+          icon: "calendar"
+        }
+      ],
+      pedicure: [
+        {
+          title: "Ыңғайлы аяқ киім",
+          desc: "Саусақтарға артық қысым түсірмеу үшін алғашқы күндері тар аяқ киім мен тығыз шұлық кимеңіз.",
+          badge: "Бос болу",
+          icon: "shoe"
+        },
+        {
+          title: "Терең ылғалдандыру",
+          desc: "Ұйықтар алдында аяққа арналған нәрлендіргіш кремді (жұмсақтық үшін несепнәр қосылған дұрыс) қолданыңыз.",
+          badge: "Жұмсақтық",
+          icon: "cream"
+        },
+        {
+          title: "Құрғақтық пен тазалық",
+          desc: "Жарықтар пен базданудың алдын алу үшін душтан кейін саусақтардың арасын мұқият құрғатыңыз.",
+          badge: "Гигиена",
+          icon: "dry"
+        },
+        {
+          title: "Тырнақты түзету",
+          desc: "Тырнақтың теріге өсуіне жол бермеу үшін тырнақтарды бұрыштарын дөңгелетпей, тек түзу кесіңіз.",
+          badge: "Пішіні",
+          icon: "shape"
+        }
+      ],
+      sugaring: [
+        {
+          title: "24 сағаттық шектеулер",
+          desc: "Ашық шаш фолликулаларының тітіркенуін тудырмау үшін спортзал, сауна, бассейн және солярийді шектеңіз.",
+          badge: "Шектеу",
+          icon: "ban"
+        },
+        {
+          title: "Бос гардероб",
+          desc: "Үйкелісті болдырмау үшін алғашқы тәулікте табиғи матадан жасалған бос іш киім мен киім киіңіз.",
+          badge: "Жайлылық",
+          icon: "cloth"
+        },
+        {
+          title: "Профилактика",
+          desc: "Түктердің ішке өсуін болдырмау үшін 3-5 күннен кейін жеңіл энзимді пилинг жасауды бастаңыз.",
+          badge: "Пилинг",
+          icon: "peel"
+        },
+        {
+          title: "Ылғалдандыру",
+          desc: "Теріні қалпына келтіру үшін комедогенді майлар мен спиртсіз жеңіл ылғалдандырғыш лосьонды қолданыңыз.",
+          badge: "Лосьон",
+          icon: "lotion"
+        }
+      ]
+    }
   };
 
   const t = translations[lang];
@@ -769,10 +937,10 @@ export default function App() {
           </div>
           {/* Desktop nav links */}
           <nav className="hidden lg:flex items-center gap-8">
-            {['#trust','#services','#portfolio','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
+            {['#trust','#services','#portfolio','#care-guide','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
               const labels = { 
-                ru: ['О мне','Услуги','Работы','Гарантии','FAQ','Адрес','Запись'], 
-                kk: ['Мен туралы','Қызметтер','Жұмыстар','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] 
+                ru: ['О мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
+                kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] 
               };
               return (
                 <a key={href} href={href}
@@ -1135,6 +1303,89 @@ export default function App() {
         </div>
       </section>
 
+      {/* ═══════════ CLIENT CARE GUIDE ═══════════ */}
+      <section id="care-guide" className={`border-b ${border} py-14 lg:py-20`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <SectionLabel text="CARE AFTER VISIT" />
+          <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>
+            {t.careTitle}
+          </h2>
+          <p className={`${textSecondary} text-sm max-w-xl mb-8`}>
+            {t.careSubtitle}
+          </p>
+
+          {/* Interactive Care Tabs */}
+          <div className="flex gap-2 p-1.5 bg-bronze-950/20 backdrop-blur-sm border border-bronze-500/10 rounded-2xl max-w-md mb-8">
+            {['manicure', 'pedicure', 'sugaring'].map((tab) => {
+              const tabLabels = {
+                manicure: lang === 'ru' ? 'Маникюр' : 'Маникюр',
+                pedicure: lang === 'ru' ? 'Педикюр' : 'Педикюр',
+                sugaring: lang === 'ru' ? 'Шугаринг' : 'Шугаринг'
+              };
+              const isActive = activeCareTab === tab;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveCareTab(tab)}
+                  className={`flex-1 text-center py-3 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300
+                    ${isActive 
+                      ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 shadow-lg' 
+                      : `${textMuted} hover:text-bronze-400 hover:bg-white/5`
+                    }`}
+                >
+                  {tabLabels[tab]}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Tips Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {careTipsData[lang][activeCareTab].map((tip, index) => {
+              const getIcon = (type) => {
+                const iconClasses = "w-5 h-5 text-bronze-500";
+                if (type === 'time' || type === 'ban') return <ShieldIcon className={iconClasses} />;
+                if (type === 'protect') return <CreamIcon className={iconClasses} />;
+                if (type === 'care') return <NailPolishIcon className={iconClasses} />;
+                if (type === 'calendar') return <MirrorIcon className={iconClasses} />;
+                if (type === 'shoe') return <ShieldIcon className={iconClasses} />;
+                if (type === 'cream') return <CreamIcon className={iconClasses} />;
+                if (type === 'dry') return <MirrorIcon className={iconClasses} />;
+                if (type === 'shape') return <NailFileIcon className={iconClasses} />;
+                if (type === 'cloth') return <LipIcon className={iconClasses} />;
+                if (type === 'peel') return <ScissorsIcon className={iconClasses} />;
+                if (type === 'lotion') return <CombIcon className={iconClasses} />;
+                return <CheckIcon className={iconClasses} />;
+              };
+
+              return (
+                <div 
+                  key={index} 
+                  className={`flex flex-col gap-4 p-5 ${bgSubtle} border ${border} rounded-2xl hover:border-bronze-500/20 transition-all hover:-translate-y-1 duration-300`}
+                >
+                  <div className="flex justify-between items-center">
+                    <div className="bg-bronze-500/10 p-2.5 rounded-xl w-fit">
+                      {getIcon(tip.icon)}
+                    </div>
+                    <span className="text-[9px] font-sans font-black uppercase tracking-wider border border-bronze-500/20 bg-bronze-500/5 px-2 py-0.5 rounded-full text-bronze-400">
+                      {tip.badge}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className={`font-display text-sm font-bold uppercase tracking-wider ${textPrimary} mb-2`}>
+                      {tip.title}
+                    </h3>
+                    <p className={`${textSecondary} text-xs leading-relaxed`}>
+                      {tip.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════ GUARANTEES ═══════════ */}
       <section id="guarantees" className={`border-b ${border} py-14 lg:py-20`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
@@ -1439,10 +1690,10 @@ export default function App() {
 
               {/* Nav Links */}
               <nav className="flex flex-col gap-6">
-                {['#trust','#services','#portfolio','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
+                {['#trust','#services','#portfolio','#care-guide','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
                   const labels = { 
-                    ru: ['О мне','Услуги','Работы','Гарантии','FAQ','Адрес','Запись'], 
-                    kk: ['Мен туралы','Қызметтер','Жұмыстар','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] 
+                    ru: ['О мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
+                    kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] 
                   };
                   return (
                     <a 
