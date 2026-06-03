@@ -592,18 +592,18 @@ export default function App() {
             <p className={`${textMuted} text-[10px] max-w-xs`}>{t.footerText}</p>
             
             {/* Social Icons Footer */}
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-4 items-center">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                 className={`p-2 rounded-full ${bgSubtle} border ${border} ${isDark ? 'text-neutral-400 hover:text-bronze-400 hover:border-bronze-500/30' : 'text-charcoal-400 hover:text-bronze-600 hover:border-bronze-400'} transition-all`}>
-                <InstagramIcon className="w-4 h-4" />
+                 className={`${isDark ? 'text-neutral-500' : 'text-charcoal-400'} hover:text-[#E1306C] transition-colors duration-200`}>
+                <InstagramIcon className="w-5 h-5" />
               </a>
               <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
-                 className={`p-2 rounded-full ${bgSubtle} border ${border} ${isDark ? 'text-neutral-400 hover:text-bronze-400 hover:border-bronze-500/30' : 'text-charcoal-400 hover:text-bronze-600 hover:border-bronze-400'} transition-all`}>
-                <WhatsAppIcon className="w-4 h-4" />
+                 className={`${isDark ? 'text-neutral-500' : 'text-charcoal-400'} hover:text-[#25D366] transition-colors duration-200`}>
+                <WhatsAppIcon className="w-5 h-5" />
               </a>
               <a href="tel:+77016698086"
-                 className={`p-2 rounded-full ${bgSubtle} border ${border} ${isDark ? 'text-neutral-400 hover:text-bronze-400 hover:border-bronze-500/30' : 'text-charcoal-400 hover:text-bronze-600 hover:border-bronze-400'} transition-all`}>
-                <PhoneIcon className="w-4 h-4" />
+                 className={`${isDark ? 'text-neutral-500' : 'text-charcoal-400'} hover:text-[#4A90D9] transition-colors duration-200`}>
+                <PhoneIcon className="w-5 h-5" />
               </a>
             </div>
             <p className={`${textFaint} text-[9px] mt-2`}>© {new Date().getFullYear()} {t.brand}. {t.rights}</p>
