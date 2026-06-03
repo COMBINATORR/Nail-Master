@@ -57,6 +57,109 @@ const ShieldIcon = () => (
   </svg>
 );
 
+/* ─── Premium Beauty Background Icons ─── */
+const NailPolishIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <rect x="10" y="2" width="4" height="7" rx="1" />
+    <path d="M6 9h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z" />
+    <path d="M9 14c1.5 0 1.5 2 3 2s1.5-2 3-2" />
+  </svg>
+);
+
+const ScissorsIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="6" cy="6" r="3" />
+    <circle cx="6" cy="18" r="3" />
+    <line x1="8.5" y1="7.5" x2="19" y2="18" />
+    <line x1="8.5" y1="16.5" x2="19" y2="6" />
+  </svg>
+);
+
+const NailFileIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="10" width="20" height="4" rx="2" transform="rotate(-45 12 12)" />
+    <line x1="6" y1="12" x2="18" y2="12" strokeDasharray="2 2" transform="rotate(-45 12 12)" />
+  </svg>
+);
+
+const CreamIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 7h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z" />
+    <path d="M4 11h16v7a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-7z" />
+    <path d="M9 15a3 3 0 0 0 6 0" />
+  </svg>
+);
+
+const LipIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 12c1.5-2.5 4-3.5 8-3.5s6.5 1 8 3.5c-1.5 2.5-4 3.5-8 3.5S5.5 14.5 4 12z" />
+    <path d="M4 12h16" />
+  </svg>
+);
+
+const CombIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="5" width="18" height="3" rx="1" />
+    <line x1="5" y1="8" x2="5" y2="18" />
+    <line x1="8" y1="8" x2="8" y2="18" />
+    <line x1="11" y1="8" x2="11" y2="18" />
+    <line x1="14" y1="8" x2="14" y2="18" />
+    <line x1="17" y1="8" x2="17" y2="18" />
+    <line x1="20" y1="8" x2="20" y2="18" />
+  </svg>
+);
+
+const MirrorIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="9" r="6" />
+    <path d="M12 15v6" />
+    <path d="M9 21h6" />
+  </svg>
+);
+
+const MenuIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+  </svg>
+);
+
+const CloseIcon = ({ className = "w-6 h-6" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
+const ArrowUpIcon = ({ className = "w-5 h-5" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+  </svg>
+);
+
+const scatteredIconsList = [
+  { top: '3%', left: '8%', rotate: 'rotate-12', Icon: NailPolishIcon },
+  { top: '6%', right: '7%', rotate: '-rotate-45', Icon: ScissorsIcon },
+  { top: '11%', left: '82%', rotate: 'rotate-30', Icon: CreamIcon },
+  { top: '15%', left: '12%', rotate: '-rotate-12', Icon: LipIcon },
+  { top: '19%', right: '10%', rotate: 'rotate-45', Icon: NailFileIcon },
+  { top: '23%', left: '5%', rotate: '-rotate-30', Icon: CombIcon },
+  { top: '28%', right: '5%', rotate: 'rotate-15', Icon: MirrorIcon },
+  { top: '32%', left: '85%', rotate: '-rotate-15', Icon: NailPolishIcon },
+  { top: '37%', left: '10%', rotate: 'rotate-45', Icon: ScissorsIcon },
+  { top: '41%', right: '8%', rotate: '-rotate-45', Icon: CreamIcon },
+  { top: '46%', left: '7%', rotate: 'rotate-12', Icon: LipIcon },
+  { top: '51%', right: '12%', rotate: '-rotate-12', Icon: NailFileIcon },
+  { top: '56%', left: '80%', rotate: 'rotate-30', Icon: CombIcon },
+  { top: '60%', left: '14%', rotate: '-rotate-30', Icon: MirrorIcon },
+  { top: '65%', right: '6%', rotate: 'rotate-45', Icon: NailPolishIcon },
+  { top: '70%', left: '9%', rotate: '-rotate-15', Icon: ScissorsIcon },
+  { top: '74%', right: '11%', rotate: 'rotate-15', Icon: CreamIcon },
+  { top: '79%', left: '84%', rotate: '-rotate-45', Icon: LipIcon },
+  { top: '83%', left: '6%', rotate: 'rotate-12', Icon: NailFileIcon },
+  { top: '87%', right: '8%', rotate: '-rotate-12', Icon: CombIcon },
+  { top: '92%', left: '11%', rotate: 'rotate-30', Icon: MirrorIcon },
+  { top: '96%', right: '10%', rotate: '-rotate-30', Icon: NailPolishIcon },
+];
+
 export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem('svtl-lang') || 'ru');
   const [theme, setTheme] = useState(() => localStorage.getItem('svtl-theme') || 'dark');
@@ -114,6 +217,28 @@ export default function App() {
     }
   };
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100);
+      } else {
+        setScrollProgress(0);
+      }
+      if (window.scrollY > 300) {
+        setShowBackToTop(true);
+      } else {
+        setShowBackToTop(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const [activeCategory, setActiveCategory] = useState('manicure');
   const [selectedServiceId, setSelectedServiceId] = useState('classic');
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -124,6 +249,7 @@ export default function App() {
     }
     setSelectedOptions([]);
   }, [activeCategory]);
+
 
 
   const [sliderPosition, setSliderPosition] = useState(50);
@@ -553,20 +679,20 @@ export default function App() {
   const NavControls = () => (
     <div className="flex items-center gap-1.5">
       <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-         className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#E1306C]' : 'text-charcoal-400 hover:text-[#E1306C]'} transition-colors`}>
+         className={`hidden sm:inline-flex p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#E1306C]' : 'text-charcoal-400 hover:text-[#E1306C]'} transition-colors`}>
         <InstagramIcon className="w-4 h-4" />
       </a>
       <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
-         className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#25D366]' : 'text-charcoal-400 hover:text-[#25D366]'} transition-colors`}>
+         className={`hidden sm:inline-flex p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#25D366]' : 'text-charcoal-400 hover:text-[#25D366]'} transition-colors`}>
         <WhatsAppIcon className="w-4 h-4" />
       </a>
-      <div className={`h-5 w-px ${isDark ? 'bg-white/10' : 'bg-charcoal-200'} mx-0.5`}></div>
+      <div className={`hidden sm:block h-5 w-px ${isDark ? 'bg-white/10' : 'bg-charcoal-200'} mx-0.5`}></div>
       <button onClick={cycleTheme}
         className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors`}
         title={theme === 'dark' ? 'Тёмная' : theme === 'light' ? 'Светлая' : 'Системная'}>
         <ThemeIcon />
       </button>
-      <div className="relative" ref={langPopupRef}>
+      <div className="relative animate-fadeIn" ref={langPopupRef}>
         <button onClick={() => setShowLangPopup(!showLangPopup)}
           className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors flex items-center gap-1`}>
           <GlobeIcon />
@@ -585,12 +711,19 @@ export default function App() {
           </div>
         )}
       </div>
+      <div className={`h-5 w-px ${isDark ? 'bg-white/10' : 'bg-charcoal-200'} mx-0.5 lg:hidden`}></div>
+      <button onClick={() => setIsMobileMenuOpen(true)}
+        className={`lg:hidden p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors`}
+        aria-label="Toggle mobile menu"
+      >
+        <MenuIcon className="w-4 h-4" />
+      </button>
     </div>
   );
 
   /* ─── RENDER ─── */
   return (
-    <div className={`min-h-screen ${bg} bg-grain ${isDark ? 'text-neutral-100' : 'text-charcoal-800'} font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950`}>
+    <div className={`relative min-h-screen ${bg} bg-grain ${isDark ? 'text-neutral-100' : 'text-charcoal-800'} font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950`}>
 
       {/* ═══════════ PREMIUM BACKGROUND LAYERS (fixed, behind everything) ═══════════ */}
       <div className="premium-orbs" aria-hidden="true">
@@ -600,6 +733,31 @@ export default function App() {
         <div className="orb orb-4"></div>
       </div>
       <div className="bg-grid-lines" aria-hidden="true"></div>
+
+      {/* ═══════════ SCATTERED BEAUTY BACKGROUND ICONS ═══════════ */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        {scatteredIconsList.map((item, idx) => {
+          const IconComp = item.Icon;
+          return (
+            <div
+              key={idx}
+              className={`absolute ${item.rotate} transition-opacity duration-300`}
+              style={{
+                top: item.top,
+                ...(item.left ? { left: item.left } : { right: item.right }),
+              }}
+            >
+              <IconComp className="w-5 h-5 sm:w-6 sm:h-6 text-bronze-500" style={{ opacity: isDark ? 0.022 : 0.045 }} />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}
+      <div 
+        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-bronze-700 via-bronze-400 to-bronze-200 z-[100] transition-all duration-100 ease-out" 
+        style={{ width: `${scrollProgress}%` }}
+      ></div>
 
       {/* ═══════════ HEADER — full width on desktop ═══════════ */}
       <header className={`sticky top-0 z-40 backdrop-blur-md ${bgHeader} border-b ${border} transition-colors duration-300`}>
@@ -1250,6 +1408,109 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* ═══════════ MOBILE MENU OVERLAY (Sandwich Panel) ═══════════ */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden popup-backdrop">
+          {/* Backdrop blur overlay */}
+          <div 
+            className="absolute inset-0 bg-charcoal-950/60 backdrop-blur-md" 
+            onClick={() => setIsMobileMenuOpen(false)}
+          ></div>
+          
+          {/* Drawer Panel */}
+          <div className={`absolute top-0 right-0 h-full w-4/5 max-w-[320px] ${isDark ? 'bg-charcoal-900/95 border-l border-white/10' : 'bg-[#fcfbf9]/95 border-l border-charcoal-200'} shadow-2xl p-6 flex flex-col justify-between backdrop-blur-md transition-all duration-300 transform`}>
+            <div>
+              {/* Header inside Mobile Menu */}
+              <div className="flex justify-between items-center mb-10">
+                <div className="flex flex-col items-start leading-none">
+                  <span className={`font-sans font-bold text-xl tracking-widest ${textPrimary}`}>SVTL</span>
+                  <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
+                </div>
+                <button 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-white' : 'text-charcoal-500 hover:text-charcoal-900'} transition-colors`}
+                  aria-label="Close menu"
+                >
+                  <CloseIcon className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Nav Links */}
+              <nav className="flex flex-col gap-6">
+                {['#trust','#services','#portfolio','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
+                  const labels = { 
+                    ru: ['О мне','Услуги','Работы','Гарантии','FAQ','Адрес','Запись'], 
+                    kk: ['Мен туралы','Қызметтер','Жұмыстар','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] 
+                  };
+                  return (
+                    <a 
+                      key={href} 
+                      href={href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`text-sm font-bold uppercase tracking-wider ${textSecondary} hover:text-bronze-500 transition-colors border-b ${borderSubtle} pb-3`}
+                    >
+                      {labels[lang][i]}
+                    </a>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Footer inside Mobile Menu */}
+            <div className="flex flex-col gap-5 border-t border-white/5 pt-6">
+              {/* Social icons */}
+              <div className="flex items-center gap-4">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                   className={`p-2.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#E1306C]' : 'text-charcoal-400 hover:text-[#E1306C]'} transition-colors flex-1 flex justify-center`}>
+                  <InstagramIcon className="w-5 h-5" />
+                </a>
+                <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
+                   className={`p-2.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-[#25D366]' : 'text-charcoal-400 hover:text-[#25D366]'} transition-colors flex-1 flex justify-center`}>
+                  <WhatsAppIcon className="w-5 h-5" />
+                </a>
+              </div>
+              
+              {/* Language selection in drawer */}
+              <div className="flex items-center justify-between">
+                <span className={`text-[10px] uppercase font-bold tracking-wider ${textMuted}`}>Язык / Тіл:</span>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => { setLang('ru'); setIsMobileMenuOpen(false); }}
+                    className={`px-3 py-1 rounded-md text-xs font-bold transition-colors ${lang === 'ru' ? 'bg-bronze-500/20 text-bronze-500' : `${textMuted} ${bgSubtle}`}`}
+                  >
+                    RU
+                  </button>
+                  <button 
+                    onClick={() => { setLang('kk'); setIsMobileMenuOpen(false); }}
+                    className={`px-3 py-1 rounded-md text-xs font-bold transition-colors ${lang === 'kk' ? 'bg-bronze-500/20 text-bronze-500' : `${textMuted} ${bgSubtle}`}`}
+                  >
+                    KZ
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ═══════════ ELEGANT BACK TO TOP BUTTON ═══════════ */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className={`fixed bottom-6 right-6 z-40 p-3 rounded-full border shadow-xl transition-all duration-500 flex items-center justify-center
+          ${showBackToTop 
+            ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
+            : 'opacity-0 translate-y-4 scale-75 pointer-events-none'
+          }
+          ${isDark 
+            ? 'bg-charcoal-900/90 border-white/10 text-bronze-400 hover:text-bronze-300 hover:border-bronze-500/50 hover:shadow-bronze-500/10' 
+            : 'bg-white/90 border-charcoal-200 text-bronze-600 hover:text-bronze-700 hover:border-bronze-500/50 hover:shadow-bronze-500/10'
+          }
+          backdrop-blur-md cursor-pointer hover:scale-110 active:scale-95`}
+        aria-label="Scroll to top"
+      >
+        <ArrowUpIcon className="w-5 h-5" />
+      </button>
     </div>
   );
 }

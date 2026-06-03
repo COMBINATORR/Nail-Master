@@ -207,3 +207,7 @@ body.light .bg-grid-lines {
   position: relative;
   z-index: 1;
 }
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease forwards;
+}
