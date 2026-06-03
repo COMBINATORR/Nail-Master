@@ -363,8 +363,8 @@ export default function App() {
           </div>
           {/* Desktop nav links */}
           <nav className="hidden lg:flex items-center gap-8">
-            {['#trust','#services','#guarantees','#faq','#appointment-form'].map((href, i) => {
-              const labels = { ru: ['О мне','Услуги','Гарантии','FAQ','Запись'], kk: ['Мен туралы','Қызметтер','Кепілдіктер','FAQ','Жазылу'] };
+            {['#trust','#services','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
+              const labels = { ru: ['О мне','Услуги','Гарантии','FAQ','Адрес','Запись'], kk: ['Мен туралы','Қызметтер','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] };
               return (
                 <a key={href} href={href}
                    className={`text-xs font-bold uppercase tracking-wider ${textMuted} hover:text-bronze-500 transition-colors`}>
@@ -615,6 +615,118 @@ export default function App() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ LOCATION MAP ═══════════ */}
+      <section id="location" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+          <SectionLabel text="LOCATION" />
+          <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-3`}>
+            {lang === 'ru' ? 'КАК ДОБРАТЬСЯ' : 'МЕКЕН-ЖАЙ'}
+          </h2>
+          <p className={`${textSecondary} text-sm mb-8`}>
+            {lang === 'ru'
+              ? 'Кабинет находится в салоне красоты Shade. Вход со стороны проспекта.'
+              : 'Кабинет Shade сұлулық салонында орналасқан. Кіреберіс даңғыл жағынан.'}
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+
+            {/* Map iframe — takes 2/3 width on desktop */}
+            <div className={`lg:col-span-2 rounded-2xl overflow-hidden border ${border} shadow-xl`} style={{height: '380px'}}>
+              <iframe
+                title="2GIS Map — Shade, Проспект Азаттык 93, Атырау"
+                src="https://widgets.2gis.com/widget?type=firmsonmap&options=%7B%22pos%22%3A%7B%22lat%22%3A47.1086%2C%22lon%22%3A51.9154%2C%22zoom%22%3A17%7D%2C%22opt%22%3A%7B%22city%22%3A%22atyrau%22%7D%2C%22markers%22%3A%5B%7B%22lat%22%3A47.1086%2C%22lon%22%3A51.9154%2C%22hint%22%3A%22SVTL%20Nails%20%26%20Aesthetic%20%E2%80%94%20%D0%A1%D0%B0%D0%BB%D0%BE%D0%BD%20Shade%22%7D%5D%7D"
+                width="100%"
+                height="100%"
+                style={{border:'none', display:'block'}}
+                loading="lazy"
+                allowFullScreen
+              />
+            </div>
+
+            {/* Info card — 1/3 width */}
+            <div className="flex flex-col gap-4">
+
+              {/* Address */}
+              <div className={`${bgCard} border ${border} rounded-2xl p-5 flex-1`}>
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="bg-bronze-500/10 p-2 rounded-xl flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-bronze-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
+                      {lang === 'ru' ? 'Адрес' : 'Мекен-жайы'}
+                    </p>
+                    <p className={`${textSecondary} text-sm leading-relaxed`}>
+                      {lang === 'ru'
+                        ? 'Проспект Азаттык, 93 — салон красоты Shade'
+                        : 'Азаттық даңғылы, 93 — Shade сұлулық салоны'}
+                    </p>
+                    <p className={`${textMuted} text-xs mt-1`}>Атырау, 60011/E01Y0B0</p>
+                  </div>
+                </div>
+
+                <div className={`border-t ${borderSubtle} pt-4 flex items-start gap-3 mb-4`}>
+                  <div className="bg-bronze-500/10 p-2 rounded-xl flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-bronze-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
+                      {lang === 'ru' ? 'График' : 'Жұмыс уақыты'}
+                    </p>
+                    <p className={`${textSecondary} text-sm`}>
+                      {lang === 'ru' ? 'Пн–Вс: 10:00–20:00' : 'Дс–Жс: 10:00–20:00'}
+                    </p>
+                    <p className={`${textMuted} text-xs mt-0.5`}>
+                      {lang === 'ru' ? 'Только по записи' : 'Тек алдын ала жазылу'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className={`border-t ${borderSubtle} pt-4 flex items-start gap-3`}>
+                  <div className="bg-bronze-500/10 p-2 rounded-xl flex-shrink-0 mt-0.5">
+                    <PhoneIcon className="w-4 h-4 text-bronze-500" />
+                  </div>
+                  <div>
+                    <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
+                      {lang === 'ru' ? 'Телефон / WhatsApp' : 'Телефон / WhatsApp'}
+                    </p>
+                    <a href="tel:+77016698086" className="text-bronze-400 hover:text-bronze-300 text-sm font-bold transition-colors">
+                      +7 701 669 8086
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA buttons */}
+              <a
+                href="https://2gis.kz/atyrau/search/Shade%20%D0%90%D0%B7%D0%B0%D1%82%D1%82%D1%8B%D0%BA%2093"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all shadow-md"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                {lang === 'ru' ? 'Открыть в 2ГИС' : '2ГИС-та ашу'}
+              </a>
+
+              <a
+                href="https://wa.me/77016698086?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BC%D0%B0%D0%BD%D0%B8%D0%BA%D1%8E%D1%80%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center justify-center gap-2 border border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all`}
+              >
+                <WhatsAppIcon className="w-4 h-4" />
+                {lang === 'ru' ? 'Спросить маршрут' : 'Бағыт сұрау'}
+              </a>
+            </div>
           </div>
         </div>
       </section>
