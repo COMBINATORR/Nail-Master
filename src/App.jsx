@@ -382,7 +382,7 @@ export default function App() {
                 <span className="w-1.5 h-1.5 rounded-full bg-bronze-500 animate-pulse"></span>
                 <span className="text-bronze-300 font-bold tracking-widest text-[9px] uppercase">{t.heroSuperTitle}</span>
               </div>
-              <h1 className={`font-display font-black tracking-tighter ${textPrimary} leading-[0.88] uppercase mb-5
+              <h1 className={`font-display font-black tracking-tighter ${textPrimary} leading-[1.05] uppercase mb-5
                              text-4xl sm:text-5xl lg:text-6xl xl:text-7xl`}>
                 {t.heroTitle}
               </h1>
