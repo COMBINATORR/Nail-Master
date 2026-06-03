@@ -252,6 +252,8 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState('manicure');
   const [selectedServiceId, setSelectedServiceId] = useState('classic');
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [nailShape, setNailShape] = useState('softSquare');
+  const [visitMode, setVisitMode] = useState('relax');
 
   useEffect(() => {
     if (categories[activeCategory]) {
@@ -822,13 +824,25 @@ export default function App() {
   };
   const toggleOption = (id) => setSelectedOptions(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
 
+  const nailShapeLabels = {
+    ru: { square: 'Чёткий квадрат', softSquare: 'Мягкий квадрат', oval: 'Овал', almond: 'Миндаль' },
+    kk: { square: 'Нақты шаршы', softSquare: 'Жұмсақ шаршы', oval: 'Овал', almond: 'Бадам' }
+  };
+  const visitModeLabels = {
+    ru: { relax: 'Relax-визит в тишине', chat: 'С душевной беседой' },
+    kk: { relax: 'Тыныш демалыс', chat: 'Жылы сөйлесу' }
+  };
+
   const getWAMessage = () => {
     const categoryName = t[catObj.nameKey];
     const sn = t[baseServiceObj.nameKey];
     const ol = selectedOptions.map(id => t[catObj.options.find(o => o.id === id).nameKey]).join(', ');
+    const shapeName = nailShapeLabels[lang][nailShape];
+    const modeName = visitModeLabels[lang][visitMode];
+    const servicesList = `${sn}${ol ? ', ' + ol : ''}`;
     return lang === 'ru'
-      ? `Привет! Хочу записаться на ${categoryName.toLowerCase()}:\n💅 ${sn}${ol ? ' + ' + ol : ''}\n💰 ${totalPrice} ₸\n⏱️ ${fmtTime(totalTime)}\nИмя: ${name}\nТел: ${phone}`
-      : `Сәлем! ${categoryName.toLowerCase()} қызметіне жазылғым келеді:\n💅 ${sn}${ol ? ' + ' + ol : ''}\n💰 ${totalPrice} ₸\n⏱️ ${fmtTime(totalTime)}\nЕсімім: ${name}\nТел: ${phone}`;
+      ? `Салем! Хочу записаться в SVTL Nails & Aesthetic.\n\n💅 Услуги: ${servicesList}\n💎 Форма ногтей: ${shapeName}\n☕ Режим визита: ${modeName}\n💰 Фиксированная цена: ${totalPrice.toLocaleString()} ₸`
+      : `Сәлем! SVTL Nails & Aesthetic студиясына жазылғым келеді.\n\n💅 Қызметтер: ${servicesList}\n💎 Тырнақ пішіні: ${shapeName}\n☕ Сеанс режимі: ${modeName}\n💰 Бекітілген баға: ${totalPrice.toLocaleString()} ₸`;
   };
 
   const handleSubmit = (e) => {
@@ -1081,6 +1095,38 @@ export default function App() {
                 </div>
               </div>
 
+              {/* Nail Shape Picker */}
+              <div>
+                <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">
+                  {lang === 'ru' ? '3. Форма ногтей:' : '3. Тырнақ пішіні:'}
+                </h3>
+                <div className="grid grid-cols-4 gap-2">
+                  {[
+                    { id: 'square', svgPath: 'M8 18 L8 6 Q8 5 9 5 L15 5 Q16 5 16 6 L16 18 Z', label: nailShapeLabels[lang].square },
+                    { id: 'softSquare', svgPath: 'M8 18 L8 7 Q8 5 10 5 L14 5 Q16 5 16 7 L16 18 Z', label: nailShapeLabels[lang].softSquare },
+                    { id: 'oval', svgPath: 'M8 18 L8 10 Q8 4 12 4 Q16 4 16 10 L16 18 Z', label: nailShapeLabels[lang].oval },
+                    { id: 'almond', svgPath: 'M9 18 L9 12 Q9 4 12 3 Q15 4 15 12 L15 18 Z', label: nailShapeLabels[lang].almond },
+                  ].map(shape => {
+                    const isActive = nailShape === shape.id;
+                    return (
+                      <button key={shape.id} type="button" onClick={() => setNailShape(shape.id)}
+                        className={`flex flex-col items-center gap-2 border rounded-xl py-3 px-1 cursor-pointer transition-all duration-200
+                          ${isActive
+                            ? 'border-bronze-500 bg-bronze-500/10'
+                            : `${borderSubtle} ${isDark ? 'bg-charcoal-900/30 hover:bg-charcoal-900/60' : 'bg-white/60 hover:bg-white'} opacity-70 hover:opacity-100`}`}>
+                        <svg viewBox="0 0 24 24" fill="none" className="w-8 h-10"
+                          stroke={isActive ? '#c5a880' : isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.35)'}
+                          strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d={shape.svgPath} />
+                        </svg>
+                        <span className={`text-[8px] font-bold uppercase tracking-wider leading-tight text-center transition-colors duration-200
+                          ${isActive ? 'text-bronze-400' : textMuted}`}>{shape.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Extra options */}
               <div>
                 <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">{t.servicesSelectOptions}</h3>
@@ -1137,14 +1183,28 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-5">
                   <span className={`${textSecondary} text-xs`}>{t.servicesTotalTime}:</span>
                   <span className="font-display font-bold text-bronze-300 text-sm tracking-wider">≈ {fmtTime(totalTime)}</span>
                 </div>
 
-                <button onClick={scrollToForm}
-                  className="w-full bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 py-3.5 rounded-xl font-bold tracking-wider uppercase text-xs transition-all duration-300 shadow-lg">
-                  {t.serviceCta} ✦
+                {/* SVTL Guarantee Badge */}
+                <div className={`flex items-start gap-2.5 border ${ isDark ? 'border-emerald-500/20 bg-emerald-500/5' : 'border-emerald-600/20 bg-emerald-50/50' } rounded-xl p-3 mb-5`}>
+                  <div className="flex-shrink-0 mt-0.5">
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-emerald-400" style={{filter:'drop-shadow(0 0 4px rgba(52,211,153,0.5))'}}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
+                  </div>
+                  <p className={`text-[9px] leading-relaxed ${ isDark ? 'text-emerald-300/70' : 'text-emerald-700/80' } font-medium`}>
+                    <span className="font-bold uppercase tracking-wider">Гарантия SVTL:</span> Вы записываетесь напрямую к Светлане. Скрытая подмена мастера исключена. Персональный контроль качества.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => window.open(`https://wa.me/77016698086?text=${encodeURIComponent(getWAMessage())}`, '_blank', 'noopener,noreferrer')}
+                  className="w-full bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 py-3.5 rounded-xl font-bold tracking-wider uppercase text-xs transition-all duration-300 shadow-lg flex items-center justify-center gap-2">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  {lang === 'ru' ? 'Зафиксировать цену и записаться' : 'Бағаны бекіту және жазылу'} ✦
                 </button>
               </div>
 
@@ -1601,6 +1661,42 @@ export default function App() {
                   className={`${isDark ? 'bg-charcoal-900 border-white/10 text-white placeholder-neutral-500' : 'bg-charcoal-50 border-charcoal-200 text-charcoal-800 placeholder-charcoal-400'} border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full`} />
                 <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder={t.phonePlaceholder} required
                   className={`${isDark ? 'bg-charcoal-900 border-white/10 text-white placeholder-neutral-500' : 'bg-charcoal-50 border-charcoal-200 text-charcoal-800 placeholder-charcoal-400'} border rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full`} />
+
+                {/* Visit Mode Segmented Control */}
+                <div>
+                  <p className={`text-[9px] uppercase tracking-wider font-bold ${textMuted} mb-2`}>
+                    {lang === 'ru' ? 'Режим визита:' : 'Сеанс режимі:'}
+                  </p>
+                  <div className={`flex rounded-xl border ${border} overflow-hidden ${isDark ? 'bg-charcoal-900/60' : 'bg-charcoal-50'} p-1 gap-1`}>
+                    {[
+                      { id: 'relax', icon: (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 flex-shrink-0">
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                        </svg>
+                      ), label: visitModeLabels[lang].relax },
+                      { id: 'chat', icon: (
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 flex-shrink-0">
+                          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                      ), label: visitModeLabels[lang].chat },
+                    ].map(opt => {
+                      const isActive = visitMode === opt.id;
+                      return (
+                        <button key={opt.id} type="button" onClick={() => setVisitMode(opt.id)}
+                          className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-[9px] font-bold uppercase tracking-wider transition-all duration-200
+                            ${ isActive
+                              ? `${isDark ? 'bg-white/10 text-white' : 'bg-white text-charcoal-900'} shadow-sm`
+                              : `text-transparent bg-clip-text ${ isDark ? 'text-neutral-500 hover:text-neutral-300' : 'text-charcoal-400 hover:text-charcoal-600' } hover:bg-white/5`
+                            }`}
+                          style={ isActive ? {} : { color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)' } }>
+                          {opt.icon}
+                          <span className="leading-tight text-center">{opt.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 <button type="submit" disabled={isSubmitting} id="form-submit-btn"
                   className="w-full bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 disabled:opacity-50 text-charcoal-950 font-bold py-4 rounded-xl text-xs tracking-widest uppercase transition-all duration-300 shadow-md flex justify-center items-center gap-2">
                   {isSubmitting
