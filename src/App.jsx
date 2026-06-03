@@ -628,8 +628,8 @@ export default function App() {
           </h2>
           <p className={`${textSecondary} text-sm mb-8`}>
             {lang === 'ru'
-              ? 'Кабинет находится в салоне красоты Shade. Вход со стороны проспекта.'
-              : 'Кабинет Shade сұлулық салонында орналасқан. Кіреберіс даңғыл жағынан.'}
+              ? 'Кабинет находится в студии лазерной эпиляции Shade. Вход со стороны проспекта.'
+              : 'Кабинет Shade лазерлік эпиляция студиясында орналасқан. Кіреберіс даңғыл жағынан.'}
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -666,8 +666,8 @@ export default function App() {
                     </p>
                     <p className={`${textSecondary} text-sm leading-relaxed`}>
                       {lang === 'ru'
-                        ? 'Проспект Азаттык, 93 — салон красоты Shade'
-                        : 'Азаттық даңғылы, 93 — Shade сұлулық салоны'}
+                        ? 'Проспект Азаттык, 93 — студия лазерной эпиляции Shade'
+                        : 'Азаттық даңғылы, 93 — Shade лазерлік эпиляция студиясы'}
                     </p>
                     <p className={`${textMuted} text-xs mt-1`}>Атырау, 60011/E01Y0B0</p>
                   </div>
