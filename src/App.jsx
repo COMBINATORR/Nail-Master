@@ -889,7 +889,8 @@ export default function App() {
       <header className={`sticky top-0 z-40 backdrop-blur-md ${bgHeader} border-b ${border} transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center">
           <div className="flex flex-col items-start leading-none">
-            <span className={`font-sans font-bold text-2xl tracking-widest ${textPrimary}`}>SVTL</span>
+            <span className={`font-sans font-bold text-2xl ${textPrimary} w-full`}
+                  style={{textAlign:'justify', textAlignLast:'justify'}}>SVTL</span>
             <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
           </div>
           {/* Desktop nav links */}
@@ -1618,7 +1619,8 @@ export default function App() {
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
             {/* Logo */}
             <div className="flex flex-col leading-none">
-              <span className={`font-sans font-bold text-2xl tracking-widest ${textPrimary}`}>SVTL</span>
+              <span className={`font-sans font-bold text-2xl ${textPrimary} w-full`}
+                    style={{textAlign:'justify', textAlignLast:'justify'}}>SVTL</span>
               <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
             </div>
 
@@ -1675,7 +1677,8 @@ export default function App() {
               {/* Header inside Mobile Menu */}
               <div className="flex justify-between items-center mb-10">
                 <div className="flex flex-col items-start leading-none">
-                  <span className={`font-sans font-bold text-xl tracking-widest ${textPrimary}`}>SVTL</span>
+                  <span className={`font-sans font-bold text-xl ${textPrimary} w-full`}
+                        style={{textAlign:'justify', textAlignLast:'justify'}}>SVTL</span>
                   <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
                 </div>
                 <button 
