@@ -98,13 +98,13 @@ export default function App() {
   };
 
   /* ─── Theme-aware class helpers ─── */
-  const bg       = isDark ? 'bg-charcoal-900'    : 'bg-[#faf9f7]';
-  const bgDeep   = isDark ? 'bg-charcoal-950'    : 'bg-white';
-  const bgCard   = isDark ? 'bg-charcoal-950/40' : 'bg-white';
-  const bgSubtle = isDark ? 'bg-white/5'         : 'bg-charcoal-50';
-  const bgHeader = isDark ? 'bg-charcoal-900/95' : 'bg-[#faf9f7]/95';
-  const bgAlt    = isDark ? 'bg-charcoal-950/60' : 'bg-bronze-50/40';
-  const bgDeep80 = isDark ? 'bg-charcoal-950/80' : 'bg-white/95';
+  const bg       = isDark ? 'bg-transparent'              : 'bg-transparent';
+  const bgDeep   = isDark ? 'bg-charcoal-950/70'          : 'bg-white/80';
+  const bgCard   = isDark ? 'bg-charcoal-950/50'          : 'bg-white/80';
+  const bgSubtle = isDark ? 'bg-white/4'                  : 'bg-charcoal-50/80';
+  const bgHeader = isDark ? 'bg-charcoal-950/80'          : 'bg-[#f8f6f2]/90';
+  const bgAlt    = isDark ? 'bg-charcoal-950/30'          : 'bg-bronze-50/30';
+  const bgDeep80 = isDark ? 'bg-charcoal-950/80'          : 'bg-white/90';
 
   const textPrimary   = isDark ? 'text-white'       : 'text-charcoal-900';
   const textSecondary = isDark ? 'text-neutral-400' : 'text-charcoal-500';
@@ -343,7 +343,16 @@ export default function App() {
 
   /* ─── RENDER ─── */
   return (
-    <div className={`min-h-screen ${bg} ${isDark ? 'text-neutral-100' : 'text-charcoal-800'} font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950`}>
+    <div className={`min-h-screen ${bg} bg-grain ${isDark ? 'text-neutral-100' : 'text-charcoal-800'} font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950`}>
+
+      {/* ═══════════ PREMIUM BACKGROUND LAYERS (fixed, behind everything) ═══════════ */}
+      <div className="premium-orbs" aria-hidden="true">
+        <div className="orb orb-1"></div>
+        <div className="orb orb-2"></div>
+        <div className="orb orb-3"></div>
+        <div className="orb orb-4"></div>
+      </div>
+      <div className="bg-grid-lines" aria-hidden="true"></div>
 
       {/* ═══════════ HEADER — full width on desktop ═══════════ */}
       <header className={`sticky top-0 z-40 backdrop-blur-md ${bgHeader} border-b ${border} transition-colors duration-300`}>
