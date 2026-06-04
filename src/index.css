@@ -305,11 +305,7 @@ body.light .spcwlkr-credit:hover {
   .logo-container:hover .logo-svg {
     transform: translate(-50%, -6px) scale(1.08);
     filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 0 8px rgba(20, 184, 166, 0.45));
-  }
-  .logo-container:hover .logo-pulse-path {
-    opacity: 1;
-    animation: logoPulseRun 1.2s linear infinite;
+            drop-shadow(0 0 8px rgba(197, 160, 89, 0.35));
   }
   .logo-container:hover .logo-details {
     opacity: 1;
@@ -329,11 +325,7 @@ body.light .spcwlkr-credit:hover {
 .logo-container.active .logo-svg {
   transform: translate(-50%, -6px) scale(1.08);
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55))
-          drop-shadow(0 0 8px rgba(20, 184, 166, 0.45));
-}
-.logo-container.active .logo-pulse-path {
-  opacity: 1;
-  animation: logoPulseRun 1.2s linear infinite;
+          drop-shadow(0 0 8px rgba(197, 160, 89, 0.35));
 }
 .logo-container.active .logo-details {
   opacity: 1;
@@ -358,22 +350,6 @@ body.light .spcwlkr-credit:hover {
   stroke: currentColor;
   stroke-width: 0.6px;
   transition: color 350ms ease-out, stroke 350ms ease-out;
-}
-
-.logo-pulse-path {
-  opacity: 0;
-  stroke-dasharray: 20 60;
-  stroke-dashoffset: 80;
-  transition: opacity 350ms ease-out;
-}
-
-@keyframes logoPulseRun {
-  from {
-    stroke-dashoffset: 80;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
 }
 
 .logo-details {

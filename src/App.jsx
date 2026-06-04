@@ -1160,15 +1160,6 @@ export default function App() {
               >
                 S
               </text>
-              {/* Center skeleton neon laser pulse path */}
-              <path 
-                d="M22 9.5 C22 7.5, 20 6, 16 6 C12 6, 10 7.5, 10 11 C10 14.5, 22 17.5, 22 21 C22 24.5, 20 26, 16 26 C12 26, 10 24.5, 10 22.5" 
-                stroke="#14b8a6" 
-                strokeWidth="2.5" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-                className="logo-pulse-path"
-              />
             </svg>
             
             {/* Floating text underlay */}
