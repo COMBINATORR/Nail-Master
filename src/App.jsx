@@ -633,6 +633,111 @@ export default function App() {
       optSugarMask: "Тыныштандыратын альгинатты маска",
       optSugarPeeling: "Түктердің ішке өсуіне қарсы энзимді пилинг",
       optSugarFace: "Бет аймағындағы депиляция (мұрт/иек)",
+    },
+    en: {
+      brand: "SVTL Nails & Aesthetic",
+      heroSuperTitle: "MANICURE • PEDICURE • SUGARING IN ATYRAU",
+      heroTitle: "PREMIUM CARE AND AESTHETICS FOR YOUR BEAUTY",
+      heroSubtitle: "IMPECCABLE QUALITY • 100% STERILE",
+      heroDesc: "Personalized approach from certified artist Svetlana. Safe treatments, premium materials, and a cozy studio designed with your comfort and beauty in mind.",
+      heroCta: "Calculate price & lock in discount",
+      trustTitle: "WHY CLIENTS TRUST ME",
+      trustSubtitle: "I guarantee safety, transparency, and the highest standards of service",
+      trust1Title: "100% Sterile Instruments",
+      trust1Desc: "3-stage sterilization following sanitary standards. Tools are sterilized in a GP-10 dry heat oven, and the kraft bag is opened strictly in front of you.",
+      trust2Title: "Zero Hidden Charges",
+      trust2Desc: "Treatment prices are locked in before we begin. You will always know the exact amount with no unexpected extras at checkout.",
+      trust3Title: "Respecting Your Time",
+      trust3Desc: "Strict session timing. Your manicure or sugaring will be fast, neat, and precisely on schedule.",
+      servicesTitle: "MY SERVICES",
+      servicesSubtitle: "Choose category, service, and options — price and duration are calculated automatically.",
+      servicesSelectBase: "1. Select service:",
+      servicesSelectOptions: "2. Extra options:",
+      servicesTotal: "Total Estimate:",
+      servicesTotalPrice: "Price",
+      servicesTotalTime: "Duration",
+      servicesSelectedPreview: "Your Visit",
+      serviceCta: "Lock in price and book",
+      guaranteeIndicatorText: "SVTL Guarantee: You book directly with Svetlana. Master replacement or passing your time to a beginner/trainee is completely excluded. Personal quality control.",
+      guaranteesTitle: "GUARANTEES",
+      guaranteesSubtitle: "You are protected by my personal standards of quality",
+      g1Title: "Personal Responsibility", g1Desc: "You book directly with me. I take full responsibility for every stage of your treatment and comfort.",
+      g2Title: "Absolute Safety", g2Desc: "Only certified hypoallergenic materials and 100% disposable consumables are used.",
+      g3Title: "Punctuality",         g3Desc: "Appointments are strictly on time. No queues, waiting, or unnecessary delays.",
+      g4Title: "Transparent Pricing",        g4Desc: "All extra requests are discussed beforehand. Complete financial honesty with no surprises.",
+      fearTitle: "MYTHS • FAQ",
+      fearSubtitle: "Answering my clients' most common questions",
+      formTitle: "BOOK AN APPOINTMENT",
+      formComfort: "The studio is equipped with air conditioning. Fresh coffee, tea, pleasant music, and dedicated service are always included.",
+      formHelp: "Fill in your details, and I will contact you on WhatsApp within 5 minutes to confirm your preferred time.",
+      namePlaceholder: "Your name",
+      phonePlaceholder: "Phone number (WhatsApp)",
+      formCta: "Confirm booking via WhatsApp",
+      modalSuccessTitle: "Request Sent!",
+      modalSuccessDesc: "I'm already preparing to contact you on WhatsApp. See you at your appointment!",
+      modalClose: "Open WhatsApp",
+      careTitle: "CLIENT AFTERCARE GUIDE",
+      careSubtitle: "Simple and effective tips to care for your skin and nails after your appointment",
+      footerText: "SVTL Aesthetics Studio in Atyrau. Manicure, pedicure, sugaring.",
+      rights: "All rights reserved.",
+      total: "Total",
+      portfolioTitle: "OUR WORKS",
+      portfolioSubtitle: "Interactive comparison: drag the slider side to side to evaluate the manicure quality.",
+      beforeText: "BEFORE",
+      afterText: "AFTER",
+      workNudeTitle: "Classic Nude",
+      workNudeDesc: "Delicate cuticle treatment without cuts, nail plate alignment, and coverage with premium nude builder gel.",
+      workFrenchTitle: "Elegant French",
+      workFrenchDesc: "Classic French manicure on medium length. Perfectly crisp smile line and nail structure reinforcement.",
+      workBordeauxTitle: "Deep Bordeaux",
+      workBordeauxDesc: "Comprehensive anti-aging hand and cuticle treatment, reinforcing weakened nails, finished with a noble wine shade.",
+      workLavenderTitle: "Gentle Lavender",
+      workLavenderDesc: "Fresh pastel lavender design. Thin yet durable gel polish coating.",
+      workRedTitle: "Vibrant Red",
+      workRedDesc: "Classic manicure with flawless deep red gel polish applied right under the cuticle. Perfect architecture and long-lasting shine.",
+      ageLabel: "Hand Age",
+      timeLabel: "Work Time",
+
+      // Categories & services names
+      catManicureName: "Manicure",
+      catPedicureName: "Pedicure",
+      catSugaringName: "Sugaring",
+      
+      serviceManicureClassicName: "Hygienic Manicure",
+      serviceManicureClassicDesc: "Hardware/combined manicure focusing on cuticle care and nail shaping without polish.",
+      serviceManicureGelName: "Manicure with Gel Polish",
+      serviceManicureGelDesc: "Manicure + structure reinforcement, nail plate alignment with builder base, and premium under-cuticle color application.",
+      serviceManicureExtName: "Nail Extensions",
+      serviceManicureExtDesc: "Modeling nail length and architecture with builder gel on nail forms, tailored to your ideal shape.",
+      
+      optManiDesign: "Design (French/gradient/nail art)",
+      optManiStrengthen: "Extra reinforcement (gel/acrylic)",
+      optManiRepair: "Nail repair (1-2 nails)",
+      optManiSpa: "SPA care (paraffin treatment & massage)",
+
+      servicePediExpressName: "Express Pedicure",
+      servicePediExpressDesc: "Toenail care with premium gel polish application. Quick and beautiful.",
+      servicePediSmartName: "Full Smart Pedicure",
+      servicePediSmartDesc: "Complete foot treatment using Smart discs (removing cracks, calluses) + toenail care with gel polish.",
+      servicePediHygieneName: "Hygienic Pedicure",
+      servicePediHygieneDesc: "Hardware treatment for feet and toenails without polish. Health and purity for your feet.",
+      
+      optPediDesign: "Toenail design",
+      optPediCracks: "Removal of core calluses / deep cracks",
+      optPediSpa: "SPA care (peeling, nourishing mask, massage)",
+
+      serviceSugarBikiniName: "Brazilian Bikini",
+      serviceSugarBikiniDesc: "Delicate and gentle hair removal in the intimate zone using sugar paste, with antiseptic care.",
+      serviceSugarLegsName: "Full Legs",
+      serviceSugarLegsDesc: "Full leg sugaring (thighs and calves). Silky smooth skin for up to 4 weeks.",
+      serviceSugarUnderarmsName: "Underarms",
+      serviceSugarUnderarmsDesc: "Quick underarm hair removal using hypoallergenic sugar paste.",
+      serviceSugarArmsName: "Full Arms",
+      serviceSugarArmsDesc: "Sugaring of arms along the entire length (up to the shoulder). Makes skin perfectly smooth.",
+      
+      optSugarMask: "Soothing alginate body mask",
+      optSugarPeeling: "Enzyme peeling against ingrown hairs",
+      optSugarFace: "Facial depilation (upper lip/chin)",
     }
   };
 
@@ -650,6 +755,13 @@ export default function App() {
       { q: "Стерильділік сақтала ма?",   a: "3 кезеңді стерилизация. Крафт-пакет көзіңізше ашылады. Егеулер бір реттік." },
       { q: "Жасырын үстемелер бола ма?", a: "Құны жұмыс алдында бекітіледі. Алып тастау мен тегістеу прайске кіреді." },
       { q: "Пішіні басқаша бола ма?",    a: "Пішін мен ұзындық базаны жаққанға дейін сізбен келісіледі." }
+    ],
+    en: [
+      { q: "Will the polish chip quickly?", a: "I guarantee 28 days of wear. If any chip occurs, I will redo it for free on the same day." },
+      { q: "Does the e-file hurt?", a: "I work with a gentle micro-treatment technique. No burns, cuts, or discomfort." },
+      { q: "What about sterility?", a: "3-stage medical-grade sterilization. The kraft bag is opened in front of you. Nail files are single-use." },
+      { q: "Are there hidden costs?", a: "Prices are fixed before we start. Removal and plate alignment are already included." },
+      { q: "What if the shape isn't right?", a: "The shape and length are aligned with you step-by-step before applying any base." }
     ]
   };
 
@@ -813,6 +925,86 @@ export default function App() {
           icon: "lotion"
         }
       ]
+    },
+    en: {
+      manicure: [
+        {
+          title: "First 24 hours",
+          desc: "Avoid prolonged contact with hot water (baths, saunas, hot showers) to let the polish fully cure.",
+          badge: "Important",
+          icon: "time"
+        },
+        {
+          title: "Household chores",
+          desc: "Wear rubber gloves when handling household chemicals to preserve the mirror shine of the top coat.",
+          badge: "Protection",
+          icon: "protect"
+        },
+        {
+          title: "Daily care",
+          desc: "Apply cuticle oil and moisturizer daily to prevent dryness and hangnails.",
+          badge: "Care",
+          icon: "care"
+        },
+        {
+          title: "Duration",
+          desc: "The recommended wear time is 3–4 weeks. Do not wear it longer to avoid stress cracks on the nail bed.",
+          badge: "Timing",
+          icon: "calendar"
+        }
+      ],
+      pedicure: [
+        {
+          title: "Comfortable shoes",
+          desc: "Avoid tight footwear and narrow socks in the first days to prevent unnecessary pressure on your toes.",
+          badge: "Comfort",
+          icon: "shoe"
+        },
+        {
+          title: "Deep moisture",
+          desc: "Apply a nourishing foot cream before bed (preferably with urea for maximum softness).",
+          badge: "Softness",
+          icon: "cream"
+        },
+        {
+          title: "Dry and clean",
+          desc: "Dry the skin between your toes thoroughly after showering to prevent cracking and dampness.",
+          badge: "Hygiene",
+          icon: "dry"
+        },
+        {
+          title: "Nail trimming",
+          desc: "Cut toenails straight across without rounding the corners to prevent ingrown toenails.",
+          badge: "Shape",
+          icon: "shape"
+        }
+      ],
+      sugaring: [
+        {
+          title: "Limit for 24h",
+          desc: "Avoid gym sessions, saunas, swimming pools, and tanning beds to prevent irritation of open hair follicles.",
+          badge: "Restricted",
+          icon: "ban"
+        },
+        {
+          title: "Loose clothing",
+          desc: "Wear loose natural-fabric underwear and clothing on the first day to prevent friction.",
+          badge: "Comfort",
+          icon: "cloth"
+        },
+        {
+          title: "Prevention",
+          desc: "Start a light enzyme peel after 3-5 days to exfoliate skin and prevent ingrown hairs.",
+          badge: "Peeling",
+          icon: "peel"
+        },
+        {
+          title: "Hydration",
+          desc: "Use a lightweight moisturizing lotion without comedogenic oils or alcohol to restore skin.",
+          badge: "Lotion",
+          icon: "lotion"
+        }
+      ]
     }
   };
 
@@ -828,8 +1020,10 @@ export default function App() {
     const o = catObj.options.find(x => x.id === id); return s + (o ? o.time : 0);
   }, 0);
   const fmtTime = (m) => {
-    const h = Math.floor(m / 60), mn = m % 60, hl = lang === 'ru' ? 'ч.' : 'сағ.';
-    return `${h > 0 ? `${h} ${hl} ` : ''}${mn > 0 ? `${mn} мин.` : ''}`;
+    const h = Math.floor(m / 60), mn = m % 60;
+    const hl = lang === 'en' ? 'h.' : lang === 'ru' ? 'ч.' : 'сағ.';
+    const ml = lang === 'en' ? 'min.' : 'мин.';
+    return `${h > 0 ? `${h} ${hl} ` : ''}${mn > 0 ? `${mn} ${ml}` : ''}`;
   };
   const toggleOption = (id) => setSelectedOptions(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
 
@@ -846,21 +1040,30 @@ export default function App() {
 
     const shapeObj = nailShapes.find(s => s.id === nailShape);
     const shapeText = activeCategory !== 'sugaring'
-      ? (lang === 'ru' ? shapeObj?.nameRu : shapeObj?.nameKk)
-      : (lang === 'ru' ? 'Не требуется' : 'Қажет емес');
+      ? (lang === 'en' ? (shapeObj?.id === 'sharp_square' ? 'Sharp Square' : shapeObj?.id === 'soft_square' ? 'Soft Square' : shapeObj?.id === 'oval' ? 'Oval' : 'Almond') : lang === 'ru' ? shapeObj?.nameRu : shapeObj?.nameKk)
+      : (lang === 'en' ? 'Not required' : lang === 'ru' ? 'Не требуется' : 'Қажет емес');
 
     const modeText = visitMode === 'relax'
-      ? (lang === 'ru' ? 'Relax-визит в тишине' : 'Тыныштықтағы Relax')
-      : (lang === 'ru' ? 'С душевной беседой' : 'Жылы сұхбат');
+      ? (lang === 'en' ? 'Relax visit in silence' : lang === 'ru' ? 'Relax-визит в тишине' : 'Тыныштықтағы Relax')
+      : (lang === 'en' ? 'With a friendly chat' : lang === 'ru' ? 'С душевной беседой' : 'Жылы сұхбат');
 
-    let msg = `Салем! Хочу записаться в SVTL Nails & Aesthetic.\n` +
-      `Услуги: ${allServicesText} (${categoryName})\n` +
-      `Форма ногтей: ${shapeText}\n` +
-      `Режим визита: ${modeText}\n` +
-      `Фиксированная цена: ${totalPrice.toLocaleString()} ₸.`;
+    const greeting = lang === 'en' ? 'Hello!' : 'Салем!';
+    const requestText = lang === 'en' ? 'I would like to book an appointment at SVTL Nails & Aesthetic.' : 'Хочу записаться в SVTL Nails & Aesthetic.';
+    const servicesLabel = lang === 'en' ? 'Services' : 'Услуги';
+    const shapeLabel = lang === 'en' ? 'Nail shape' : 'Форма ногтей';
+    const modeLabel = lang === 'en' ? 'Visit mode' : 'Режим визита';
+    const priceLabel = lang === 'en' ? 'Fixed price' : 'Фиксированная цена';
+
+    let msg = `${greeting} ${requestText}\n` +
+      `${servicesLabel}: ${allServicesText} (${categoryName})\n` +
+      `${shapeLabel}: ${shapeText}\n` +
+      `${modeLabel}: ${modeText}\n` +
+      `${priceLabel}: ${totalPrice.toLocaleString()} ₸.`;
 
     if (includeNameAndPhone && name) {
-      msg += `\nИмя: ${name}\nТелефон: ${phone}`;
+      const nameLabel = lang === 'en' ? 'Name' : 'Имя';
+      const phoneLabel = lang === 'en' ? 'Phone' : 'Телефон';
+      msg += `\n${nameLabel}: ${name}\n${phoneLabel}: ${phone}`;
     }
     return msg;
   };
@@ -975,7 +1178,7 @@ export default function App() {
               <button onClick={() => setShowLangPopup(!showLangPopup)}
                 className={`p-1.5 rounded-full ${bgSubtle} ${isDark ? 'text-neutral-400 hover:text-bronze-400' : 'text-charcoal-400 hover:text-bronze-600'} transition-colors flex items-center gap-1`}>
                 <GlobeIcon />
-                <span className="text-[9px] font-bold uppercase">{lang === 'ru' ? 'RU' : 'KZ'}</span>
+                <span className="text-[9px] font-bold uppercase">{lang === 'ru' ? 'RU' : lang === 'kk' ? 'KZ' : 'EN'}</span>
               </button>
               {showLangPopup && (
                 <div className={`absolute right-0 top-full mt-2 ${isDark ? 'bg-charcoal-800 border-white/10' : 'bg-white border-charcoal-200'} border rounded-xl shadow-xl overflow-hidden z-50 popup-backdrop min-w-[130px] animate-fadeIn`}>
@@ -986,6 +1189,10 @@ export default function App() {
                   <button onClick={() => { setLang('kk'); setShowLangPopup(false); }}
                     className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'kk' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} ${isDark ? 'hover:bg-white/5' : 'hover:bg-charcoal-50'}`}`}>
                     <span>🇰🇿</span> Қазақша
+                  </button>
+                  <button onClick={() => { setLang('en'); setShowLangPopup(false); }}
+                    className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'en' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} ${isDark ? 'hover:bg-white/5' : 'hover:bg-charcoal-50'}`}`}>
+                    <span>🇬🇧</span> English
                   </button>
                 </div>
               )}
@@ -1881,7 +2088,7 @@ export default function App() {
               
               {/* Language selection in drawer */}
               <div className="flex items-center justify-between">
-                <span className={`text-[10px] uppercase font-bold tracking-wider ${textMuted}`}>Язык / Тіл:</span>
+                <span className={`text-[10px] uppercase font-bold tracking-wider ${textMuted}`}>Language / Язык / Тіл:</span>
                 <div className="flex gap-2">
                   <button 
                     onClick={() => { setLang('ru'); setIsMobileMenuOpen(false); }}
@@ -1894,6 +2101,12 @@ export default function App() {
                     className={`px-3 py-1 rounded-md text-xs font-bold transition-colors ${lang === 'kk' ? 'bg-bronze-500/20 text-bronze-500' : `${textMuted} ${bgSubtle}`}`}
                   >
                     KZ
+                  </button>
+                  <button 
+                    onClick={() => { setLang('en'); setIsMobileMenuOpen(false); }}
+                    className={`px-3 py-1 rounded-md text-xs font-bold transition-colors ${lang === 'en' ? 'bg-bronze-500/20 text-bronze-500' : `${textMuted} ${bgSubtle}`}`}
+                  >
+                    EN
                   </button>
                 </div>
               </div>
