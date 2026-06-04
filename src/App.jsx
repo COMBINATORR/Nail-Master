@@ -373,6 +373,9 @@ export default function App() {
   const textPrimary   = isDark ? 'text-white'       : 'text-charcoal-900';
   const textSecondary = isDark ? 'text-neutral-400' : 'text-charcoal-500';
   const textMuted     = isDark ? 'text-neutral-500' : 'text-charcoal-400';
+  const logoColorClass = isDark
+    ? 'text-neutral-500 group-hover:text-white group-[.active]:text-white'
+    : 'text-charcoal-400 group-hover:text-charcoal-900 group-[.active]:text-charcoal-900';
   const textFaint     = isDark ? 'text-neutral-600' : 'text-charcoal-300';
 
   const border       = isDark ? 'border-white/10'  : 'border-charcoal-200';
@@ -1146,7 +1149,7 @@ export default function App() {
           {/* Logo with hover SVG neon animation */}
           <div 
             ref={logoRef}
-            className="logo-container"
+            className="logo-container group"
             onClick={(e) => {
               e.currentTarget.classList.toggle('active');
             }}
@@ -1156,7 +1159,7 @@ export default function App() {
               <text 
                 x="16" 
                 y="16" 
-                className="logo-base-text"
+                className={`logo-base-text transition-colors duration-300 ${logoColorClass}`}
               >
                 S
               </text>

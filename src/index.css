@@ -349,7 +349,7 @@ body.light .spcwlkr-credit:hover {
   fill: currentColor;
   stroke: currentColor;
   stroke-width: 0.6px;
-  transition: color 350ms ease-out, stroke 350ms ease-out;
+  transition: color 350ms ease-out, fill 350ms ease-out, stroke 350ms ease-out;
 }
 
 .logo-details {
