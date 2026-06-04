@@ -1146,7 +1146,7 @@ export default function App() {
           {/* Logo with hover SVG neon animation */}
           <div 
             ref={logoRef}
-            className="logo-container inline-flex flex-col items-center justify-center cursor-pointer select-none"
+            className="logo-container"
             onClick={(e) => {
               e.currentTarget.classList.toggle('active');
             }}
@@ -1155,7 +1155,7 @@ export default function App() {
               <svg width="24" height="24" viewBox="0 0 32 32" fill="none" className="logo-svg">
                 {/* Base path */}
                 <path 
-                  d="M22 9C22 7 19.5 6 16 6C11.5 6 9.5 8.5 9.5 12C9.5 16.5 22.5 15.5 22.5 20C22.5 23.5 20.5 26 16 26C12.5 26 10 25 10 23" 
+                  d="M22 9.5 C22 7.5, 20 6, 16 6 C12 6, 10 7.5, 10 11 C10 14.5, 22 17.5, 22 21 C22 24.5, 20 26, 16 26 C12 26, 10 24.5, 10 22.5" 
                   stroke="currentColor" 
                   strokeWidth="2.5" 
                   strokeLinecap="round" 
@@ -1164,7 +1164,7 @@ export default function App() {
                 />
                 {/* Pulse path */}
                 <path 
-                  d="M22 9C22 7 19.5 6 16 6C11.5 6 9.5 8.5 9.5 12C9.5 16.5 22.5 15.5 22.5 20C22.5 23.5 20.5 26 16 26C12.5 26 10 25 10 23" 
+                  d="M22 9.5 C22 7.5, 20 6, 16 6 C12 6, 10 7.5, 10 11 C10 14.5, 22 17.5, 22 21 C22 24.5, 20 26, 16 26 C12 26, 10 24.5, 10 22.5" 
                   stroke="#14b8a6" 
                   strokeWidth="2.5" 
                   strokeLinecap="round" 
@@ -1175,7 +1175,7 @@ export default function App() {
             </div>
             
             {/* Floating text underlay */}
-            <div className="logo-details absolute top-full left-1/2 flex flex-col items-center pt-0.5">
+            <div className="logo-details">
               <div className="logo-line"></div>
               <span className="logo-subtext">
                 Nails &amp; Aesthetic
