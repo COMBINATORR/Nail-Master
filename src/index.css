@@ -348,9 +348,16 @@ body.light .spcwlkr-credit:hover {
   letter-spacing: 0.2em;
 }
 
-.logo-base-path {
+.logo-base-text {
+  font-family: 'Playfair Display', 'Cormorant Garamond', 'Didot', 'Bodoni MT', serif;
+  font-size: 27px;
+  font-weight: 900;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: currentColor;
   stroke: currentColor;
-  transition: stroke 350ms ease-out;
+  stroke-width: 0.6px;
+  transition: color 350ms ease-out, stroke 350ms ease-out;
 }
 
 .logo-pulse-path {
