@@ -297,9 +297,55 @@ body.light .spcwlkr-credit:hover {
 
 .logo-container:hover .logo-svg,
 .logo-container.active .logo-svg {
+  /* base fallback - will be overridden below if hover is supported */
+}
+
+/* Hover styles only on devices that support hover */
+@media (hover: hover) {
+  .logo-container:hover .logo-svg {
+    transform: translate(-50%, -6px) scale(1.08);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 8px rgba(20, 184, 166, 0.45));
+  }
+  .logo-container:hover .logo-pulse-path {
+    opacity: 1;
+    animation: logoPulseRun 1.2s linear infinite;
+  }
+  .logo-container:hover .logo-details {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  .logo-container:hover .logo-line {
+    width: 24px;
+  }
+  .logo-container:hover .logo-subtext {
+    opacity: 1;
+    filter: blur(0);
+    letter-spacing: 0.2em;
+  }
+}
+
+/* Active styles on tap/click for both mobile and desktop */
+.logo-container.active .logo-svg {
   transform: translate(-50%, -6px) scale(1.08);
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55))
           drop-shadow(0 0 8px rgba(20, 184, 166, 0.45));
+}
+.logo-container.active .logo-pulse-path {
+  opacity: 1;
+  animation: logoPulseRun 1.2s linear infinite;
+}
+.logo-container.active .logo-details {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.logo-container.active .logo-line {
+  width: 24px;
+}
+.logo-container.active .logo-subtext {
+  opacity: 1;
+  filter: blur(0);
+  letter-spacing: 0.2em;
 }
 
 .logo-base-path {
@@ -312,12 +358,6 @@ body.light .spcwlkr-credit:hover {
   stroke-dasharray: 20 60;
   stroke-dashoffset: 80;
   transition: opacity 350ms ease-out;
-}
-
-.logo-container:hover .logo-pulse-path,
-.logo-container.active .logo-pulse-path {
-  opacity: 1;
-  animation: logoPulseRun 1.2s linear infinite;
 }
 
 @keyframes logoPulseRun {
@@ -344,12 +384,6 @@ body.light .spcwlkr-credit:hover {
   width: 100%;
 }
 
-.logo-container:hover .logo-details,
-.logo-container.active .logo-details {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
 .logo-line {
   height: 1.5px;
   width: 0;
@@ -357,11 +391,6 @@ body.light .spcwlkr-credit:hover {
   opacity: 0.6;
   border-radius: 9999px;
   transition: width 350ms ease-out;
-}
-
-.logo-container:hover .logo-line,
-.logo-container.active .logo-line {
-  width: 24px;
 }
 
 .logo-subtext {
@@ -378,13 +407,6 @@ body.light .spcwlkr-credit:hover {
   transition: opacity 350ms ease-out, 
               filter 400ms ease-out, 
               letter-spacing 350ms ease-out;
-}
-
-.logo-container:hover .logo-subtext,
-.logo-container.active .logo-subtext {
-  opacity: 1;
-  filter: blur(0);
-  letter-spacing: 0.2em;
 }
 
 
