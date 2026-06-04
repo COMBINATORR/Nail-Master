@@ -1240,9 +1240,21 @@ export default function App() {
             {/* Right: stat cards (desktop only) */}
             <div className="hidden lg:grid grid-cols-1 gap-4 w-72 xl:w-80 flex-shrink-0">
               {[
-                { num: '28', unit: 'дней', label: 'гарантия покрытия' },
-                { num: '100%', unit: '', label: 'одноразовые расходники' },
-                { num: '0 ₸', unit: '', label: 'скрытых доплат' },
+                { 
+                  num: '28', 
+                  unit: lang === 'en' ? 'days' : lang === 'ru' ? 'дней' : 'күн', 
+                  label: lang === 'en' ? 'coating guarantee' : lang === 'ru' ? 'гарантия покрытия' : 'жабын кепілдігі' 
+                },
+                { 
+                  num: '100%', 
+                  unit: '', 
+                  label: lang === 'en' ? 'disposable consumables' : lang === 'ru' ? 'одноразовые расходники' : 'бір реттік шығын материалдары' 
+                },
+                { 
+                  num: '0 ₸', 
+                  unit: '', 
+                  label: lang === 'en' ? 'hidden charges' : lang === 'ru' ? 'скрытых доплат' : 'жасырын үстемелер' 
+                },
               ].map((s, i) => (
                 <div key={i} className={`${bgCard} border ${border} rounded-2xl p-5 hover:border-bronze-500/30 transition-all`}>
                   <div className={`font-display font-black text-3xl ${textPrimary} mb-0.5`}>
