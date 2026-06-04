@@ -185,6 +185,7 @@ export default function App() {
   const [nailShape, setNailShape] = useState('oval');
   const [visitMode, setVisitMode] = useState('relax');
   const langPopupRef = useRef(null);
+  const logoRef = useRef(null);
   const categories = {
     manicure: {
       id: 'manicure',
@@ -341,6 +342,9 @@ export default function App() {
   useEffect(() => {
     const handler = (e) => {
       if (langPopupRef.current && !langPopupRef.current.contains(e.target)) setShowLangPopup(false);
+      if (logoRef.current && !logoRef.current.contains(e.target)) {
+        logoRef.current.classList.remove('active');
+      }
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -1139,10 +1143,44 @@ export default function App() {
       {/* ═══════════ HEADER — full width on desktop ═══════════ */}
       <header className={`sticky top-0 z-40 backdrop-blur-md ${bgHeader} border-b ${border} transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center">
-          <div className="inline-flex flex-col leading-none">
-            <span className={`font-sans font-bold text-2xl ${textPrimary} block`}
-                  style={{textAlign:'justify', textAlignLast:'justify'}}>SVTL</span>
-            <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
+          {/* Logo with hover SVG neon animation */}
+          <div 
+            ref={logoRef}
+            className="logo-container inline-flex flex-col items-center justify-center cursor-pointer select-none"
+            onClick={(e) => {
+              e.currentTarget.classList.toggle('active');
+            }}
+          >
+            <div className="relative flex items-center justify-center w-6 h-6">
+              <svg width="24" height="24" viewBox="0 0 32 32" fill="none" className="logo-svg">
+                {/* Base path */}
+                <path 
+                  d="M22 9C22 7 19.5 6 16 6C11.5 6 9.5 8.5 9.5 12C9.5 16.5 22.5 15.5 22.5 20C22.5 23.5 20.5 26 16 26C12.5 26 10 25 10 23" 
+                  stroke="currentColor" 
+                  strokeWidth="2.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                  className="logo-base-path"
+                />
+                {/* Pulse path */}
+                <path 
+                  d="M22 9C22 7 19.5 6 16 6C11.5 6 9.5 8.5 9.5 12C9.5 16.5 22.5 15.5 22.5 20C22.5 23.5 20.5 26 16 26C12.5 26 10 25 10 23" 
+                  stroke="#14b8a6" 
+                  strokeWidth="2.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                  className="logo-pulse-path"
+                />
+              </svg>
+            </div>
+            
+            {/* Floating text underlay */}
+            <div className="logo-details absolute top-full left-1/2 flex flex-col items-center pt-0.5">
+              <div className="logo-line"></div>
+              <span className="logo-subtext">
+                Nails &amp; Aesthetic
+              </span>
+            </div>
           </div>
           {/* Desktop nav links */}
           <nav className="hidden lg:flex items-center gap-8">

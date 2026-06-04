@@ -273,3 +273,110 @@ body.light .spcwlkr-credit:hover {
     0px 4px 8px rgba(0, 0, 0, 0.08),
     0px 8px 16px rgba(0, 0, 0, 0.04);
 }
+
+/* ─── Header Logo SVG Neon & Cinematic Animation ─── */
+.logo-container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.logo-svg {
+  display: block;
+  transform: scale(1);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+  transition: transform 350ms ease-out, filter 350ms ease-out;
+  overflow: visible; /* ensure drop-shadow is not clipped */
+}
+
+.logo-container:hover .logo-svg,
+.logo-container.active .logo-svg {
+  transform: scale(1.08);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55))
+          drop-shadow(0 0 8px rgba(20, 184, 166, 0.45));
+}
+
+.logo-base-path {
+  stroke: currentColor;
+  transition: stroke 350ms ease-out;
+}
+
+.logo-pulse-path {
+  opacity: 0;
+  stroke-dasharray: 20 60;
+  stroke-dashoffset: 80;
+  transition: opacity 350ms ease-out;
+}
+
+.logo-container:hover .logo-pulse-path,
+.logo-container.active .logo-pulse-path {
+  opacity: 1;
+  animation: logoPulseRun 1.2s linear infinite;
+}
+
+@keyframes logoPulseRun {
+  from {
+    stroke-dashoffset: 80;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.logo-details {
+  opacity: 0;
+  transform: translate(-50%, 6px);
+  pointer-events: none;
+  transition: opacity 350ms ease-out,
+              transform 350ms ease-out;
+}
+
+.logo-container:hover .logo-details,
+.logo-container.active .logo-details {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.logo-line {
+  height: 1.5px;
+  width: 0;
+  background-color: var(--color-bronze-500);
+  opacity: 0.6;
+  border-radius: 9999px;
+  transition: width 350ms ease-out;
+}
+
+.logo-container:hover .logo-line,
+.logo-container.active .logo-line {
+  width: 24px;
+}
+
+.logo-subtext {
+  font-family: var(--font-serif);
+  font-size: 7.5px;
+  font-weight: 300;
+  color: var(--color-bronze-500);
+  text-transform: uppercase;
+  margin-top: 4px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  opacity: 0;
+  filter: blur(6px);
+  transition: opacity 350ms ease-out, 
+              filter 400ms ease-out, 
+              letter-spacing 350ms ease-out;
+}
+
+.logo-container:hover .logo-subtext,
+.logo-container.active .logo-subtext {
+  opacity: 1;
+  filter: blur(0);
+  letter-spacing: 0.2em;
+}
+
