@@ -167,10 +167,10 @@ const SectionLabel = ({ text }) => (
 );
 
 const nailShapes = [
-  { id: 'sharp_square', nameRu: 'Четкий квадрат', nameKk: 'Анық квадрат', path: "M10,18 L10,8 L22,8 L22,18" },
-  { id: 'soft_square', nameRu: 'Мягкий квадрат', nameKk: 'Жұмсақ квадрат', path: "M10,18 L10,10 Q10,8 12,8 L20,8 Q22,8 22,10 L22,18" },
-  { id: 'oval', nameRu: 'Овал', nameKk: 'Овал', path: "M10,18 C10,11 12,6 16,6 C20,6 22,11 22,18" },
-  { id: 'almond', nameRu: 'Миндаль', nameKk: 'Миндаль', path: "M10,18 C10,14 13,7 16,4 C19,7 22,14 22,18" },
+  { id: 'sharp_square', nameRu: 'Четкий квадрат', nameKk: 'Анық квадрат', nameEn: 'Sharp square', path: "M10,18 L10,8 L22,8 L22,18" },
+  { id: 'soft_square', nameRu: 'Мягкий квадрат', nameKk: 'Жұмсақ квадрат', nameEn: 'Soft square', path: "M10,18 L10,10 Q10,8 12,8 L20,8 Q22,8 22,10 L22,18" },
+  { id: 'oval', nameRu: 'Овал', nameKk: 'Овал', nameEn: 'Oval', path: "M10,18 C10,11 12,6 16,6 C20,6 22,11 22,18" },
+  { id: 'almond', nameRu: 'Миндаль', nameKk: 'Миндаль', nameEn: 'Almond', path: "M10,18 C10,14 13,7 16,4 C19,7 22,14 22,18" },
 ];
 
 export default function App() {
@@ -1149,7 +1149,8 @@ export default function App() {
             {['#trust','#services','#portfolio','#care-guide','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
               const labels = { 
                 ru: ['О мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
-                kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] 
+                kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'],
+                en: ['About me','Services','Works','Aftercare','Guarantees','FAQ','Address','Booking']
               };
               return (
                 <a key={href} href={href}
@@ -1340,7 +1341,7 @@ export default function App() {
               {activeCategory !== 'sugaring' && (
                 <div>
                   <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">
-                    {lang === 'ru' ? '2. Выберите форму ногтей:' : '2. Тырнақ пішінін таңдаңыз:'}
+                    {lang === 'en' ? '2. Choose nail shape:' : lang === 'ru' ? '2. Выберите форму ногтей:' : '2. Тырнақ пішінін таңдаңыз:'}
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {nailShapes.map((shape) => {
@@ -1377,7 +1378,7 @@ export default function App() {
                             />
                           </svg>
                           <span className="text-[11px] font-bold tracking-tight leading-snug">
-                            {lang === 'ru' ? shape.nameRu : shape.nameKk}
+                            {lang === 'en' ? shape.nameEn : lang === 'ru' ? shape.nameRu : shape.nameKk}
                           </span>
                         </div>
                       );
@@ -1390,7 +1391,7 @@ export default function App() {
               <div>
                 <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">
                   {activeCategory !== 'sugaring' 
-                    ? (lang === 'ru' ? '3. Дополнительные опции:' : '3. Қосымша опциялар:')
+                    ? (lang === 'en' ? '3. Extra options:' : lang === 'ru' ? '3. Дополнительные опции:' : '3. Қосымша опциялар:')
                     : t.servicesSelectOptions
                   }
                 </h3>
@@ -1471,9 +1472,9 @@ export default function App() {
               {/* Trust badges */}
               <div className={`border ${border} rounded-2xl p-4 ${bgCard} grid grid-cols-3 gap-3 text-center`}>
                 {[
-                  { icon: '🛡️', label: lang === 'ru' ? '28 дней\nгарантия' : '28 күн\nкепілдік' },
-                  { icon: '🔬', label: lang === 'ru' ? '3-уровн.\nстерильность' : '3 деңгейлі\nстерилизация' },
-                  { icon: '⏱️', label: lang === 'ru' ? 'До 2 часов\nработа' : '2 сағатқа\ndейін' },
+                  { icon: '🛡️', label: lang === 'en' ? '28 days\nguarantee' : lang === 'ru' ? '28 дней\nгарантия' : '28 күн\nкепілдік' },
+                  { icon: '🔬', label: lang === 'en' ? '3-stage\nsterility' : lang === 'ru' ? '3-уровн.\nстерильность' : '3 деңгейлі\nстерилизация' },
+                  { icon: '⏱️', label: lang === 'en' ? 'Up to 2 hours\nduration' : lang === 'ru' ? 'До 2 часов\nработа' : '2 сағатқа\ndейін' },
                 ].map((b, i) => (
                   <div key={i} className="flex flex-col items-center gap-1">
                     <span className="text-xl">{b.icon}</span>
@@ -1587,7 +1588,7 @@ export default function App() {
                   <div className="bg-charcoal-950/90 border border-bronze-500/30 px-6 py-3.5 rounded-2xl text-center shadow-2xl max-w-xs mx-4">
                     <div className="text-bronze-400 text-lg mb-1.5 animate-bounce">↔</div>
                     <p className="text-white text-xs font-bold uppercase tracking-wider leading-snug">
-                      {lang === 'ru' ? 'Потяните ползунок' : 'Жүгірткіні тартыңыз'}
+                      {lang === 'en' ? 'Drag the slider' : lang === 'ru' ? 'Потяните ползунок' : 'Жүгірткіні тартыңыз'}
                     </p>
                   </div>
                 </div>
@@ -1613,7 +1614,7 @@ export default function App() {
                 <div className="flex flex-col gap-1">
                   <span className={`${textMuted} text-[9px]`}>{t.timeLabel}</span>
                   <span className="text-bronze-400 font-display text-sm">
-                    {lang === 'ru' ? works[activeWork].time : works[activeWork].time.replace('ч', 'сағ').replace('мин', 'мин')}
+                    {lang === 'en' ? works[activeWork].time.replace('ч', 'h').replace('мин', 'min') : lang === 'ru' ? works[activeWork].time : works[activeWork].time.replace('ч', 'сағ').replace('мин', 'мин')}
                   </span>
                 </div>
               </div>
@@ -1637,9 +1638,9 @@ export default function App() {
           <div className="flex gap-2 p-1.5 bg-bronze-950/20 backdrop-blur-sm border border-bronze-500/10 rounded-2xl max-w-md mb-8">
             {['manicure', 'pedicure', 'sugaring'].map((tab) => {
               const tabLabels = {
-                manicure: lang === 'ru' ? 'Маникюр' : 'Маникюр',
-                pedicure: lang === 'ru' ? 'Педикюр' : 'Педикюр',
-                sugaring: lang === 'ru' ? 'Шугаринг' : 'Шугаринг'
+                manicure: lang === 'en' ? 'Manicure' : lang === 'ru' ? 'Маникюр' : 'Маникюр',
+                pedicure: lang === 'en' ? 'Pedicure' : lang === 'ru' ? 'Педикюр' : 'Педикюр',
+                sugaring: lang === 'en' ? 'Sugaring' : lang === 'ru' ? 'Шугаринг' : 'Шугаринг'
               };
               const isActive = activeCareTab === tab;
               return (
@@ -1759,12 +1760,14 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <SectionLabel text="LOCATION" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-3`}>
-            {lang === 'ru' ? 'КАК ДОБРАТЬСЯ' : 'МЕКЕН-ЖАЙ'}
+            {lang === 'en' ? 'HOW TO FIND US' : lang === 'ru' ? 'КАК ДОБРАТЬСЯ' : 'МЕКЕН-ЖАЙ'}
           </h2>
           <p className={`${textSecondary} text-sm mb-8`}>
-            {lang === 'ru'
-              ? 'Кабинет находится в студии лазерной эпиляции Shade. Вход со стороны проспекта.'
-              : 'Кабинет Shade лазерлік эпиляция студиясында орналасқан. Кіреберіс даңғыл жағынан.'}
+            {lang === 'en'
+              ? 'The studio is located inside Shade laser hair removal studio. Entrance from the avenue side.'
+              : lang === 'ru'
+                ? 'Кабинет находится в студии лазерной эпиляции Shade. Вход со стороны проспекта.'
+                : 'Кабинет Shade лазерлік эпиляция студиясында орналасқан. Кіреберіс даңғыл жағынан.'}
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -1797,12 +1800,14 @@ export default function App() {
                   </div>
                   <div>
                     <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
-                      {lang === 'ru' ? 'Адрес' : 'Мекен-жайы'}
+                      {lang === 'en' ? 'Address' : lang === 'ru' ? 'Адрес' : 'Мекен-жайы'}
                     </p>
                     <p className={`${textSecondary} text-sm leading-relaxed`}>
-                      {lang === 'ru'
-                        ? 'Проспект Азаттык, 93 — студия лазерной эпиляции Shade'
-                        : 'Азаттық даңғылы, 93 — Shade лазерлік эпиляция студиясы'}
+                      {lang === 'en'
+                        ? '93 Azattyk Avenue — inside Shade laser hair removal studio'
+                        : lang === 'ru'
+                          ? 'Проспект Азаттык, 93 — студия лазерной эпиляции Shade'
+                          : 'Азаттық даңғылы, 93 — Shade лазерлік эпиляция студиясы'}
                     </p>
                     <p className={`${textMuted} text-xs mt-1`}>Атырау, 60011/E01Y0B0</p>
                   </div>
@@ -1816,13 +1821,13 @@ export default function App() {
                   </div>
                   <div>
                     <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
-                      {lang === 'ru' ? 'График' : 'Жұмыс уақыты'}
+                      {lang === 'en' ? 'Working hours' : lang === 'ru' ? 'График' : 'Жұмыс уақыты'}
                     </p>
                     <p className={`${textSecondary} text-sm`}>
-                      {lang === 'ru' ? 'Пн–Вс: 10:00–20:00' : 'Дс–Жс: 10:00–20:00'}
+                      {lang === 'en' ? 'Mon–Sun: 10:00–20:00' : lang === 'ru' ? 'Пн–Вс: 10:00–20:00' : 'Дс–Жс: 10:00–20:00'}
                     </p>
                     <p className={`${textMuted} text-xs mt-0.5`}>
-                      {lang === 'ru' ? 'Только по записи' : 'Тек алдын ала жазылу'}
+                      {lang === 'en' ? 'By appointment only' : lang === 'ru' ? 'Только по записи' : 'Тек алдын ала жазылу'}
                     </p>
                   </div>
                 </div>
@@ -1833,7 +1838,7 @@ export default function App() {
                   </div>
                   <div>
                     <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
-                      {lang === 'ru' ? 'Телефон / WhatsApp' : 'Телефон / WhatsApp'}
+                      {lang === 'en' ? 'Phone / WhatsApp' : lang === 'ru' ? 'Телефон / WhatsApp' : 'Телефон / WhatsApp'}
                     </p>
                     <a href="tel:+77016698086" className="text-bronze-400 hover:text-bronze-300 text-sm font-bold transition-colors">
                       +7 701 669 8086
@@ -1850,7 +1855,7 @@ export default function App() {
                 className="flex items-center justify-center gap-2 bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all shadow-md"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                {lang === 'ru' ? 'Открыть в 2ГИС' : '2ГИС-та ашу'}
+                {lang === 'en' ? 'Open in 2GIS' : lang === 'ru' ? 'Открыть в 2ГИС' : '2ГИС-та ашу'}
               </a>
 
               <a
@@ -1860,7 +1865,7 @@ export default function App() {
                 className={`flex items-center justify-center gap-2 border border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all`}
               >
                 <WhatsAppIcon className="w-4 h-4" />
-                {lang === 'ru' ? 'Спросить маршрут' : 'Бағыт сұрау'}
+                {lang === 'en' ? 'Ask route' : lang === 'ru' ? 'Спросить маршрут' : 'Бағыт сұрау'}
               </a>
             </div>
           </div>
@@ -1925,7 +1930,7 @@ export default function App() {
                 {/* Visit Mode Segmented Control */}
                 <div className="space-y-2 py-1">
                   <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted} mb-1.5`}>
-                    {lang === 'ru' ? 'Режим визита:' : 'Визит форматы:'}
+                    {lang === 'en' ? 'Visit mode:' : lang === 'ru' ? 'Режим визита:' : 'Визит форматы:'}
                   </span>
                   <div className={`grid grid-cols-2 p-1 gap-1 rounded-xl ${isDark ? 'bg-charcoal-900/50 border border-white/5' : 'bg-charcoal-50 border border-charcoal-150'}`}>
                     <button
@@ -1941,7 +1946,7 @@ export default function App() {
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                       </svg>
-                      <span>{lang === 'ru' ? 'Relax в тишине' : 'Тыныштықтағы Relax'}</span>
+                      <span>{lang === 'en' ? 'Relax in silence' : lang === 'ru' ? 'Relax в тишине' : 'Тыныштықтағы Relax'}</span>
                     </button>
 
                     <button
@@ -1957,7 +1962,7 @@ export default function App() {
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
-                      <span>{lang === 'ru' ? 'Душевная беседа' : 'Жылы сұхбат'}</span>
+                      <span>{lang === 'en' ? 'Friendly chat' : lang === 'ru' ? 'Душевная беседа' : 'Жылы сұхбат'}</span>
                     </button>
                   </div>
                 </div>
@@ -2056,7 +2061,8 @@ export default function App() {
                 {['#trust','#services','#portfolio','#care-guide','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
                   const labels = { 
                     ru: ['О мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
-                    kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'] 
+                    kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'],
+                    en: ['About me','Services','Works','Aftercare','Guarantees','FAQ','Address','Booking']
                   };
                   return (
                     <a 
