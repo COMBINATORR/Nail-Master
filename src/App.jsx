@@ -2022,10 +2022,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
             {/* Logo */}
-            <div className="inline-flex flex-col leading-none">
-              <span className={`font-sans font-bold text-2xl ${textPrimary} block`}
-                    style={{textAlign:'justify', textAlignLast:'justify'}}>SVTL</span>
-              <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
+            <div className="static-logo">
+              <span className={`static-logo-title text-3xl sm:text-4xl ${textPrimary}`}>SVTL</span>
+              <span className={`static-logo-subtitle text-[13px] sm:text-[15px] ${textPrimary}`}>Nails &amp; Aesthetic</span>
             </div>
 
             <p className={`${textMuted} text-xs max-w-xs lg:text-center`}>{t.footerText}</p>
@@ -2080,10 +2079,9 @@ export default function App() {
             <div>
               {/* Header inside Mobile Menu */}
               <div className="flex justify-between items-center mb-10">
-                <div className="inline-flex flex-col leading-none">
-                  <span className={`font-sans font-bold text-xl ${textPrimary} block`}
-                        style={{textAlign:'justify', textAlignLast:'justify'}}>SVTL</span>
-                  <span className="font-serif text-[8px] tracking-[0.2em] text-bronze-500 font-light uppercase mt-0.5">Nails &amp; Aesthetic</span>
+                <div className="static-logo">
+                  <span className={`static-logo-title text-2xl ${textPrimary}`}>SVTL</span>
+                  <span className={`static-logo-subtitle text-[11px] ${textPrimary}`}>Nails &amp; Aesthetic</span>
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
