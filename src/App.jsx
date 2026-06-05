@@ -607,7 +607,7 @@ export default function App() {
       formCta: "Подтвердить запись через WhatsApp",
       modalSuccessTitle: "Заявка отправлена!",
       modalSuccessDesc: "Я уже готовлюсь связаться с вами в WhatsApp. До встречи на процедуре!",
-      modalClose: "Перейти в WhatsApp",
+      modalClose: "ОК",
       careTitle: "ПАМЯТКА КЛИЕНТА",
       careSubtitle: "Простые и эффективные правила ухода за кожей и ногтями после визита",
       footerText: "Студия эстетики SVTL в Атырау. Маникюр, педикюр, шугаринг.",
@@ -712,7 +712,7 @@ export default function App() {
       formCta: "WhatsApp арқылы жазылуды растау",
       modalSuccessTitle: "Өтінім жіберілді!",
       modalSuccessDesc: "Мен WhatsApp арқылы хабарласуға дайынмын. Процедурада кездескенше!",
-      modalClose: "WhatsApp-қа өту",
+      modalClose: "ОК",
       careTitle: "КЛИЕНТ ЖАДЫНАМАСЫ",
       careSubtitle: "Қабылдаудан кейінгі тері мен тырнақты күтудің қарапайым және тиімді ережелері",
       footerText: "Атыраудағы SVTL эстетика студиясы. Маникюр, педикюр, шугаринг.",
@@ -817,7 +817,7 @@ export default function App() {
       formCta: "Confirm booking via WhatsApp",
       modalSuccessTitle: "Request Sent!",
       modalSuccessDesc: "I'm already preparing to contact you on WhatsApp. See you at your appointment!",
-      modalClose: "Open WhatsApp",
+      modalClose: "OK",
       careTitle: "CLIENT AFTERCARE GUIDE",
       careSubtitle: "Simple and effective tips to care for your skin and nails after your appointment",
       footerText: "SVTL Aesthetics Studio in Atyrau. Manicure, pedicure, sugaring.",
@@ -1211,10 +1211,18 @@ export default function App() {
   };
 
   const handleCalculatorCta = () => {
-    const waText = generateWhatsAppText(false);
+    document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!phone) return;
+    setIsSubmitting(true);
+
+    const waText = generateWhatsAppText(true);
     const waUrl = `https://wa.me/77016698086?text=${encodeURIComponent(waText)}`;
     
-    // Direct navigation is often less blocked by popups than window.open
+    // Direct user-action link navigation to prevent browser popup block
     const link = document.createElement('a');
     link.href = waUrl;
     link.target = '_blank';
@@ -1222,19 +1230,17 @@ export default function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!phone) return;
-    setIsSubmitting(true);
-    setTimeout(() => { setIsSubmitting(false); setShowModal(true); }, 1000);
+    setTimeout(() => { 
+      setIsSubmitting(false); 
+      setShowModal(true); 
+    }, 1000);
   };
 
   const handleModalClose = () => {
     setShowModal(false);
-    window.open(`https://wa.me/77016698086?text=${encodeURIComponent(generateWhatsAppText(true))}`, '_blank', 'noopener,noreferrer');
-    setName(''); setPhone('');
+    setName(''); 
+    setPhone('');
   };
 
   const scrollToForm = () => document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
