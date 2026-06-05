@@ -42,7 +42,14 @@ body {
 /* ─── Light Theme Override ─── */
 body.light {
   background-color: #f8f6f2;
-  color: #1c1c1c;
+  color: #1E1B18;
+  --color-charcoal-800: #292522;
+  --color-charcoal-900: #1E1B18;
+  --color-charcoal-950: #12100E;
+}
+
+body.light .shadow-2xl {
+  box-shadow: 0 20px 40px -15px rgba(27, 20, 12, 0.04);
 }
 body.light ::-webkit-scrollbar-track { background: #f0ede8; }
 body.light ::-webkit-scrollbar-thumb { background: #d1b996; }
@@ -315,7 +322,7 @@ body.light .static-logo {
 body.light .static-logo:hover,
 body.light .static-logo:active,
 body.light .static-logo.active {
-  color: #121212; /* text-charcoal-900 active state */
+  color: #1E1B18; /* text-charcoal-900 active state */
 }
 
 .static-logo-title {

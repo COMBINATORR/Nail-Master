@@ -1484,7 +1484,7 @@ export default function App() {
                           className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 flex flex-col items-center justify-between text-center
                             ${isDark ? 'bg-charcoal-900/30' : 'bg-white/60'}
                             ${isActive 
-                              ? 'border-teal-500 text-teal-400 bg-teal-500/5 shadow-[0_0_15px_rgba(20,184,166,0.15)]' 
+                              ? `${isDark ? 'border-bronze-500 text-bronze-400 bg-bronze-500/5 shadow-[0_0_15px_rgba(197,168,128,0.15)]' : 'border-bronze-500 text-bronze-700 bg-bronze-500/5 shadow-[0_0_15px_rgba(197,168,128,0.08)]'}`
                               : `${borderSubtle} opacity-80 hover:opacity-100`
                             }`}
                         >
@@ -1766,7 +1766,7 @@ export default function App() {
           </p>
 
           {/* Interactive Care Tabs */}
-          <div className="flex gap-2 p-1.5 bg-bronze-950/20 backdrop-blur-sm border border-bronze-500/10 rounded-2xl max-w-md mb-8">
+          <div className="flex flex-wrap gap-2 mb-8 max-w-md">
             {['manicure', 'pedicure', 'sugaring'].map((tab) => {
               const tabLabels = {
                 manicure: lang === 'en' ? 'Manicure' : lang === 'ru' ? 'Маникюр' : 'Маникюр',
@@ -1778,10 +1778,10 @@ export default function App() {
                 <button
                   key={tab}
                   onClick={() => setActiveCareTab(tab)}
-                  className={`flex-1 text-center py-3 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300
+                  className={`flex-1 text-center py-3 text-xs font-bold uppercase tracking-wider border rounded-xl transition-all duration-300 cursor-pointer
                     ${isActive 
-                      ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 shadow-lg' 
-                      : `${textMuted} hover:text-bronze-400 hover:bg-white/5`
+                      ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 border-bronze-500 shadow-lg shadow-bronze-500/10' 
+                      : `${border} ${isDark ? 'bg-charcoal-900/50 hover:bg-charcoal-900 text-neutral-400 hover:text-white' : 'bg-white hover:bg-charcoal-50 text-charcoal-600 hover:text-charcoal-900'}`
                     }`}
                 >
                   {tabLabels[tab]}
@@ -2069,8 +2069,8 @@ export default function App() {
                       onClick={() => setVisitMode('relax')}
                       className={`flex items-center justify-center gap-2 py-3 px-3 rounded-lg text-[11px] font-bold transition-all duration-200 cursor-pointer
                         ${visitMode === 'relax'
-                          ? `${isDark ? 'bg-white text-charcoal-950 shadow-md' : 'bg-charcoal-950 text-white shadow-md'}`
-                          : `${isDark ? 'text-neutral-400 hover:text-white' : 'text-charcoal-600 hover:text-charcoal-900'} bg-transparent opacity-70 hover:opacity-100`
+                          ? `${isDark ? 'bg-white text-charcoal-950 shadow-md' : 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 shadow-md'}`
+                          : `${isDark ? 'text-neutral-400 hover:text-white' : 'text-charcoal-900 hover:text-charcoal-950'} bg-transparent opacity-70 hover:opacity-100`
                         }`}
                     >
                       {/* Moon Icon */}
@@ -2079,14 +2079,14 @@ export default function App() {
                       </svg>
                       <span>{lang === 'en' ? 'Relax in silence' : lang === 'ru' ? 'Relax в тишине' : 'Тыныштықтағы Relax'}</span>
                     </button>
-
+ 
                     <button
                       type="button"
                       onClick={() => setVisitMode('talk')}
                       className={`flex items-center justify-center gap-2 py-3 px-3 rounded-lg text-[11px] font-bold transition-all duration-200 cursor-pointer
                         ${visitMode === 'talk'
-                          ? `${isDark ? 'bg-white text-charcoal-950 shadow-md' : 'bg-charcoal-950 text-white shadow-md'}`
-                          : `${isDark ? 'text-neutral-400 hover:text-white' : 'text-charcoal-600 hover:text-charcoal-900'} bg-transparent opacity-70 hover:opacity-100`
+                          ? `${isDark ? 'bg-white text-charcoal-950 shadow-md' : 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 shadow-md'}`
+                          : `${isDark ? 'text-neutral-400 hover:text-white' : 'text-charcoal-900 hover:text-charcoal-950'} bg-transparent opacity-70 hover:opacity-100`
                         }`}
                     >
                       {/* Bubble Icon */}
