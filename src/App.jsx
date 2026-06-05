@@ -188,6 +188,9 @@ export default function App() {
   const [visitMode, setVisitMode] = useState('relax');
   const langPopupRef = useRef(null);
   const logoRef = useRef(null);
+  const [showGravityRestore, setShowGravityRestore] = useState(false);
+  const clickTracker = useRef({ count: 0, lastClickTime: 0 });
+  const affectedElements = useRef([]);
   const categories = {
     manicure: {
       id: 'manicure',
@@ -362,6 +365,124 @@ export default function App() {
       isConsoleMessagePrinted = true;
     }
   }, []);
+
+  const playPowerDown = () => {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(450, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 1.4);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.4);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 1.4);
+    } catch (err) {
+      console.log("Audio play failed:", err);
+    }
+  };
+
+  const playPowerUp = () => {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(30, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(650, ctx.currentTime + 0.9);
+      gain.gain.setValueAtTime(0.001, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + 0.2);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.9);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.9);
+    } catch (err) {
+      console.log("Audio play failed:", err);
+    }
+  };
+
+  const triggerGravityExplosion = () => {
+    playPowerDown();
+    setShowGravityRestore(true);
+    
+    const selectors = [
+      'h1', 'h2', 'h3', 'h4', 'button', 'input', 'textarea', 'select',
+      '.trust-card', '.service-category-card', '.portfolio-card', '.faq-item', '.contact-form',
+      'footer p', 'footer .static-logo', 'header nav a', 'header .logo-container', 'header button'
+    ];
+    
+    const els = document.querySelectorAll(selectors.join(', '));
+    const list = [];
+    
+    els.forEach((el) => {
+      if (el.closest('.fixed') || el.classList.contains('fixed') || el.id === 'gravity-restore-btn') return;
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      
+      const deltaY = window.innerHeight - rect.bottom - (Math.random() * 30);
+      const deltaX = (Math.random() - 0.5) * 50;
+      const rotation = (Math.random() - 0.5) * 16;
+      
+      const origStyle = {
+        transition: el.style.transition,
+        transform: el.style.transform,
+        pointerEvents: el.style.pointerEvents
+      };
+      
+      el.style.transition = 'transform 1100ms cubic-bezier(0.5, 0.05, 0.9, 0.45)';
+      el.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
+      el.style.pointerEvents = 'none';
+      
+      list.push({ el, origStyle });
+    });
+    
+    affectedElements.current = list;
+  };
+
+  const handleRestoreGravity = () => {
+    playPowerUp();
+    
+    affectedElements.current.forEach(({ el }) => {
+      el.style.transition = 'transform 600ms cubic-bezier(0.25, 1, 0.5, 1)';
+      el.style.transform = 'none';
+    });
+    
+    setTimeout(() => {
+      affectedElements.current.forEach(({ el, origStyle }) => {
+        el.style.transition = origStyle.transition;
+        el.style.transform = origStyle.transform;
+        el.style.pointerEvents = origStyle.pointerEvents;
+      });
+      affectedElements.current = [];
+      setShowGravityRestore(false);
+    }, 600);
+  };
+
+  const handleLogoClick = (e) => {
+    e.currentTarget.classList.toggle('active');
+
+    const now = Date.now();
+    const tracker = clickTracker.current;
+    if (now - tracker.lastClickTime < 500) {
+      tracker.count += 1;
+    } else {
+      tracker.count = 1;
+    }
+    tracker.lastClickTime = now;
+
+    if (tracker.count === 5) {
+      triggerGravityExplosion();
+      tracker.count = 0;
+    }
+  };
 
   const cycleTheme = () => {
     const order = ['dark', 'light', 'system'];
@@ -1163,9 +1284,7 @@ export default function App() {
           <div 
             ref={logoRef}
             className="logo-container group"
-            onClick={(e) => {
-              e.currentTarget.classList.toggle('active');
-            }}
+            onClick={handleLogoClick}
           >
             <svg width="24" height="24" viewBox="0 0 32 32" fill="none" className="logo-svg">
               {/* Monumental Serif Text Base S */}
@@ -2190,6 +2309,23 @@ export default function App() {
       >
         <ArrowUpIcon className="w-5 h-5" />
       </button>
+
+      {/* ═══════════ GRAVITY EXPLOSION RESTORE BUTTON ═══════════ */}
+      {showGravityRestore && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm pointer-events-none">
+          <button
+            id="gravity-restore-btn"
+            onClick={handleRestoreGravity}
+            className="pointer-events-auto px-6 py-4 bg-charcoal-900/95 border border-bronze-500/30 text-bronze-500 hover:text-bronze-400 font-bold uppercase tracking-wider text-xs rounded-xl shadow-2xl backdrop-blur-md transition-all hover:scale-105 active:scale-95 animate-fadeIn"
+            style={{ 
+              boxShadow: '0 0 30px rgba(197, 160, 89, 0.25)',
+              cursor: 'pointer'
+            }}
+          >
+            Включить Антигравитацию (SPCWLKR Engine)
+          </button>
+        </div>
+      )}
     </div>
   );
 }
