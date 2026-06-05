@@ -137,11 +137,7 @@ const ArrowUpIcon = ({ className = "w-5 h-5" }) => (
 
 
 
-const SectionLabel = ({ text }) => (
-  <div className="flex items-center gap-1.5 mb-2">
-    <span className="font-display text-[9px] tracking-wider text-bronze-500 font-bold uppercase">✦ {text} ✦</span>
-  </div>
-);
+const SectionLabel = () => null;
 
 const nailShapes = [
   { id: 'sharp_square', nameRu: 'Четкий квадрат', nameKk: 'Анық квадрат', nameEn: 'Sharp square', path: "M10,18 L10,8 L22,8 L22,18" },
