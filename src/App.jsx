@@ -135,30 +135,7 @@ const ArrowUpIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const scatteredIconsList = [
-  { top: '3%', left: '8%', rotate: 'rotate-12', Icon: NailPolishIcon },
-  { top: '6%', right: '7%', rotate: '-rotate-45', Icon: ScissorsIcon },
-  { top: '11%', left: '82%', rotate: 'rotate-30', Icon: CreamIcon },
-  { top: '15%', left: '12%', rotate: '-rotate-12', Icon: LipIcon },
-  { top: '19%', right: '10%', rotate: 'rotate-45', Icon: NailFileIcon },
-  { top: '23%', left: '5%', rotate: '-rotate-30', Icon: CombIcon },
-  { top: '28%', right: '5%', rotate: 'rotate-15', Icon: MirrorIcon },
-  { top: '32%', left: '85%', rotate: '-rotate-15', Icon: NailPolishIcon },
-  { top: '37%', left: '10%', rotate: 'rotate-45', Icon: ScissorsIcon },
-  { top: '41%', right: '8%', rotate: '-rotate-45', Icon: CreamIcon },
-  { top: '46%', left: '7%', rotate: 'rotate-12', Icon: LipIcon },
-  { top: '51%', right: '12%', rotate: '-rotate-12', Icon: NailFileIcon },
-  { top: '56%', left: '80%', rotate: 'rotate-30', Icon: CombIcon },
-  { top: '60%', left: '14%', rotate: '-rotate-30', Icon: MirrorIcon },
-  { top: '65%', right: '6%', rotate: 'rotate-45', Icon: NailPolishIcon },
-  { top: '70%', left: '9%', rotate: '-rotate-15', Icon: ScissorsIcon },
-  { top: '74%', right: '11%', rotate: 'rotate-15', Icon: CreamIcon },
-  { top: '79%', left: '84%', rotate: '-rotate-45', Icon: LipIcon },
-  { top: '83%', left: '6%', rotate: 'rotate-12', Icon: NailFileIcon },
-  { top: '87%', right: '8%', rotate: '-rotate-12', Icon: CombIcon },
-  { top: '92%', left: '11%', rotate: 'rotate-30', Icon: MirrorIcon },
-  { top: '96%', right: '10%', rotate: '-rotate-30', Icon: NailPolishIcon },
-];
+
 
 const SectionLabel = ({ text }) => (
   <div className="flex items-center gap-1.5 mb-2">
@@ -1250,33 +1227,7 @@ export default function App() {
     <div className={`relative min-h-screen ${bg} bg-grain ${isDark ? 'text-neutral-100' : 'text-charcoal-800'} font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950`}>
 
       {/* ═══════════ PREMIUM BACKGROUND LAYERS (fixed, behind everything) ═══════════ */}
-      <div className="premium-orbs" aria-hidden="true">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="orb orb-3"></div>
-        <div className="orb orb-4"></div>
-      </div>
       <div className="bg-grid-lines" aria-hidden="true"></div>
-
-      {/* ═══════════ SCATTERED BEAUTY BACKGROUND ICONS ═══════════ */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {scatteredIconsList.map((item, idx) => {
-          const IconComp = item.Icon;
-          return (
-            <div
-              key={idx}
-              className={`absolute ${item.rotate} transition-opacity duration-300`}
-              style={{
-                top: item.top,
-                ...(item.left ? { left: item.left } : { right: item.right }),
-                opacity: 0.3
-              }}
-            >
-              <IconComp className="w-5 h-5 sm:w-6 sm:h-6 text-bronze-500" />
-            </div>
-          );
-        })}
-      </div>
 
       {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}
       <div 
