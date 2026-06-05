@@ -1310,7 +1310,7 @@ export default function App() {
           <nav className="hidden lg:flex items-center gap-8">
             {['#trust','#services','#portfolio','#care-guide','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
               const labels = { 
-                ru: ['О мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
+                ru: ['Обо мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
                 kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'],
                 en: ['About me','Services','Works','Aftercare','Guarantees','FAQ','Address','Booking']
               };
@@ -2232,7 +2232,7 @@ export default function App() {
               <nav className="flex flex-col gap-6">
                 {['#trust','#services','#portfolio','#care-guide','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
                   const labels = { 
-                    ru: ['О мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
+                    ru: ['Обо мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
                     kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'],
                     en: ['About me','Services','Works','Aftercare','Guarantees','FAQ','Address','Booking']
                   };
