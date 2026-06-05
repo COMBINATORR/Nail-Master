@@ -345,5 +345,221 @@ body.light .static-logo.active {
   white-space: nowrap;
 }
 
+/* ══════════════════════════════════════════
+   THEMING SYSTEM CONFIGURATIONS
+   ══════════════════════════════════════════ */
+
+/* Smooth color transitions for all coloring elements */
+body,
+body.theme-dark,
+body.theme-light,
+body.theme-emerald,
+body.theme-nudefashion,
+body.theme-sage,
+body.theme-cyber {
+  transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out, border-color 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+}
+
+body *,
+body *::before,
+body *::after {
+  transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out, border-color 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+}
+
+/* Initialize body settings */
+body {
+  background-color: var(--bg-main, #0D0D0D);
+  color: var(--text-primary, #FFFFFF);
+}
+
+/* 1. DARK (Original) */
+body.theme-dark {
+  --bg-main: #0D0D0D;
+  --bg-card: rgba(10, 10, 10, 0.5);
+  --bg-deep: rgba(10, 10, 10, 0.7);
+  --bg-subtle: rgba(255, 255, 255, 0.04);
+  --bg-alt: rgba(10, 10, 10, 0.3);
+  --bg-header: rgba(13, 13, 13, 0.85);
+  --text-primary: #FFFFFF;
+  --text-secondary: #a3a3a3;
+  --text-muted: #737373;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+
+  --color-bronze-300: #d5c298;
+  --color-bronze-400: #cbb075;
+  --color-bronze-500: #B89548;
+  --color-bronze-600: #a3813c;
+  --color-bronze-700: #8c6c2e;
+  --color-bronze-950: #251c0a;
+
+  --color-charcoal-50: #f6f6f6;
+  --color-charcoal-100: #e7e7e7;
+  --color-charcoal-200: #d1d1d1;
+  --color-charcoal-800: #1c1c1c;
+  --color-charcoal-900: #121212;
+  --color-charcoal-950: #0a0a0a;
+}
+
+/* 2. LIGHT (Original) */
+body.theme-light {
+  --bg-main: #FDFBF7;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-deep: rgba(255, 255, 255, 0.8);
+  --bg-subtle: rgba(28, 25, 23, 0.04);
+  --bg-alt: rgba(184, 149, 72, 0.05);
+  --bg-header: rgba(253, 251, 247, 0.9);
+  --text-primary: #1C1917;
+  --text-secondary: #57534e;
+  --text-muted: #78716c;
+  --border-color: rgba(28, 25, 23, 0.1);
+  --border-subtle: rgba(28, 25, 23, 0.05);
+
+  --color-bronze-300: #d5c298;
+  --color-bronze-400: #cbb075;
+  --color-bronze-500: #B89548;
+  --color-bronze-600: #a3813c;
+  --color-bronze-700: #8c6c2e;
+  --color-bronze-950: #251c0a;
+
+  --color-charcoal-50: #f7f5f0;
+  --color-charcoal-100: #ebdcc9;
+  --color-charcoal-200: #d6c1a7;
+  --color-charcoal-800: #292522;
+  --color-charcoal-900: #1E1B18;
+  --color-charcoal-950: #12100E;
+}
+
+/* Overwrite shadow-2xl globally for all light/day themes */
+body.theme-light .shadow-2xl,
+body.theme-nudefashion .shadow-2xl,
+body.theme-sage .shadow-2xl {
+  box-shadow: 0 20px 40px -15px rgba(27, 20, 12, 0.04);
+}
+
+/* 3. EMERALD SPA */
+body.theme-emerald {
+  --bg-main: #061F17;
+  --bg-card: rgba(9, 44, 33, 0.5);
+  --bg-deep: rgba(9, 44, 33, 0.7);
+  --bg-subtle: rgba(239, 231, 225, 0.04);
+  --bg-alt: rgba(9, 44, 33, 0.3);
+  --bg-header: rgba(6, 31, 23, 0.85);
+  --text-primary: #EFE7E1;
+  --text-secondary: #c9c1bb;
+  --text-muted: #9e9791;
+  --border-color: rgba(239, 231, 225, 0.1);
+  --border-subtle: rgba(239, 231, 225, 0.05);
+
+  --color-bronze-300: #f7f2e6;
+  --color-bronze-400: #f4ebd4;
+  --color-bronze-500: #F1E4C3;
+  --color-bronze-600: #dfd1af;
+  --color-bronze-700: #caba9b;
+  --color-bronze-950: #2a2517;
+
+  --color-charcoal-50: #123c2f;
+  --color-charcoal-100: #0e2f25;
+  --color-charcoal-200: #0a221b;
+  --color-charcoal-800: #08241c;
+  --color-charcoal-900: #051b14;
+  --color-charcoal-950: #03110d;
+}
+
+/* 4. FASHION NUDE */
+body.theme-nudefashion {
+  --bg-main: #F4EFEA;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-deep: rgba(255, 255, 255, 0.85);
+  --bg-subtle: rgba(30, 27, 24, 0.04);
+  --bg-alt: rgba(43, 41, 39, 0.05);
+  --bg-header: rgba(244, 239, 234, 0.9);
+  --text-primary: #1E1B18;
+  --text-secondary: #5a5550;
+  --text-muted: #7d7772;
+  --border-color: rgba(30, 27, 24, 0.1);
+  --border-subtle: rgba(30, 27, 24, 0.05);
+
+  --color-bronze-300: #787572;
+  --color-bronze-400: #53504d;
+  --color-bronze-500: #2B2927;
+  --color-bronze-600: #1e1d1b;
+  --color-bronze-700: #121211;
+  --color-bronze-950: #0f0f0e;
+
+  --color-charcoal-50: #f9f7f5;
+  --color-charcoal-100: #eae4df;
+  --color-charcoal-200: #dbd3cc;
+  --color-charcoal-800: #2d2926;
+  --color-charcoal-900: #1E1B18;
+  --color-charcoal-950: #12100E;
+}
+
+/* 5. SAGE ECO */
+body.theme-sage {
+  --bg-main: #F0F2EE;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-deep: rgba(255, 255, 255, 0.85);
+  --bg-subtle: rgba(45, 53, 46, 0.04);
+  --bg-alt: rgba(74, 93, 78, 0.05);
+  --bg-header: rgba(240, 242, 238, 0.9);
+  --text-primary: #2D352E;
+  --text-secondary: #5e6b60;
+  --text-muted: #808f82;
+  --border-color: rgba(45, 53, 46, 0.1);
+  --border-subtle: rgba(45, 53, 46, 0.05);
+
+  --color-bronze-300: #90a494;
+  --color-bronze-400: #6c8270;
+  --color-bronze-500: #4A5D4E;
+  --color-bronze-600: #3b4b3e;
+  --color-bronze-700: #2d392f;
+  --color-bronze-950: #121713;
+
+  --color-charcoal-50: #f4f6f3;
+  --color-charcoal-100: #e1e6e0;
+  --color-charcoal-200: #ccd4cb;
+  --color-charcoal-800: #384239;
+  --color-charcoal-900: #2D352E;
+  --color-charcoal-950: #1a201b;
+}
+
+/* 6. CYBER BEAUTY */
+body.theme-cyber {
+  --bg-main: #0D0B14;
+  --bg-card: rgba(24, 21, 36, 0.5);
+  --bg-deep: rgba(24, 21, 36, 0.7);
+  --bg-subtle: rgba(253, 251, 247, 0.04);
+  --bg-alt: rgba(24, 21, 36, 0.3);
+  --bg-header: rgba(13, 11, 20, 0.85);
+  --text-primary: #FDFBF7;
+  --text-secondary: #a3a1ad;
+  --text-muted: #75737d;
+  --border-color: rgba(253, 251, 247, 0.1);
+  --border-subtle: rgba(253, 251, 247, 0.05);
+
+  --color-bronze-300: #a5f3fc;
+  --color-bronze-400: #67e8f9;
+  --color-bronze-500: #22D3EE;
+  --color-bronze-600: #0ea5e9;
+  --color-bronze-700: #0369a1;
+  --color-bronze-950: #082f49;
+
+  --color-charcoal-50: #231d30;
+  --color-charcoal-100: #1a1624;
+  --color-charcoal-200: #13101a;
+  --color-charcoal-800: #14101e;
+  --color-charcoal-900: #0d0b14;
+  --color-charcoal-950: #07060b;
+}
+
+/* Tactile glow effects for Appearance switcher modes */
+.glow-sun {
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.45);
+}
+.glow-moon {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.45);
+}
+
 
 
