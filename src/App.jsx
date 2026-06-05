@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import work1_before from './assets/work1_before.png';
 import work1_after from './assets/work1_after.png';
 import work2_before from './assets/work2_before.png';
@@ -1591,7 +1591,7 @@ export default function App() {
                             <path 
                               d="M8,30 C8,20 8,16 9,14 C10,12 11,11 16,11 C21,11 22,12 23,14 C24,16 24,20 24,30" 
                               fill="none" 
-                              stroke="var(--border-color) 
+                              stroke="var(--border-color)" 
                               strokeWidth="1" 
                               strokeDasharray="2 2" 
                             />
