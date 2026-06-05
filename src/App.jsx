@@ -2159,7 +2159,9 @@ export default function App() {
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
             {/* Logo */}
             <div className="static-logo">
-              <span className={`static-logo-title text-3xl sm:text-4xl ${textPrimary}`}>SVTL</span>
+              <span className={`static-logo-title text-3xl sm:text-4xl ${textPrimary}`}>
+                <span>S</span><span>V</span><span>T</span><span>L</span>
+              </span>
               <span className={`static-logo-subtitle text-[13px] sm:text-[15px] ${textPrimary}`}>Nails &amp; Aesthetic</span>
             </div>
 
@@ -2216,7 +2218,9 @@ export default function App() {
               {/* Header inside Mobile Menu */}
               <div className="flex justify-between items-center mb-10">
                 <div className="static-logo">
-                  <span className={`static-logo-title text-2xl ${textPrimary}`}>SVTL</span>
+                  <span className={`static-logo-title text-2xl ${textPrimary}`}>
+                    <span>S</span><span>V</span><span>T</span><span>L</span>
+                  </span>
                   <span className={`static-logo-subtitle text-[11px] ${textPrimary}`}>Nails &amp; Aesthetic</span>
                 </div>
                 <button 
