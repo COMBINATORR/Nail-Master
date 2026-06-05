@@ -1691,35 +1691,26 @@ export default function App() {
 
               {/* Slide Line Divider */}
               <div 
-                className="absolute top-0 bottom-0 w-[3px] bg-gradient-to-b from-bronze-400 via-bronze-500 to-bronze-600 z-30 cursor-ew-resize shadow-[0_0_10px_rgba(197,168,128,0.5)]"
+                className="absolute top-0 bottom-0 w-[1.5px] bg-gradient-to-b from-bronze-400 via-bronze-500 to-bronze-600 z-30 cursor-ew-resize shadow-[0_0_10px_rgba(197,168,128,0.5)]"
                 style={{ left: `${sliderPosition}%` }}
               >
                 {/* Drag handle */}
                 <div 
-                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-charcoal-950/95 border-2 border-bronze-500 shadow-2xl flex items-center justify-center cursor-ew-resize transition-transform duration-150 ${isDragging ? 'scale-110' : 'hover:scale-105'}`}
+                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full ${isDark ? 'bg-charcoal-950/40' : 'bg-white/40'} backdrop-blur-md border border-bronze-500/60 shadow-xl flex items-center justify-center cursor-ew-resize transition-transform duration-150 ${isDragging ? 'scale-110' : 'hover:scale-105'}`}
                 >
-                  {/* Left arrow */}
-                  <svg className="w-3 h-3 text-bronze-500 -ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-                  </svg>
-                  {/* Right arrow */}
-                  <svg className="w-3 h-3 text-bronze-500 -mr-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                  {/* Left & Right custom vector arrows */}
+                  <svg className="w-5 h-5 text-bronze-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 16l-4-4 4-4m4 8l4-4-4-4" />
                   </svg>
                 </div>
               </div>
+            </div>
 
-              {/* Instructions tooltip overlay that disappears when dragging starts */}
-              {sliderPosition === 50 && !isDragging && (
-                <div className="absolute inset-0 bg-charcoal-950/40 backdrop-blur-[2px] flex items-center justify-center z-10 pointer-events-none transition-opacity duration-300">
-                  <div className="bg-charcoal-950/90 border border-bronze-500/30 px-6 py-3.5 rounded-2xl text-center shadow-2xl max-w-xs mx-4">
-                    <div className="text-bronze-400 text-lg mb-1.5 animate-bounce">↔</div>
-                    <p className="text-white text-xs font-bold uppercase tracking-wider leading-snug">
-                      {lang === 'en' ? 'Drag the slider' : lang === 'ru' ? 'Потяните ползунок' : 'Жүгірткіні тартыңыз'}
-                    </p>
-                  </div>
-                </div>
-              )}
+            {/* Helper UX caption strictly below the slider */}
+            <div className="text-center mt-3.5">
+              <span className={`text-[10px] uppercase tracking-widest ${textMuted} font-bold opacity-80`}>
+                {lang === 'en' ? '← Drag the slider to compare →' : lang === 'ru' ? '← Потяните ползунок для сравнения →' : '← Салыстыру үшін жүгірткіні тартыңыз →'}
+              </span>
             </div>
 
             {/* Work details block */}
