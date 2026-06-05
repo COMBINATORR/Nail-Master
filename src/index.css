@@ -399,6 +399,26 @@ body.light .spcwlkr-credit:hover {
   align-items: stretch;
   line-height: 0.85;
   width: max-content;
+  color: #737373; /* text-neutral-500 quiet state */
+  transition: color 350ms ease-out;
+  cursor: pointer;
+}
+
+.static-logo:hover,
+.static-logo:active,
+.static-logo.active {
+  color: #ffffff; /* white active state */
+}
+
+/* Light mode overrides */
+body.light .static-logo {
+  color: #888888; /* text-charcoal-400 quiet state */
+}
+
+body.light .static-logo:hover,
+body.light .static-logo:active,
+body.light .static-logo.active {
+  color: #121212; /* text-charcoal-900 active state */
 }
 
 .static-logo-title {
