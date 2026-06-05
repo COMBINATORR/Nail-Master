@@ -173,6 +173,8 @@ const nailShapes = [
   { id: 'almond', nameRu: 'Миндаль', nameKk: 'Миндаль', nameEn: 'Almond', path: "M10,18 C10,14 13,7 16,4 C19,7 22,14 22,18" },
 ];
 
+let isConsoleMessagePrinted = false;
+
 export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem('svtl-lang') || 'ru');
   const [theme, setTheme] = useState(() => localStorage.getItem('svtl-theme') || 'dark');
@@ -348,6 +350,17 @@ export default function App() {
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  useEffect(() => {
+    if (!isConsoleMessagePrinted) {
+      console.log(
+        "%c🚀 Powered by SPCWLKR Digital Studio %c\n\nПонравился чистый код, скорость и кастомные микро-интерактивы этого сайта?\nЭтот интерфейс спроектирован в невесомости на передовом технологическом стеке.\n\nИщете кастомное цифровое решение для вашего бизнеса?\n💬 Telegram: @grokhunter\n💼 Портфолио: в разработке...\n",
+        "background: #0a0b0d; color: #22d3ee; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; border: 1px solid rgba(255,255,255,0.1);",
+        "color: #9ca3af; font-size: 12px; font-family: monospace;"
+      );
+      isConsoleMessagePrinted = true;
+    }
   }, []);
 
   const cycleTheme = () => {
