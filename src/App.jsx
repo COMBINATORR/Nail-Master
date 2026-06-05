@@ -449,6 +449,7 @@ export default function App() {
 
   const handleRestoreGravity = () => {
     playPowerUp();
+    clickTracker.current.count = 0;
     
     affectedElements.current.forEach(({ el }) => {
       el.style.transition = 'transform 600ms cubic-bezier(0.25, 1, 0.5, 1)';
