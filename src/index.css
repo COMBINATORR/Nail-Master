@@ -88,23 +88,7 @@ body.light .bg-grain::before {
 }
 
 
-/* ── Horizontal shimmer line (subtle luxury grid accent) ── */
-.bg-grid-lines {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(197,168,128,0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(197,168,128,0.03) 1px, transparent 1px);
-  background-size: 80px 80px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-}
-body.light .bg-grid-lines {
-  background-image:
-    linear-gradient(to right, rgba(142,108,70,0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(142,108,70,0.05) 1px, transparent 1px);
-}
+
 
 /* ── Content must sit above fixed background layers ── */
 .content-layer {
@@ -374,17 +358,23 @@ body {
 
 /* 1. DARK (Original) */
 body.theme-dark {
-  --bg-main: #0D0D0D;
-  --bg-card: rgba(10, 10, 10, 0.5);
-  --bg-deep: rgba(10, 10, 10, 0.7);
+  --bg-main: #08070b;
+  --bg-card: rgba(12, 11, 18, 0.55);
+  --bg-deep: rgba(8, 7, 11, 0.75);
   --bg-subtle: rgba(255, 255, 255, 0.04);
-  --bg-alt: rgba(10, 10, 10, 0.3);
-  --bg-header: rgba(13, 13, 13, 0.85);
+  --bg-alt: rgba(8, 7, 11, 0.3);
+  --bg-header: rgba(8, 7, 11, 0.85);
   --text-primary: #FFFFFF;
   --text-secondary: #a3a3a3;
   --text-muted: #737373;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* SVG Blob Colors */
+  --blob-1: #25103a;
+  --blob-2: #090e29;
+  --blob-3: #2d1c12;
+  --blob-4: #180d27;
 
   --color-bronze-300: #d5c298;
   --color-bronze-400: #cbb075;
@@ -414,6 +404,12 @@ body.theme-light {
   --text-muted: #78716c;
   --border-color: rgba(28, 25, 23, 0.1);
   --border-subtle: rgba(28, 25, 23, 0.05);
+
+  /* SVG Blob Colors */
+  --blob-1: #f3ebd9;
+  --blob-2: #e2d1bc;
+  --blob-3: #e6dfd3;
+  --blob-4: #ebd9c4;
 
   --color-bronze-300: #d5c298;
   --color-bronze-400: #cbb075;
@@ -451,6 +447,12 @@ body.theme-emerald {
   --border-color: rgba(239, 231, 225, 0.1);
   --border-subtle: rgba(239, 231, 225, 0.05);
 
+  /* SVG Blob Colors */
+  --blob-1: #0a2c20;
+  --blob-2: #051b14;
+  --blob-3: #2c2718;
+  --blob-4: #0e3527;
+
   --color-bronze-300: #f7f2e6;
   --color-bronze-400: #f4ebd4;
   --color-bronze-500: #F1E4C3;
@@ -479,6 +481,12 @@ body.theme-nudefashion {
   --text-muted: #7d7772;
   --border-color: rgba(30, 27, 24, 0.1);
   --border-subtle: rgba(30, 27, 24, 0.05);
+
+  /* SVG Blob Colors */
+  --blob-1: #eae0d5;
+  --blob-2: #c9c1bb;
+  --blob-3: #d3c5b9;
+  --blob-4: #e2d4c9;
 
   --color-bronze-300: #787572;
   --color-bronze-400: #53504d;
@@ -509,6 +517,12 @@ body.theme-sage {
   --border-color: rgba(45, 53, 46, 0.1);
   --border-subtle: rgba(45, 53, 46, 0.05);
 
+  /* SVG Blob Colors */
+  --blob-1: #e2e6df;
+  --blob-2: #ced4cb;
+  --blob-3: #dbdecb;
+  --blob-4: #d7dbd2;
+
   --color-bronze-300: #90a494;
   --color-bronze-400: #6c8270;
   --color-bronze-500: #4A5D4E;
@@ -537,6 +551,12 @@ body.theme-cyber {
   --text-muted: #75737d;
   --border-color: rgba(253, 251, 247, 0.1);
   --border-subtle: rgba(253, 251, 247, 0.05);
+
+  /* SVG Blob Colors */
+  --blob-1: #1d0b30;
+  --blob-2: #042a3a;
+  --blob-3: #2f0727;
+  --blob-4: #0e0d1f;
 
   --color-bronze-300: #a5f3fc;
   --color-bronze-400: #67e8f9;
@@ -714,6 +734,94 @@ body.theme-light .btn-tactile-circle {
   color: #E1306C !important;
   filter: drop-shadow(0 0 6px rgba(225, 48, 108, 0.85));
 }
+
+/* ══════════════════════════════════════════
+   FLUID BACKGROUND SYSTEM (SVG BLOBS & ANIMATION)
+   ══════════════════════════════════════════ */
+
+.fluid-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: var(--bg-main);
+  transition: background-color 0.6s ease-in-out;
+}
+
+/* Base blending overlay to mix blobs smoothly and match image_3.png's mood */
+.fluid-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(8, 7, 11, 0.45) 100%);
+  pointer-events: none;
+}
+
+body.theme-light .fluid-background::after,
+body.theme-nudefashion .fluid-background::after,
+body.theme-sage .fluid-background::after {
+  background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(255, 255, 255, 0.15) 100%);
+}
+
+/* GPU-Accelerated Breathing Animations */
+.blob-1 {
+  animation: float-1 45s infinite alternate ease-in-out;
+  transform-origin: 30% 30%;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.blob-2 {
+  animation: float-2 50s infinite alternate ease-in-out;
+  transform-origin: 75% 75%;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.blob-3 {
+  animation: float-3 48s infinite alternate ease-in-out;
+  transform-origin: 80% 25%;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.blob-4 {
+  animation: float-4 55s infinite alternate ease-in-out;
+  transform-origin: 20% 70%;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+/* Adjust blend modes for light themes to prevent washouts */
+body.theme-light .blob-1, body.theme-light .blob-2, body.theme-light .blob-3, body.theme-light .blob-4,
+body.theme-nudefashion .blob-1, body.theme-nudefashion .blob-2, body.theme-nudefashion .blob-3, body.theme-nudefashion .blob-4,
+body.theme-sage .blob-1, body.theme-sage .blob-2, body.theme-sage .blob-3, body.theme-sage .blob-4 {
+  mix-blend-mode: multiply;
+  opacity: 0.65;
+}
+
+@keyframes float-1 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(12%, -8%) scale(1.15) rotate(90deg); }
+  100% { transform: translate(-5%, 8%) scale(0.9) rotate(180deg); }
+}
+
+@keyframes float-2 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-10%, 12%) scale(0.85) rotate(-120deg); }
+  100% { transform: translate(8%, -6%) scale(1.1) rotate(-240deg); }
+}
+
+@keyframes float-3 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-12%, -6%) scale(1.1) rotate(60deg); }
+  100% { transform: translate(6%, 10%) scale(0.85) rotate(120deg); }
+}
+
+@keyframes float-4 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(8%, 8%) scale(1.2) rotate(-90deg); }
+  100% { transform: translate(-12%, -10%) scale(0.9) rotate(-180deg); }
+}
+
 
 
 
