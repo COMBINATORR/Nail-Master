@@ -1214,6 +1214,10 @@ export default function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!phone) return;
+    if (selectedServices.length === 0 && selectedOptions.length === 0) {
+      alert(lang === 'en' ? 'Please select at least one service.' : lang === 'ru' ? 'Пожалуйста, выберите хотя бы одну услугу.' : 'Кем дегенде бір қызметті таңдаңыз.');
+      return;
+    }
     setIsSubmitting(true);
 
     const waText = generateWhatsAppText(true);
@@ -2221,14 +2225,24 @@ export default function App() {
               {/* Receipt */}
               <div className="bg-bronze-500/5 border border-bronze-500/20 rounded-xl p-4 mb-5 text-sm">
                 <span className="text-bronze-400 font-bold block mb-2 uppercase tracking-wider text-[9px]">{t.servicesSelectedPreview}:</span>
-                <div className={`flex justify-between font-bold ${textPrimary} mb-1`}>
-                  <span>{t[baseServiceObj.nameKey]}</span>
-                  <span className="text-bronze-500">{baseServiceObj.price.toLocaleString()} ₸</span>
-                </div>
-                {selectedOptions.map(id => {
-                  const o = catObj.options.find(x => x.id === id); if (!o) return null;
-                  return <div key={id} className={`flex justify-between text-xs ${textMuted} pl-3`}><span>+ {t[o.nameKey]}</span><span>+{o.price.toLocaleString()} ₸</span></div>;
-                })}
+                {selectedServices.length === 0 && selectedOptions.length === 0 ? (
+                  <div className={`text-center py-4 ${textSecondary} text-xs font-semibold`}>
+                    {t.servicesNotSelected}
+                  </div>
+                ) : (
+                  <>
+                    {selectedServices.map(svc => (
+                      <div key={svc.id} className={`flex justify-between font-bold ${textPrimary} mb-1`}>
+                        <span>{t[svc.nameKey]}</span>
+                        <span className="text-bronze-500">{svc.price.toLocaleString()} ₸</span>
+                      </div>
+                    ))}
+                    {selectedOptions.map(id => {
+                      const o = catObj.options.find(x => x.id === id); if (!o) return null;
+                      return <div key={id} className={`flex justify-between text-xs ${textMuted} pl-3`}><span>+ {t[o.nameKey]}</span><span>+{o.price.toLocaleString()} ₸</span></div>;
+                    })}
+                  </>
+                )}
                 <div className={`border-t ${border} mt-3 pt-2.5 flex justify-between font-black ${textPrimary}`}>
                   <span className="text-xs uppercase tracking-wider">{t.total}:</span>
                   <span className="text-bronze-400">{totalPrice.toLocaleString()} ₸ ({fmtTime(totalTime)})</span>
