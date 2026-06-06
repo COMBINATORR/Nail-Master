@@ -1981,7 +1981,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <SectionLabel text="FAQ" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t.fearTitle}</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 max-w-5xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 max-w-5xl items-start">
             {faqData[lang].map((item, i) => {
               const isOpen = activeFaq === i;
               return (
