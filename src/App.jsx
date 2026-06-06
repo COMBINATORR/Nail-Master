@@ -1234,6 +1234,22 @@ export default function App() {
 
   const scrollToForm = () => document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
 
+  const renderFaqCard = (item, i, keyPrefix) => {
+    const isOpen = activeFaq === i;
+    return (
+      <div key={`${keyPrefix}-${i}`} className={`${bgCard} border ${borderSubtle} rounded-2xl overflow-hidden transition-all duration-300`}>
+        <button onClick={() => setActiveFaq(isOpen ? null : i)}
+          className="w-full flex justify-between items-center p-5 text-left hover:text-bronze-500 transition-colors">
+          <span className={`font-display font-bold uppercase text-xs tracking-wide ${textPrimary} leading-snug`}>{item.q}</span>
+          <ChevronDownIcon className={`flex-shrink-0 ml-4 ${isOpen ? 'rotate-180 text-bronze-500' : textMuted}`} />
+        </button>
+        <div className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-40 border-t ' + borderSubtle : 'max-h-0'}`} style={{ overflow: 'hidden' }}>
+          <div className={`p-5 ${textSecondary} text-sm leading-relaxed ${bgSubtle}`}>{item.a}</div>
+        </div>
+      </div>
+    );
+  };
+
   /* ─── RENDER ─── */
     return (
     <div className={`relative min-h-screen ${bg} bg-grain text-[var(--text-primary)] font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950`}>
@@ -1981,22 +1997,19 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
           <SectionLabel text="FAQ" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t.fearTitle}</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 max-w-5xl items-start">
-            {faqData[lang].map((item, i) => {
-              const isOpen = activeFaq === i;
-              return (
-                                <div key={i} className={`${bgCard} border ${borderSubtle} rounded-2xl overflow-hidden transition-all duration-300`}>
-                  <button onClick={() => setActiveFaq(isOpen ? null : i)}
-                    className="w-full flex justify-between items-center p-5 text-left hover:text-bronze-500 transition-colors">
-                    <span className={`font-display font-bold uppercase text-xs tracking-wide ${textPrimary} leading-snug`}>{item.q}</span>
-                    <ChevronDownIcon className={`flex-shrink-0 ml-4 ${isOpen ? 'rotate-180 text-bronze-500' : textMuted}`} />
-                  </button>
-                  <div className={`transition-all duration-300 ease-in-out ${isOpen ? `max-h-40 border-t ${borderSubtle}` : 'max-h-0'}`} style={{ overflow: 'hidden' }}>
-                    <div className={`p-5 ${textSecondary} text-sm leading-relaxed ${bgSubtle}`}>{item.a}</div>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Mobile FAQ list */}
+          <div className="flex flex-col gap-3 lg:hidden max-w-5xl">
+            {faqData[lang].map((item, i) => renderFaqCard(item, i, 'mob'))}
+          </div>
+
+          {/* Desktop FAQ columns */}
+          <div className="hidden lg:grid grid-cols-2 gap-3 max-w-5xl items-start">
+            <div className="flex flex-col gap-3">
+              {faqData[lang].map((item, i) => i % 2 === 0 ? renderFaqCard(item, i, 'desk-l') : null)}
+            </div>
+            <div className="flex flex-col gap-3">
+              {faqData[lang].map((item, i) => i % 2 !== 0 ? renderFaqCard(item, i, 'desk-r') : null)}
+            </div>
           </div>
         </div>
       </section>
