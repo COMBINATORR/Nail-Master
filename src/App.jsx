@@ -1700,12 +1700,22 @@ export default function App() {
               {/* Trust badges */}
               <div className={`border ${border} rounded-2xl p-4 ${bgCard} grid grid-cols-3 gap-3 text-center`}>
                 {[
-                  { icon: '🛡️', label: lang === 'en' ? '28 days\nguarantee' : lang === 'ru' ? '28 дней\nгарантия' : '28 күн\nкепілдік' },
-                  { icon: '🔬', label: lang === 'en' ? '3-stage\nsterility' : lang === 'ru' ? '3-уровн.\nстерильность' : '3 деңгейлі\nстерилизация' },
-                  { icon: '⏱️', label: lang === 'en' ? 'Up to 2 hours\nduration' : lang === 'ru' ? 'До 2 часов\nработа' : '2 сағатқа\ndейін' },
+                  { id:'guarantee', label: lang === 'en' ? '28 days\nguarantee' : lang === 'ru' ? '28 дней\nгарантия' : '28 күн\nкепілдік' },
+                  { id:'sterility', label: lang === 'en' ? '3-stage\nsterility' : lang === 'ru' ? '3-уровн.\nстерильность' : '3 деңгейлі\nстерилизация' },
+                  { id:'duration', label: lang === 'en' ? 'Up to 2 hours\nduration' : lang === 'ru' ? 'До 2 часов\nработа' : '2 сағатқа\ndейін' },
                 ].map((b, i) => (
-                  <div key={i} className="flex flex-col items-center gap-1">
-                    <span className="text-xl">{b.icon}</span>
+                  <div key={i} className="flex flex-col items-center gap-1.5">
+                    <span style={{color:'var(--accent)'}}>
+                      {b.id === 'guarantee' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><path d="m9 12 2 2 4-4"/></svg>
+                      )}
+                      {b.id === 'sterility' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 3v2m0 14v2M5.6 5.6l1.4 1.4m10 10 1.4 1.4M3 12h2m14 0h2M5.6 18.4l1.4-1.4m10-10 1.4-1.4"/><circle cx="12" cy="12" r="3"/></svg>
+                      )}
+                      {b.id === 'duration' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                      )}
+                    </span>
                     <span className={`text-[9px] font-bold uppercase tracking-wider ${textMuted} leading-tight whitespace-pre-line`}>{b.label}</span>
                   </div>
                 ))}
@@ -2100,7 +2110,7 @@ export default function App() {
               <SectionLabel text="BOOK" />
               <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-6`}>{t.formTitle}</h2>
               <div className="bg-bronze-500/10 border border-bronze-500/20 p-4 rounded-xl text-bronze-300 text-sm mb-6 leading-relaxed flex items-start gap-3">
-                <span className="text-xl">❄️</span><p>{t.formComfort}</p>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 flex-shrink-0 mt-0.5" style={{color:'var(--accent)'}}><path d="M17.7 7.7A7.5 7.5 0 1 0 6.3 16.3"/><path d="M9.4 4.6 12 7l2.6-2.4"/><path d="M6.8 8.8 4 12l-2.8-3.2"/><path d="M20 12l-2.8 3.2L14.4 12"/></svg><p>{t.formComfort}</p>
               </div>
               <p className={`${textSecondary} text-sm leading-relaxed mb-6`}>{t.formHelp}</p>
 
