@@ -687,6 +687,36 @@ body.theme-light .btn-tactile-circle {
     0 4px 10px rgba(0, 0, 0, 0.05) !important;
 }
 
+/* Social Icon Glow on Hover/Tap */
+.whatsapp-glow-hover {
+  transition: all 0.3s ease;
+}
+@media (hover: hover) {
+  .whatsapp-glow-hover:hover {
+    color: #25D366 !important;
+    filter: drop-shadow(0 0 6px rgba(37, 211, 102, 0.85));
+  }
+}
+.whatsapp-glow-hover:active {
+  color: #25D366 !important;
+  filter: drop-shadow(0 0 6px rgba(37, 211, 102, 0.85));
+}
+
+.instagram-glow-hover {
+  transition: all 0.3s ease;
+}
+@media (hover: hover) {
+  .instagram-glow-hover:hover {
+    color: #E1306C !important;
+    filter: drop-shadow(0 0 6px rgba(225, 48, 108, 0.85));
+  }
+}
+.instagram-glow-hover:active {
+  color: #E1306C !important;
+  filter: drop-shadow(0 0 6px rgba(225, 48, 108, 0.85));
+}
+
+
 
 
 

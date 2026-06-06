@@ -1292,12 +1292,12 @@ export default function App() {
             })}
           </nav>
           <div className="flex items-center gap-1.5">
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-               className={`hidden sm:inline-flex p-1.5 rounded-full ${bgSubtle} text-[var(--text-secondary)] hover:text-[#E1306C] transition-colors`}>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+               className={`hidden sm:inline-flex p-2 rounded-full ${bgSubtle} text-[var(--text-secondary)] instagram-glow-hover`}>
               <InstagramIcon className="w-4 h-4" />
             </a>
             <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
-               className="hidden sm:inline-flex p-2 rounded-full btn-tactile-circle text-[var(--text-secondary)] hover:text-[#25D366] transition-all">
+               className={`hidden sm:inline-flex p-2 rounded-full ${bgSubtle} text-[var(--text-secondary)] whatsapp-glow-hover`}>
               <WhatsAppIcon className="w-4 h-4" />
             </a>
             <div className="hidden sm:block h-5 w-px bg-[var(--border-color)] mx-0.5" />
