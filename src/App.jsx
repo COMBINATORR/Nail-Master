@@ -2071,7 +2071,7 @@ export default function App() {
                       {lang === 'en' ? 'Working hours' : lang === 'ru' ? 'График' : 'Жұмыс уақыты'}
                     </p>
                     <p className={`${textSecondary} text-sm`}>
-                      {lang === 'en' ? 'Mon–Sun: 10:00–20:00' : lang === 'ru' ? 'Пн–Вс: 10:00–20:00' : 'Дс–Жс: 10:00–20:00'}
+                      {lang === 'en' ? 'Mon–Sun: 09:00–23:00' : lang === 'ru' ? 'Пн–Вс: 09:00–23:00' : 'Дс–Жс: 09:00–23:00'}
                     </p>
                     <p className={`${textMuted} text-xs mt-0.5`}>
                       {lang === 'en' ? 'By appointment only' : lang === 'ru' ? 'Только по записи' : 'Тек алдын ала жазылу'}
