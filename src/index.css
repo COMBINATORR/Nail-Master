@@ -561,5 +561,132 @@ body.theme-cyber {
   box-shadow: 0 0 20px rgba(249, 115, 22, 0.45);
 }
 
+/* ══════════════════════════════════════════
+   PREMIUM TACTILE BUTTONS SYSTEM (SKEUOMORPHIC/NEUMORPHIC BEVEL)
+   ══════════════════════════════════════════ */
+
+/* 1. Primary CTA tactile buttons */
+.btn-premium-tactile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, var(--color-bronze-400) 0%, var(--color-bronze-600) 100%) !important;
+  color: var(--color-charcoal-950) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.3),
+    0 4px 15px rgba(0, 0, 0, 0.25) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer;
+}
+
+.btn-premium-tactile:hover {
+  background: linear-gradient(180deg, var(--color-bronze-300) 0%, var(--color-bronze-500) 100%) !important;
+  transform: translateY(-1.5px);
+  box-shadow: 
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.4),
+    0 6px 20px var(--btn-glow-color, rgba(197, 168, 128, 0.25)),
+    0 2px 5px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-premium-tactile:active {
+  background: linear-gradient(180deg, var(--color-bronze-600) 0%, var(--color-bronze-700) 100%) !important;
+  transform: translateY(1px);
+  box-shadow: 
+    inset 0 2.5px 5px rgba(0, 0, 0, 0.35),
+    0 1px 1px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 2. Tactile switch/tab outer container */
+.tactile-container {
+  display: flex;
+  background: rgba(10, 10, 10, 0.45) !important;
+  padding: 4px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.theme-light .tactile-container,
+body.theme-nudefashion .tactile-container,
+body.theme-sage .tactile-container {
+  background: rgba(45, 53, 46, 0.04) !important;
+  border: 1px solid rgba(45, 53, 46, 0.06) !important;
+  box-shadow: inset 0 1.5px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 3. Tactile Switch/Tab active/inactive state */
+.active-tactile-pill {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: #ffffff !important;
+}
+
+body.theme-light .active-tactile-pill,
+body.theme-nudefashion .active-tactile-pill,
+body.theme-sage .active-tactile-pill {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 238, 235, 0.95) 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05),
+    0 4px 10px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  color: var(--text-primary) !important;
+}
+
+/* 4. Day/Night button active colors */
+.btn-switch-active-day {
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #0d0b14 !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 15px rgba(245, 158, 11, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.btn-switch-active-night {
+  background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 4px 15px rgba(234, 88, 12, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 5. Custom tactile circle button */
+.btn-tactile-circle {
+  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-deep) 100%) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-tactile-circle:hover {
+  border-color: var(--color-bronze-500) !important;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 6px 20px rgba(197, 168, 128, 0.2) !important;
+}
+
+body.theme-light .btn-tactile-circle {
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+
 
 
