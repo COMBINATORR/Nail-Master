@@ -240,13 +240,11 @@ export default function App() {
   }, []);
 
   const [activeCategory, setActiveCategory] = useState('manicure');
-  const [selectedServiceId, setSelectedServiceId] = useState('classic');
+  const [selectedServiceIds, setSelectedServiceIds] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   useEffect(() => {
-    if (categories[activeCategory]) {
-      setSelectedServiceId(categories[activeCategory].services[0].id);
-    }
+    setSelectedServiceIds([]);
     setSelectedOptions([]);
   }, [activeCategory]);
 
@@ -561,7 +559,7 @@ export default function App() {
       heroTitle: "ПРЕМИАЛЬНЫЙ УХОД И ЭСТЕТИКА ДЛЯ ВАШЕЙ КРАСОТЫ",
       heroSubtitle: "БЕЗУПРЕЧНОЕ КАЧЕСТВО • 100% СТЕРИЛЬНОСТЬ",
       heroDesc: "Индивидуальный подход от сертифицированного мастера Светланы. Безопасные процедуры, премиальные материалы и уютный кабинет с заботой о вашем комфорте и красоте.",
-      heroCta: "Рассчитать стоимость и зафиксировать скидку",
+      heroCta: "Подобрать услуги и рассчитать стоимость",
       trustTitle: "ПОЧЕМУ МНЕ ДОВЕРЯЮТ",
       trustSubtitle: "Я гарантирую безопасность, прозрачность и высокий уровень сервиса",
       trust1Title: "100% стерильные инструменты",
@@ -578,6 +576,7 @@ export default function App() {
       servicesTotalPrice: "Стоимость",
       servicesTotalTime: "Время",
       servicesSelectedPreview: "Ваш визит",
+      servicesNotSelected: "Услуги не выбраны",
       serviceCta: "Зафиксировать цену и записаться",
       guaranteeIndicatorText: "Гарантия SVTL: Вы записываетесь напрямую к Светлане. Скрытая подмена мастера, передача вашего времени новичку или стажеру полностью исключены. Персональный контроль качества.",
       guaranteesTitle: "ГАРАНТИИ",
@@ -668,7 +667,7 @@ export default function App() {
       heroTitle: "СІЗДІҢ СҰЛУЛЫҒЫҢЫЗ ҮШІН ПРЕМИУМ КҮТІМ ЖӘНЕ ЭСТЕТИКА",
       heroSubtitle: "МІНСІЗ САПА • 100% СТЕРИЛЬДІЛІК",
       heroDesc: "Сертификатталған шебер Светланадан жеке тәсіл. Қауіпсіз процедуралар, премиум материалдар және сіздің жайлылығыңыз бен сұлулығыңызға қамқорлық жасайтын кабинет.",
-      heroCta: "Құнын есептеу және жеңілдікті бекіту",
+      heroCta: "Қызметтерді таңдау және құнын есептеу",
       trustTitle: "МАҒАН НЕГЕ СЕНЕДІ",
       trustSubtitle: "Мен қауіпсіздікке, ашықтыққа және жоғары қызмет көрсету деңгейіне кепілдік беремін",
       trust1Title: "100% стерильді құралдар",
@@ -685,6 +684,7 @@ export default function App() {
       servicesTotalPrice: "Құны",
       servicesTotalTime: "Уақыты",
       servicesSelectedPreview: "Сіздің сеанс",
+      servicesNotSelected: "Қызметтер таңдалмады",
       serviceCta: "Бағаны бекіту және жазылу",
       guaranteeIndicatorText: "SVTL кепілдігі: Сіз тікелей Светланаға жазыласыз. Шеберді жасырын ауыстыру, сіздің уақытыңызды жаңадан бастаушыға немесе стажерға беру мүлдем мүмкін емес. Жеке сапа бақылауы.",
       guaranteesTitle: "КЕПІЛДІКТЕР",
@@ -775,7 +775,7 @@ export default function App() {
       heroTitle: "PREMIUM CARE AND AESTHETICS FOR YOUR BEAUTY",
       heroSubtitle: "IMPECCABLE QUALITY • 100% STERILE",
       heroDesc: "Personalized approach from certified artist Svetlana. Safe treatments, premium materials, and a cozy studio designed with your comfort and beauty in mind.",
-      heroCta: "Calculate price & lock in discount",
+      heroCta: "Select services and calculate price",
       trustTitle: "WHY CLIENTS TRUST ME",
       trustSubtitle: "I guarantee safety, transparency, and the highest standards of service",
       trust1Title: "100% Sterile Instruments",
@@ -792,6 +792,7 @@ export default function App() {
       servicesTotalPrice: "Price",
       servicesTotalTime: "Duration",
       servicesSelectedPreview: "Your Visit",
+      servicesNotSelected: "Services not selected",
       serviceCta: "Lock in price and book",
       guaranteeIndicatorText: "SVTL Guarantee: You book directly with Svetlana. Master replacement or passing your time to a beginner/trainee is completely excluded. Personal quality control.",
       guaranteesTitle: "GUARANTEES",
@@ -1149,11 +1150,11 @@ export default function App() {
 
   /* ─── Calculator ─── */
   const catObj = categories[activeCategory];
-  const baseServiceObj = catObj.services.find(s => s.id === selectedServiceId) || catObj.services[0];
-  const totalPrice = baseServiceObj.price + selectedOptions.reduce((s, id) => {
+  const selectedServices = catObj.services.filter(s => selectedServiceIds.includes(s.id));
+  const totalPrice = selectedServices.reduce((s, svc) => s + svc.price, 0) + selectedOptions.reduce((s, id) => {
     const o = catObj.options.find(x => x.id === id); return s + (o ? o.price : 0);
   }, 0);
-  const totalTime = baseServiceObj.time + selectedOptions.reduce((s, id) => {
+  const totalTime = selectedServices.reduce((s, svc) => s + svc.time, 0) + selectedOptions.reduce((s, id) => {
     const o = catObj.options.find(x => x.id === id); return s + (o ? o.time : 0);
   }, 0);
   const fmtTime = (m) => {
@@ -1162,18 +1163,19 @@ export default function App() {
     const ml = lang === 'en' ? 'min.' : 'мин.';
     return `${h > 0 ? `${h} ${hl} ` : ''}${mn > 0 ? `${mn} ${ml}` : ''}`;
   };
+  const toggleService = (id) => setSelectedServiceIds(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
   const toggleOption = (id) => setSelectedOptions(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
 
   const generateWhatsAppText = (includeNameAndPhone = false) => {
     const categoryName = t[catObj?.nameKey] || '';
-    const baseServiceName = t[baseServiceObj?.nameKey] || '';
+    const serviceNames = selectedServices.map(s => t[s.nameKey] || '').filter(Boolean);
     const optionNames = selectedOptions
       .map(id => {
         const o = catObj?.options?.find(opt => opt.id === id);
         return o ? t[o.nameKey] : null;
       })
       .filter(Boolean);
-    const allServicesText = [baseServiceName, ...optionNames].join(' + ');
+    const allServicesText = [...serviceNames, ...optionNames].join(' + ');
 
     const shapeObj = nailShapes.find(s => s.id === nailShape);
     const shapeText = activeCategory !== 'sugaring'
@@ -1239,6 +1241,7 @@ export default function App() {
   };
 
   const scrollToForm = () => document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToServices = () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
 
   const renderFaqCard = (item, i, keyPrefix) => {
     const isOpen = activeFaq === i;
@@ -1482,7 +1485,7 @@ export default function App() {
                 <span className="text-bronze-400 font-sans font-bold text-xs tracking-wider uppercase">✦ {t.heroSubtitle} ✦</span>
               </div>
               <p className={`${textSecondary} text-sm leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8`}>{t.heroDesc}</p>
-              <button onClick={scrollToForm} id="hero-cta-btn"
+              <button onClick={scrollToServices} id="hero-cta-btn"
                 className="w-full lg:w-auto btn-premium-tactile px-8 py-4 rounded-xl text-xs uppercase transition-all duration-300">
                 {t.heroCta}
               </button>
@@ -1574,10 +1577,10 @@ export default function App() {
                 <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">{t.servicesSelectBase}</h3>
                 <div className="space-y-3">
                   {catObj.services.map((svc) => {
-                    const isActive = selectedServiceId === svc.id;
+                    const isActive = selectedServiceIds.includes(svc.id);
                     return (
-                      <div key={svc.id} onClick={() => setSelectedServiceId(svc.id)}
-                                              className={`border rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden bg-[var(--bg-card)]
+                      <div key={svc.id} onClick={() => toggleService(svc.id)}
+                        className={`border rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden bg-[var(--bg-card)]
                         ${isActive
                           ? `border-bronze-500 shadow-[0_0_20px_rgba(197,168,128,0.12)]`
                           : `${borderSubtle} opacity-70 hover:opacity-100`}`}>
@@ -1689,19 +1692,29 @@ export default function App() {
 
                 {/* Receipt */}
                 <div className={`${bgSubtle} rounded-xl p-4 mb-5 space-y-1.5`}>
-                  <div className={`flex justify-between items-center font-bold ${textPrimary} text-sm`}>
-                    <span>{t[baseServiceObj.nameKey]}</span>
-                    <span className="text-bronze-500">{baseServiceObj.price.toLocaleString()} ₸</span>
-                  </div>
-                  {selectedOptions.map(id => {
-                    const o = catObj.options.find(x => x.id === id); if (!o) return null;
-                    return (
-                      <div key={id} className={`flex justify-between items-center text-xs ${textMuted} pl-4`}>
-                        <span>+ {t[o.nameKey]}</span>
-                        <span>+{o.price.toLocaleString()} ₸</span>
-                      </div>
-                    );
-                  })}
+                  {selectedServices.length === 0 && selectedOptions.length === 0 ? (
+                    <div className={`text-center py-4 ${textSecondary} text-xs font-semibold`}>
+                      {t.servicesNotSelected}
+                    </div>
+                  ) : (
+                    <>
+                      {selectedServices.map(svc => (
+                        <div key={svc.id} className={`flex justify-between items-center font-bold ${textPrimary} text-sm`}>
+                          <span>{t[svc.nameKey]}</span>
+                          <span className="text-bronze-500">{svc.price.toLocaleString()} ₸</span>
+                        </div>
+                      ))}
+                      {selectedOptions.map(id => {
+                        const o = catObj.options.find(x => x.id === id); if (!o) return null;
+                        return (
+                          <div key={id} className={`flex justify-between items-center text-xs ${textMuted} pl-4`}>
+                            <span>+ {t[o.nameKey]}</span>
+                            <span>+{o.price.toLocaleString()} ₸</span>
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
                   <div className={`border-t ${border} pt-2.5 mt-1 flex justify-between items-center font-black ${textPrimary}`}>
                     <span className="text-xs uppercase tracking-wider">{t.total}:</span>
                     <span className="text-bronze-400 text-base">{totalPrice.toLocaleString()} ₸</span>
@@ -1723,8 +1736,15 @@ export default function App() {
                   </p>
                 </div>
 
-                <button onClick={handleCalculatorCta}
-                  className="w-full btn-premium-tactile py-3.5 rounded-xl text-xs uppercase transition-all duration-300">
+                <button 
+                  onClick={handleCalculatorCta}
+                  disabled={selectedServices.length === 0 && selectedOptions.length === 0}
+                  className={`w-full py-3.5 rounded-xl text-xs uppercase transition-all duration-300
+                    ${(selectedServices.length === 0 && selectedOptions.length === 0)
+                      ? 'bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-muted)] cursor-not-allowed opacity-50 shadow-none'
+                      : 'btn-premium-tactile'
+                    }`}
+                >
                   {t.serviceCta} ✦
                 </button>
               </div>
