@@ -604,7 +604,6 @@ body.theme-cyber {
 
 /* 2. Tactile switch/tab outer container */
 .tactile-container {
-  display: flex;
   background: rgba(10, 10, 10, 0.45) !important;
   padding: 4px;
   border-radius: 14px;
