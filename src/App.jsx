@@ -171,9 +171,8 @@ export default function App() {
       id: 'manicure',
       nameKey: 'catManicureName',
       services: [
-        { id: 'classic', nameKey: 'serviceManicureClassicName', descKey: 'serviceManicureClassicDesc', price: 7000, time: 60 },
-        { id: 'gel', nameKey: 'serviceManicureGelName', descKey: 'serviceManicureGelDesc', price: 10000, time: 90 },
-        { id: 'extensions', nameKey: 'serviceManicureExtName', descKey: 'serviceManicureExtDesc', price: 14000, time: 120 }
+        { id: 'classic', nameKey: 'serviceManicureClassicName', descKey: 'serviceManicureClassicDesc', price: 4000, time: 60 },
+        { id: 'gel', nameKey: 'serviceManicureGelName', descKey: 'serviceManicureGelDesc', price: 6000, time: 90 }
       ],
       options: [
         { id: 'design', nameKey: 'optManiDesign', price: 2000, time: 20 },
@@ -200,14 +199,13 @@ export default function App() {
       id: 'sugaring',
       nameKey: 'catSugaringName',
       services: [
-        { id: 'bikini', nameKey: 'serviceSugarBikiniName', descKey: 'serviceSugarBikiniDesc', price: 8000, time: 30 },
-        { id: 'legs', nameKey: 'serviceSugarLegsName', descKey: 'serviceSugarLegsDesc', price: 7000, time: 40 },
-        { id: 'underarms', nameKey: 'serviceSugarUnderarmsName', descKey: 'serviceSugarUnderarmsDesc', price: 3000, time: 15 },
+        { id: 'bikini', nameKey: 'serviceSugarBikiniName', descKey: 'serviceSugarBikiniDesc', price: 5000, time: 30 },
+        { id: 'legs', nameKey: 'serviceSugarLegsName', descKey: 'serviceSugarLegsDesc', price: 6000, time: 40 },
+        { id: 'underarms', nameKey: 'serviceSugarUnderarmsName', descKey: 'serviceSugarUnderarmsDesc', price: 2000, time: 15 },
         { id: 'arms', nameKey: 'serviceSugarArmsName', descKey: 'serviceSugarArmsDesc', price: 5000, time: 25 }
       ],
       options: [
-        { id: 'mask', nameKey: 'optSugarMask', price: 2000, time: 15 },
-        { id: 'peeling', nameKey: 'optSugarPeeling', price: 2500, time: 15 },
+        { id: 'cleaning', nameKey: 'optSugarCleaning', price: 3000, time: 15 },
         { id: 'face', nameKey: 'optSugarFace', price: 1500, time: 10 }
       ]
     }
@@ -656,8 +654,7 @@ export default function App() {
       serviceSugarArmsName: "Руки полностью",
       serviceSugarArmsDesc: "Шугаринг рук по всей длине (до плеча). Кожа становится идеально гладкой.",
       
-      optSugarMask: "Успокаивающая альгинатная маска",
-      optSugarPeeling: "Энзимный пилинг против вросших волос",
+       optSugarCleaning: "Чистка глубокого бикини / удаление вросших волос / удаление комедонов",
       optSugarFace: "Депиляция зоны на лице (усики/подбородок)",
     },
     kk: {
@@ -761,8 +758,7 @@ export default function App() {
       serviceSugarArmsName: "Толық қолдар",
       serviceSugarArmsDesc: "Қолдарды толық ұзындығы бойынша шугарингтеу (иыққа дейін). Тері мінсіз тегіс болады.",
       
-      optSugarMask: "Тыныштандыратын альгинатты маска",
-      optSugarPeeling: "Түктердің ішке өсуіне қарсы энзимді пилинг",
+      optSugarCleaning: "Терең бикини тазалау / ішке өскен түктерді кетіру / комедондарды тазалау",
       optSugarFace: "Бет аймағындағы депиляция (мұрт/иек)",
     },
     en: {
@@ -866,8 +862,7 @@ export default function App() {
       serviceSugarArmsName: "Full Arms",
       serviceSugarArmsDesc: "Sugaring of arms along the entire length (up to the shoulder). Makes skin perfectly smooth.",
       
-      optSugarMask: "Soothing alginate body mask",
-      optSugarPeeling: "Enzyme peeling against ingrown hairs",
+      optSugarCleaning: "Deep bikini cleansing / ingrown hair removal / comedone removal",
       optSugarFace: "Facial depilation (upper lip/chin)",
     }
   };
