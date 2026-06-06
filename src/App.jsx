@@ -1863,7 +1863,7 @@ export default function App() {
           </p>
 
           {/* Interactive Care Tabs */}
-          <div className="flex flex-wrap gap-2 mb-8 max-w-md">
+          <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl tactile-container">
             {['manicure', 'pedicure', 'sugaring'].map((tab) => {
               const tabLabels = {
                 manicure: lang === 'en' ? 'Manicure' : lang === 'ru' ? 'Маникюр' : 'Маникюр',
@@ -1875,10 +1875,10 @@ export default function App() {
                                 <button
                   key={tab}
                   onClick={() => setActiveCareTab(tab)}
-                  className={`flex-1 text-center py-3 text-xs font-bold uppercase tracking-wider border rounded-xl transition-all duration-300 cursor-pointer
+                  className={`flex-1 text-center py-3 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 cursor-pointer
                     ${isActive 
-                      ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 border-bronze-500 shadow-lg shadow-bronze-500/10' 
-                      : `${border} bg-[var(--bg-subtle)] hover:bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]`
+                      ? 'active-tactile-pill scale-[1.02]' 
+                      : 'border border-transparent hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                     }`}
                 >
                   {tabLabels[tab]}
@@ -2080,7 +2080,7 @@ export default function App() {
                 href="https://2gis.kz/atyrau/search/Shade%20%D0%90%D0%B7%D0%B0%D1%82%D1%82%D1%8B%D0%BA%2093"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-bronze-500 to-bronze-600 hover:from-bronze-600 hover:to-bronze-700 text-charcoal-950 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all shadow-md"
+                className="w-full flex items-center justify-center gap-2 btn-premium-tactile py-3.5 px-5 rounded-xl text-xs uppercase transition-all"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                 {lang === 'en' ? 'Open in 2GIS' : lang === 'ru' ? 'Открыть в 2ГИС' : '2ГИС-та ашу'}
@@ -2196,13 +2196,13 @@ export default function App() {
                   <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted} mb-1.5`}>
                     {lang === 'en' ? 'Visit mode:' : lang === 'ru' ? 'Режим визита:' : 'Визит форматы:'}
                   </span>
-                  <div className={`grid grid-cols-2 p-1 gap-1 rounded-xl bg-[var(--bg-subtle)] border ${borderSubtle}`}>
+                  <div className="grid grid-cols-2 p-1 gap-1 rounded-xl tactile-container">
                     <button
                       type="button"
                       onClick={() => setVisitMode('relax')}
                       className={`flex items-center justify-center gap-2 py-3 px-3 rounded-lg text-[11px] font-bold transition-all duration-200 cursor-pointer
                         ${visitMode === 'relax'
-                          ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 shadow-md'
+                          ? 'active-tactile-pill scale-[1.02]'
                           : 'text-[var(--text-secondary)] bg-transparent hover:text-[var(--text-primary)] hover:bg-white/5'
                         }`}
                     >
@@ -2218,7 +2218,7 @@ export default function App() {
                       onClick={() => setVisitMode('talk')}
                       className={`flex items-center justify-center gap-2 py-3 px-3 rounded-lg text-[11px] font-bold transition-all duration-200 cursor-pointer
                         ${visitMode === 'talk'
-                          ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 shadow-md'
+                          ? 'active-tactile-pill scale-[1.02]'
                           : 'text-[var(--text-secondary)] bg-transparent hover:text-[var(--text-primary)] hover:bg-white/5'
                         }`}
                     >
