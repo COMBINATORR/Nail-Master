@@ -1737,17 +1737,17 @@ export default function App() {
 
           <div className="max-w-3xl mx-auto">
             {/* Tabs for switching works */}
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
+            <div className="flex flex-wrap justify-center gap-2 mb-8 mx-auto max-w-max p-1 rounded-2xl tactile-container">
               {works.map((w, index) => {
                 const isActive = activeWork === index;
                 return (
-                                    <button
+                  <button
                     key={w.id}
                     onClick={() => setActiveWork(index)}
-                    className={`flex-shrink-0 snap-start px-5 py-2.5 rounded-xl font-display font-bold text-[10px] uppercase tracking-wider border transition-all duration-300 cursor-pointer
+                    className={`flex-shrink-0 snap-start px-5 py-2.5 rounded-xl font-display font-bold text-[10px] uppercase tracking-wider transition-all duration-300 cursor-pointer
                       ${isActive 
-                        ? 'bg-gradient-to-r from-bronze-500 to-bronze-600 text-charcoal-950 border-bronze-500 shadow-lg shadow-bronze-500/10' 
-                        : `${border} bg-[var(--bg-subtle)] hover:bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]`
+                        ? 'active-tactile-pill scale-[1.02]' 
+                        : 'border border-transparent hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                       }`}
                   >
                     {t[w.titleKey]}
