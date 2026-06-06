@@ -1737,7 +1737,7 @@ export default function App() {
 
           <div className="max-w-3xl mx-auto">
             {/* Tabs for switching works */}
-            <div className="flex flex-wrap justify-center gap-2 mb-8 mx-auto max-w-max p-1 rounded-2xl tactile-container">
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
               {works.map((w, index) => {
                 const isActive = activeWork === index;
                 return (
@@ -1747,7 +1747,7 @@ export default function App() {
                     className={`flex-shrink-0 snap-start px-5 py-2.5 rounded-xl font-display font-bold text-[10px] uppercase tracking-wider transition-all duration-300 cursor-pointer
                       ${isActive 
                         ? 'active-tactile-pill scale-[1.02]' 
-                        : 'border border-transparent hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                        : 'border border-[var(--border-color)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-bronze-500/30'
                       }`}
                   >
                     {t[w.titleKey]}
