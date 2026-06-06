@@ -2110,7 +2110,43 @@ export default function App() {
               <SectionLabel text="BOOK" />
               <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-6`}>{t.formTitle}</h2>
               <div className="bg-bronze-500/10 border border-bronze-500/20 p-4 rounded-xl text-bronze-300 text-sm mb-6 leading-relaxed flex items-start gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 flex-shrink-0 mt-0.5" style={{color:'var(--accent)'}}><path d="M17.7 7.7A7.5 7.5 0 1 0 6.3 16.3"/><path d="M9.4 4.6 12 7l2.6-2.4"/><path d="M6.8 8.8 4 12l-2.8-3.2"/><path d="M20 12l-2.8 3.2L14.4 12"/></svg><p>{t.formComfort}</p>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" className="w-8 h-8 flex-shrink-0 mt-0.5" style={{ color: 'var(--accent)' }}>
+                  <defs>
+                    {/* Gold/accent glow for the AC unit */}
+                    <filter id="ac-glow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                    {/* Turquoise glow for the air flow */}
+                    <filter id="wind-glow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  {/* AC Unit Body */}
+                  <g filter="url(#ac-glow)">
+                    <rect x="3" y="4" width="26" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="3" y1="10" x2="29" y2="10" stroke="currentColor" strokeWidth="0.8" />
+                    <line x1="6" y1="7" x2="26" y2="7" stroke="currentColor" strokeWidth="0.8" strokeDasharray="1 2" opacity="0.6" />
+                    <path d="M5 13c3 1.5 19 1.5 22 0" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                    <circle cx="23" cy="7" r="0.6" fill="currentColor" />
+                  </g>
+
+                  {/* Dynamic Cool Airflow */}
+                  <g filter="url(#wind-glow)" stroke="#2dd4bf" strokeWidth="1" strokeLinecap="round" opacity="0.85">
+                    <path d="M8 15c-1.5 2.5-3 5.5-2 8.5s2 4.5 0.5 7.5" />
+                    <path d="M16 15c0 3 1.5 6-1 9s-2.5 4.5-1 7.5" />
+                    <path d="M24 15c1.5 2.5 3 5.5 2 8.5s-2 4.5-0.5 7.5" />
+                  </g>
+                </svg>
+                <p>{t.formComfort}</p>
               </div>
               <p className={`${textSecondary} text-sm leading-relaxed mb-6`}>{t.formHelp}</p>
 
