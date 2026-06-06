@@ -202,9 +202,11 @@ export default function App() {
         { id: 'bikini', nameKey: 'serviceSugarBikiniName', descKey: 'serviceSugarBikiniDesc', price: 5000, time: 30 },
         { id: 'legs', nameKey: 'serviceSugarLegsName', descKey: 'serviceSugarLegsDesc', price: 6000, time: 40 },
         { id: 'underarms', nameKey: 'serviceSugarUnderarmsName', descKey: 'serviceSugarUnderarmsDesc', price: 2000, time: 15 },
-        { id: 'arms', nameKey: 'serviceSugarArmsName', descKey: 'serviceSugarArmsDesc', price: 5000, time: 25 }
+        { id: 'arms', nameKey: 'serviceSugarArmsName', descKey: 'serviceSugarArmsDesc', price: 5000, time: 25 },
+        { id: 'fullbody', nameKey: 'serviceSugarFullBodyName', descKey: 'serviceSugarFullBodyDesc', price: 15000, time: 90 }
       ],
       options: [
+        { id: 'bikinipit', nameKey: 'optSugarBikiniPit', price: 6000, time: 30 },
         { id: 'cleaning', nameKey: 'optSugarCleaning', price: 3000, time: 15 },
         { id: 'face', nameKey: 'optSugarFace', price: 1500, time: 10 }
       ]
@@ -653,8 +655,11 @@ export default function App() {
       serviceSugarUnderarmsDesc: "Быстрое удаление волос в подмышечной зоне гипоаллергенной пастой.",
       serviceSugarArmsName: "Руки полностью",
       serviceSugarArmsDesc: "Шугаринг рук по всей длине (до плеча). Кожа становится идеально гладкой.",
+      serviceSugarFullBodyName: "Всего тела",
+      serviceSugarFullBodyDesc: "Бикини, руки/ноги полностью, подмышки, усики",
       
-       optSugarCleaning: "Чистка глубокого бикини / удаление вросших волос / удаление комедонов",
+      optSugarBikiniPit: "Бикини + Подмышки",
+      optSugarCleaning: "Чистка глубокого бикини / удаление вросших волос / удаление комедонов",
       optSugarFace: "Депиляция зоны на лице (усики/подбородок)",
     },
     kk: {
@@ -757,7 +762,10 @@ export default function App() {
       serviceSugarUnderarmsDesc: "Қолтық асты аймағындағы түктерді гипоаллергенді пастамен жылдам кетіру.",
       serviceSugarArmsName: "Толық қолдар",
       serviceSugarArmsDesc: "Қолдарды толық ұзындығы бойынша шугарингтеу (иыққа дейін). Тері мінсіз тегіс болады.",
+      serviceSugarFullBodyName: "Толық дене",
+      serviceSugarFullBodyDesc: "Бикини, қолдар/аяқтар толық, қолтық асты, мұрт",
       
+      optSugarBikiniPit: "Бикини + Қолтық асты",
       optSugarCleaning: "Терең бикини тазалау / ішке өскен түктерді кетіру / комедондарды тазалау",
       optSugarFace: "Бет аймағындағы депиляция (мұрт/иек)",
     },
@@ -861,7 +869,10 @@ export default function App() {
       serviceSugarUnderarmsDesc: "Quick underarm hair removal using hypoallergenic sugar paste.",
       serviceSugarArmsName: "Full Arms",
       serviceSugarArmsDesc: "Sugaring of arms along the entire length (up to the shoulder). Makes skin perfectly smooth.",
+      serviceSugarFullBodyName: "Full Body",
+      serviceSugarFullBodyDesc: "Bikini, full arms/legs, underarms, upper lip",
       
+      optSugarBikiniPit: "Bikini + Underarms",
       optSugarCleaning: "Deep bikini cleansing / ingrown hair removal / comedone removal",
       optSugarFace: "Facial depilation (upper lip/chin)",
     }
