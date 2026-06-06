@@ -1257,21 +1257,14 @@ export default function App() {
       {/* ═══════════ PREMIUM BACKGROUND LAYERS (fixed, behind everything) ═══════════ */}
       <div className="fluid-background" aria-hidden="true">
         <svg className="w-full h-full opacity-65" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <defs>
-            <filter id="fluid-blur" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="12" />
-            </filter>
-          </defs>
-          <g filter="url(#fluid-blur)">
-            {/* Blob 1 */}
-            <circle className="blob-1" cx="25" cy="30" r="28" fill="var(--blob-1)" />
-            {/* Blob 2 */}
-            <circle className="blob-2" cx="75" cy="70" r="30" fill="var(--blob-2)" />
-            {/* Blob 3 */}
-            <circle className="blob-3" cx="80" cy="20" r="25" fill="var(--blob-3)" />
-            {/* Blob 4 */}
-            <circle className="blob-4" cx="20" cy="80" r="26" fill="var(--blob-4)" />
-          </g>
+          {/* Blob 1 */}
+          <circle className="blob-1" cx="25" cy="30" r="28" fill="var(--blob-1)" />
+          {/* Blob 2 */}
+          <circle className="blob-2" cx="75" cy="70" r="30" fill="var(--blob-2)" />
+          {/* Blob 3 */}
+          <circle className="blob-3" cx="80" cy="20" r="25" fill="var(--blob-3)" />
+          {/* Blob 4 */}
+          <circle className="blob-4" cx="20" cy="80" r="26" fill="var(--blob-4)" />
         </svg>
       </div>
 

@@ -747,6 +747,16 @@ body.theme-light .btn-tactile-circle {
   overflow: hidden;
   background-color: var(--bg-main);
   transition: background-color 0.6s ease-in-out;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Offload blur filters to GPU-accelerated CSS rendering instead of SVG filters */
+.fluid-background svg {
+  filter: blur(clamp(45px, 8vw, 85px));
+  -webkit-filter: blur(clamp(45px, 8vw, 85px));
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 /* Base blending overlay to mix blobs smoothly and match image_3.png's mood */
@@ -764,30 +774,42 @@ body.theme-sage .fluid-background::after {
   background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(255, 255, 255, 0.15) 100%);
 }
 
-/* GPU-Accelerated Breathing Animations */
+/* Base Blob styling (without animation on mobile for 0% CPU footprint and thermal safety) */
 .blob-1 {
-  animation: float-1 45s infinite alternate ease-in-out;
   transform-origin: 30% 30%;
   mix-blend-mode: screen;
-  will-change: transform;
 }
 .blob-2 {
-  animation: float-2 50s infinite alternate ease-in-out;
   transform-origin: 75% 75%;
   mix-blend-mode: screen;
-  will-change: transform;
 }
 .blob-3 {
-  animation: float-3 48s infinite alternate ease-in-out;
   transform-origin: 80% 25%;
   mix-blend-mode: screen;
-  will-change: transform;
 }
 .blob-4 {
-  animation: float-4 55s infinite alternate ease-in-out;
   transform-origin: 20% 70%;
   mix-blend-mode: screen;
-  will-change: transform;
+}
+
+/* GPU-Accelerated Breathing Animations - Desktop Only (min-width: 1024px) */
+@media (min-width: 1024px) {
+  .blob-1 {
+    animation: float-1 45s infinite alternate ease-in-out;
+    will-change: transform;
+  }
+  .blob-2 {
+    animation: float-2 50s infinite alternate ease-in-out;
+    will-change: transform;
+  }
+  .blob-3 {
+    animation: float-3 48s infinite alternate ease-in-out;
+    will-change: transform;
+  }
+  .blob-4 {
+    animation: float-4 55s infinite alternate ease-in-out;
+    will-change: transform;
+  }
 }
 
 /* Adjust blend modes for light themes to prevent washouts */
