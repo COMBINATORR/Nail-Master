@@ -2141,9 +2141,9 @@ export default function App() {
 
                   {/* Dynamic Cool Airflow */}
                   <g filter="url(#wind-glow)" stroke="#2dd4bf" strokeWidth="1" strokeLinecap="round" opacity="0.85">
-                    <path d="M8 15c-1.5 2.5-3 5.5-2 8.5s2 4.5 0.5 7.5" />
-                    <path d="M16 15c0 3 1.5 6-1 9s-2.5 4.5-1 7.5" />
-                    <path d="M24 15c1.5 2.5 3 5.5 2 8.5s-2 4.5-0.5 7.5" />
+                    <path d="M9 15c-0.5 4-1.5 7-1.5 10c0 2.5 1 4 1 6" />
+                    <path d="M16 15c-0.5 4-1.5 7-1.5 10c0 2.5 1 4 1 6" />
+                    <path d="M23 15c-0.5 4-1.5 7-1.5 10c0 2.5 1 4 1 6" />
                   </g>
                 </svg>
                 <p>{t.formComfort}</p>
