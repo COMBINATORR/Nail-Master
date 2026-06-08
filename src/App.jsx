@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import work1_before from './assets/work1_before.png';
 import work1_after from './assets/work1_after.png';
 import work2_before from './assets/work2_before.png';
@@ -41,10 +41,6 @@ const SunIcon = ({ className = "w-4 h-4" }) => (
 
 const MoonIcon = ({ className = "w-4 h-4" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
-);
-
-const SystemIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/></svg>
 );
 
 const GlobeIcon = ({ className = "w-4 h-4" }) => (
@@ -242,23 +238,45 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState('manicure');
   const [selectedServiceIds, setSelectedServiceIds] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
-
-  useEffect(() => {
-    setSelectedServiceIds([]);
-    setSelectedOptions([]);
-  }, [activeCategory]);
-
-
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
 
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef(null);
   const [activeWork, setActiveWork] = useState(0);
 
-  useEffect(() => {
-    setSliderPosition(50);
-    setIsDragging(false);
-  }, [activeWork]);
+  const getNext10Days = () => {
+    const days = [];
+    const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+    const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
+    const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    
+    const today = new Date();
+    for (let i = 0; i < 10; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      
+      const dayNum = date.getDate();
+      const monthNum = date.getMonth() + 1;
+      const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
+      const dayOfWeekIndex = date.getDay();
+      
+      const weekdayRu = daysOfWeekRu[dayOfWeekIndex];
+      const weekdayKk = daysOfWeekKk[dayOfWeekIndex];
+      const weekdayEn = daysOfWeekEn[dayOfWeekIndex];
+      
+      const formattedDate = `${dayNum < 10 ? '0' + dayNum : dayNum}.${monthStr}`;
+      
+      days.push({
+        id: `${date.getFullYear()}-${monthStr}-${dayNum < 10 ? '0' + dayNum : dayNum}`,
+        dayNum,
+        weekday: lang === 'en' ? weekdayEn : lang === 'ru' ? weekdayRu : weekdayKk,
+        formatted: formattedDate
+      });
+    }
+    return days;
+  };
 
   const handleSliderMove = (clientX) => {
     if (!sliderRef.current) return;
@@ -474,17 +492,6 @@ export default function App() {
     }
   };
 
-  const cycleTheme = () => {
-    const order = ['dark', 'light', 'system'];
-    setTheme(order[(order.indexOf(theme) + 1) % order.length]);
-  };
-
-  const ThemeIcon = () => {
-    if (theme === 'dark') return <MoonIcon />;
-    if (theme === 'light') return <SunIcon />;
-    return <SystemIcon />;
-  };
-
     /* ─── Theme-aware class helpers ─── */
   const bg       = 'bg-transparent';
   const bgDeep   = 'bg-[var(--bg-deep)]';
@@ -492,7 +499,6 @@ export default function App() {
   const bgSubtle = 'bg-[var(--bg-subtle)]';
   const bgHeader = 'bg-[var(--bg-header)]';
   const bgAlt    = 'bg-[var(--bg-alt)]';
-  const bgDeep80 = 'bg-[var(--bg-deep)]';
 
   const textPrimary   = 'text-[var(--text-primary)]';
   const textSecondary = 'text-[var(--text-secondary)]';
@@ -559,7 +565,7 @@ export default function App() {
       heroTitle: "ПРЕМИАЛЬНЫЙ УХОД И ЭСТЕТИКА ДЛЯ ВАШЕЙ КРАСОТЫ",
       heroSubtitle: "БЕЗУПРЕЧНОЕ КАЧЕСТВО • 100% СТЕРИЛЬНОСТЬ",
       heroDesc: "Индивидуальный подход от сертифицированного мастера Светланы. Безопасные процедуры, премиальные материалы и уютный кабинет с заботой о вашем комфорте и красоте.",
-      heroCta: "Подобрать услуги и рассчитать стоимость",
+      heroCta: "Подобрать услуги",
       trustTitle: "ПОЧЕМУ МНЕ ДОВЕРЯЮТ",
       trustSubtitle: "Я гарантирую безопасность, прозрачность и высокий уровень сервиса",
       trust1Title: "100% стерильные инструменты",
@@ -577,7 +583,7 @@ export default function App() {
       servicesTotalTime: "Время",
       servicesSelectedPreview: "Ваш визит",
       servicesNotSelected: "Услуги не выбраны",
-      serviceCta: "Зафиксировать цену и записаться",
+      serviceCta: "Записаться",
       guaranteeIndicatorText: "Гарантия SVTL: Вы записываетесь напрямую к Светлане. Скрытая подмена мастера, передача вашего времени новичку или стажеру полностью исключены. Персональный контроль качества.",
       guaranteesTitle: "ГАРАНТИИ",
       guaranteesSubtitle: "Вы защищены моими личными стандартами качества",
@@ -592,7 +598,7 @@ export default function App() {
       formHelp: "Оставьте ваши данные, я свяжусь с вами в WhatsApp в течение 5 минут для подтверждения времени.",
       namePlaceholder: "Ваше имя",
       phonePlaceholder: "Номер телефона (WhatsApp)",
-      formCta: "Подтвердить запись через WhatsApp",
+      formCta: "Подтвердить в WhatsApp",
       modalSuccessTitle: "Заявка отправлена!",
       modalSuccessDesc: "Я уже готовлюсь связаться с вами в WhatsApp. До встречи на процедуре!",
       modalClose: "ОК",
@@ -667,7 +673,7 @@ export default function App() {
       heroTitle: "СІЗДІҢ СҰЛУЛЫҒЫҢЫЗ ҮШІН ПРЕМИУМ КҮТІМ ЖӘНЕ ЭСТЕТИКА",
       heroSubtitle: "МІНСІЗ САПА • 100% СТЕРИЛЬДІЛІК",
       heroDesc: "Сертификатталған шебер Светланадан жеке тәсіл. Қауіпсіз процедуралар, премиум материалдар және сіздің жайлылығыңыз бен сұлулығыңызға қамқорлық жасайтын кабинет.",
-      heroCta: "Қызметтерді таңдау және құнын есептеу",
+      heroCta: "Қызметтерді таңдау",
       trustTitle: "МАҒАН НЕГЕ СЕНЕДІ",
       trustSubtitle: "Мен қауіпсіздікке, ашықтыққа және жоғары қызмет көрсету деңгейіне кепілдік беремін",
       trust1Title: "100% стерильді құралдар",
@@ -685,7 +691,7 @@ export default function App() {
       servicesTotalTime: "Уақыты",
       servicesSelectedPreview: "Сіздің сеанс",
       servicesNotSelected: "Қызметтер таңдалмады",
-      serviceCta: "Бағаны бекіту және жазылу",
+      serviceCta: "Жазылу",
       guaranteeIndicatorText: "SVTL кепілдігі: Сіз тікелей Светланаға жазыласыз. Шеберді жасырын ауыстыру, сіздің уақытыңызды жаңадан бастаушыға немесе стажерға беру мүлдем мүмкін емес. Жеке сапа бақылауы.",
       guaranteesTitle: "КЕПІЛДІКТЕР",
       guaranteesSubtitle: "Сіз менің жеке сапа стандарттарыммен қорғалғансыз",
@@ -700,7 +706,7 @@ export default function App() {
       formHelp: "Деректеріңізді қалдырыңыз, мен уақытты растау үшін 5 минут ішінде WhatsApp арқылы хабарласамын.",
       namePlaceholder: "Сіздің есіміңіз",
       phonePlaceholder: "Телефон нөмірі (WhatsApp)",
-      formCta: "WhatsApp арқылы жазылуды растау",
+      formCta: "WhatsApp арқылы растау",
       modalSuccessTitle: "Өтінім жіберілді!",
       modalSuccessDesc: "Мен WhatsApp арқылы хабарласуға дайынмын. Процедурада кездескенше!",
       modalClose: "ОК",
@@ -775,7 +781,7 @@ export default function App() {
       heroTitle: "PREMIUM CARE AND AESTHETICS FOR YOUR BEAUTY",
       heroSubtitle: "IMPECCABLE QUALITY • 100% STERILE",
       heroDesc: "Personalized approach from certified artist Svetlana. Safe treatments, premium materials, and a cozy studio designed with your comfort and beauty in mind.",
-      heroCta: "Select services and calculate price",
+      heroCta: "Select services",
       trustTitle: "WHY CLIENTS TRUST ME",
       trustSubtitle: "I guarantee safety, transparency, and the highest standards of service",
       trust1Title: "100% Sterile Instruments",
@@ -793,7 +799,7 @@ export default function App() {
       servicesTotalTime: "Duration",
       servicesSelectedPreview: "Your Visit",
       servicesNotSelected: "Services not selected",
-      serviceCta: "Lock in price and book",
+      serviceCta: "Book now",
       guaranteeIndicatorText: "SVTL Guarantee: You book directly with Svetlana. Master replacement or passing your time to a beginner/trainee is completely excluded. Personal quality control.",
       guaranteesTitle: "GUARANTEES",
       guaranteesSubtitle: "You are protected by my personal standards of quality",
@@ -808,7 +814,7 @@ export default function App() {
       formHelp: "Fill in your details, and I will contact you on WhatsApp within 5 minutes to confirm your preferred time.",
       namePlaceholder: "Your name",
       phonePlaceholder: "Phone number (WhatsApp)",
-      formCta: "Confirm booking via WhatsApp",
+      formCta: "Confirm via WhatsApp",
       modalSuccessTitle: "Request Sent!",
       modalSuccessDesc: "I'm already preparing to contact you on WhatsApp. See you at your appointment!",
       modalClose: "OK",
@@ -1146,7 +1152,7 @@ export default function App() {
     }
   };
 
-  const t = translations[lang];
+  const t = translations[lang] || translations['ru'];
 
   /* ─── Calculator ─── */
   const catObj = categories[activeCategory];
@@ -1183,20 +1189,25 @@ export default function App() {
       : (lang === 'en' ? 'Not required' : lang === 'ru' ? 'Не требуется' : 'Қажет емес');
 
     const modeText = visitMode === 'relax'
-      ? (lang === 'en' ? 'Relax visit in silence' : lang === 'ru' ? 'Relax-визит в тишине' : 'Тыныштықтағы Relax')
-      : (lang === 'en' ? 'With a friendly chat' : lang === 'ru' ? 'С душевной беседой' : 'Жылы сұхбат');
+      ? (lang === 'en' ? 'Relax in silence' : lang === 'ru' ? 'Relax в тишине' : 'Тыныштықтағы Relax')
+      : (lang === 'en' ? 'Friendly chat' : lang === 'ru' ? 'Душевная беседа' : 'Жылы сұхбат');
 
     const greeting = lang === 'en' ? 'Hello!' : 'Салем!';
     const requestText = lang === 'en' ? 'I would like to book an appointment at SVTL Nails & Aesthetic.' : 'Хочу записаться в SVTL Nails & Aesthetic.';
     const servicesLabel = lang === 'en' ? 'Services' : 'Услуги';
     const shapeLabel = lang === 'en' ? 'Nail shape' : 'Форма ногтей';
-    const modeLabel = lang === 'en' ? 'Visit mode' : 'Режим визита';
     const priceLabel = lang === 'en' ? 'Fixed price' : 'Фиксированная цена';
+
+    const dayObj = getNext10Days().find(d => d.id === selectedDate);
+    const dateStr = dayObj ? dayObj.formatted : '';
+    const dateLabel = lang === 'en' ? 'Appointment' : lang === 'ru' ? 'Запись на' : 'Жазылу';
+    const timeWord = lang === 'en' ? 'at' : lang === 'ru' ? 'в' : 'сағат';
+    const modeWord = lang === 'en' ? 'Mode' : lang === 'ru' ? 'Режим' : 'Режимі';
 
     let msg = `${greeting} ${requestText}\n` +
       `${servicesLabel}: ${allServicesText} (${categoryName})\n` +
       `${shapeLabel}: ${shapeText}\n` +
-      `${modeLabel}: ${modeText}\n` +
+      `${dateLabel}: ${dateStr} ${timeWord} ${selectedTime}. ${modeWord}: ${modeText}\n` +
       `${priceLabel}: ${totalPrice.toLocaleString()} ₸.`;
 
     if (includeNameAndPhone && name) {
@@ -1216,6 +1227,10 @@ export default function App() {
     if (!phone) return;
     if (selectedServices.length === 0 && selectedOptions.length === 0) {
       alert(lang === 'en' ? 'Please select at least one service.' : lang === 'ru' ? 'Пожалуйста, выберите хотя бы одну услугу.' : 'Кем дегенде бір қызметті таңдаңыз.');
+      return;
+    }
+    if (!selectedDate || !selectedTime) {
+      alert(lang === 'en' ? 'Please select a date and time.' : lang === 'ru' ? 'Пожалуйста, выберите дату и время.' : 'Күн мен уақытты таңдаңыз.');
       return;
     }
     setIsSubmitting(true);
@@ -1244,7 +1259,6 @@ export default function App() {
     setPhone('');
   };
 
-  const scrollToForm = () => document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
   const scrollToServices = () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
 
   const renderFaqCard = (item, i, keyPrefix) => {
@@ -1486,7 +1500,7 @@ export default function App() {
                 {t.heroTitle}
               </h1>
               <div className="border border-bronze-500/20 bg-bronze-950/20 rounded-xl p-3 mb-6 inline-block">
-                <span className="text-bronze-400 font-sans font-bold text-xs tracking-wider uppercase">✦ {t.heroSubtitle} ✦</span>
+                <span className="text-bronze-400 font-sans font-bold text-xs tracking-wider uppercase">{t.heroSubtitle}</span>
               </div>
               <p className={`${textSecondary} text-sm leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8`}>{t.heroDesc}</p>
               <button onClick={scrollToServices} id="hero-cta-btn"
@@ -1560,7 +1574,11 @@ export default function App() {
               return (
                 <button
                   key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
+                  onClick={() => {
+                    setActiveCategory(cat.id);
+                    setSelectedServiceIds([]);
+                    setSelectedOptions([]);
+                  }}
                   className={`px-6 py-3 rounded-xl font-display font-bold text-[11px] uppercase tracking-wider transition-all duration-300 cursor-pointer
                     ${isActive 
                       ? 'active-tactile-pill scale-[1.02]' 
@@ -1749,7 +1767,7 @@ export default function App() {
                       : 'btn-premium-tactile'
                     }`}
                 >
-                  {t.serviceCta} ✦
+                  {t.serviceCta}
                 </button>
               </div>
 
@@ -1800,8 +1818,12 @@ export default function App() {
                 return (
                   <button
                     key={w.id}
-                    onClick={() => setActiveWork(index)}
-                    className={`flex-shrink-0 snap-start px-5 py-2.5 rounded-xl font-display font-bold text-[10px] uppercase tracking-wider transition-all duration-300 cursor-pointer
+                    onClick={() => {
+                      setActiveWork(index);
+                      setSliderPosition(50);
+                      setIsDragging(false);
+                    }}
+                    className={`flex-shrink-0 snap-start snap-always px-5 py-2.5 rounded-xl font-display font-bold text-[10px] uppercase tracking-wider transition-all duration-300 cursor-pointer
                       ${isActive 
                         ? 'active-tactile-pill scale-[1.02]' 
                         : 'border border-[var(--border-color)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-bronze-500/30'
@@ -1847,7 +1869,6 @@ export default function App() {
                   src={works[activeWork].before} 
                   alt="Before manicure" 
                   className="absolute inset-0 w-full h-full object-cover select-none"
-                  style={{ width: sliderRef.current ? `${sliderRef.current.offsetWidth}px` : '100%' }}
                   draggable="false"
                 />
               </div>
@@ -2162,45 +2183,6 @@ export default function App() {
             <div>
               <SectionLabel text="BOOK" />
               <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-6`}>{t.formTitle}</h2>
-              <div className="bg-bronze-500/10 border border-bronze-500/20 p-4 rounded-xl text-bronze-300 text-sm mb-6 leading-relaxed flex items-start gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" className="w-8 h-8 flex-shrink-0 mt-0.5" style={{ color: 'var(--accent)' }}>
-                  <defs>
-                    {/* Gold/accent glow for the AC unit */}
-                    <filter id="ac-glow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="blur" />
-                      <feMerge>
-                        <feMergeNode in="blur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                    {/* Turquoise glow for the air flow */}
-                    <filter id="wind-glow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur" />
-                      <feMerge>
-                        <feMergeNode in="blur" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                  </defs>
-
-                  {/* AC Unit Body */}
-                  <g filter="url(#ac-glow)">
-                    <rect x="3" y="4" width="26" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
-                    <line x1="3" y1="10" x2="29" y2="10" stroke="currentColor" strokeWidth="0.8" />
-                    <line x1="6" y1="7" x2="26" y2="7" stroke="currentColor" strokeWidth="0.8" strokeDasharray="1 2" opacity="0.6" />
-                    <path d="M5 13c3 1.5 19 1.5 22 0" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                    <circle cx="23" cy="7" r="0.6" fill="currentColor" />
-                  </g>
-
-                  {/* Dynamic Cool Airflow */}
-                  <g filter="url(#wind-glow)" stroke="#2dd4bf" strokeWidth="1" strokeLinecap="round" opacity="0.85">
-                    <path d="M9 15c-0.5 4-1.5 7-1.5 10c0 2.5 1 4 1 6" />
-                    <path d="M16 15c-0.5 4-1.5 7-1.5 10c0 2.5 1 4 1 6" />
-                    <path d="M23 15c-0.5 4-1.5 7-1.5 10c0 2.5 1 4 1 6" />
-                  </g>
-                </svg>
-                <p>{t.formComfort}</p>
-              </div>
               <p className={`${textSecondary} text-sm leading-relaxed mb-6`}>{t.formHelp}</p>
 
               {/* Contact links */}
@@ -2216,7 +2198,7 @@ export default function App() {
               </div>
             </div>
 
-                        {/* Right: form card */}
+            {/* Right: form card */}
             <div className={`border border-bronze-500/20 rounded-2xl p-6 lg:p-8 ${bgCard} shadow-2xl`}>
               <div className="flex justify-center mb-4">
                 <span className="font-display text-[8px] tracking-widest text-bronze-500 font-bold uppercase border border-bronze-500/30 px-3 py-0.5 rounded-full">BOOK APPOINTMENT</span>
@@ -2249,28 +2231,92 @@ export default function App() {
                 </div>
               </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-3">
-                <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder={t.namePlaceholder} required
-                  className="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
-                <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder={t.phonePlaceholder} required
-                  className="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
-                
-                {/* Visit Mode Segmented Control */}
-                <div className="space-y-2 py-1">
-                  <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted} mb-1.5`}>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Compact AC & Coffee Banner */}
+                <div className="flex gap-2.5 items-center p-3 bg-bronze-500/5 border border-bronze-500/10 rounded-xl text-[10px] text-[var(--text-secondary)] leading-relaxed">
+                  <span className="text-xs">☕</span>
+                  <p className="flex-1">{t.formComfort}</p>
+                </div>
+
+                {/* Input Fields */}
+                <div className="space-y-2">
+                  <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder={t.namePlaceholder} required
+                    className="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
+                  <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder={t.phonePlaceholder} required
+                    className="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
+                </div>
+
+                {/* Date & Time Picker */}
+                <div className="space-y-3.5">
+                  {/* Date Picker Strip */}
+                  <div className="space-y-1.5">
+                    <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
+                      {lang === 'en' ? 'Select Date:' : lang === 'ru' ? 'Выбрать дату:' : 'Күнді таңдау:'}
+                    </span>
+                    <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory">
+                      {getNext10Days().map(d => {
+                        const isSelected = selectedDate === d.id;
+                        return (
+                          <button
+                            key={d.id}
+                            type="button"
+                            onClick={() => setSelectedDate(d.id)}
+                            className={`flex-shrink-0 snap-start w-[52px] py-2.5 border rounded-xl flex flex-col items-center justify-center transition-all duration-300 cursor-pointer
+                              ${isSelected
+                                ? 'border-bronze-500 bg-bronze-500/10 text-[var(--text-primary)] shadow-[0_0_12px_rgba(197,168,128,0.2)]'
+                                : 'border-[var(--border-color)] bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-bronze-500/30'
+                              }`}
+                          >
+                            <span className="text-[9px] uppercase opacity-60 font-medium tracking-tighter">{d.weekday}</span>
+                            <span className="text-xs font-black mt-0.5">{d.dayNum}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Time slots Grid */}
+                  <div className="space-y-1.5">
+                    <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
+                      {lang === 'en' ? 'Select Time:' : lang === 'ru' ? 'Выбрать время:' : 'Уақытты таңдау:'}
+                    </span>
+                    <div className="grid grid-cols-4 gap-1.5">
+                      {['09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'].map(time => {
+                        const isSelected = selectedTime === time;
+                        return (
+                          <button
+                            key={time}
+                            type="button"
+                            onClick={() => setSelectedTime(time)}
+                            className={`py-2 px-1 border rounded-xl text-center text-xs font-bold transition-all duration-300 cursor-pointer
+                              ${isSelected
+                                ? 'border-bronze-500 bg-bronze-500/10 text-[var(--text-primary)] shadow-[0_0_12px_rgba(197,168,128,0.2)]'
+                                : 'border-[var(--border-color)] bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-bronze-500/30'
+                              }`}
+                          >
+                            {time}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Visit Mode Switch */}
+                <div className="space-y-1.5">
+                  <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
                     {lang === 'en' ? 'Visit mode:' : lang === 'ru' ? 'Режим визита:' : 'Визит форматы:'}
                   </span>
                   <div className="grid grid-cols-2 p-1 gap-1 rounded-xl tactile-container">
                     <button
                       type="button"
                       onClick={() => setVisitMode('relax')}
-                      className={`flex items-center justify-center gap-2 py-3 px-3 rounded-lg text-[11px] font-bold transition-all duration-200 cursor-pointer
+                      className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-[10px] font-bold transition-all duration-200 cursor-pointer
                         ${visitMode === 'relax'
                           ? 'active-tactile-pill scale-[1.02]'
                           : 'text-[var(--text-secondary)] bg-transparent hover:text-[var(--text-primary)] hover:bg-white/5'
                         }`}
                     >
-                      {/* Moon Icon */}
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                       </svg>
@@ -2280,13 +2326,12 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setVisitMode('talk')}
-                      className={`flex items-center justify-center gap-2 py-3 px-3 rounded-lg text-[11px] font-bold transition-all duration-200 cursor-pointer
+                      className={`flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-lg text-[10px] font-bold transition-all duration-200 cursor-pointer
                         ${visitMode === 'talk'
                           ? 'active-tactile-pill scale-[1.02]'
                           : 'text-[var(--text-secondary)] bg-transparent hover:text-[var(--text-primary)] hover:bg-white/5'
                         }`}
                     >
-                      {/* Bubble Icon */}
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
@@ -2296,7 +2341,7 @@ export default function App() {
                 </div>
 
                 <button type="submit" disabled={isSubmitting} id="form-submit-btn"
-                  className="w-full btn-premium-tactile disabled:opacity-50 py-4 rounded-xl text-xs uppercase transition-all duration-300 flex justify-center items-center gap-2">
+                  className="w-full btn-premium-tactile disabled:opacity-50 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all duration-300 flex justify-center items-center gap-2 mt-4">
                   {isSubmitting
                     ? <span className="w-4 h-4 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin"></span>
                     : t.formCta}
