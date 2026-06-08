@@ -1491,8 +1491,7 @@ export default function App() {
           <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16 pt-12 pb-14 lg:pt-20 lg:pb-24">
             {/* Left: text */}
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-1.5 border border-bronze-500/30 bg-bronze-500/5 px-3 py-1 rounded-full mb-5">
-                <span className="w-1.5 h-1.5 rounded-full bg-bronze-500 animate-pulse"></span>
+              <div className="inline-flex items-center border border-bronze-500/30 bg-bronze-500/5 px-3 py-1 rounded-full mb-5">
                 <span className="text-bronze-300 font-bold tracking-widest text-[9px] uppercase">{t.heroSuperTitle}</span>
               </div>
               <h1 className={`font-display font-black tracking-tighter ${textPrimary} leading-[1.05] uppercase mb-5
