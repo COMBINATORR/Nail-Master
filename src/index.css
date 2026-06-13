@@ -844,6 +844,128 @@ body.theme-sage .blob-1, body.theme-sage .blob-2, body.theme-sage .blob-3, body.
   100% { transform: translate(-12%, -10%) scale(0.9) rotate(-180deg); }
 }
 
+/* ══════════════════════════════════════════
+   LEAFLET CUSTOM PREMIUM STYLE OVERRIDES
+   ══════════════════════════════════════════ */
+
+/* Glow Map Marker */
+.map-custom-marker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.marker-pulse-wrapper {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.marker-dot {
+  width: 10px;
+  height: 10px;
+  background-color: var(--color-bronze-500, #B89548);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-bronze-500, #B89548);
+  z-index: 2;
+}
+.marker-pulse {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-bronze-500, #B89548);
+  border-radius: 50%;
+  animation: mapPulse 2s infinite ease-out;
+  opacity: 0;
+  z-index: 1;
+}
+@keyframes mapPulse {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+/* Leaflet Container Overrides */
+.leaflet-container {
+  background: transparent !important;
+  font-family: inherit !important;
+}
+
+/* Custom styles for Leaflet Controls */
+.leaflet-bar {
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+.leaflet-bar a {
+  background-color: var(--bg-header) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  transition: all 0.2s ease;
+}
+.leaflet-bar a:hover {
+  background-color: var(--bg-subtle) !important;
+  color: var(--color-bronze-500) !important;
+}
+
+/* Custom styles for Popups */
+.leaflet-popup-content-wrapper {
+  background-color: var(--bg-header) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(12px);
+}
+.leaflet-popup-tip {
+  background-color: var(--bg-header) !important;
+  border-left: 1px solid var(--border-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+.leaflet-popup-content {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em;
+  line-height: 1.4 !important;
+  margin: 10px 14px !important;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: var(--text-muted) !important;
+  padding: 6px 8px 0 0 !important;
+}
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: var(--text-primary) !important;
+}
+
+/* ─── Map Tile Theme Refraction & Filters ─── */
+body.theme-sage .leaflet-tile-container {
+  filter: sepia(0.3) saturate(0.7) contrast(0.95) hue-rotate(70deg) brightness(1.03);
+}
+body.theme-nudefashion .leaflet-tile-container {
+  filter: sepia(0.35) saturate(0.8) contrast(0.92) hue-rotate(-5deg) brightness(1.03);
+}
+body.theme-emerald .leaflet-tile-container {
+  filter: sepia(0.4) saturate(0.7) contrast(1.1) hue-rotate(105deg) brightness(0.8);
+}
+body.theme-cyber .leaflet-tile-container {
+  filter: invert(5%) hue-rotate(185deg) saturate(1.5) brightness(0.95) contrast(1.05);
+}
+body.theme-light .leaflet-tile-container {
+  filter: saturate(0.85) contrast(0.95) brightness(1.02);
+}
+body.theme-dark .leaflet-tile-container {
+  filter: saturate(0.9) brightness(0.95);
+}
+
+
 
 
 

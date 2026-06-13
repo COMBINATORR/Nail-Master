@@ -158,6 +158,7 @@ export default function App() {
   const [showGravityRestore, setShowGravityRestore] = useState(false);
   const clickTracker = useRef({ count: 0, lastClickTime: 0 });
   const affectedElements = useRef([]);
+  const mapInstanceRef = useRef(null);
   const categories = {
     manicure: {
       id: 'manicure',
@@ -222,11 +223,24 @@ export default function App() {
             setScrollProgress(0);
           }
           setShowBackToTop(window.scrollY > 300);
+
+          if (logoRef.current) {
+            if (window.scrollY > 10) {
+              logoRef.current.classList.add('active');
+            } else {
+              logoRef.current.classList.remove('active');
+            }
+          }
+
           ticking = false;
         });
         ticking = true;
       }
     };
+
+    // Run once on mount to handle initial page load scroll position
+    handleScroll();
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -442,6 +456,66 @@ export default function App() {
   useEffect(() => { localStorage.setItem('svtl-lang', lang); }, [lang]);
 
   useEffect(() => {
+    if (typeof window === 'undefined' || !window.L) return;
+    const L = window.L;
+
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.remove();
+      mapInstanceRef.current = null;
+    }
+
+    const mapNode = document.getElementById('studio-map');
+    if (!mapNode) return;
+
+    const map = L.map('studio-map', {
+      center: [47.092838, 51.920108],
+      zoom: 17,
+      zoomControl: false,
+      attributionControl: false
+    });
+
+    mapInstanceRef.current = map;
+
+    L.control.zoom({ position: 'bottom-right' }).addTo(map);
+
+    const tileUrl = isNightTheme
+      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+      : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+
+    L.tileLayer(tileUrl, {
+      maxZoom: 20
+    }).addTo(map);
+
+    const customIcon = L.divIcon({
+      className: 'map-custom-marker',
+      html: `
+        <div class="marker-pulse-wrapper">
+          <div class="marker-pulse"></div>
+          <div class="marker-dot"></div>
+        </div>
+      `,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15]
+    });
+
+    const marker = L.marker([47.092838, 51.920108], { icon: customIcon }).addTo(map);
+
+    const popupTexts = {
+      ru: '<b>Shade Studio</b><br/>Проспект Азаттык 93',
+      kk: '<b>Shade Studio</b><br/>Азаттық даңғылы 93',
+      en: '<b>Shade Studio</b><br/>93 Azattyk Avenue'
+    };
+    marker.bindPopup(popupTexts[lang] || popupTexts['ru']).openPopup();
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, [theme, lang, isNightTheme]);
+
+  useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const handler = () => { if (theme === 'system') setTheme('system'); };
     mq.addEventListener('change', handler);
@@ -452,9 +526,6 @@ export default function App() {
     const handler = (e) => {
       if (langPopupRef.current && !langPopupRef.current.contains(e.target)) setShowLangPopup(false);
       if (themePopupRef.current && !themePopupRef.current.contains(e.target)) setShowThemeMenu(false);
-      if (logoRef.current && !logoRef.current.contains(e.target)) {
-        logoRef.current.classList.remove('active');
-      }
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -572,9 +643,7 @@ export default function App() {
     }, 600);
   };
 
-  const handleLogoClick = (e) => {
-    e.currentTarget.classList.toggle('active');
-
+  const handleLogoClick = () => {
     const now = Date.now();
     const tracker = clickTracker.current;
     if (now - tracker.lastClickTime < 500) {
@@ -2193,18 +2262,9 @@ export default function App() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
-            {/* Map iframe — takes 2/3 width on desktop */}
-            <div className={`lg:col-span-2 rounded-2xl overflow-hidden border ${border} shadow-xl`} style={{height: '380px'}}>
-              <iframe
-                title="Google Maps — Shade, Проспект Азаттык 93, Атырау"
-                src="https://maps.google.com/maps?q=%D0%9F%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82+%D0%90%D0%B7%D0%B0%D1%82%D1%82%D1%8B%D0%BA+93+%D0%90%D1%82%D1%8B%D1%80%D0%B0%D1%83+%D0%9A%D0%B0%D0%B7%D0%B0%D1%85%D1%81%D1%82%D0%B0%D0%BD&t=m&z=17&output=embed&hl=ru"
-                width="100%"
-                height="100%"
-                style={{border:'none', display:'block'}}
-                loading="lazy"
-                allowFullScreen
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+            {/* Interactive Custom Leaflet Map Container */}
+            <div className={`lg:col-span-2 rounded-2xl overflow-hidden border ${border} shadow-xl z-0 relative`} style={{height: '380px'}}>
+              <div id="studio-map" className="w-full h-full"></div>
             </div>
 
             {/* Info card — 1/3 width */}
