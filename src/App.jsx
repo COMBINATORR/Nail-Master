@@ -2514,7 +2514,7 @@ export default function App() {
           ></div>
           
           {/* Drawer Panel */}
-                    <div className={`absolute top-0 right-0 h-full w-4/5 max-w-[320px] bg-[var(--bg-header)] border-l ${border} shadow-2xl p-6 flex flex-col justify-between backdrop-blur-md transition-all duration-300 transform`}>
+          <div className={`absolute top-0 left-0 h-full w-4/5 max-w-[320px] bg-[var(--bg-header)] border-r ${border} shadow-2xl p-6 flex flex-col justify-between backdrop-blur-md transition-all duration-300 transform`}>
             <div>
               {/* Header inside Mobile Menu */}
               <div className="flex justify-between items-center mb-10">
