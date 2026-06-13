@@ -459,58 +459,77 @@ export default function App() {
     if (typeof window === 'undefined' || !window.L) return;
     const L = window.L;
 
-    if (mapInstanceRef.current) {
-      mapInstanceRef.current.remove();
-      mapInstanceRef.current = null;
-    }
-
-    const mapNode = document.getElementById('studio-map');
-    if (!mapNode) return;
-
-    const map = L.map('studio-map', {
-      center: [47.092838, 51.920108],
-      zoom: 17,
-      zoomControl: false,
-      attributionControl: false
-    });
-
-    mapInstanceRef.current = map;
-
-    L.control.zoom({ position: 'bottom-right' }).addTo(map);
-
-    const tileUrl = isNightTheme
-      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-      : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-
-    L.tileLayer(tileUrl, {
-      maxZoom: 20
-    }).addTo(map);
-
-    const customIcon = L.divIcon({
-      className: 'map-custom-marker',
-      html: `
-        <div class="marker-pulse-wrapper">
-          <div class="marker-pulse"></div>
-          <div class="marker-dot"></div>
-        </div>
-      `,
-      iconSize: [30, 30],
-      iconAnchor: [15, 15]
-    });
-
-    const marker = L.marker([47.092838, 51.920108], { icon: customIcon }).addTo(map);
-
-    const popupTexts = {
-      ru: '<b>Shade Studio</b><br/>Проспект Азаттык 93',
-      kk: '<b>Shade Studio</b><br/>Азаттық даңғылы 93',
-      en: '<b>Shade Studio</b><br/>93 Azattyk Avenue'
-    };
-    marker.bindPopup(popupTexts[lang] || popupTexts['ru']).openPopup();
-
-    return () => {
+    try {
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
+      }
+
+      const mapNode = document.getElementById('studio-map');
+      if (!mapNode) return;
+
+      // Clear any pre-existing Leaflet instance on this DOM node to avoid "Map container is already initialized" crash
+      if (mapNode._leaflet_id) {
+        const parent = mapNode.parentNode;
+        if (parent) {
+          const newMapNode = document.createElement('div');
+          newMapNode.id = 'studio-map';
+          newMapNode.className = 'w-full h-full';
+          parent.replaceChild(newMapNode, mapNode);
+        }
+      }
+
+      const map = L.map('studio-map', {
+        center: [47.092838, 51.920108],
+        zoom: 17,
+        zoomControl: false,
+        attributionControl: false
+      });
+
+      mapInstanceRef.current = map;
+
+      L.control.zoom({ position: 'bottom-right' }).addTo(map);
+
+      const tileUrl = isNightTheme
+        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+        : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+
+      L.tileLayer(tileUrl, {
+        maxZoom: 20
+      }).addTo(map);
+
+      const customIcon = L.divIcon({
+        className: 'map-custom-marker',
+        html: `
+          <div class="marker-pulse-wrapper">
+            <div class="marker-pulse"></div>
+            <div class="marker-dot"></div>
+          </div>
+        `,
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+      });
+
+      const marker = L.marker([47.092838, 51.920108], { icon: customIcon }).addTo(map);
+
+      const popupTexts = {
+        ru: '<b>Shade Studio</b><br/>Проспект Азаттык 93',
+        kk: '<b>Shade Studio</b><br/>Азаттық даңғылы 93',
+        en: '<b>Shade Studio</b><br/>93 Azattyk Avenue'
+      };
+      marker.bindPopup(popupTexts[lang] || popupTexts['ru']).openPopup();
+    } catch (error) {
+      console.error('Leaflet Map Initialization Error:', error);
+    }
+
+    return () => {
+      try {
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.remove();
+          mapInstanceRef.current = null;
+        }
+      } catch (error) {
+        console.error('Leaflet Cleanup Error:', error);
       }
     };
   }, [theme, lang, isNightTheme]);
