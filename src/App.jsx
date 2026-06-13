@@ -210,6 +210,20 @@ export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [activeCareTab, setActiveCareTab] = useState('manicure');
+  const [leafletLoaded, setLeafletLoaded] = useState(() => typeof window !== 'undefined' && !!window.L);
+
+  useEffect(() => {
+    if (leafletLoaded) return;
+
+    const interval = setInterval(() => {
+      if (typeof window !== 'undefined' && window.L) {
+        setLeafletLoaded(true);
+        clearInterval(interval);
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [leafletLoaded]);
 
   useEffect(() => {
     let ticking = false;
@@ -532,7 +546,7 @@ export default function App() {
         console.error('Leaflet Cleanup Error:', error);
       }
     };
-  }, [theme, lang, isNightTheme]);
+  }, [theme, lang, isNightTheme, leafletLoaded]);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
