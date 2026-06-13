@@ -502,7 +502,7 @@ export default function App() {
 
       mapInstanceRef.current = map;
 
-      L.control.zoom({ position: 'bottom-right' }).addTo(map);
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
 
       const tileUrl = isNightTheme
         ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
