@@ -1400,7 +1400,7 @@ export default function App() {
       ></div>
 
       {/* ═══════════ HEADER — full width on desktop ═══════════ */}
-      <header className={`sticky top-0 z-40 backdrop-blur-md ${bgHeader} border-b ${border} transition-colors duration-300`}>
+      <header className={`sticky top-0 z-40 backdrop-blur-xl ${bgHeader} border-b ${border} transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center relative">
           {/* Mobile Sandwich menu (Left side on mobile, hidden on desktop) */}
           <button onClick={() => setIsMobileMenuOpen(true)}
@@ -1470,7 +1470,7 @@ export default function App() {
                 {isDayTheme ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
               </button>
               {showThemeMenu && (
-                <div className={`absolute right-0 top-full mt-2 ${bgHeader} border ${border} rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-md`}>
+                <div className={`absolute right-0 top-full mt-2 ${bgHeader} border ${border} rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-xl`}>
                   <div className="flex p-1 mb-4 tactile-container">
                     <button 
                       onClick={() => setTheme('light')}
@@ -1562,7 +1562,7 @@ export default function App() {
                 <span className="text-xs font-bold uppercase tracking-widest">{lang === 'ru' ? 'RU' : lang === 'kk' ? 'KZ' : 'EN'}</span>
               </button>
               {showLangPopup && (
-                <div className={`absolute right-0 top-full mt-2 ${bgHeader} border ${border} rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-md space-y-2`}>
+                <div className={`absolute right-0 top-full mt-2 ${bgHeader} border ${border} rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-xl space-y-2`}>
                   <div className={`text-[10px] uppercase font-bold tracking-wider ${textMuted} mb-2`}>
                     {lang === 'ru' ? 'Выбор языка' : lang === 'kk' ? 'Тілді таңдау' : 'Select Language'}
                   </div>
@@ -2525,12 +2525,12 @@ export default function App() {
         <div className="fixed inset-0 z-50 lg:hidden popup-backdrop">
           {/* Backdrop blur overlay */}
           <div 
-            className="absolute inset-0 bg-charcoal-950/60 backdrop-blur-md" 
+            className="absolute inset-0 bg-charcoal-950/60 backdrop-blur-xl" 
             onClick={() => setIsMobileMenuOpen(false)}
           ></div>
           
           {/* Drawer Panel */}
-          <div className={`absolute top-0 left-0 h-full w-4/5 max-w-[320px] bg-[var(--bg-header)] border-r ${border} shadow-2xl p-6 flex flex-col justify-between backdrop-blur-md transition-all duration-300 transform`}>
+          <div className={`absolute top-0 left-0 h-full w-4/5 max-w-[320px] bg-[var(--bg-header)] border-r ${border} shadow-2xl p-6 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 transform`}>
             <div>
               {/* Header inside Mobile Menu */}
               <div className="flex justify-between items-center mb-10">
