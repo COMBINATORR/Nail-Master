@@ -43,10 +43,6 @@ const MoonIcon = ({ className = "w-4 h-4" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
 );
 
-const GlobeIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg>
-);
-
 const ShieldIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
@@ -1408,7 +1404,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center relative">
           {/* Mobile Sandwich menu (Left side on mobile, hidden on desktop) */}
           <button onClick={() => setIsMobileMenuOpen(true)}
-            className="lg:hidden p-2 rounded-full btn-tactile-circle text-[var(--text-secondary)] hover:text-bronze-500 transition-all z-10"
+            className="lg:hidden p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all z-10"
             aria-label="Toggle mobile menu"
           >
             <MenuIcon className="w-4 h-4" />
@@ -1457,11 +1453,11 @@ export default function App() {
           </nav>
           <div className="flex items-center gap-1.5 z-10">
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-               className={`hidden sm:inline-flex p-2 rounded-full ${bgSubtle} text-[var(--text-secondary)] instagram-glow-hover`}>
+               className="hidden sm:inline-flex p-2 text-[var(--text-secondary)] instagram-glow-hover">
               <InstagramIcon className="w-4 h-4" />
             </a>
             <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
-               className={`hidden sm:inline-flex p-2 rounded-full ${bgSubtle} text-[var(--text-secondary)] whatsapp-glow-hover`}>
+               className="hidden sm:inline-flex p-2 text-[var(--text-secondary)] whatsapp-glow-hover">
               <WhatsAppIcon className="w-4 h-4" />
             </a>
             <div className="hidden sm:block h-5 w-px bg-[var(--border-color)] mx-0.5" />
@@ -1469,10 +1465,9 @@ export default function App() {
             {/* Appearance switch popover dropdown */}
             <div className="relative" ref={themePopupRef}>
               <button onClick={() => setShowThemeMenu(!showThemeMenu)}
-                className="p-2 px-3 rounded-full btn-tactile-circle text-[var(--text-secondary)] hover:text-bronze-500 transition-all flex items-center gap-1.5"
+                className="p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all flex items-center"
                 title={lang === 'ru' ? 'Внешний вид' : lang === 'kk' ? 'Сыртқы түрі' : 'Appearance'}>
                 {isDayTheme ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
-                <ChevronDownIcon className={`w-3 h-3 transition-transform ${showThemeMenu ? 'rotate-180' : ''}`} />
               </button>
               {showThemeMenu && (
                 <div className="absolute right-0 top-full mt-2 bg-charcoal-950/95 border border-white/10 rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn text-white">
@@ -1557,11 +1552,14 @@ export default function App() {
               )}
             </div>
             
+            {/* Divider between theme and language */}
+            <div className="h-4 w-px bg-[var(--border-color)] mx-1" />
+            
+            {/* Language selector */}
             <div className="relative" ref={langPopupRef}>
               <button onClick={() => setShowLangPopup(!showLangPopup)}
-                className="p-2 px-3 rounded-full btn-tactile-circle text-[var(--text-secondary)] hover:text-bronze-500 transition-all flex items-center gap-1.5">
-                <GlobeIcon />
-                <span className="text-[9px] font-bold uppercase">{lang === 'ru' ? 'RU' : lang === 'kk' ? 'KZ' : 'EN'}</span>
+                className="p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all flex items-center">
+                <span className="text-xs font-bold uppercase tracking-widest">{lang === 'ru' ? 'RU' : lang === 'kk' ? 'KZ' : 'EN'}</span>
               </button>
               {showLangPopup && (
                 <div className={`absolute right-0 top-full mt-2 ${bgCard} border ${border} rounded-xl shadow-xl overflow-hidden z-50 popup-backdrop min-w-[130px] animate-fadeIn`}>
