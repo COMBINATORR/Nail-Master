@@ -363,7 +363,7 @@ body.theme-dark {
   --bg-deep: rgba(8, 7, 11, 0.75);
   --bg-subtle: rgba(255, 255, 255, 0.04);
   --bg-alt: rgba(8, 7, 11, 0.3);
-  --bg-header: rgba(8, 7, 11, 0.85);
+  --bg-header: rgba(8, 7, 11, 0.95);
   --text-primary: #FFFFFF;
   --text-secondary: #a3a3a3;
   --text-muted: #737373;
@@ -398,7 +398,7 @@ body.theme-light {
   --bg-deep: rgba(255, 255, 255, 0.8);
   --bg-subtle: rgba(28, 25, 23, 0.04);
   --bg-alt: rgba(184, 149, 72, 0.05);
-  --bg-header: rgba(253, 251, 247, 0.9);
+  --bg-header: rgba(253, 251, 247, 0.98);
   --text-primary: #1C1917;
   --text-secondary: #57534e;
   --text-muted: #78716c;
@@ -440,7 +440,7 @@ body.theme-emerald {
   --bg-deep: rgba(9, 44, 33, 0.7);
   --bg-subtle: rgba(239, 231, 225, 0.04);
   --bg-alt: rgba(9, 44, 33, 0.3);
-  --bg-header: rgba(6, 31, 23, 0.85);
+  --bg-header: rgba(6, 31, 23, 0.95);
   --text-primary: #EFE7E1;
   --text-secondary: #c9c1bb;
   --text-muted: #9e9791;
@@ -475,7 +475,7 @@ body.theme-nudefashion {
   --bg-deep: rgba(255, 255, 255, 0.85);
   --bg-subtle: rgba(30, 27, 24, 0.04);
   --bg-alt: rgba(43, 41, 39, 0.05);
-  --bg-header: rgba(244, 239, 234, 0.9);
+  --bg-header: rgba(244, 239, 234, 0.98);
   --text-primary: #1E1B18;
   --text-secondary: #5a5550;
   --text-muted: #7d7772;
@@ -510,7 +510,7 @@ body.theme-sage {
   --bg-deep: rgba(255, 255, 255, 0.85);
   --bg-subtle: rgba(45, 53, 46, 0.04);
   --bg-alt: rgba(74, 93, 78, 0.05);
-  --bg-header: rgba(240, 242, 238, 0.9);
+  --bg-header: rgba(240, 242, 238, 0.98);
   --text-primary: #2D352E;
   --text-secondary: #5e6b60;
   --text-muted: #808f82;
@@ -545,7 +545,7 @@ body.theme-cyber {
   --bg-deep: rgba(24, 21, 36, 0.7);
   --bg-subtle: rgba(253, 251, 247, 0.04);
   --bg-alt: rgba(24, 21, 36, 0.3);
-  --bg-header: rgba(13, 11, 20, 0.85);
+  --bg-header: rgba(13, 11, 20, 0.95);
   --text-primary: #FDFBF7;
   --text-secondary: #a3a1ad;
   --text-muted: #75737d;
