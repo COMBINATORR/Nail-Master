@@ -1562,18 +1562,36 @@ export default function App() {
                 <span className="text-xs font-bold uppercase tracking-widest">{lang === 'ru' ? 'RU' : lang === 'kk' ? 'KZ' : 'EN'}</span>
               </button>
               {showLangPopup && (
-                <div className={`absolute right-0 top-full mt-2 ${bgCard} border ${border} rounded-xl shadow-xl overflow-hidden z-50 popup-backdrop min-w-[130px] animate-fadeIn`}>
+                <div className="absolute right-0 top-full mt-2 bg-charcoal-950/95 border border-white/10 rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn text-white space-y-2">
+                  <div className="text-[10px] uppercase font-bold tracking-wider text-neutral-400 mb-2">
+                    {lang === 'ru' ? 'Выбор языка' : lang === 'kk' ? 'Тілді таңдау' : 'Select Language'}
+                  </div>
+
                   <button onClick={() => { setLang('ru'); setShowLangPopup(false); }}
-                    className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'ru' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} hover:bg-[var(--bg-subtle)]`}`}>
-                    <span>🇷🇺</span> Русский
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'ru' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}>
+                    <div className="flex items-center gap-2">
+                      <span>🇷🇺</span>
+                      <span>Русский</span>
+                    </div>
+                    {lang === 'ru' && <span className="text-bronze-400">✓</span>}
                   </button>
+
                   <button onClick={() => { setLang('kk'); setShowLangPopup(false); }}
-                    className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'kk' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} hover:bg-[var(--bg-subtle)]`}`}>
-                    <span>🇰🇿</span> Қазақша
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'kk' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}>
+                    <div className="flex items-center gap-2">
+                      <span>🇰🇿</span>
+                      <span>Қазақша</span>
+                    </div>
+                    {lang === 'kk' && <span className="text-bronze-400">✓</span>}
                   </button>
+
                   <button onClick={() => { setLang('en'); setShowLangPopup(false); }}
-                    className={`w-full px-4 py-2.5 text-left text-xs font-bold flex items-center gap-2 transition-colors ${lang === 'en' ? 'text-bronze-500 bg-bronze-500/10' : `${textSecondary} hover:bg-[var(--bg-subtle)]`}`}>
-                    <span>🇬🇧</span> English
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'en' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}>
+                    <div className="flex items-center gap-2">
+                      <span>🇬🇧</span>
+                      <span>English</span>
+                    </div>
+                    {lang === 'en' && <span className="text-bronze-400">✓</span>}
                   </button>
                 </div>
               )}
