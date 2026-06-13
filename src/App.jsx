@@ -1405,11 +1405,19 @@ export default function App() {
 
       {/* ═══════════ HEADER — full width on desktop ═══════════ */}
       <header className={`sticky top-0 z-40 backdrop-blur-md ${bgHeader} border-b ${border} transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center">
-          {/* Logo with hover SVG neon animation */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center relative">
+          {/* Mobile Sandwich menu (Left side on mobile, hidden on desktop) */}
+          <button onClick={() => setIsMobileMenuOpen(true)}
+            className="lg:hidden p-2 rounded-full btn-tactile-circle text-[var(--text-secondary)] hover:text-bronze-500 transition-all z-10"
+            aria-label="Toggle mobile menu"
+          >
+            <MenuIcon className="w-4 h-4" />
+          </button>
+
+          {/* Logo with hover SVG neon animation (Centered on mobile, left-aligned on desktop) */}
           <div 
             ref={logoRef}
-            className="logo-container group"
+            className="logo-container group !absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:!static lg:translate-x-0 lg:translate-y-0"
             onClick={handleLogoClick}
           >
             <svg width="24" height="24" viewBox="0 0 32 32" fill="none" className="logo-svg">
@@ -1447,7 +1455,7 @@ export default function App() {
               );
             })}
           </nav>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 z-10">
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
                className={`hidden sm:inline-flex p-2 rounded-full ${bgSubtle} text-[var(--text-secondary)] instagram-glow-hover`}>
               <InstagramIcon className="w-4 h-4" />
@@ -1572,13 +1580,6 @@ export default function App() {
                 </div>
               )}
             </div>
-            <div className="h-5 w-px bg-[var(--border-color)] mx-0.5 lg:hidden" />
-            <button onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 rounded-full btn-tactile-circle text-[var(--text-secondary)] hover:text-bronze-500 transition-all"
-              aria-label="Toggle mobile menu"
-            >
-              <MenuIcon className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </header>
