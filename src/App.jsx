@@ -1470,31 +1470,31 @@ export default function App() {
                 {isDayTheme ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
               </button>
               {showThemeMenu && (
-                <div className="absolute right-0 top-full mt-2 bg-charcoal-950/95 border border-white/10 rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn text-white">
+                <div className={`absolute right-0 top-full mt-2 ${bgCard} border ${border} rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-md`}>
                   <div className="flex p-1 mb-4 tactile-container">
                     <button 
                       onClick={() => setTheme('light')}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all duration-300 ${isDayTheme && theme === 'light' ? 'btn-switch-active-day' : 'text-neutral-400 hover:text-white border border-transparent'}`}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all duration-300 ${isDayTheme && theme === 'light' ? 'btn-switch-active-day' : `${textMuted} hover:${textPrimary} border border-transparent`}`}
                     >
                       <SunIcon className="w-4 h-4" />
                       <span>{lang === 'ru' ? 'День' : lang === 'kk' ? 'Күн' : 'Day'}</span>
                     </button>
                     <button 
                       onClick={() => setTheme('dark')}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all duration-300 ${isNightTheme && theme === 'dark' ? 'btn-switch-active-night' : 'text-neutral-400 hover:text-white border border-transparent'}`}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all duration-300 ${isNightTheme && theme === 'dark' ? 'btn-switch-active-night' : `${textMuted} hover:${textPrimary} border border-transparent`}`}
                     >
                       <MoonIcon className="w-4 h-4" />
                       <span>{lang === 'ru' ? 'Ночь' : lang === 'kk' ? 'Түн' : 'Night'}</span>
                     </button>
                   </div>
                   <div className="space-y-2">
-                    <div className="text-[10px] uppercase font-bold tracking-wider text-neutral-400 mb-2">
+                    <div className={`text-[10px] uppercase font-bold tracking-wider ${textMuted} mb-2`}>
                       {lang === 'ru' ? 'Премиум палитры' : lang === 'kk' ? 'Премиум палитралар' : 'Premium Palettes'}
                     </div>
                     
                     <button 
                       onClick={() => setTheme('emerald')}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${theme === 'emerald' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${theme === 'emerald' ? `${bgSubtle} ${textPrimary} border ${borderSubtle}` : `${textSecondary} hover:${bgSubtle} border border-transparent`}`}
                     >
                       <div className="flex items-center gap-2">
                         <span className="flex gap-1">
@@ -1508,7 +1508,7 @@ export default function App() {
 
                     <button 
                       onClick={() => setTheme('nudefashion')}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${theme === 'nudefashion' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${theme === 'nudefashion' ? `${bgSubtle} ${textPrimary} border ${borderSubtle}` : `${textSecondary} hover:${bgSubtle} border border-transparent`}`}
                     >
                       <div className="flex items-center gap-2">
                         <span className="flex gap-1">
@@ -1522,7 +1522,7 @@ export default function App() {
 
                     <button 
                       onClick={() => setTheme('sage')}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${theme === 'sage' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${theme === 'sage' ? `${bgSubtle} ${textPrimary} border ${borderSubtle}` : `${textSecondary} hover:${bgSubtle} border border-transparent`}`}
                     >
                       <div className="flex items-center gap-2">
                         <span className="flex gap-1">
@@ -1536,7 +1536,7 @@ export default function App() {
 
                     <button 
                       onClick={() => setTheme('cyber')}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${theme === 'cyber' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${theme === 'cyber' ? `${bgSubtle} ${textPrimary} border ${borderSubtle}` : `${textSecondary} hover:${bgSubtle} border border-transparent`}`}
                     >
                       <div className="flex items-center gap-2">
                         <span className="flex gap-1">
@@ -1562,13 +1562,13 @@ export default function App() {
                 <span className="text-xs font-bold uppercase tracking-widest">{lang === 'ru' ? 'RU' : lang === 'kk' ? 'KZ' : 'EN'}</span>
               </button>
               {showLangPopup && (
-                <div className="absolute right-0 top-full mt-2 bg-charcoal-950/95 border border-white/10 rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn text-white space-y-2">
-                  <div className="text-[10px] uppercase font-bold tracking-wider text-neutral-400 mb-2">
+                <div className={`absolute right-0 top-full mt-2 ${bgCard} border ${border} rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-md space-y-2`}>
+                  <div className={`text-[10px] uppercase font-bold tracking-wider ${textMuted} mb-2`}>
                     {lang === 'ru' ? 'Выбор языка' : lang === 'kk' ? 'Тілді таңдау' : 'Select Language'}
                   </div>
 
                   <button onClick={() => { setLang('ru'); setShowLangPopup(false); }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'ru' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}>
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'ru' ? `${bgSubtle} ${textPrimary} border ${borderSubtle}` : `${textSecondary} hover:${bgSubtle} border border-transparent`}`}>
                     <div className="flex items-center gap-2">
                       <span>🇷🇺</span>
                       <span>Русский</span>
@@ -1577,7 +1577,7 @@ export default function App() {
                   </button>
 
                   <button onClick={() => { setLang('kk'); setShowLangPopup(false); }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'kk' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}>
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'kk' ? `${bgSubtle} ${textPrimary} border ${borderSubtle}` : `${textSecondary} hover:${bgSubtle} border border-transparent`}`}>
                     <div className="flex items-center gap-2">
                       <span>🇰🇿</span>
                       <span>Қазақша</span>
@@ -1586,7 +1586,7 @@ export default function App() {
                   </button>
 
                   <button onClick={() => { setLang('en'); setShowLangPopup(false); }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'en' ? 'bg-white/10 text-white border border-white/20' : 'text-neutral-300 hover:bg-white/5 border border-transparent'}`}>
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${lang === 'en' ? `${bgSubtle} ${textPrimary} border ${borderSubtle}` : `${textSecondary} hover:${bgSubtle} border border-transparent`}`}>
                     <div className="flex items-center gap-2">
                       <span>🇬🇧</span>
                       <span>English</span>
