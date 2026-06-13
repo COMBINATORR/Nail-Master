@@ -594,6 +594,7 @@ export default function App() {
   const bg       = 'bg-transparent';
   const bgDeep   = 'bg-[var(--bg-deep)]';
   const bgCard   = 'bg-[var(--bg-card)]';
+  const bgCardSolid = 'bg-[var(--bg-card-solid)]';
   const bgSubtle = 'bg-[var(--bg-subtle)]';
   const bgHeader = 'bg-[var(--bg-header)]';
   const bgAlt    = 'bg-[var(--bg-alt)]';
@@ -1470,7 +1471,7 @@ export default function App() {
                 {isDayTheme ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
               </button>
               {showThemeMenu && (
-                <div className={`absolute right-0 top-full mt-2 ${bgCard} border ${border} rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-md`}>
+                <div className={`absolute right-0 top-full mt-2 ${bgCardSolid} border ${border} rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-md`}>
                   <div className="flex p-1 mb-4 tactile-container">
                     <button 
                       onClick={() => setTheme('light')}
@@ -1562,7 +1563,7 @@ export default function App() {
                 <span className="text-xs font-bold uppercase tracking-widest">{lang === 'ru' ? 'RU' : lang === 'kk' ? 'KZ' : 'EN'}</span>
               </button>
               {showLangPopup && (
-                <div className={`absolute right-0 top-full mt-2 ${bgCard} border ${border} rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-md space-y-2`}>
+                <div className={`absolute right-0 top-full mt-2 ${bgCardSolid} border ${border} rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-md space-y-2`}>
                   <div className={`text-[10px] uppercase font-bold tracking-wider ${textMuted} mb-2`}>
                     {lang === 'ru' ? 'Выбор языка' : lang === 'kk' ? 'Тілді таңдау' : 'Select Language'}
                   </div>
