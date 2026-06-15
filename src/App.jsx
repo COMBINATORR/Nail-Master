@@ -111,7 +111,7 @@ const MirrorIcon = ({ className = "w-6 h-6" }) => (
 
 const MenuIcon = ({ className = "w-6 h-6" }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h11M3.75 17.25h5.5" />
   </svg>
 );
 
@@ -1504,18 +1504,18 @@ export default function App() {
       {/* ═══════════ HEADER — full width on desktop ═══════════ */}
       <header className={`sticky top-0 z-40 backdrop-blur-xl ${bgHeader} border-b ${border} transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center relative">
-          {/* Mobile Sandwich menu (Left side on mobile, hidden on desktop) */}
+          {/* Sandwich menu (Left side, visible on both mobile and desktop) */}
           <button onClick={() => setIsMobileMenuOpen(true)}
-            className="lg:hidden p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all z-10"
-            aria-label="Toggle mobile menu"
+            className="p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all z-10 cursor-pointer"
+            aria-label="Toggle menu"
           >
-            <MenuIcon className="w-4 h-4" />
+            <MenuIcon className="w-5 h-5 lg:w-6 lg:h-6" />
           </button>
 
-          {/* Logo with hover SVG neon animation (Centered on mobile, left-aligned on desktop) */}
+          {/* Logo with hover SVG neon animation (Absolute-centered on all screens) */}
           <div 
             ref={logoRef}
-            className="logo-container group !absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:!static lg:translate-x-0 lg:translate-y-0"
+            className="logo-container group !absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             onClick={handleLogoClick}
           >
             <svg width="24" height="24" viewBox="0 0 32 32" fill="none" className="logo-svg">
@@ -1537,22 +1537,6 @@ export default function App() {
               </span>
             </div>
           </div>
-          {/* Desktop nav links */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {['#trust','#services','#portfolio','#care-guide','#guarantees','#faq','#location','#appointment-form'].map((href, i) => {
-              const labels = { 
-                ru: ['Обо мне','Услуги','Работы','Памятка','Гарантии','FAQ','Адрес','Запись'], 
-                kk: ['Мен туралы','Қызметтер','Жұмыстар','Күтім','Кепілдіктер','FAQ','Мекен-жай','Жазылу'],
-                en: ['About me','Services','Works','Aftercare','Guarantees','FAQ','Address','Booking']
-              };
-              return (
-                <a key={href} href={href}
-                   className={`text-xs font-bold uppercase tracking-wider ${textMuted} hover:text-bronze-500 transition-colors`}>
-                  {labels[lang][i]}
-                </a>
-              );
-            })}
-          </nav>
           <div className="flex items-center gap-1.5 z-10">
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
                className="hidden sm:inline-flex p-2 text-[var(--text-secondary)] instagram-glow-hover">
@@ -2615,7 +2599,7 @@ export default function App() {
 
       {/* ═══════════ MOBILE MENU OVERLAY (Sandwich Panel) ═══════════ */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden popup-backdrop">
+        <div className="fixed inset-0 z-50 popup-backdrop">
           {/* Backdrop blur overlay */}
           <div 
             className="absolute inset-0 bg-charcoal-950/60 backdrop-blur-xl" 

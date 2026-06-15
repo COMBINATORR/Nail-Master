@@ -280,6 +280,25 @@ body.light .spcwlkr-credit:hover {
               letter-spacing 350ms ease-out;
 }
 
+/* Desktop Large Logo Overrides */
+@media (min-width: 1024px) {
+  .logo-container {
+    width: 160px;
+    height: 52px;
+  }
+  .logo-svg {
+    top: 8px;
+    transform: translate(-50%, 0) scale(1.25);
+  }
+  .logo-container:hover .logo-svg,
+  .logo-container.active .logo-svg {
+    transform: translate(-50%, -6px) scale(1.35);
+  }
+  .logo-details {
+    top: 36px;
+  }
+}
+
 /* ─── Static Brand Logo (Drawer & Footer) ─── */
 .static-logo {
   display: inline-flex;
