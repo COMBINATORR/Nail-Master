@@ -1,4 +1,4 @@
-## 2026-06-21 - [Sentinel] Input Validation Enhancement
-**Vulnerability:** The booking form's `name` and `phone` inputs lack validation, length limits, and sanitation.
-**Learning:** This exposes the application to potentially large inputs or malformed data that could cause UI issues, resource exhaustion, or problems when formatting the WhatsApp link.
-**Prevention:** Always add `maxLength` limits on user inputs and perform basic format validation before processing inputs to prevent malformed text propagation.
+## 2025-02-12 - Added Content Security Policy (CSP)
+**Vulnerability:** The application was missing a Content-Security-Policy (CSP) header, which is a critical security header that helps mitigate Cross-Site Scripting (XSS) and data injection attacks by restricting the sources from which content can be loaded.
+**Learning:** The application is a standard Vite/React single-page application. Since it's a static site, adding a `<meta http-equiv="Content-Security-Policy">` tag to `index.html` is an effective way to implement CSP. We need to allow Google Fonts, Leaflet map tiles from CartoCDN, and inline scripts/styles for React/Vite development (and potentially build tools).
+**Prevention:** Always include a CSP header (or meta tag for static sites) in new projects to establish a baseline defense against XSS.
