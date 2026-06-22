@@ -129,7 +129,6 @@ const ArrowUpIcon = ({ className = "w-5 h-5" }) => (
 
 
 
-const SectionLabel = () => null;
 
 const nailShapes = [
   { id: 'sharp_square', nameRu: 'Четкий квадрат', nameKk: 'Анық квадрат', nameEn: 'Sharp square', path: "M10,18 L10,8 L22,8 L22,18" },
@@ -1753,7 +1752,6 @@ export default function App() {
       {/* ═══════════ TRUST ═══════════ */}
       <section id="trust" className={`border-b ${border} py-14 lg:py-20`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <SectionLabel text="INFO" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t.trustTitle}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
@@ -1774,7 +1772,6 @@ export default function App() {
       {/* ═══════════ SERVICES CALCULATOR ═══════════ */}
       <section id="services" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <SectionLabel text="SERVICES" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>{t.servicesTitle}</h2>
           <p className={`${textSecondary} text-sm mb-10`}>{t.servicesSubtitle}</p>
 
@@ -2012,7 +2009,6 @@ export default function App() {
       {/* ═══════════ PORTFOLIO BEFORE/AFTER SLIDER ═══════════ */}
       <section id="portfolio" className={`border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <SectionLabel text="PORTFOLIO" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>
             {t.portfolioTitle}
           </h2>
@@ -2142,7 +2138,6 @@ export default function App() {
       {/* ═══════════ CLIENT CARE GUIDE ═══════════ */}
       <section id="care-guide" className={`border-b ${border} py-14 lg:py-20`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <SectionLabel text="CARE AFTER VISIT" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>
             {t.careTitle}
           </h2>
@@ -2225,7 +2220,6 @@ export default function App() {
       {/* ═══════════ GUARANTEES ═══════════ */}
       <section id="guarantees" className={`border-b ${border} py-14 lg:py-20`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <SectionLabel text="RULES" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t.guaranteesTitle}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -2249,7 +2243,6 @@ export default function App() {
       {/* ═══════════ FAQ ═══════════ */}
       <section id="faq" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <SectionLabel text="FAQ" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t.fearTitle}</h2>
           {/* Mobile FAQ list */}
           <div className="flex flex-col gap-3 lg:hidden max-w-5xl">
@@ -2271,7 +2264,6 @@ export default function App() {
       {/* ═══════════ LOCATION MAP ═══════════ */}
       <section id="location" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
-          <SectionLabel text="LOCATION" />
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-3`}>
             {lang === 'en' ? 'HOW TO FIND US' : lang === 'ru' ? 'КАК ДОБРАТЬСЯ' : 'МЕКЕН-ЖАЙ'}
           </h2>
@@ -2382,7 +2374,6 @@ export default function App() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             {/* Left: copy */}
             <div>
-              <SectionLabel text="BOOK" />
               <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-6`}>{t.formTitle}</h2>
               <p className={`${textSecondary} text-sm leading-relaxed mb-6`}>{t.formHelp}</p>
 
