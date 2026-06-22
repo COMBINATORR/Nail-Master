@@ -1424,7 +1424,15 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!phone) return;
+    if (!name || name.trim().length === 0 || name.length > 50) {
+      alert(lang === 'en' ? 'Please enter a valid name (max 50 chars).' : lang === 'ru' ? 'Пожалуйста, введите корректное имя (до 50 символов).' : 'Жарамды есім енгізіңіз (ең көбі 50 таңба).');
+      return;
+    }
+    const phoneClean = phone.replace(/[^0-9+]/g, '');
+    if (!phoneClean || phoneClean.length < 10 || phoneClean.length > 15) {
+      alert(lang === 'en' ? 'Please enter a valid phone number.' : lang === 'ru' ? 'Пожалуйста, введите корректный номер телефона.' : 'Жарамды телефон нөмірін енгізіңіз.');
+      return;
+    }
     if (selectedServices.length === 0 && selectedOptions.length === 0) {
       alert(lang === 'en' ? 'Please select at least one service.' : lang === 'ru' ? 'Пожалуйста, выберите хотя бы одну услугу.' : 'Кем дегенде бір қызметті таңдаңыз.');
       return;
@@ -2435,9 +2443,9 @@ export default function App() {
 
                 {/* Input Fields */}
                 <div className="space-y-2">
-                  <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder={t.namePlaceholder} required
+                  <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder={t.namePlaceholder} required maxLength={50} pattern="[A-Za-zА-Яа-яЁёӘәІіҢңҒғҮүҰұҚқӨөҺһ\s\-]+"
                     className="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
-                  <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder={t.phonePlaceholder} required
+                  <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder={t.phonePlaceholder} required maxLength={15} pattern="[\+0-9\s\-]+"
                     className="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
                 </div>
 
