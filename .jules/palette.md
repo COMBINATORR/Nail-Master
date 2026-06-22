@@ -1,0 +1,3 @@
+## 2024-06-22 - Missing Accessible Names on Icon-Only Social Links
+**Learning:** Icon-only interactive elements (like `<a>` tags containing only an SVG for Instagram or WhatsApp) lack accessible names, making them unreadable or confusing to screen reader users. The screen reader may announce the file path, the word "link", or nothing at all, instead of the destination's purpose.
+**Action:** Always verify that buttons or links consisting solely of an icon include a descriptive `aria-label` attribute (e.g., `aria-label="Instagram"`) to ensure the intent of the element is communicated to assistive technologies.
