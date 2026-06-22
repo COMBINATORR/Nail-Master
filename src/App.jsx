@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import work1_before from './assets/work1_before.png';
 import work1_after from './assets/work1_after.png';
 import work2_before from './assets/work2_before.png';
@@ -371,7 +371,7 @@ export default function App() {
   const sliderRef = useRef(null);
   const [activeWork, setActiveWork] = useState(0);
 
-  const getNext10Days = () => {
+  const next10Days = useMemo(() => {
     const days = [];
     const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
     const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
@@ -401,7 +401,7 @@ export default function App() {
       });
     }
     return days;
-  };
+  }, [lang]);
 
   const handleSliderMove = (clientX) => {
     if (!sliderRef.current) return;
@@ -1397,7 +1397,7 @@ export default function App() {
     const shapeLabel = lang === 'en' ? 'Nail shape' : 'Форма ногтей';
     const priceLabel = lang === 'en' ? 'Fixed price' : 'Фиксированная цена';
 
-    const dayObj = getNext10Days().find(d => d.id === selectedDate);
+    const dayObj = next10Days.find(d => d.id === selectedDate);
     const dateStr = dayObj ? dayObj.formatted : '';
     const dateLabel = lang === 'en' ? 'Appointment' : lang === 'ru' ? 'Запись на' : 'Жазылу';
     const timeWord = lang === 'en' ? 'at' : lang === 'ru' ? 'в' : 'сағат';
@@ -2446,7 +2446,7 @@ export default function App() {
                       {lang === 'en' ? 'Select Date:' : lang === 'ru' ? 'Выбрать дату:' : 'Күнді таңдау:'}
                     </span>
                     <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory">
-                      {getNext10Days().map(d => {
+                      {next10Days.map(d => {
                         const isSelected = selectedDate === d.id;
                         return (
                           <button
