@@ -1355,12 +1355,18 @@ export default function App() {
 
   /* ─── Calculator ─── */
   const catObj = categories[activeCategory];
+
+  const optionsById = catObj?.options?.reduce((acc, opt) => {
+    acc[opt.id] = opt;
+    return acc;
+  }, {}) || {};
+
   const selectedServices = catObj.services.filter(s => selectedServiceIds.includes(s.id));
   const totalPrice = selectedServices.reduce((s, svc) => s + svc.price, 0) + selectedOptions.reduce((s, id) => {
-    const o = catObj.options.find(x => x.id === id); return s + (o ? o.price : 0);
+    const o = optionsById[id]; return s + (o ? o.price : 0);
   }, 0);
   const totalTime = selectedServices.reduce((s, svc) => s + svc.time, 0) + selectedOptions.reduce((s, id) => {
-    const o = catObj.options.find(x => x.id === id); return s + (o ? o.time : 0);
+    const o = optionsById[id]; return s + (o ? o.time : 0);
   }, 0);
   const fmtTime = (m) => {
     const h = Math.floor(m / 60), mn = m % 60;
@@ -1376,7 +1382,7 @@ export default function App() {
     const serviceNames = selectedServices.map(s => t[s.nameKey] || '').filter(Boolean);
     const optionNames = selectedOptions
       .map(id => {
-        const o = catObj?.options?.find(opt => opt.id === id);
+        const o = optionsById[id];
         return o ? t[o.nameKey] : null;
       })
       .filter(Boolean);
@@ -1888,7 +1894,7 @@ export default function App() {
                   }
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2">
-                  {catObj.options.map((opt) => {
+                  {catObj?.options?.map((opt) => {
                     const isChecked = selectedOptions.includes(opt.id);
                     return (
                                             <div key={opt.id} onClick={() => toggleOption(opt.id)}
@@ -1934,7 +1940,7 @@ export default function App() {
                         </div>
                       ))}
                       {selectedOptions.map(id => {
-                        const o = catObj.options.find(x => x.id === id); if (!o) return null;
+                        const o = optionsById[id]; if (!o) return null;
                         return (
                           <div key={id} className={`flex justify-between items-center text-xs ${textMuted} pl-4`}>
                             <span>+ {t[o.nameKey]}</span>
@@ -2412,7 +2418,7 @@ export default function App() {
                       </div>
                     ))}
                     {selectedOptions.map(id => {
-                      const o = catObj.options.find(x => x.id === id); if (!o) return null;
+                      const o = optionsById[id]; if (!o) return null;
                       return <div key={id} className={`flex justify-between text-xs ${textMuted} pl-3`}><span>+ {t[o.nameKey]}</span><span>+{o.price.toLocaleString()} ₸</span></div>;
                     })}
                   </>
