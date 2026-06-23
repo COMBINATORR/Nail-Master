@@ -124,36 +124,72 @@ const ArrowUpIcon = ({ className = "w-5 h-5" }) => (
 
 let isConsoleMessagePrinted = false;
 
+const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
+const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+let cachedToday = null;
+let cachedDaysEn = null;
+let cachedDaysRu = null;
+let cachedDaysKk = null;
+
 const getNext10Days = (lang) => {
-  const days = [];
-  const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-  const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
-  const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const now = new Date();
+  const dateStr = now.toDateString();
 
-  const today = new Date();
-  for (let i = 0; i < 10; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() + i);
+  if (cachedToday !== dateStr) {
+    cachedToday = dateStr;
+    cachedDaysEn = [];
+    cachedDaysRu = [];
+    cachedDaysKk = [];
 
-    const dayNum = date.getDate();
-    const monthNum = date.getMonth() + 1;
-    const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
-    const dayOfWeekIndex = date.getDay();
+    now.setHours(0, 0, 0, 0);
+    let currentEpoch = now.getTime();
 
-    const weekdayRu = daysOfWeekRu[dayOfWeekIndex];
-    const weekdayKk = daysOfWeekKk[dayOfWeekIndex];
-    const weekdayEn = daysOfWeekEn[dayOfWeekIndex];
+    for (let i = 0; i < 10; i++) {
+      const date = new Date(currentEpoch);
 
-    const formattedDate = `${dayNum < 10 ? '0' + dayNum : dayNum}.${monthStr}`;
+      const dayNum = date.getDate();
+      const monthNum = date.getMonth() + 1;
+      const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
+      const dayOfWeekIndex = date.getDay();
 
-    days.push({
-      id: `${date.getFullYear()}-${monthStr}-${dayNum < 10 ? '0' + dayNum : dayNum}`,
-      dayNum,
-      weekday: lang === 'en' ? weekdayEn : lang === 'ru' ? weekdayRu : weekdayKk,
-      formatted: formattedDate
-    });
+      const weekdayRu = daysOfWeekRu[dayOfWeekIndex];
+      const weekdayKk = daysOfWeekKk[dayOfWeekIndex];
+      const weekdayEn = daysOfWeekEn[dayOfWeekIndex];
+
+      const dayNumStr = dayNum < 10 ? `0${dayNum}` : `${dayNum}`;
+      const formattedDate = `${dayNumStr}.${monthStr}`;
+      const id = `${date.getFullYear()}-${monthStr}-${dayNumStr}`;
+
+      cachedDaysEn.push({
+        id,
+        dayNum,
+        weekday: weekdayEn,
+        formatted: formattedDate
+      });
+      cachedDaysRu.push({
+        id,
+        dayNum,
+        weekday: weekdayRu,
+        formatted: formattedDate
+      });
+      cachedDaysKk.push({
+        id,
+        dayNum,
+        weekday: weekdayKk,
+        formatted: formattedDate
+      });
+
+      const newDate = new Date(currentEpoch);
+      newDate.setDate(newDate.getDate() + 1);
+      currentEpoch = newDate.getTime();
+    }
   }
-  return days;
+
+  if (lang === 'en') return cachedDaysEn;
+  if (lang === 'ru') return cachedDaysRu;
+  return cachedDaysKk;
 };
 
 export default function App() {
