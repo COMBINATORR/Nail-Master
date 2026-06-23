@@ -139,6 +139,38 @@ const nailShapes = [
 
 let isConsoleMessagePrinted = false;
 
+const getNext10Days = (lang) => {
+  const days = [];
+  const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+  const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
+  const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const today = new Date();
+  for (let i = 0; i < 10; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+
+    const dayNum = date.getDate();
+    const monthNum = date.getMonth() + 1;
+    const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
+    const dayOfWeekIndex = date.getDay();
+
+    const weekdayRu = daysOfWeekRu[dayOfWeekIndex];
+    const weekdayKk = daysOfWeekKk[dayOfWeekIndex];
+    const weekdayEn = daysOfWeekEn[dayOfWeekIndex];
+
+    const formattedDate = `${dayNum < 10 ? '0' + dayNum : dayNum}.${monthStr}`;
+
+    days.push({
+      id: `${date.getFullYear()}-${monthStr}-${dayNum < 10 ? '0' + dayNum : dayNum}`,
+      dayNum,
+      weekday: lang === 'en' ? weekdayEn : lang === 'ru' ? weekdayRu : weekdayKk,
+      formatted: formattedDate
+    });
+  }
+  return days;
+};
+
 export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem('svtl-lang') || 'ru');
   const [theme, setTheme] = useState(() => localStorage.getItem('svtl-theme') || 'dark');
@@ -269,37 +301,7 @@ export default function App() {
   const sliderRef = useRef(null);
   const [activeWork, setActiveWork] = useState(0);
 
-  const next10Days = useMemo(() => {
-    const days = [];
-    const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-    const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
-    const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    
-    const today = new Date();
-    for (let i = 0; i < 10; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      
-      const dayNum = date.getDate();
-      const monthNum = date.getMonth() + 1;
-      const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
-      const dayOfWeekIndex = date.getDay();
-      
-      const weekdayRu = daysOfWeekRu[dayOfWeekIndex];
-      const weekdayKk = daysOfWeekKk[dayOfWeekIndex];
-      const weekdayEn = daysOfWeekEn[dayOfWeekIndex];
-      
-      const formattedDate = `${dayNum < 10 ? '0' + dayNum : dayNum}.${monthStr}`;
-      
-      days.push({
-        id: `${date.getFullYear()}-${monthStr}-${dayNum < 10 ? '0' + dayNum : dayNum}`,
-        dayNum,
-        weekday: lang === 'en' ? weekdayEn : lang === 'ru' ? weekdayRu : weekdayKk,
-        formatted: formattedDate
-      });
-    }
-    return days;
-  }, [lang]);
+  const next10Days = useMemo(() => getNext10Days(lang), [lang]);
 
   const handleSliderMove = (clientX) => {
     if (!sliderRef.current) return;
