@@ -1,1 +1,2 @@
-echo "Running tests..."
+#!/bin/bash
+pnpm run test
