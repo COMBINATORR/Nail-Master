@@ -1,0 +1,9 @@
+🧹 Extract getNext10Days out of App component
+
+🎯 **What:** Extracted the `getNext10Days` helper function from within the `App` component's scope and moved it to the file's top level.
+
+💡 **Why:** Moving this pure function outside the component scope is a simple performance and readability optimization. It prevents the function from being unnecessarily redefined on every render cycle of the `App` component and keeps the component body cleaner.
+
+✅ **Verification:** Verified by ensuring the code builds (`pnpm build`) and lints (`pnpm lint`) successfully without any syntax errors or regressions. The function signature and `lang` parameter matching were preserved.
+
+✨ **Result:** Improved component render performance and maintainability by keeping the render scope pure of static helper utility definitions.
