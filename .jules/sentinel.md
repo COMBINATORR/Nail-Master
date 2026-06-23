@@ -7,3 +7,8 @@
 **Vulnerability:** Found extensive security theater implementation in `src/App.jsx` (disabling context menus, copy-paste, text selection, throwing debugger traps, blocking inspect element shortcuts).
 **Learning:** These client-side "protections" provide zero real security against determined attackers. They only degrade the experience for legitimate users and developers, making the site less accessible and harder to maintain. The real logic and API calls are still visible in network requests.
 **Prevention:** Avoid implementing client-side obfuscation or disabling native browser features (like context menus or selection). Focus on real security measures like server-side validation, proper CORS, and secure authentication instead of trying to "hide" the frontend code.
+
+## 2025-02-14 - Verification of Anti-Debugging Code Removal
+**Vulnerability:** Addressed the absence of automated tests to ensure "security theater" code is not reintroduced.
+**Learning:** Adding test-driven checks for common anti-patterns like `debugger` statements disguised as traps provides a regression safety net. When fixing a vulnerability, adding a test ensures the issue stays fixed.
+**Prevention:** Implement unit tests that scan source code or output for known anti-patterns, ensuring continuous compliance with security policies.
