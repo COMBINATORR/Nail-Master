@@ -1,10 +1,3 @@
-🎯 **What:**
-Added a test environment using Vitest, JSDOM, and React Testing Library to cover the testing gap for the main `App` component.
-
-📊 **Coverage:**
-- Verifies the main SVTL logo and "Nails & Aesthetic" subtitles render correctly without crashing.
-- Tests that the application correctly initializes with "RU" language by default.
-- Ensures the default 'dark' theme class is properly applied to `document.body` as a side effect on initialization.
-
-✨ **Result:**
-Increased frontend reliability by providing basic component mounting, interaction, and side-effect tests. Provides a solid foundation for adding future interaction tests and avoids regressions during refactoring.
+🎯 **What:** The testing gap addressed was the untested form submission validation logic in `App.jsx`, specifically the `handleSubmit` function which validates user inputs for name, phone, and selected services.
+📊 **Coverage:** The scenarios now tested include an empty name, a name exceeding 50 characters, an invalid phone number format, and submitting the form without selecting a service.
+✨ **Result:** Increased test coverage for the form submission logic, ensuring the `window.alert` triggers correctly with appropriate error messages when users provide invalid data or miss required fields.
