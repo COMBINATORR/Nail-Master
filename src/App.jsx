@@ -577,8 +577,6 @@ export default function App() {
   const textPrimary   = 'text-[var(--text-primary)]';
   const textSecondary = 'text-[var(--text-secondary)]';
   const textMuted     = 'text-[var(--text-muted)]';
-  const logoColorClass = 'text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-[.active]:text-[var(--text-primary)]';
-  const textFaint     = 'text-[var(--text-muted)]/60';
 
   const border       = 'border-[var(--border-color)]';
   const borderSubtle = 'border-[var(--border-subtle)]';
@@ -743,7 +741,7 @@ export default function App() {
               <text 
                 x="16" 
                 y="16" 
-                className={`logo-base-text transition-colors duration-300 ${logoColorClass}`}
+                className="logo-base-text transition-colors duration-300 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-[.active]:text-[var(--text-primary)]"
               >
                 S
               </text>
@@ -1786,7 +1784,7 @@ export default function App() {
           </div>
 
           <div className={`border-t ${borderSubtle} mt-8 pt-6 text-center`}>
-            <p className={`${textFaint} text-[10px]`}>© {new Date().getFullYear()} {t.brand}. {t.rights}</p>
+            <p className="text-[var(--text-muted)]/60 text-[10px]">© {new Date().getFullYear()} {t.brand}. {t.rights}</p>
             <p className="spcwlkr-credit mt-3">Powered by SPCWLKR Digital Studio</p>
           </div>
         </div>
