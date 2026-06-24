@@ -1,14 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import work1_before from './assets/work1_before.png';
-import work1_after from './assets/work1_after.png';
-import work2_before from './assets/work2_before.png';
-import work2_after from './assets/work2_after.png';
-import work3_before from './assets/work3_before.png';
-import work3_after from './assets/work3_after.png';
-import work4_before from './assets/work4_before.png';
-import work4_after from './assets/work4_after.png';
-import work5_before from './assets/work5_before.png';
-import work5_after from './assets/work5_after.png';
+
+import { works, categories, translations, nailShapes, faqData, careTipsData } from './data';
 
 /* ─── SVG Icon Components ─── */
 const CheckIcon = () => (
@@ -130,14 +122,75 @@ const ArrowUpIcon = ({ className = "w-5 h-5" }) => (
 
 
 
-const nailShapes = [
-  { id: 'sharp_square', nameRu: 'Четкий квадрат', nameKk: 'Анық квадрат', nameEn: 'Sharp square', path: "M10,18 L10,8 L22,8 L22,18" },
-  { id: 'soft_square', nameRu: 'Мягкий квадрат', nameKk: 'Жұмсақ квадрат', nameEn: 'Soft square', path: "M10,18 L10,10 Q10,8 12,8 L20,8 Q22,8 22,10 L22,18" },
-  { id: 'oval', nameRu: 'Овал', nameKk: 'Овал', nameEn: 'Oval', path: "M10,18 C10,11 12,6 16,6 C20,6 22,11 22,18" },
-  { id: 'almond', nameRu: 'Миндаль', nameKk: 'Миндаль', nameEn: 'Almond', path: "M10,18 C10,14 13,7 16,4 C19,7 22,14 22,18" },
-];
-
 let isConsoleMessagePrinted = false;
+
+const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
+const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+let cachedToday = null;
+let cachedDaysEn = null;
+let cachedDaysRu = null;
+let cachedDaysKk = null;
+
+const getNext10Days = (lang) => {
+  const now = new Date();
+  const dateStr = now.toDateString();
+
+  if (cachedToday !== dateStr) {
+    cachedToday = dateStr;
+    cachedDaysEn = [];
+    cachedDaysRu = [];
+    cachedDaysKk = [];
+
+    now.setHours(0, 0, 0, 0);
+    let currentEpoch = now.getTime();
+
+    for (let i = 0; i < 10; i++) {
+      const date = new Date(currentEpoch);
+
+      const dayNum = date.getDate();
+      const monthNum = date.getMonth() + 1;
+      const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
+      const dayOfWeekIndex = date.getDay();
+
+      const weekdayRu = daysOfWeekRu[dayOfWeekIndex];
+      const weekdayKk = daysOfWeekKk[dayOfWeekIndex];
+      const weekdayEn = daysOfWeekEn[dayOfWeekIndex];
+
+      const dayNumStr = dayNum < 10 ? `0${dayNum}` : `${dayNum}`;
+      const formattedDate = `${dayNumStr}.${monthStr}`;
+      const id = `${date.getFullYear()}-${monthStr}-${dayNumStr}`;
+
+      cachedDaysEn.push({
+        id,
+        dayNum,
+        weekday: weekdayEn,
+        formatted: formattedDate
+      });
+      cachedDaysRu.push({
+        id,
+        dayNum,
+        weekday: weekdayRu,
+        formatted: formattedDate
+      });
+      cachedDaysKk.push({
+        id,
+        dayNum,
+        weekday: weekdayKk,
+        formatted: formattedDate
+      });
+
+      const newDate = new Date(currentEpoch);
+      newDate.setDate(newDate.getDate() + 1);
+      currentEpoch = newDate.getTime();
+    }
+  }
+
+  if (lang === 'en') return cachedDaysEn;
+  if (lang === 'ru') return cachedDaysRu;
+  return cachedDaysKk;
+};
 
 export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem('svtl-lang') || 'ru');
@@ -158,53 +211,6 @@ export default function App() {
   const clickTracker = useRef({ count: 0, lastClickTime: 0 });
   const affectedElements = useRef([]);
   const mapInstanceRef = useRef(null);
-  const categories = {
-    manicure: {
-      id: 'manicure',
-      nameKey: 'catManicureName',
-      services: [
-        { id: 'classic', nameKey: 'serviceManicureClassicName', descKey: 'serviceManicureClassicDesc', price: 4000, time: 60 },
-        { id: 'gel', nameKey: 'serviceManicureGelName', descKey: 'serviceManicureGelDesc', price: 6000, time: 90 }
-      ],
-      options: [
-        { id: 'design', nameKey: 'optManiDesign', price: 2000, time: 20 },
-        { id: 'strengthen', nameKey: 'optManiStrengthen', price: 1500, time: 15 },
-        { id: 'repair', nameKey: 'optManiRepair', price: 1000, time: 10 },
-        { id: 'spa', nameKey: 'optManiSpa', price: 1500, time: 15 }
-      ]
-    },
-    pedicure: {
-      id: 'pedicure',
-      nameKey: 'catPedicureName',
-      services: [
-        { id: 'express', nameKey: 'servicePediExpressName', descKey: 'servicePediExpressDesc', price: 8000, time: 60 },
-        { id: 'smart', nameKey: 'servicePediSmartName', descKey: 'servicePediSmartDesc', price: 12000, time: 90 },
-        { id: 'hygiene', nameKey: 'servicePediHygieneName', descKey: 'servicePediHygieneDesc', price: 9000, time: 60 }
-      ],
-      options: [
-        { id: 'design', nameKey: 'optPediDesign', price: 2000, time: 20 },
-        { id: 'cracks', nameKey: 'optPediCracks', price: 3000, time: 20 },
-        { id: 'spa', nameKey: 'optPediSpa', price: 2000, time: 20 }
-      ]
-    },
-    sugaring: {
-      id: 'sugaring',
-      nameKey: 'catSugaringName',
-      services: [
-        { id: 'bikini', nameKey: 'serviceSugarBikiniName', descKey: 'serviceSugarBikiniDesc', price: 5000, time: 30 },
-        { id: 'legs', nameKey: 'serviceSugarLegsName', descKey: 'serviceSugarLegsDesc', price: 6000, time: 40 },
-        { id: 'underarms', nameKey: 'serviceSugarUnderarmsName', descKey: 'serviceSugarUnderarmsDesc', price: 2000, time: 15 },
-        { id: 'arms', nameKey: 'serviceSugarArmsName', descKey: 'serviceSugarArmsDesc', price: 5000, time: 25 },
-        { id: 'fullbody', nameKey: 'serviceSugarFullBodyName', descKey: 'serviceSugarFullBodyDesc', price: 15000, time: 90 }
-      ],
-      options: [
-        { id: 'bikinipit', nameKey: 'optSugarBikiniPit', price: 6000, time: 30 },
-        { id: 'cleaning', nameKey: 'optSugarCleaning', price: 3000, time: 15 },
-        { id: 'face', nameKey: 'optSugarFace', price: 1500, time: 10 }
-      ]
-    }
-  };
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -269,37 +275,7 @@ export default function App() {
   const sliderRef = useRef(null);
   const [activeWork, setActiveWork] = useState(0);
 
-  const next10Days = useMemo(() => {
-    const days = [];
-    const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-    const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
-    const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    
-    const today = new Date();
-    for (let i = 0; i < 10; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      
-      const dayNum = date.getDate();
-      const monthNum = date.getMonth() + 1;
-      const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
-      const dayOfWeekIndex = date.getDay();
-      
-      const weekdayRu = daysOfWeekRu[dayOfWeekIndex];
-      const weekdayKk = daysOfWeekKk[dayOfWeekIndex];
-      const weekdayEn = daysOfWeekEn[dayOfWeekIndex];
-      
-      const formattedDate = `${dayNum < 10 ? '0' + dayNum : dayNum}.${monthStr}`;
-      
-      days.push({
-        id: `${date.getFullYear()}-${monthStr}-${dayNum < 10 ? '0' + dayNum : dayNum}`,
-        dayNum,
-        weekday: lang === 'en' ? weekdayEn : lang === 'ru' ? weekdayRu : weekdayKk,
-        formatted: formattedDate
-      });
-    }
-    return days;
-  }, [lang]);
+  const next10Days = useMemo(() => getNext10Days(lang), [lang]);
 
   const handleSliderMove = (clientX) => {
     if (!sliderRef.current) return;
@@ -607,647 +583,6 @@ export default function App() {
   const borderSubtle = 'border-[var(--border-subtle)]';
 
   /* ─── Data ─── */
-  const works = [
-    {
-      id: 'nude',
-      titleKey: 'workNudeTitle',
-      descKey: 'workNudeDesc',
-      before: work1_before,
-      after: work1_after,
-      age: '20+',
-      time: '1 ч 15 мин'
-    },
-    {
-      id: 'french',
-      titleKey: 'workFrenchTitle',
-      descKey: 'workFrenchDesc',
-      before: work2_before,
-      after: work2_after,
-      age: '35+',
-      time: '1 ч 30 мин'
-    },
-    {
-      id: 'bordeaux',
-      titleKey: 'workBordeauxTitle',
-      descKey: 'workBordeauxDesc',
-      before: work3_before,
-      after: work3_after,
-      age: '55+',
-      time: '1 ч 20 мин'
-    },
-    {
-      id: 'lavender',
-      titleKey: 'workLavenderTitle',
-      descKey: 'workLavenderDesc',
-      before: work4_before,
-      after: work4_after,
-      age: '25+',
-      time: '1 ч 15 мин'
-    },
-    {
-      id: 'red',
-      titleKey: 'workRedTitle',
-      descKey: 'workRedDesc',
-      before: work5_before,
-      after: work5_after,
-      age: '45+',
-      time: '1 ч 15 мин'
-    }
-  ];
-
-  const translations = {
-    ru: {
-      brand: "SVTL Nails & Aesthetic",
-      heroSuperTitle: "МАНИКЮР • ПЕДИКЮР • ШУГАРИНГ В АТЫРАУ",
-      heroTitle: "ПРЕМИАЛЬНЫЙ УХОД И ЭСТЕТИКА ДЛЯ ВАШЕЙ КРАСОТЫ",
-      heroSubtitle: "БЕЗУПРЕЧНОЕ КАЧЕСТВО • 100% СТЕРИЛЬНОСТЬ",
-      heroDesc: "Индивидуальный подход от сертифицированного мастера Светланы. Безопасные процедуры, премиальные материалы и уютный кабинет с заботой о вашем комфорте и красоте.",
-      heroCta: "Подобрать услуги",
-      trustTitle: "ПОЧЕМУ МНЕ ДОВЕРЯЮТ",
-      trustSubtitle: "Я гарантирую безопасность, прозрачность и высокий уровень сервиса",
-      trust1Title: "100% стерильные инструменты",
-      trust1Desc: "3-этапная дезинфекция по стандартам СанПиН. Инструменты стерилизуются в сухожаре, крафт-пакет вскрывается исключительно при вас.",
-      trust2Title: "0 скрытых наценок",
-      trust2Desc: "Стоимость процедур фиксируется до их начала. Вы всегда знаете точную сумму без внезапных доплат в конце визита.",
-      trust3Title: "Цените ваше время",
-      trust3Desc: "Строгий тайминг процедур. Маникюр или шугаринг проходят быстро, аккуратно и без задержек по времени.",
-      servicesTitle: "МОИ УСЛУГИ",
-      servicesSubtitle: "Выберите направление, услугу и опции — стоимость и время рассчитаются автоматически.",
-      servicesSelectBase: "1. Выберите услугу:",
-      servicesSelectOptions: "2. Дополнительные опции:",
-      servicesTotal: "Итоговый расчет:",
-      servicesTotalPrice: "Стоимость",
-      servicesTotalTime: "Время",
-      servicesSelectedPreview: "Ваш визит",
-      servicesNotSelected: "Услуги не выбраны",
-      serviceCta: "Записаться",
-      guaranteeIndicatorText: "Гарантия SVTL: Вы записываетесь напрямую к Светлане. Скрытая подмена мастера, передача вашего времени новичку или стажеру полностью исключены. Персональный контроль качества.",
-      guaranteesTitle: "ГАРАНТИИ",
-      guaranteesSubtitle: "Вы защищены моими личными стандартами качества",
-      g1Title: "Личная ответственность", g1Desc: "Вы записываетесь лично ко мне. Я отвечаю за каждый этап процедуры и ваш комфорт.",
-      g2Title: "Абсолютная безопасность", g2Desc: "Только сертифицированные гипоаллергенные материалы и 100% одноразовые расходники.",
-      g3Title: "Пунктуальность",         g3Desc: "Прием строго в назначенное время. Никаких очередей или томительного ожидания.",
-      g4Title: "Прозрачный прайс",        g4Desc: "Все доп. манипуляции обсуждаются заранее. Полная финансовая честность.",
-      fearTitle: "СТРАХИ • FAQ",
-      fearSubtitle: "Отвечаю на частые вопросы клиентов",
-      formTitle: "ЗАПИСЬ НА ВИЗИТ",
-      formComfort: "Кабинет оборудован кондиционером. Всегда свежий кофе, чай, приятная музыка и заботливый сервис.",
-      formHelp: "Оставьте ваши данные, я свяжусь с вами в WhatsApp в течение 5 минут для подтверждения времени.",
-      namePlaceholder: "Ваше имя",
-      phonePlaceholder: "Номер телефона (WhatsApp)",
-      formCta: "Подтвердить в WhatsApp",
-      modalSuccessTitle: "Заявка отправлена!",
-      modalSuccessDesc: "Я уже готовлюсь связаться с вами в WhatsApp. До встречи на процедуре!",
-      modalClose: "ОК",
-      careTitle: "ПАМЯТКА КЛИЕНТА",
-      careSubtitle: "Простые и эффективные правила ухода за кожей и ногтями после визита",
-      footerText: "Студия эстетики SVTL в Атырау. Маникюр, педикюр, шугаринг.",
-      rights: "Все права защищены.",
-      total: "Итого",
-      portfolioTitle: "РЕЗУЛЬТАТЫ РАБОТ",
-      portfolioSubtitle: "Интерактивное сравнение: потяните ползунок в стороны, чтобы оценить качество маникюра.",
-      beforeText: "ДО",
-      afterText: "ПОСЛЕ",
-      workNudeTitle: "Классический нюд",
-      workNudeDesc: "Деликатная обработка кутикулы без порезов, выравнивание ногтевой пластины и покрытие премиальным нюдовым базовым гелем.",
-      workFrenchTitle: "Элегантный френч",
-      workFrenchDesc: "Классический французский маникюр на средней длине. Идеально ровная линия улыбки и укрепление структуры ногтя.",
-      workBordeauxTitle: "Глубокий бордо",
-      workBordeauxDesc: "Комплексный антивозрастной уход за кожей рук и кутикулой, укрепление ослабленных ногтей и покрытие благородным винным оттенком.",
-      workLavenderTitle: "Нежная лаванда",
-      workLavenderDesc: "Свежий дизайн с использованием пастельно-лавандового оттенка. Тонкое, но прочное покрытие гель-лаком.",
-      workRedTitle: "Яркий красный",
-      workRedDesc: "Классический маникюр с безупречным глубоким красным покрытием «под кутикулу». Идеальная архитектура и стойкий глянец.",
-      ageLabel: "Возраст рук",
-      timeLabel: "Время работы",
-
-      // Categories & services names
-      catManicureName: "Маникюр",
-      catPedicureName: "Педикюр",
-      catSugaringName: "Шугаринг",
-      
-      serviceManicureClassicName: "Гигиенический маникюр",
-      serviceManicureClassicDesc: "Аппаратный/комбинированный маникюр с обработкой кутикулы и формой ногтей без покрытия.",
-      serviceManicureGelName: "Маникюр с гель-лаком",
-      serviceManicureGelDesc: "Маникюр + укрепление, выравнивание пластины базой и покрытие премиальным гель-лаком под кутикулу.",
-      serviceManicureExtName: "Наращивание ногтей",
-      serviceManicureExtDesc: "Моделирование длины и архитектуры ногтей гелем на формах с подбором идеальной формы.",
-      
-      optManiDesign: "Дизайн (френч/градиент/рисунки)",
-      optManiStrengthen: "Доп. укрепление гелем / акрилом",
-      optManiRepair: "Ремонт ногтя (1-2 шт)",
-      optManiSpa: "СПА-уход (парафинотерапия и массаж)",
-
-      servicePediExpressName: "Экспресс-педикюр",
-      servicePediExpressDesc: "Обработка пальчиков ног с покрытием гель-лаком. Быстрый и красивый уход.",
-      servicePediSmartName: "Полный Smart-педикюр",
-      servicePediSmartDesc: "Обработка всей стопы Smart-дисками (удаление трещин, натоптышей) + обработка пальчиков с гель-лаком.",
-      servicePediHygieneName: "Гигиенический педикюр",
-      servicePediHygieneDesc: "Аппаратная обработка стоп и пальчиков без покрытия лаком. Здоровье и чистота ваших ног.",
-      
-      optPediDesign: "Дизайн ногтей на ногах",
-      optPediCracks: "Удаление стержневых мозолей / глубоких трещин",
-      optPediSpa: "СПА-уход (пилинг, питательная маска, массаж)",
-
-      serviceSugarBikiniName: "Глубокое бикини",
-      serviceSugarBikiniDesc: "Деликатное и бережное удаление волос сахарной пастой в интимной зоне с антисептическим уходом.",
-      serviceSugarLegsName: "Ноги полностью",
-      serviceSugarLegsDesc: "Депиляция ног по всей длине сахарной пастой (бедра, голени). Гладкая кожа до 4 недель.",
-      serviceSugarUnderarmsName: "Подмышки",
-      serviceSugarUnderarmsDesc: "Быстрое удаление волос в подмышечной зоне гипоаллергенной пастой.",
-      serviceSugarArmsName: "Руки полностью",
-      serviceSugarArmsDesc: "Шугаринг рук по всей длине (до плеча). Кожа становится идеально гладкой.",
-      serviceSugarFullBodyName: "Всего тела",
-      serviceSugarFullBodyDesc: "Бикини, руки/ноги полностью, подмышки, усики",
-      
-      optSugarBikiniPit: "Бикини + Подмышки",
-      optSugarCleaning: "Чистка глубокого бикини / удаление вросших волос / удаление комедонов",
-      optSugarFace: "Депиляция зоны на лице (усики/подбородок)",
-    },
-    kk: {
-      brand: "SVTL Nails & Aesthetic",
-      heroSuperTitle: "АТЫРАУДАҒЫ МАНИКЮР • ПЕДИКЮР • ШУГАРИНГ",
-      heroTitle: "СІЗДІҢ СҰЛУЛЫҒЫҢЫЗ ҮШІН ПРЕМИУМ КҮТІМ ЖӘНЕ ЭСТЕТИКА",
-      heroSubtitle: "МІНСІЗ САПА • 100% СТЕРИЛЬДІЛІК",
-      heroDesc: "Сертификатталған шебер Светланадан жеке тәсіл. Қауіпсіз процедуралар, премиум материалдар және сіздің жайлылығыңыз бен сұлулығыңызға қамқорлық жасайтын кабинет.",
-      heroCta: "Қызметтерді таңдау",
-      trustTitle: "МАҒАН НЕГЕ СЕНЕДІ",
-      trustSubtitle: "Мен қауіпсіздікке, ашықтыққа және жоғары қызмет көрсету деңгейіне кепілдік беремін",
-      trust1Title: "100% стерильді құралдар",
-      trust1Desc: "СанПиН стандарттары бойынша 3 кезеңді дезинфекция. Құралдар сухожарда стерильденеді, крафт-пакет тек сіздің көзіңізше ашамын.",
-      trust2Title: "0 жасырын үстемелер",
-      trust2Desc: "Процедуралардың құны жұмыс басталғанға дейін бекітіледі. Сіз әрқашан визит соңында ешқандай қосымша төлемсіз нақты соманы білесіз.",
-      trust3Title: "Уақытыңызды бағалаңыз",
-      trust3Desc: "Процедуралардың қатаң таймингі. Маникюр немесе шугаринг тез, ұқыпты және уақытты кешіктірмей өтеді.",
-      servicesTitle: "ҚЫЗМЕТТЕРІМ",
-      servicesSubtitle: "Бағытты, қызметті және опцияларды таңдаңыз — құны мен уақыты автоматты түрде есептеледі.",
-      servicesSelectBase: "1. Қызметті таңдаңыз:",
-      servicesSelectOptions: "2. Қосымша опциялар:",
-      servicesTotal: "Қорытынды есеп:",
-      servicesTotalPrice: "Құны",
-      servicesTotalTime: "Уақыты",
-      servicesSelectedPreview: "Сіздің сеанс",
-      servicesNotSelected: "Қызметтер таңдалмады",
-      serviceCta: "Жазылу",
-      guaranteeIndicatorText: "SVTL кепілдігі: Сіз тікелей Светланаға жазыласыз. Шеберді жасырын ауыстыру, сіздің уақытыңызды жаңадан бастаушыға немесе стажерға беру мүлдем мүмкін емес. Жеке сапа бақылауы.",
-      guaranteesTitle: "КЕПІЛДІКТЕР",
-      guaranteesSubtitle: "Сіз менің жеке сапа стандарттарыммен қорғалғансыз",
-      g1Title: "Жеке жауапкершілік", g1Desc: "Сіз тікелей маған жазыласыз. Мен процедураның әрбір кезеңі мен жайлылығыңыз үшін жауап беремін.",
-      g2Title: "Абсолютті қауіпсіздік", g2Desc: "Тек сертификатталған гипоаллергенді материалдар және 100% бір реттік шығын материалдары.",
-      g3Title: "Ұқыптылық",          g3Desc: "Қабылдау белгіленген уақытта қатаң түрде жүреді. Кезектер немесе ұзақ күту жоқ.",
-      g4Title: "Ашық баға",          g4Desc: "Барлық қосымша манипуляциялар алдын ала талқыланады. Толық қаржылық адалдық.",
-      fearTitle: "ҚОРҚЫНЫШТАР • FAQ",
-      fearSubtitle: "Клиенттердің жиі сұрақтарына жауап беремін",
-      formTitle: "ҚАБЫЛДАУҒА ЖАЗЫЛУ",
-      formComfort: "Кабинет кондиционермен жабдықталған. Әрқашан жаңа кофе, шай, жағымды музыка және қамқорлық қызметі бар.",
-      formHelp: "Деректеріңізді қалдырыңыз, мен уақытты растау үшін 5 минут ішінде WhatsApp арқылы хабарласамын.",
-      namePlaceholder: "Сіздің есіміңіз",
-      phonePlaceholder: "Телефон нөмірі (WhatsApp)",
-      formCta: "WhatsApp арқылы растау",
-      modalSuccessTitle: "Өтінім жіберілді!",
-      modalSuccessDesc: "Мен WhatsApp арқылы хабарласуға дайынмын. Процедурада кездескенше!",
-      modalClose: "ОК",
-      careTitle: "КЛИЕНТ ЖАДЫНАМАСЫ",
-      careSubtitle: "Қабылдаудан кейінгі тері мен тырнақты күтудің қарапайым және тиімді ережелері",
-      footerText: "Атыраудағы SVTL эстетика студиясы. Маникюр, педикюр, шугаринг.",
-      rights: "Барлық құқықтар қорғалған.",
-      total: "Жиыны",
-      portfolioTitle: "ЖҰМЫС НӘТИЖЕЛЕРІ",
-      portfolioSubtitle: "Интерактивті салыстыру: маникюр сапасын бағалау үшін жүгірткіні екі жаққа тартыңыз.",
-      beforeText: "ДЕЙІН",
-      afterText: "КЕЙІН",
-      workNudeTitle: "Классикалық нюд",
-      workNudeDesc: "Кутикуланы кесіксіз нәзік өңдеу, тырнақ пластинасын тегістеу және премиум нюд базалық гельмен жабу.",
-      workFrenchTitle: "Элегантты френч",
-      workFrenchDesc: "Орташа ұзындықтағы классикалық француз маникюрі. Тырнақ құрылымын нығайту және мінсіз күлімсіреу сызығы.",
-      workBordeauxTitle: "Терең бордо",
-      workBordeauxDesc: "Қол терісі мен кутикулаға арналған кешенді қартаюға қарсы күтім, әлсіреген тырнақтарды нығайту және асыл шарап түсті жабын.",
-      workLavenderTitle: "Нәзік лаванда",
-      workLavenderDesc: "Пастельді лаванда реңкін қолданатын жаңа дизайн. Гель-лакпен жұқа, бірақ берік жабын.",
-      workRedTitle: "Ашық қызыл",
-      workRedDesc: "Кутикула астына мінсіз қанық қызыл түспен жабылған классикалық маникюр. Мінсіз архитектура және тұрақты жылтыр.",
-      ageLabel: "Қол жасы",
-      timeLabel: "Жұмыс уақыты",
-
-      // Categories & services names
-      catManicureName: "Маникюр",
-      catPedicureName: "Педикюр",
-      catSugaringName: "Шугаринг",
-      
-      serviceManicureClassicName: "Гигиеналық маникюр",
-      serviceManicureClassicDesc: "Жабынсыз кутикуланы өңдеу және тырнақтарға пішін берумен аппараттық/комбинацияланған маникюр.",
-      serviceManicureGelName: "Гель-лакпен маникюр",
-      serviceManicureGelDesc: "Маникюр + нығайту, тырнақ пластинасын базамен тегістеу және кутикула астына премиум гель-лак жабу.",
-      serviceManicureExtName: "Тырнақ өсіру",
-      serviceManicureExtDesc: "Мінсіз пішінді таңдай отырып, формаларда тырнақтардың ұзындығы мен архитектурасын гельмен модельдеу.",
-      
-      optManiDesign: "Дизайн (френч/градиент/суреттер)",
-      optManiStrengthen: "Гельмен / akрилмен қосымша нығайту",
-      optManiRepair: "Тырнақты жөндеу (1-2 дана)",
-      optManiSpa: "СПА-күтім (парафинотерапия және массаж)",
-
-      servicePediExpressName: "Экспресс-педикюр",
-      servicePediExpressDesc: "Аяқ саусақтарын өңдеу және гель-лак жабу. Жылдам әрі әдемі күтім.",
-      servicePediSmartName: "Толық Smart-педикюр",
-      servicePediSmartDesc: "Smart-дискілермен бүкіл табанды өңдеу (жарықтарды, сүйелдерді кетіру) + саусақтарды өңдеу және гель-лак жабу.",
-      servicePediHygieneName: "Гигиеналық педикюр",
-      servicePediHygieneDesc: "Табан мен саусақтарды лаксыз аппараттық өңдеу. Аяғыңыздың денсаулығы мен тазалығы.",
-      
-      optPediDesign: "Аяқ саусақтарындағы тырнақ дизайны",
-      optPediCracks: "Терең жарықтар мен сүйелдерді кетіру",
-      optPediSpa: "СПА-күтім (пилинг, қоректік маска, массаж)",
-
-      serviceSugarBikiniName: "Терең бикини",
-      serviceSugarBikiniDesc: "Интимдік аймақтағы түктерді антисептикалық күтіммен қант пастасымен нәзік әрі мұқият кетіру.",
-      serviceSugarLegsName: "Толық аяқтар",
-      serviceSugarLegsDesc: "Аяқтарды толық ұзындығы бойынша қант пастасымен депиляциялау (сан, сирақ). 4 аптаға дейін тегіс тері.",
-      serviceSugarUnderarmsName: "Қолтық асты",
-      serviceSugarUnderarmsDesc: "Қолтық асты аймағындағы түктерді гипоаллергенді пастамен жылдам кетіру.",
-      serviceSugarArmsName: "Толық қолдар",
-      serviceSugarArmsDesc: "Қолдарды толық ұзындығы бойынша шугарингтеу (иыққа дейін). Тері мінсіз тегіс болады.",
-      serviceSugarFullBodyName: "Толық дене",
-      serviceSugarFullBodyDesc: "Бикини, қолдар/аяқтар толық, қолтық асты, мұрт",
-      
-      optSugarBikiniPit: "Бикини + Қолтық асты",
-      optSugarCleaning: "Терең бикини тазалау / ішке өскен түктерді кетіру / комедондарды тазалау",
-      optSugarFace: "Бет аймағындағы депиляция (мұрт/иек)",
-    },
-    en: {
-      brand: "SVTL Nails & Aesthetic",
-      heroSuperTitle: "MANICURE • PEDICURE • SUGARING IN ATYRAU",
-      heroTitle: "PREMIUM CARE AND AESTHETICS FOR YOUR BEAUTY",
-      heroSubtitle: "IMPECCABLE QUALITY • 100% STERILE",
-      heroDesc: "Personalized approach from certified artist Svetlana. Safe treatments, premium materials, and a cozy studio designed with your comfort and beauty in mind.",
-      heroCta: "Select services",
-      trustTitle: "WHY CLIENTS TRUST ME",
-      trustSubtitle: "I guarantee safety, transparency, and the highest standards of service",
-      trust1Title: "100% Sterile Instruments",
-      trust1Desc: "3-stage sterilization following sanitary standards. Tools are sterilized in a dry heat oven, and the kraft bag is opened strictly in front of you.",
-      trust2Title: "Zero Hidden Charges",
-      trust2Desc: "Treatment prices are locked in before we begin. You will always know the exact amount with no unexpected extras at checkout.",
-      trust3Title: "Respecting Your Time",
-      trust3Desc: "Strict session timing. Your manicure or sugaring will be fast, neat, and precisely on schedule.",
-      servicesTitle: "MY SERVICES",
-      servicesSubtitle: "Choose category, service, and options — price and duration are calculated automatically.",
-      servicesSelectBase: "1. Select service:",
-      servicesSelectOptions: "2. Extra options:",
-      servicesTotal: "Total Estimate:",
-      servicesTotalPrice: "Price",
-      servicesTotalTime: "Duration",
-      servicesSelectedPreview: "Your Visit",
-      servicesNotSelected: "Services not selected",
-      serviceCta: "Book now",
-      guaranteeIndicatorText: "SVTL Guarantee: You book directly with Svetlana. Master replacement or passing your time to a beginner/trainee is completely excluded. Personal quality control.",
-      guaranteesTitle: "GUARANTEES",
-      guaranteesSubtitle: "You are protected by my personal standards of quality",
-      g1Title: "Personal Responsibility", g1Desc: "You book directly with me. I take full responsibility for every stage of your treatment and comfort.",
-      g2Title: "Absolute Safety", g2Desc: "Only certified hypoallergenic materials and 100% disposable consumables are used.",
-      g3Title: "Punctuality",         g3Desc: "Appointments are strictly on time. No queues, waiting, or unnecessary delays.",
-      g4Title: "Transparent Pricing",        g4Desc: "All extra requests are discussed beforehand. Complete financial honesty with no surprises.",
-      fearTitle: "MYTHS • FAQ",
-      fearSubtitle: "Answering my clients' most common questions",
-      formTitle: "BOOK AN APPOINTMENT",
-      formComfort: "The studio is equipped with air conditioning. Fresh coffee, tea, pleasant music, and dedicated service are always included.",
-      formHelp: "Fill in your details, and I will contact you on WhatsApp within 5 minutes to confirm your preferred time.",
-      namePlaceholder: "Your name",
-      phonePlaceholder: "Phone number (WhatsApp)",
-      formCta: "Confirm via WhatsApp",
-      modalSuccessTitle: "Request Sent!",
-      modalSuccessDesc: "I'm already preparing to contact you on WhatsApp. See you at your appointment!",
-      modalClose: "OK",
-      careTitle: "CLIENT AFTERCARE GUIDE",
-      careSubtitle: "Simple and effective tips to care for your skin and nails after your appointment",
-      footerText: "SVTL Aesthetics Studio in Atyrau. Manicure, pedicure, sugaring.",
-      rights: "All rights reserved.",
-      total: "Total",
-      portfolioTitle: "OUR WORKS",
-      portfolioSubtitle: "Interactive comparison: drag the slider side to side to evaluate the manicure quality.",
-      beforeText: "BEFORE",
-      afterText: "AFTER",
-      workNudeTitle: "Classic Nude",
-      workNudeDesc: "Delicate cuticle treatment without cuts, nail plate alignment, and coverage with premium nude builder gel.",
-      workFrenchTitle: "Elegant French",
-      workFrenchDesc: "Classic French manicure on medium length. Perfectly crisp smile line and nail structure reinforcement.",
-      workBordeauxTitle: "Deep Bordeaux",
-      workBordeauxDesc: "Comprehensive anti-aging hand and cuticle treatment, reinforcing weakened nails, finished with a noble wine shade.",
-      workLavenderTitle: "Gentle Lavender",
-      workLavenderDesc: "Fresh pastel lavender design. Thin yet durable gel polish coating.",
-      workRedTitle: "Vibrant Red",
-      workRedDesc: "Classic manicure with flawless deep red gel polish applied right under the cuticle. Perfect architecture and long-lasting shine.",
-      ageLabel: "Hand Age",
-      timeLabel: "Work Time",
-
-      // Categories & services names
-      catManicureName: "Manicure",
-      catPedicureName: "Pedicure",
-      catSugaringName: "Sugaring",
-      
-      serviceManicureClassicName: "Hygienic Manicure",
-      serviceManicureClassicDesc: "Hardware/combined manicure focusing on cuticle care and nail shaping without polish.",
-      serviceManicureGelName: "Manicure with Gel Polish",
-      serviceManicureGelDesc: "Manicure + structure reinforcement, nail plate alignment with builder base, and premium under-cuticle color application.",
-      serviceManicureExtName: "Nail Extensions",
-      serviceManicureExtDesc: "Modeling nail length and architecture with builder gel on nail forms, tailored to your ideal shape.",
-      
-      optManiDesign: "Design (French/gradient/nail art)",
-      optManiStrengthen: "Extra reinforcement (gel/acrylic)",
-      optManiRepair: "Nail repair (1-2 nails)",
-      optManiSpa: "SPA care (paraffin treatment & massage)",
-
-      servicePediExpressName: "Express Pedicure",
-      servicePediExpressDesc: "Toenail care with premium gel polish application. Quick and beautiful.",
-      servicePediSmartName: "Full Smart Pedicure",
-      servicePediSmartDesc: "Complete foot treatment using Smart discs (removing cracks, calluses) + toenail care with gel polish.",
-      servicePediHygieneName: "Hygienic Pedicure",
-      servicePediHygieneDesc: "Hardware treatment for feet and toenails without polish. Health and purity for your feet.",
-      
-      optPediDesign: "Toenail design",
-      optPediCracks: "Removal of core calluses / deep cracks",
-      optPediSpa: "SPA care (peeling, nourishing mask, massage)",
-
-      serviceSugarBikiniName: "Brazilian Bikini",
-      serviceSugarBikiniDesc: "Delicate and gentle hair removal in the intimate zone using sugar paste, with antiseptic care.",
-      serviceSugarLegsName: "Full Legs",
-      serviceSugarLegsDesc: "Full leg sugaring (thighs and calves). Silky smooth skin for up to 4 weeks.",
-      serviceSugarUnderarmsName: "Underarms",
-      serviceSugarUnderarmsDesc: "Quick underarm hair removal using hypoallergenic sugar paste.",
-      serviceSugarArmsName: "Full Arms",
-      serviceSugarArmsDesc: "Sugaring of arms along the entire length (up to the shoulder). Makes skin perfectly smooth.",
-      serviceSugarFullBodyName: "Full Body",
-      serviceSugarFullBodyDesc: "Bikini, full arms/legs, underarms, upper lip",
-      
-      optSugarBikiniPit: "Bikini + Underarms",
-      optSugarCleaning: "Deep bikini cleansing / ingrown hair removal / comedone removal",
-      optSugarFace: "Facial depilation (upper lip/chin)",
-    }
-  };
-
-  const faqData = {
-    ru: [
-      { q: "Покрытие быстро слезет?",   a: "Гарантия носки 28 дней. Скол — переделаю бесплатно в день обращения." },
-      { q: "Будет больно от аппарата?", a: "Я работаю по микротехнологии мягкой обработки. Никаких прожигов и порезов." },
-      { q: "А стерильность?",           a: "3-этапная медицинская стерилизация. Крафт-пакет вскрываю при вас. Пилки одноразовые." },
-      { q: "Будут скрытые доплаты?",    a: "Стоимость фиксируется до начала. Снятие и выравнивание уже в прайсе." },
-      { q: "Форма будет не та?",         a: "Форма и длина согласуются с вами пошагово до покрытия базой." }
-    ],
-    kk: [
-      { q: "Жабын тез түсіп қалады ма?", a: "28 күндік кепілдік. Сызат болса — тегін қайта жасаймын." },
-      { q: "Аппараттан ауырады ма?",     a: "Жұмсақ өңдеу технологиясымен жұмыс істеймін. Күю мен кесік жоқ." },
-      { q: "Стерильділік сақтала ма?",   a: "3 кезеңді стерилизация. Крафт-пакет көзіңізше ашылады. Егеулер бір реттік." },
-      { q: "Жасырын үстемелер бола ма?", a: "Құны жұмыс алдында бекітіледі. Алып тастау мен тегістеу прайске кіреді." },
-      { q: "Пішіні басқаша бола ма?",    a: "Пішін мен ұзындық базаны жаққанға дейін сізбен келісіледі." }
-    ],
-    en: [
-      { q: "Will the polish chip quickly?", a: "I guarantee 28 days of wear. If any chip occurs, I will redo it for free on the same day." },
-      { q: "Does the e-file hurt?", a: "I work with a gentle micro-treatment technique. No burns, cuts, or discomfort." },
-      { q: "What about sterility?", a: "3-stage medical-grade sterilization. The kraft bag is opened in front of you. Nail files are single-use." },
-      { q: "Are there hidden costs?", a: "Prices are fixed before we start. Removal and plate alignment are already included." },
-      { q: "What if the shape isn't right?", a: "The shape and length are aligned with you step-by-step before applying any base." }
-    ]
-  };
-
-  const careTipsData = {
-    ru: {
-      manicure: [
-        {
-          title: "Первые 24 часа",
-          desc: "Избегайте длительного контакта с горячей водой (бани, сауны, горячие ванны), чтобы покрытие зафиксировалось.",
-          badge: "Важно",
-          icon: "time"
-        },
-        {
-          title: "Домашние дела",
-          desc: "Пользуйтесь резиновыми перчатками при контакте с бытовой химией, чтобы сохранить идеальный блеск топа.",
-          badge: "Защита",
-          icon: "protect"
-        },
-        {
-          title: "Ежедневный уход",
-          desc: "Наносите масло для кутикулы и увлажняющий крем каждый день — это предотвратит сухость и заусенцы.",
-          badge: "Уход",
-          icon: "care"
-        },
-        {
-          title: "Срок носки",
-          desc: "Рекомендуемый срок носки — 3–4 недели. Не перенашивайте покрытие во избежание трещин ногтевого ложа.",
-          badge: "Сроки",
-          icon: "calendar"
-        }
-      ],
-      pedicure: [
-        {
-          title: "Комфортная обувь",
-          desc: "Избегайте тесной обуви и узких носков в первые дни, чтобы не создавать лишнего давления на пальцы.",
-          badge: "Свобода",
-          icon: "shoe"
-        },
-        {
-          title: "Глубокое увлажнение",
-          desc: "Используйте питательный крем для ног перед сном (желательно с мочевиной для максимальной мягкости).",
-          badge: "Мягкость",
-          icon: "cream"
-        },
-        {
-          title: "Сухость и чистота",
-          desc: "Тщательно вытирайте кожу между пальцами после душа, чтобы предотвратить опрелости и трещины.",
-          badge: "Гигиена",
-          icon: "dry"
-        },
-        {
-          title: "Коррекция ногтей",
-          desc: "Подрезайте ногти строго прямо, без закругления уголков, чтобы избежать проблемы вросшего ногтя.",
-          badge: "Форма",
-          icon: "shape"
-        }
-      ],
-      sugaring: [
-        {
-          title: "Ограничения на 24 часа",
-          desc: "Исключите спортзал, сауну, бассейн и солярий, чтобы не вызвать раздражение открытых волосяных фолликулов.",
-          badge: "Запрет",
-          icon: "ban"
-        },
-        {
-          title: "Свободный гардероб",
-          desc: "Носите свободное белье и одежду из натуральных тканей в первые сутки во избежание излишнего трения.",
-          badge: "Комфорт",
-          icon: "cloth"
-        },
-        {
-          title: "Профилактика",
-          desc: "Через 3–5 дней начните делать легкий энзимный пилинг, чтобы отшелушить кожу и избежать вросших волос.",
-          badge: "Пилинг",
-          icon: "peel"
-        },
-        {
-          title: "Увлажнение",
-          desc: "Используйте легкий увлажняющий лосьон без комедогенных масел и спирта для восстановления кожи.",
-          badge: "Лосьон",
-          icon: "lotion"
-        }
-      ]
-    },
-    kk: {
-      manicure: [
-        {
-          title: "Алғашқы 24 сағат",
-          desc: "Жабын толық бекуі үшін ыстық сумен ұзақ жанасудан (монша, сауна, ыстық ванна) аулақ болыңыз.",
-          badge: "Маңызды",
-          icon: "time"
-        },
-        {
-          title: "Үй шаруасы",
-          desc: "Топтың мінсіз жылтырлығын сақтау үшін тұрмыстық химиямен тазалау кезінде резеңке қолғап киіңіз.",
-          badge: "Қорғау",
-          icon: "protect"
-        },
-        {
-          title: "Күнделікті күтім",
-          desc: "Күн сайын кутикула майын және ылғалдандырғыш кремді қолданыңыз — бұл терінің құрғауы мен сынуын болдырмайды.",
-          badge: "Күтім",
-          icon: "care"
-        },
-        {
-          title: "Жүру мерзімі",
-          desc: "Ұсынылатын жүру мерзімі — 3-4 апта. Тырнақ пластинасының зақымдалуын болдырмау үшін тым ұзақ кимеңіз.",
-          badge: "Мерзімі",
-          icon: "calendar"
-        }
-      ],
-      pedicure: [
-        {
-          title: "Ыңғайлы аяқ киім",
-          desc: "Саусақтарға артық қысым түсірмеу үшін алғашқы күндері тар аяқ киім мен тығыз шұлық кимеңіз.",
-          badge: "Бос болу",
-          icon: "shoe"
-        },
-        {
-          title: "Терең ылғалдандыру",
-          desc: "Ұйықтар алдында аяққа арналған нәрлендіргіш кремді (жұмсақтық үшін несепнәр қосылған дұрыс) қолданыңыз.",
-          badge: "Жұмсақтық",
-          icon: "cream"
-        },
-        {
-          title: "Құрғақтық пен тазалық",
-          desc: "Жарықтар пен базданудың алдын алу үшін душтан кейін саусақтардың арасын мұқият құрғатыңыз.",
-          badge: "Гигиена",
-          icon: "dry"
-        },
-        {
-          title: "Тырнақты түзету",
-          desc: "Тырнақтың теріге өсуіне жол бермеу үшін тырнақтарды бұрыштарын дөңгелетпей, тек түзу кесіңіз.",
-          badge: "Пішіні",
-          icon: "shape"
-        }
-      ],
-      sugaring: [
-        {
-          title: "24 сағаттық шектеулер",
-          desc: "Ашық шаш фолликулаларының тітіркенуін тудырмау үшін спортзал, сауна, бассейн және солярийді шектеңіз.",
-          badge: "Шектеу",
-          icon: "ban"
-        },
-        {
-          title: "Бос гардероб",
-          desc: "Үйкелісті болдырмау үшін алғашқы тәулікте табиғи матадан жасалған бос іш киім мен киім киіңіз.",
-          badge: "Жайлылық",
-          icon: "cloth"
-        },
-        {
-          title: "Профилактика",
-          desc: "Түктердің ішке өсуін болдырмау үшін 3-5 күннен кейін жеңіл энзимді пилинг жасауды бастаңыз.",
-          badge: "Пилинг",
-          icon: "peel"
-        },
-        {
-          title: "Ылғалдандыру",
-          desc: "Теріні қалпына келтіру үшін комедогенді майлар мен спиртсіз жеңіл ылғалдандырғыш лосьонды қолданыңыз.",
-          badge: "Лосьон",
-          icon: "lotion"
-        }
-      ]
-    },
-    en: {
-      manicure: [
-        {
-          title: "First 24 hours",
-          desc: "Avoid prolonged contact with hot water (baths, saunas, hot showers) to let the polish fully cure.",
-          badge: "Important",
-          icon: "time"
-        },
-        {
-          title: "Household chores",
-          desc: "Wear rubber gloves when handling household chemicals to preserve the mirror shine of the top coat.",
-          badge: "Protection",
-          icon: "protect"
-        },
-        {
-          title: "Daily care",
-          desc: "Apply cuticle oil and moisturizer daily to prevent dryness and hangnails.",
-          badge: "Care",
-          icon: "care"
-        },
-        {
-          title: "Duration",
-          desc: "The recommended wear time is 3–4 weeks. Do not wear it longer to avoid stress cracks on the nail bed.",
-          badge: "Timing",
-          icon: "calendar"
-        }
-      ],
-      pedicure: [
-        {
-          title: "Comfortable shoes",
-          desc: "Avoid tight footwear and narrow socks in the first days to prevent unnecessary pressure on your toes.",
-          badge: "Comfort",
-          icon: "shoe"
-        },
-        {
-          title: "Deep moisture",
-          desc: "Apply a nourishing foot cream before bed (preferably with urea for maximum softness).",
-          badge: "Softness",
-          icon: "cream"
-        },
-        {
-          title: "Dry and clean",
-          desc: "Dry the skin between your toes thoroughly after showering to prevent cracking and dampness.",
-          badge: "Hygiene",
-          icon: "dry"
-        },
-        {
-          title: "Nail trimming",
-          desc: "Cut toenails straight across without rounding the corners to prevent ingrown toenails.",
-          badge: "Shape",
-          icon: "shape"
-        }
-      ],
-      sugaring: [
-        {
-          title: "Limit for 24h",
-          desc: "Avoid gym sessions, saunas, swimming pools, and tanning beds to prevent irritation of open hair follicles.",
-          badge: "Restricted",
-          icon: "ban"
-        },
-        {
-          title: "Loose clothing",
-          desc: "Wear loose natural-fabric underwear and clothing on the first day to prevent friction.",
-          badge: "Comfort",
-          icon: "cloth"
-        },
-        {
-          title: "Prevention",
-          desc: "Start a light enzyme peel after 3-5 days to exfoliate skin and prevent ingrown hairs.",
-          badge: "Peeling",
-          icon: "peel"
-        },
-        {
-          title: "Hydration",
-          desc: "Use a lightweight moisturizing lotion without comedogenic oils or alcohol to restore skin.",
-          badge: "Lotion",
-          icon: "lotion"
-        }
-      ]
-    }
-  };
 
   const t = translations[lang] || translations['ru'];
 

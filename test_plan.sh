@@ -1,3 +1,3 @@
 #!/bin/bash
 echo "Running tests..."
-pnpm test
+pnpm run test

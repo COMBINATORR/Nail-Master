@@ -1,3 +1,7 @@
+## Security Learnings & Vulnerability Patterns
+* When executing node scripts directly, ensure you use the `.cjs` extension when the project specifies `"type": "module"` in `package.json`.
+* Avoid mutating the original static data while refactoring and extracting it to a separate file, so as to avoid introducing subtle data regressions.
+
 ## 2025-02-12 - Added Content Security Policy (CSP)
 **Vulnerability:** The application was missing a Content-Security-Policy (CSP) header, which is a critical security header that helps mitigate Cross-Site Scripting (XSS) and data injection attacks by restricting the sources from which content can be loaded.
 **Learning:** The application is a standard Vite/React single-page application. Since it's a static site, adding a `<meta http-equiv="Content-Security-Policy">` tag to `index.html` is an effective way to implement CSP. We need to allow Google Fonts, Leaflet map tiles from CartoCDN, and inline scripts/styles for React/Vite development (and potentially build tools).
