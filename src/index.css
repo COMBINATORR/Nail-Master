@@ -230,14 +230,13 @@ body.light .spcwlkr-credit:hover {
 
 .logo-base-text {
   font-family: 'Playfair Display', 'Cormorant Garamond', 'Didot', 'Bodoni MT', serif;
-  font-size: 27px;
-  font-weight: 900;
+  font-size: 26px;
+  font-weight: 800;
   text-anchor: middle;
   dominant-baseline: central;
   fill: currentColor;
-  stroke: currentColor;
-  stroke-width: 0.6px;
-  transition: color 350ms ease-out, fill 350ms ease-out, stroke 350ms ease-out;
+  stroke: none;
+  transition: color 350ms ease-out, fill 350ms ease-out;
 }
 
 .logo-details {
@@ -283,6 +282,30 @@ body.light .spcwlkr-credit:hover {
 .logo-3d-wrapper canvas {
   display: block;
   outline: none;
+}
+
+.logo-3d-svg {
+  display: block;
+  transition: filter 350ms ease-out;
+}
+
+/* 3D extrusion depth layers */
+.logo-extrude {
+  fill: rgba(0, 0, 0, 0.6);
+  stroke: none;
+}
+
+/* Specular gloss overlay */
+.logo-spec-layer {
+  font-family: 'Playfair Display', 'Cormorant Garamond', 'Didot', 'Bodoni MT', serif;
+  opacity: 0.25;
+  transition: opacity 400ms ease-out;
+  pointer-events: none;
+}
+
+.logo-container:hover .logo-spec-layer,
+.logo-container.active .logo-spec-layer {
+  opacity: 0.55;
 }
 
 /* Desktop Large Logo Overrides */

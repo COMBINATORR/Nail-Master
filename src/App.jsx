@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import * as THREE from 'three';
 
 import { works, categories, translations, nailShapes, faqData, careTipsData } from './data';
 import { generateWhatsAppText } from './whatsapp';
@@ -97,221 +96,97 @@ const getNext10Days = (lang) => {
   return cachedDaysKk;
 };
 
-// 3D WebGL Canvas Logo Component using Vanilla Three.js
-const Logo3D = ({ theme }) => {
-  const containerRef = useRef(null);
-  const themeRef = useRef(theme);
-  const mountRef = useRef({ scene: null, renderer: null, mesh: null, pointLight: null, material: null });
+// Interactive 3D Logo Component — extrusion + diffuse shading + specular gloss
+const Logo3D = () => {
+  const specLightRef = useRef(null);
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
-    themeRef.current = theme;
-  }, [theme]);
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const width = 32;
-    const height = 32;
-
-    // WebGL support fallback check
-    const canvasTest = document.createElement('canvas');
-    const gl = canvasTest.getContext('webgl') || canvasTest.getContext('experimental-webgl');
-    if (!gl) {
-      containerRef.current.innerHTML = '<span class="logo-base-text" style="font-size:20px; font-weight:900; color:var(--text-primary); display:block; text-align:center; line-height:32px;">S</span>';
-      return;
-    }
-
-    // 1. Scene setup
-    const scene = new THREE.Scene();
-    
-    // 2. Camera setup - orthographic for flat 3D monogram look
-    const camera = new THREE.OrthographicCamera(-1.25, 1.25, 1.25, -1.25, 0.1, 100);
-    camera.position.z = 10;
-
-    // 3. Renderer setup
-    const renderer = new THREE.WebGLRenderer({ 
-      antialias: true, 
-      alpha: true,
-      powerPreference: "low-power"
-    });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    
-    containerRef.current.innerHTML = '';
-    containerRef.current.appendChild(renderer.domElement);
-
-    // 4. Create "S" Shape
-    const shape = new THREE.Shape();
-    // Beautiful calligraphic serif "S" contours
-    shape.moveTo(-0.6, 1.2);
-    shape.quadraticCurveTo(-0.6, 1.6, 0, 1.6);
-    shape.quadraticCurveTo(0.6, 1.6, 0.6, 1.1);
-    shape.quadraticCurveTo(0.6, 0.7, 0, 0.5);
-    shape.quadraticCurveTo(-0.6, 0.3, -0.6, -0.1);
-    shape.quadraticCurveTo(-0.6, -0.6, 0, -0.6);
-    shape.quadraticCurveTo(0.6, -0.6, 0.6, -0.2);
-    shape.lineTo(0.35, -0.2);
-    shape.quadraticCurveTo(0.35, -0.35, 0, -0.35);
-    shape.quadraticCurveTo(-0.35, -0.35, -0.35, -0.1);
-    shape.quadraticCurveTo(-0.35, 0.15, 0.15, 0.35);
-    shape.quadraticCurveTo(0.85, 0.55, 0.85, 1.1);
-    shape.quadraticCurveTo(0.85, 1.8, 0, 1.8);
-    shape.quadraticCurveTo(-0.8, 1.8, -0.8, 1.2);
-    shape.closePath();
-
-    // Extrude Settings
-    const extrudeSettings = {
-      steps: 1,
-      depth: 0.25,
-      bevelEnabled: true,
-      bevelThickness: 0.06,
-      bevelSize: 0.04,
-      bevelSegments: 3
-    };
-
-    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-    geometry.center();
-
-    // 5. Materials & Initial Color
-    const getThemeColor = (themeName) => {
-      switch (themeName) {
-        case 'emerald': return new THREE.Color('#F1E4C3');
-        case 'nudefashion': return new THREE.Color('#2B2927');
-        case 'sage': return new THREE.Color('#4A5D4E');
-        case 'cyber': return new THREE.Color('#22D3EE');
-        default: return new THREE.Color('#B89548');
-      }
-    };
-
-    const material = new THREE.MeshStandardMaterial({
-      color: getThemeColor(themeRef.current),
-      metalness: 0.1, // low metalness to avoid black reflection void
-      roughness: 0.25 // glossy sheen
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-
-    // Initial angles
-    mesh.rotation.y = 0.2;
-    mesh.rotation.x = 0.1;
-
-    // 6. Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85); // bright ambient fill
-    scene.add(ambientLight);
-
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.5); // front-left directional light
-    dirLight.position.set(-2, 2, 4);
-    scene.add(dirLight);
-
-    const pointLight = new THREE.PointLight(0xffffff, 2.5, 50); // mouse tracking highlight light
-    pointLight.position.set(3, 3, 5);
-    scene.add(pointLight);
-
-    mountRef.current = { scene, renderer, mesh, pointLight, material };
-
-    // 7. Animation Loop
-    let animationFrameId;
-    let targetRotationY = 0.2;
-    let targetRotationX = 0.1;
-    let time = 0;
-
-    const animate = () => {
-      time += 0.015;
-
-      if (mesh) {
-        mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.1;
-        mesh.rotation.x += (targetRotationX - mesh.rotation.x) * 0.1;
-        mesh.position.y = Math.sin(time) * 0.04;
-        mesh.rotation.z = Math.cos(time * 0.5) * 0.02;
-      }
-
-      if (material) {
-        let targetColorHex = '#B89548';
-        const currentTheme = themeRef.current;
-        if (currentTheme === 'emerald') targetColorHex = '#F1E4C3';
-        else if (currentTheme === 'nudefashion') targetColorHex = '#2B2927';
-        else if (currentTheme === 'sage') targetColorHex = '#4A5D4E';
-        else if (currentTheme === 'cyber') targetColorHex = '#22D3EE';
-
-        const targetColor = new THREE.Color(targetColorHex);
-        material.color.lerp(targetColor, 0.08);
-      }
-
-      renderer.render(scene, camera);
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    // 8. Mouse Move Interactivity on Logo Container
     const handleMouseMove = (e) => {
-      const rect = containerRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      const nx = x / (rect.width * 2);
-      const ny = y / (rect.height * 2);
-
-      targetRotationY = 0.2 + nx * 0.9;
-      targetRotationX = 0.1 + ny * 0.9;
-
-      if (pointLight) {
-        pointLight.position.x = nx * 8;
-        pointLight.position.y = -ny * 8 + 3;
-      }
+      if (!specLightRef.current) return;
+      const rect = wrapper.getBoundingClientRect();
+      specLightRef.current.setAttribute('x', (((e.clientX - rect.left) / rect.width) * 32).toFixed(1));
+      specLightRef.current.setAttribute('y', (((e.clientY - rect.top) / rect.height) * 32).toFixed(1));
     };
 
     const handleMouseLeave = () => {
-      targetRotationY = 0.2;
-      targetRotationX = 0.1;
-      if (pointLight) {
-        pointLight.position.set(3, 3, 5);
+      if (specLightRef.current) {
+        specLightRef.current.setAttribute('x', '22');
+        specLightRef.current.setAttribute('y', '6');
       }
     };
 
-    const logoContainer = containerRef.current.parentElement;
-    if (logoContainer) {
-      logoContainer.addEventListener('mousemove', handleMouseMove);
-      logoContainer.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    // 9. Intersection Observer for battery preservation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          if (!animationFrameId) {
-            animate();
-          }
-        } else {
-          cancelAnimationFrame(animationFrameId);
-          animationFrameId = null;
-        }
-      });
-    }, { threshold: 0.1 });
-
-    observer.observe(containerRef.current);
-
-    // Cleanup
+    wrapper.addEventListener('mousemove', handleMouseMove);
+    wrapper.addEventListener('mouseleave', handleMouseLeave);
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      observer.disconnect();
-      if (logoContainer) {
-        logoContainer.removeEventListener('mousemove', handleMouseMove);
-        logoContainer.removeEventListener('mouseleave', handleMouseLeave);
-      }
-      geometry.dispose();
-      material.dispose();
-      renderer.dispose();
+      wrapper.removeEventListener('mousemove', handleMouseMove);
+      wrapper.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
+  const txtStyle = { userSelect: 'none' };
+
   return (
-    <div 
-      ref={containerRef} 
-      className="logo-svg logo-3d-wrapper"
-      style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-    />
+    <svg
+      ref={wrapperRef}
+      width="24"
+      height="24"
+      viewBox="0 0 32 32"
+      fill="none"
+      className="logo-svg"
+      style={{ overflow: 'visible', cursor: 'pointer' }}
+    >
+      <defs>
+        {/* Diffuse lighting — creates 3D surface shading (fixed light from top-left) */}
+        <filter id="logo-3d-shade" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.7" result="bevel" />
+          <feDiffuseLighting in="bevel" surfaceScale="5" diffuseConstant="1.0" lightingColor="#ffffff" result="diffuse">
+            <feDistantLight azimuth="225" elevation="45" />
+          </feDiffuseLighting>
+          <feComposite in="diffuse" in2="SourceGraphic" operator="in" result="lit" />
+          <feBlend in="SourceGraphic" in2="lit" mode="multiply" />
+        </filter>
+
+        {/* Specular highlight — cursor-following glossy reflection */}
+        <filter id="logo-specular" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.8" result="blurA" />
+          <feSpecularLighting in="blurA" surfaceScale="5" specularConstant="1.0" specularExponent="22" lightingColor="#ffffff" result="spec">
+            <fePointLight ref={specLightRef} x="22" y="6" z="12" />
+          </feSpecularLighting>
+          <feComposite in="spec" in2="SourceAlpha" operator="in" />
+        </filter>
+      </defs>
+
+      {/* Layer 1: Extrusion depth — 3 offset shadow copies creating 3D thickness */}
+      <text x="16.9" y="17.9" className="logo-base-text logo-extrude" style={{ ...txtStyle, opacity: 0.2 }}>S</text>
+      <text x="16.6" y="17.6" className="logo-base-text logo-extrude" style={{ ...txtStyle, opacity: 0.25 }}>S</text>
+      <text x="16.3" y="17.3" className="logo-base-text logo-extrude" style={{ ...txtStyle, opacity: 0.3 }}>S</text>
+
+      {/* Layer 2: Main face — diffuse 3D shading applied, themed color */}
+      <text
+        x="16"
+        y="17"
+        filter="url(#logo-3d-shade)"
+        className="logo-base-text transition-colors duration-300 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-[.active]:text-[var(--text-primary)]"
+        style={txtStyle}
+      >
+        S
+      </text>
+
+      {/* Layer 3: Specular gloss — cursor-following shiny highlight */}
+      <text
+        x="16"
+        y="17"
+        filter="url(#logo-specular)"
+        className="logo-spec-layer"
+        style={{ ...txtStyle, fill: 'white', pointerEvents: 'none' }}
+      >
+        S
+      </text>
+    </svg>
   );
 };
 
@@ -867,7 +742,7 @@ export default function App() {
             className="logo-container group !absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             onClick={handleLogoClick}
           >
-            <Logo3D theme={theme} />
+            <Logo3D />
             
             {/* Floating text underlay */}
             <div className="logo-details">
