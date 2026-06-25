@@ -280,6 +280,11 @@ body.light .spcwlkr-credit:hover {
               letter-spacing 350ms ease-out;
 }
 
+.logo-3d-wrapper canvas {
+  display: block;
+  outline: none;
+}
+
 /* Desktop Large Logo Overrides */
 @media (min-width: 1024px) {
   .logo-container {

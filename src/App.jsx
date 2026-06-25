@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
+import * as THREE from 'three';
 
 import { works, categories, translations, nailShapes, faqData, careTipsData } from './data';
 import { generateWhatsAppText } from './whatsapp';
@@ -94,6 +95,220 @@ const getNext10Days = (lang) => {
   if (lang === 'en') return cachedDaysEn;
   if (lang === 'ru') return cachedDaysRu;
   return cachedDaysKk;
+};
+
+// 3D WebGL Canvas Logo Component using Vanilla Three.js
+const Logo3D = ({ theme }) => {
+  const containerRef = useRef(null);
+  const themeRef = useRef(theme);
+  const mountRef = useRef({ scene: null, renderer: null, mesh: null, pointLight: null, material: null });
+
+  useEffect(() => {
+    themeRef.current = theme;
+  }, [theme]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const width = 32;
+    const height = 32;
+
+    // WebGL support fallback check
+    const canvasTest = document.createElement('canvas');
+    const gl = canvasTest.getContext('webgl') || canvasTest.getContext('experimental-webgl');
+    if (!gl) {
+      containerRef.current.innerHTML = '<span class="logo-base-text" style="font-size:20px; font-weight:900; color:var(--text-primary); display:block; text-align:center; line-height:32px;">S</span>';
+      return;
+    }
+
+    // 1. Scene setup
+    const scene = new THREE.Scene();
+    
+    // 2. Camera setup - orthographic for flat 3D monogram look
+    const camera = new THREE.OrthographicCamera(-1.8, 1.8, 1.8, -1.8, 0.1, 100);
+    camera.position.z = 10;
+
+    // 3. Renderer setup
+    const renderer = new THREE.WebGLRenderer({ 
+      antialias: true, 
+      alpha: true,
+      powerPreference: "low-power"
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    containerRef.current.innerHTML = '';
+    containerRef.current.appendChild(renderer.domElement);
+
+    // 4. Create "S" Shape
+    const shape = new THREE.Shape();
+    // Beautiful calligraphic serif "S" contours
+    shape.moveTo(-0.6, 1.2);
+    shape.quadraticCurveTo(-0.6, 1.6, 0, 1.6);
+    shape.quadraticCurveTo(0.6, 1.6, 0.6, 1.1);
+    shape.quadraticCurveTo(0.6, 0.7, 0, 0.5);
+    shape.quadraticCurveTo(-0.6, 0.3, -0.6, -0.1);
+    shape.quadraticCurveTo(-0.6, -0.6, 0, -0.6);
+    shape.quadraticCurveTo(0.6, -0.6, 0.6, -0.2);
+    shape.lineTo(0.35, -0.2);
+    shape.quadraticCurveTo(0.35, -0.35, 0, -0.35);
+    shape.quadraticCurveTo(-0.35, -0.35, -0.35, -0.1);
+    shape.quadraticCurveTo(-0.35, 0.15, 0.15, 0.35);
+    shape.quadraticCurveTo(0.85, 0.55, 0.85, 1.1);
+    shape.quadraticCurveTo(0.85, 1.8, 0, 1.8);
+    shape.quadraticCurveTo(-0.8, 1.8, -0.8, 1.2);
+    shape.closePath();
+
+    // Extrude Settings
+    const extrudeSettings = {
+      steps: 1,
+      depth: 0.25,
+      bevelEnabled: true,
+      bevelThickness: 0.06,
+      bevelSize: 0.04,
+      bevelSegments: 3
+    };
+
+    const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+    geometry.center();
+
+    // 5. Materials & Initial Color
+    const getThemeColor = (themeName) => {
+      switch (themeName) {
+        case 'emerald': return new THREE.Color('#F1E4C3');
+        case 'nudefashion': return new THREE.Color('#2B2927');
+        case 'sage': return new THREE.Color('#4A5D4E');
+        case 'cyber': return new THREE.Color('#22D3EE');
+        default: return new THREE.Color('#B89548');
+      }
+    };
+
+    const material = new THREE.MeshStandardMaterial({
+      color: getThemeColor(themeRef.current),
+      metalness: 0.9,
+      roughness: 0.15
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    // Initial angles
+    mesh.rotation.y = 0.2;
+    mesh.rotation.x = 0.1;
+
+    // 6. Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 2.0, 50);
+    pointLight.position.set(3, 3, 5);
+    scene.add(pointLight);
+
+    mountRef.current = { scene, renderer, mesh, pointLight, material };
+
+    // 7. Animation Loop
+    let animationFrameId;
+    let targetRotationY = 0.2;
+    let targetRotationX = 0.1;
+    let time = 0;
+
+    const animate = () => {
+      time += 0.015;
+
+      if (mesh) {
+        mesh.rotation.y += (targetRotationY - mesh.rotation.y) * 0.1;
+        mesh.rotation.x += (targetRotationX - mesh.rotation.x) * 0.1;
+        mesh.position.y = Math.sin(time) * 0.04;
+        mesh.rotation.z = Math.cos(time * 0.5) * 0.02;
+      }
+
+      if (material) {
+        let targetColorHex = '#B89548';
+        const currentTheme = themeRef.current;
+        if (currentTheme === 'emerald') targetColorHex = '#F1E4C3';
+        else if (currentTheme === 'nudefashion') targetColorHex = '#2B2927';
+        else if (currentTheme === 'sage') targetColorHex = '#4A5D4E';
+        else if (currentTheme === 'cyber') targetColorHex = '#22D3EE';
+
+        const targetColor = new THREE.Color(targetColorHex);
+        material.color.lerp(targetColor, 0.08);
+      }
+
+      renderer.render(scene, camera);
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    // 8. Mouse Move Interactivity on Logo Container
+    const handleMouseMove = (e) => {
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      const nx = x / (rect.width * 2);
+      const ny = y / (rect.height * 2);
+
+      targetRotationY = 0.2 + nx * 0.9;
+      targetRotationX = 0.1 + ny * 0.9;
+
+      if (pointLight) {
+        pointLight.position.x = nx * 8;
+        pointLight.position.y = -ny * 8 + 3;
+      }
+    };
+
+    const handleMouseLeave = () => {
+      targetRotationY = 0.2;
+      targetRotationX = 0.1;
+      if (pointLight) {
+        pointLight.position.set(3, 3, 5);
+      }
+    };
+
+    const logoContainer = containerRef.current.parentElement;
+    if (logoContainer) {
+      logoContainer.addEventListener('mousemove', handleMouseMove);
+      logoContainer.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    // 9. Intersection Observer for battery preservation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!animationFrameId) {
+            animate();
+          }
+        } else {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(containerRef.current);
+
+    // Cleanup
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
+      if (logoContainer) {
+        logoContainer.removeEventListener('mousemove', handleMouseMove);
+        logoContainer.removeEventListener('mouseleave', handleMouseLeave);
+      }
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
+    };
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef} 
+      className="logo-svg logo-3d-wrapper"
+      style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+    />
+  );
 };
 
 export default function App() {
@@ -648,16 +863,7 @@ export default function App() {
             className="logo-container group !absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             onClick={handleLogoClick}
           >
-            <svg width="24" height="24" viewBox="0 0 32 32" fill="none" className="logo-svg">
-              {/* Monumental Serif Text Base S */}
-              <text 
-                x="16" 
-                y="16" 
-                className="logo-base-text transition-colors duration-300 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-[.active]:text-[var(--text-primary)]"
-              >
-                S
-              </text>
-            </svg>
+            <Logo3D theme={theme} />
             
             {/* Floating text underlay */}
             <div className="logo-details">
