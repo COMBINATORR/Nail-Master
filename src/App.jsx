@@ -624,7 +624,7 @@ export default function App() {
 
       {/* ═══════════ HEADER — full width on desktop ═══════════ */}
       <header className={`sticky top-0 z-40 backdrop-blur-xl ${bgHeader} border-b ${border} transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center relative">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-3 flex justify-between items-center relative">
           {/* Sandwich menu (Left side, visible on both mobile and desktop) */}
           <button onClick={() => setIsMobileMenuOpen(true)}
             className="p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all z-10 cursor-pointer"
@@ -811,7 +811,7 @@ export default function App() {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-bronze-500/5 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-bronze-700/5 rounded-full blur-[80px] pointer-events-none"></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16 pt-12 pb-14 lg:pt-20 lg:pb-24">
             {/* Left: text */}
             <div className="flex-1 text-center lg:text-left">
@@ -865,7 +865,7 @@ export default function App() {
 
       {/* ═══════════ TRUST ═══════════ */}
       <section id="trust" className={`border-b ${border} py-14 lg:py-20`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t.trustTitle}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
@@ -885,7 +885,7 @@ export default function App() {
 
       {/* ═══════════ SERVICES CALCULATOR ═══════════ */}
       <section id="services" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>{t.servicesTitle}</h2>
           <p className={`${textSecondary} text-sm mb-10`}>{t.servicesSubtitle}</p>
 
@@ -1122,7 +1122,7 @@ export default function App() {
 
       {/* ═══════════ PORTFOLIO BEFORE/AFTER SLIDER ═══════════ */}
       <section id="portfolio" className={`border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>
             {t.portfolioTitle}
           </h2>
@@ -1251,7 +1251,7 @@ export default function App() {
 
       {/* ═══════════ CLIENT CARE GUIDE ═══════════ */}
       <section id="care-guide" className={`border-b ${border} py-14 lg:py-20`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>
             {t.careTitle}
           </h2>
@@ -1333,7 +1333,7 @@ export default function App() {
 
       {/* ═══════════ GUARANTEES ═══════════ */}
       <section id="guarantees" className={`border-b ${border} py-14 lg:py-20`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t.guaranteesTitle}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
@@ -1356,7 +1356,7 @@ export default function App() {
 
       {/* ═══════════ FAQ ═══════════ */}
       <section id="faq" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t.fearTitle}</h2>
           {/* Mobile FAQ list */}
           <div className="flex flex-col gap-3 lg:hidden max-w-5xl">
@@ -1377,7 +1377,7 @@ export default function App() {
 
       {/* ═══════════ LOCATION MAP ═══════════ */}
       <section id="location" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-3`}>
             {lang === 'en' ? 'HOW TO FIND US' : lang === 'ru' ? 'КАК ДОБРАТЬСЯ' : 'МЕКЕН-ЖАЙ'}
           </h2>
@@ -1484,7 +1484,7 @@ export default function App() {
 
       {/* ═══════════ BOOKING FORM ═══════════ */}
       <section id="appointment-form" className={`${bg} py-14 lg:py-20 transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             {/* Left: copy */}
             <div>
@@ -1660,7 +1660,7 @@ export default function App() {
 
       {/* ═══════════ FOOTER ═══════════ */}
       <footer className={`border-t ${border} py-10 ${bgDeep} transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
             {/* Logo */}
             <div className="static-logo">
