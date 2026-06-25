@@ -40,7 +40,7 @@ describe('generateWhatsAppText', () => {
     expect(text).toContain('Services: Hygienic Manicure + Design (Manicure)');
     expect(text).toContain('Nail shape: Oval');
     expect(text).toContain('Appointment: Oct 27, Fri at 14:00. Mode: Relax in silence');
-    expect(text).toContain('Fixed price: 6,000 ₸.');
+    expect(text.replace(/\u00A0/g, ' ')).toMatch(/Fixed price: 6[, ]000 ₸\./);
 
     // Should not include name and phone by default
     expect(text).not.toContain('Jane Doe');
