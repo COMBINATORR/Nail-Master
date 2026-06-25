@@ -125,7 +125,7 @@ const Logo3D = ({ theme }) => {
     const scene = new THREE.Scene();
     
     // 2. Camera setup - orthographic for flat 3D monogram look
-    const camera = new THREE.OrthographicCamera(-1.8, 1.8, 1.8, -1.8, 0.1, 100);
+    const camera = new THREE.OrthographicCamera(-1.25, 1.25, 1.25, -1.25, 0.1, 100);
     camera.position.z = 10;
 
     // 3. Renderer setup
@@ -185,8 +185,8 @@ const Logo3D = ({ theme }) => {
 
     const material = new THREE.MeshStandardMaterial({
       color: getThemeColor(themeRef.current),
-      metalness: 0.9,
-      roughness: 0.15
+      metalness: 0.1, // low metalness to avoid black reflection void
+      roughness: 0.25 // glossy sheen
     });
 
     const mesh = new THREE.Mesh(geometry, material);
@@ -197,10 +197,14 @@ const Logo3D = ({ theme }) => {
     mesh.rotation.x = 0.1;
 
     // 6. Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85); // bright ambient fill
     scene.add(ambientLight);
 
-    const pointLight = new THREE.PointLight(0xffffff, 2.0, 50);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.5); // front-left directional light
+    dirLight.position.set(-2, 2, 4);
+    scene.add(dirLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 2.5, 50); // mouse tracking highlight light
     pointLight.position.set(3, 3, 5);
     scene.add(pointLight);
 
