@@ -984,9 +984,75 @@ body.theme-dark .leaflet-tile-container {
   filter: saturate(0.9) brightness(0.95);
 }
 
+/* ─── Scroll-driven floating header capsule ─── */
+header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
+header.scrolled-capsule {
+  top: 1rem !important;
+  margin-left: auto;
+  margin-right: auto;
+  width: calc(100% - 2rem) !important;
+  max-width: 1200px !important;
+  border-radius: 9999px !important;
+  background-color: rgba(14, 14, 14, 0.7) !important;
+  border-color: rgba(197, 168, 128, 0.25) !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
+}
 
+body.light header.scrolled-capsule {
+  background-color: rgba(248, 246, 242, 0.7) !important;
+  border-color: rgba(197, 168, 128, 0.3) !important;
+  box-shadow: 0 20px 40px -15px rgba(27, 20, 12, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
+}
 
+header.scrolled-capsule > div {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 
+/* ─── Tactile selected cards Shimmer effect ─── */
+.tactile-card-selected {
+  position: relative;
+  overflow: hidden;
+}
 
+.tactile-card-selected::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  z-index: 10;
+}
 
+.tactile-card-selected:hover::after {
+  animation: shimmery-shine 1.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes shimmery-shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}

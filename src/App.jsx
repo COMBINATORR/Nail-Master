@@ -111,6 +111,7 @@ export default function App() {
   const langPopupRef = useRef(null);
   const themePopupRef = useRef(null);
   const logoRef = useRef(null);
+  const headerRef = useRef(null);
   const [showGravityRestore, setShowGravityRestore] = useState(false);
   const clickTracker = useRef({ count: 0, lastClickTime: 0 });
   const affectedElements = useRef([]);
@@ -152,6 +153,14 @@ export default function App() {
               logoRef.current.classList.add('active');
             } else {
               logoRef.current.classList.remove('active');
+            }
+          }
+
+          if (headerRef.current) {
+            if (window.scrollY > 50) {
+              headerRef.current.classList.add('scrolled-capsule');
+            } else {
+              headerRef.current.classList.remove('scrolled-capsule');
             }
           }
 
@@ -623,7 +632,7 @@ export default function App() {
       ></div>
 
       {/* ═══════════ HEADER — full width on desktop ═══════════ */}
-      <header className={`sticky top-0 z-40 backdrop-blur-xl ${bgHeader} border-b ${border} transition-colors duration-300`}>
+      <header ref={headerRef} className={`sticky top-0 z-40 backdrop-blur-xl ${bgHeader} border-b ${border} transition-colors duration-300`}>
         <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24 py-3 flex justify-between items-center relative">
           {/* Sandwich menu (Left side, visible on both mobile and desktop) */}
           <button onClick={() => setIsMobileMenuOpen(true)}
@@ -923,9 +932,9 @@ export default function App() {
                     const isActive = selectedServiceIds.includes(svc.id);
                     return (
                       <div key={svc.id} onClick={() => toggleService(svc.id)}
-                        className={`border rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden bg-[var(--bg-card)]
+                        className={`border rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden bg-[var(--bg-card)] active:scale-[0.98] active:duration-100
                         ${isActive
-                          ? `border-bronze-500 shadow-[0_0_20px_rgba(197,168,128,0.12)]`
+                          ? `border-bronze-500 shadow-[0_0_20px_rgba(197,168,128,0.12)] tactile-card-selected`
                           : `${borderSubtle} opacity-70 hover:opacity-100`}`}>
                         {isActive && (
                           <div className="absolute top-0 right-0 w-9 h-9 bg-bronze-500/10 border-b border-l border-bronze-500/30 rounded-bl-xl flex items-center justify-center">
@@ -957,9 +966,9 @@ export default function App() {
                         <div
                           key={shape.id}
                           onClick={() => setNailShape(shape.id)}
-                                                    className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 flex flex-col items-center justify-between text-center bg-[var(--bg-card)]
+                                                    className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 flex flex-col items-center justify-between text-center bg-[var(--bg-card)] active:scale-[0.96] active:duration-100
                             ${isActive 
-                              ? `border-bronze-500 text-bronze-400 bg-bronze-500/5 shadow-[0_0_15px_rgba(197,168,128,0.12)]`
+                              ? `border-bronze-500 text-bronze-400 bg-bronze-500/5 shadow-[0_0_15px_rgba(197,168,128,0.12)] tactile-card-selected`
                               : `${borderSubtle} opacity-80 hover:opacity-100`
                             }`}
                         >
@@ -1007,8 +1016,8 @@ export default function App() {
                     return (
                                             <div key={opt.id} onClick={() => toggleOption(opt.id)}
                         className={`border rounded-xl p-3.5 cursor-pointer transition-all duration-300 flex items-center justify-between
-                          bg-[var(--bg-card)]
-                          ${isChecked ? 'border-bronze-500/50' : `${borderSubtle} opacity-80 hover:opacity-100`}`}>
+                          bg-[var(--bg-card)] active:scale-[0.98] active:duration-100
+                          ${isChecked ? 'border-bronze-500/50 tactile-card-selected' : `${borderSubtle} opacity-80 hover:opacity-100`}`}>
                         <div className="flex items-center gap-3">
                           <div className={`w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-all
                             ${isChecked ? 'bg-bronze-500 border-bronze-500 text-charcoal-950' : 'border-[var(--border-color)]'}`}>
