@@ -96,12 +96,15 @@ const getNext10Days = (lang) => {
   return cachedDaysKk;
 };
 
-// Interactive 3D Logo Component — extrusion + diffuse shading + specular gloss
+// Interactive 3D Logo — full effects on desktop, lightweight on mobile
+const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+
 const Logo3D = () => {
   const specLightRef = useRef(null);
   const wrapperRef = useRef(null);
 
   useEffect(() => {
+    if (!canHover) return; // Skip mouse tracking on touch devices
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
 
@@ -139,53 +142,56 @@ const Logo3D = () => {
       className="logo-svg"
       style={{ overflow: 'visible', cursor: 'pointer' }}
     >
-      <defs>
-        {/* Diffuse lighting — creates 3D surface shading (fixed light from top-left) */}
-        <filter id="logo-3d-shade" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="0.7" result="bevel" />
-          <feDiffuseLighting in="bevel" surfaceScale="5" diffuseConstant="1.0" lightingColor="#ffffff" result="diffuse">
-            <feDistantLight azimuth="225" elevation="45" />
-          </feDiffuseLighting>
-          <feComposite in="diffuse" in2="SourceGraphic" operator="in" result="lit" />
-          <feBlend in="SourceGraphic" in2="lit" mode="multiply" />
-        </filter>
+      {/* SVG filters only rendered on desktop — zero GPU cost on mobile */}
+      {canHover && (
+        <defs>
+          <filter id="logo-3d-shade" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="0.7" result="bevel" />
+            <feDiffuseLighting in="bevel" surfaceScale="5" diffuseConstant="1.0" lightingColor="#ffffff" result="diffuse">
+              <feDistantLight azimuth="225" elevation="45" />
+            </feDiffuseLighting>
+            <feComposite in="diffuse" in2="SourceGraphic" operator="in" result="lit" />
+            <feBlend in="SourceGraphic" in2="lit" mode="multiply" />
+          </filter>
 
-        {/* Specular highlight — cursor-following glossy reflection */}
-        <filter id="logo-specular" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="0.8" result="blurA" />
-          <feSpecularLighting in="blurA" surfaceScale="5" specularConstant="1.0" specularExponent="22" lightingColor="#ffffff" result="spec">
-            <fePointLight ref={specLightRef} x="22" y="6" z="12" />
-          </feSpecularLighting>
-          <feComposite in="spec" in2="SourceAlpha" operator="in" />
-        </filter>
-      </defs>
+          <filter id="logo-specular" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="0.8" result="blurA" />
+            <feSpecularLighting in="blurA" surfaceScale="5" specularConstant="1.0" specularExponent="22" lightingColor="#ffffff" result="spec">
+              <fePointLight ref={specLightRef} x="22" y="6" z="12" />
+            </feSpecularLighting>
+            <feComposite in="spec" in2="SourceAlpha" operator="in" />
+          </filter>
+        </defs>
+      )}
 
-      {/* Layer 1: Extrusion depth — 3 offset shadow copies creating 3D thickness */}
+      {/* Extrusion depth — static, lightweight on all devices */}
       <text x="16.9" y="17.9" className="logo-base-text logo-extrude" style={{ ...txtStyle, opacity: 0.2 }}>S</text>
       <text x="16.6" y="17.6" className="logo-base-text logo-extrude" style={{ ...txtStyle, opacity: 0.25 }}>S</text>
       <text x="16.3" y="17.3" className="logo-base-text logo-extrude" style={{ ...txtStyle, opacity: 0.3 }}>S</text>
 
-      {/* Layer 2: Main face — diffuse 3D shading applied, themed color */}
+      {/* Main face — with diffuse 3D filter on desktop, plain on mobile */}
       <text
         x="16"
         y="17"
-        filter="url(#logo-3d-shade)"
+        filter={canHover ? 'url(#logo-3d-shade)' : undefined}
         className="logo-base-text transition-colors duration-300 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-[.active]:text-[var(--text-primary)]"
         style={txtStyle}
       >
         S
       </text>
 
-      {/* Layer 3: Specular gloss — cursor-following shiny highlight */}
-      <text
-        x="16"
-        y="17"
-        filter="url(#logo-specular)"
-        className="logo-spec-layer"
-        style={{ ...txtStyle, fill: 'white', pointerEvents: 'none' }}
-      >
-        S
-      </text>
+      {/* Specular gloss — only on desktop */}
+      {canHover && (
+        <text
+          x="16"
+          y="17"
+          filter="url(#logo-specular)"
+          className="logo-spec-layer"
+          style={{ ...txtStyle, fill: 'white', pointerEvents: 'none' }}
+        >
+          S
+        </text>
+      )}
     </svg>
   );
 };
