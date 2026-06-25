@@ -1766,7 +1766,7 @@ export default function App() {
             </div>
 
             {/* Footer inside Mobile Menu */}
-                        <div className="flex flex-col gap-5 border-t border-white/5 pt-6">
+            <div className={`flex flex-col gap-5 border-t ${borderSubtle} pt-6`}>
               {/* Social icons */}
               <div className="flex items-center gap-4">
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={`p-2.5 rounded-full ${bgSubtle} text-[var(--text-secondary)] hover:text-[#E1306C] transition-colors flex-1 flex justify-center`}>
@@ -1780,22 +1780,22 @@ export default function App() {
               {/* Language selection in drawer */}
               <div className="flex items-center justify-between">
                 <span className={`text-[10px] uppercase font-bold tracking-wider ${textMuted}`}>Language / Язык / Тіл:</span>
-                <div className="flex p-0.5 border border-white/5 rounded-lg tactile-container w-32">
+                <div className={`flex p-0.5 border ${borderSubtle} rounded-lg tactile-container w-32`}>
                   <button 
                     onClick={() => { setLang('ru'); setIsMobileMenuOpen(false); }}
-                    className={`flex-1 py-1 text-center rounded-md text-[10px] font-bold transition-all ${lang === 'ru' ? 'active-tactile-pill scale-[1.02]' : 'text-neutral-400 hover:text-white'}`}
+                    className={`flex-1 py-1 text-center rounded-md text-[10px] font-bold transition-all ${lang === 'ru' ? 'active-tactile-pill scale-[1.02]' : `${textSecondary} hover:${textPrimary}`}`}
                   >
                     RU
                   </button>
                   <button 
                     onClick={() => { setLang('kk'); setIsMobileMenuOpen(false); }}
-                    className={`flex-1 py-1 text-center rounded-md text-[10px] font-bold transition-all ${lang === 'kk' ? 'active-tactile-pill scale-[1.02]' : 'text-neutral-400 hover:text-white'}`}
+                    className={`flex-1 py-1 text-center rounded-md text-[10px] font-bold transition-all ${lang === 'kk' ? 'active-tactile-pill scale-[1.02]' : `${textSecondary} hover:${textPrimary}`}`}
                   >
                     KZ
                   </button>
                   <button 
                     onClick={() => { setLang('en'); setIsMobileMenuOpen(false); }}
-                    className={`flex-1 py-1 text-center rounded-md text-[10px] font-bold transition-all ${lang === 'en' ? 'active-tactile-pill scale-[1.02]' : 'text-neutral-400 hover:text-white'}`}
+                    className={`flex-1 py-1 text-center rounded-md text-[10px] font-bold transition-all ${lang === 'en' ? 'active-tactile-pill scale-[1.02]' : `${textSecondary} hover:${textPrimary}`}`}
                   >
                     EN
                   </button>
@@ -1803,23 +1803,23 @@ export default function App() {
               </div>
 
               {/* Appearance selection in drawer */}
-              <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-white/5">
+              <div className={`flex flex-col gap-3 mt-4 pt-4 border-t ${borderSubtle}`}>
                 <span className={`text-[10px] uppercase font-bold tracking-wider ${textMuted}`}>
                   {lang === 'ru' ? 'Внешний вид / Тема:' : lang === 'kk' ? 'Сыртқы түрі / Тема:' : 'Appearance / Theme:'}
                 </span>
                 
                 {/* Day / Night tactile buttons */}
-                <div className="flex p-1 border border-white/5 tactile-container">
+                <div className={`flex p-1 border ${borderSubtle} tactile-container`}>
                   <button 
                     onClick={() => setTheme('light')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 ${isDayTheme && theme === 'light' ? 'btn-switch-active-day' : 'text-neutral-400 hover:text-white border border-transparent'}`}
+                    className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 ${isDayTheme && theme === 'light' ? 'btn-switch-active-day' : `${textSecondary} hover:${textPrimary} border border-transparent`}`}
                   >
                     <SunIcon className="w-3.5 h-3.5" />
                     <span>{lang === 'ru' ? 'День' : lang === 'kk' ? 'Күн' : 'Day'}</span>
                   </button>
                   <button 
                     onClick={() => setTheme('dark')}
-                    className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 ${isNightTheme && theme === 'dark' ? 'btn-switch-active-night' : 'text-neutral-400 hover:text-white border border-transparent'}`}
+                    className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 ${isNightTheme && theme === 'dark' ? 'btn-switch-active-night' : `${textSecondary} hover:${textPrimary} border border-transparent`}`}
                   >
                     <MoonIcon className="w-3.5 h-3.5" />
                     <span>{lang === 'ru' ? 'Ночь' : lang === 'kk' ? 'Түн' : 'Night'}</span>
@@ -1830,28 +1830,28 @@ export default function App() {
                 <div className="grid grid-cols-2 gap-2 mt-1">
                   <button 
                     onClick={() => setTheme('emerald')}
-                    className={`flex items-center gap-1.5 justify-center py-1.5 px-2 rounded-lg text-[10px] font-bold border transition-all ${theme === 'emerald' ? 'active-tactile-pill scale-[1.02]' : 'text-neutral-400 border-transparent hover:bg-white/5'}`}
+                    className={`flex items-center gap-1.5 justify-center py-1.5 px-2 rounded-lg text-[10px] font-bold border transition-all ${theme === 'emerald' ? 'active-tactile-pill scale-[1.02]' : `${textSecondary} border-transparent hover:${bgSubtle} hover:${textPrimary}`}`}
                   >
                     <span className="w-2 h-2 rounded-full border border-white/20" style={{ backgroundColor: '#061F17' }}></span>
                     <span>Emerald</span>
                   </button>
                   <button 
                     onClick={() => setTheme('nudefashion')}
-                    className={`flex items-center gap-1.5 justify-center py-1.5 px-2 rounded-lg text-[10px] font-bold border transition-all ${theme === 'nudefashion' ? 'active-tactile-pill scale-[1.02]' : 'text-neutral-400 border-transparent hover:bg-white/5'}`}
+                    className={`flex items-center gap-1.5 justify-center py-1.5 px-2 rounded-lg text-[10px] font-bold border transition-all ${theme === 'nudefashion' ? 'active-tactile-pill scale-[1.02]' : `${textSecondary} border-transparent hover:${bgSubtle} hover:${textPrimary}`}`}
                   >
                     <span className="w-2 h-2 rounded-full border border-white/20" style={{ backgroundColor: '#F4EFEA' }}></span>
                     <span>Nude</span>
                   </button>
                   <button 
                     onClick={() => setTheme('sage')}
-                    className={`flex items-center gap-1.5 justify-center py-1.5 px-2 rounded-lg text-[10px] font-bold border transition-all ${theme === 'sage' ? 'active-tactile-pill scale-[1.02]' : 'text-neutral-400 border-transparent hover:bg-white/5'}`}
+                    className={`flex items-center gap-1.5 justify-center py-1.5 px-2 rounded-lg text-[10px] font-bold border transition-all ${theme === 'sage' ? 'active-tactile-pill scale-[1.02]' : `${textSecondary} border-transparent hover:${bgSubtle} hover:${textPrimary}`}`}
                   >
                     <span className="w-2 h-2 rounded-full border border-white/20" style={{ backgroundColor: '#F0F2EE' }}></span>
                     <span>Sage</span>
                   </button>
                   <button 
                     onClick={() => setTheme('cyber')}
-                    className={`flex items-center gap-1.5 justify-center py-1.5 px-2 rounded-lg text-[10px] font-bold border transition-all ${theme === 'cyber' ? 'active-tactile-pill scale-[1.02]' : 'text-neutral-400 border-transparent hover:bg-white/5'}`}
+                    className={`flex items-center gap-1.5 justify-center py-1.5 px-2 rounded-lg text-[10px] font-bold border transition-all ${theme === 'cyber' ? 'active-tactile-pill scale-[1.02]' : `${textSecondary} border-transparent hover:${bgSubtle} hover:${textPrimary}`}`}
                   >
                     <span className="w-2 h-2 rounded-full border border-white/20" style={{ backgroundColor: '#0D0B14' }}></span>
                     <span>Cyber</span>

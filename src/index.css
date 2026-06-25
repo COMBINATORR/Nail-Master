@@ -999,15 +999,15 @@ header.scrolled-capsule {
   width: calc(100% - 2rem) !important;
   max-width: 1200px !important;
   border-radius: 9999px !important;
-  background-color: rgba(14, 14, 14, 0.7) !important;
-  border-color: rgba(197, 168, 128, 0.25) !important;
+  background-color: var(--bg-header) !important;
+  border: 1px solid var(--border-color) !important;
   box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
 }
 
-body.light header.scrolled-capsule {
-  background-color: rgba(248, 246, 242, 0.7) !important;
-  border-color: rgba(197, 168, 128, 0.3) !important;
-  box-shadow: 0 20px 40px -15px rgba(27, 20, 12, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
+body.theme-light header.scrolled-capsule,
+body.theme-nudefashion header.scrolled-capsule,
+body.theme-sage header.scrolled-capsule {
+  box-shadow: 0 20px 40px -15px rgba(27, 20, 12, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
 }
 
 header.scrolled-capsule > div {
