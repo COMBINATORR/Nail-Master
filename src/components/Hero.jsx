@@ -32,7 +32,7 @@ export const Hero = ({ scrollToServices }) => {
             </h1>
             <p className={`${textSecondary} text-sm leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8`}>
               <span className="block text-bronze-400 font-display font-bold text-xs tracking-widest uppercase mb-3">
-                ✦ {t('heroSubtitle')}
+                {t('heroSubtitle')}
               </span>
               {t('heroDesc')}
             </p>
