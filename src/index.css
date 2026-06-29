@@ -27,6 +27,17 @@
 
   --font-display: Montserrat, sans-serif;
   --font-sans: Inter, sans-serif;
+
+  --animate-gradient-flow: gradient-flow 6s ease infinite;
+
+  @keyframes gradient-flow {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
 }
 
 html {

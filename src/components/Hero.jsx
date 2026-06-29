@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { AnimatedGradientText } from './AnimatedGradientText';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
@@ -25,7 +26,9 @@ export const Hero = ({ scrollToServices }) => {
             </div>
             <h1 className={`font-display font-black tracking-tighter ${textPrimary} leading-[1.05] uppercase mb-5
                            text-4xl sm:text-5xl lg:text-6xl xl:text-7xl`}>
-              {t('heroTitle')}
+              {t('heroTitlePre')}
+              <AnimatedGradientText>{t('heroTitleHighlight')}</AnimatedGradientText>
+              {t('heroTitlePost')}
             </h1>
             <div className="border border-bronze-500/20 bg-bronze-950/20 rounded-xl p-3 mb-6 inline-block">
               <span className="text-bronze-400 font-sans font-bold text-xs tracking-wider uppercase">{t('heroSubtitle')}</span>

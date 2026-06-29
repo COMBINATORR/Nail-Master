@@ -1,7 +1,9 @@
 {
   "brand": "SVTL Nails & Aesthetic",
   "heroSuperTitle": "아티라우 네일 • 페디큐어 • 슈가링",
-  "heroTitle": "당신의 아름다움을 위한 프리미엄 케어 및 에스테틱",
+  "heroTitlePre": "당신의 아름다움을 위한 ",
+  "heroTitleHighlight": "프리미엄 케어 및 에스테틱",
+  "heroTitlePost": "",
   "heroSubtitle": "완벽한 퀄리티 • 100% 멸균 보장",
   "heroDesc": "인증받은 아티스트 Svetlana의 1:1 맞춤형 케어. 안전하고 위생적인 시술 과정, 프리미엄 재료 및 아늑한 개인 룸에서 당신의 편안함과 아름다움을 위해 세심하게 모십니다.",
   "heroCta": "시술 선택하기",

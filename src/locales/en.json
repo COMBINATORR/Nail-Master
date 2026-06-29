@@ -1,7 +1,9 @@
 {
   "brand": "SVTL Nails & Aesthetic",
   "heroSuperTitle": "MANICURE • PEDICURE • SUGARING IN ATYRAU",
-  "heroTitle": "PREMIUM CARE AND AESTHETICS FOR YOUR BEAUTY",
+  "heroTitlePre": "PREMIUM ",
+  "heroTitleHighlight": "CARE AND AESTHETICS",
+  "heroTitlePost": " FOR YOUR BEAUTY",
   "heroSubtitle": "IMPECCABLE QUALITY • 100% STERILE",
   "heroDesc": "Personalized approach from certified artist Svetlana. Safe treatments, premium materials, and a cozy studio designed with your comfort and beauty in mind.",
   "heroCta": "Select services",

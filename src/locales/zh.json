@@ -1,7 +1,9 @@
 {
   "brand": "SVTL Nails & Aesthetic",
   "heroSuperTitle": "阿特劳美甲 • 足疗 • 蜜蜡脱毛",
-  "heroTitle": "为您的美丽提供尊贵护理与美学体验",
+  "heroTitlePre": "为您的美丽提供",
+  "heroTitleHighlight": "尊贵护理与美学体验",
+  "heroTitlePost": "",
   "heroSubtitle": "无可挑剔 • 100% 无菌保障",
   "heroDesc": "认证美甲师 Svetlana 为您提供专属定制服务。安全卫生的护理流程、高端优质材料、温馨舒适的私人包间，悉心呵护您的舒适与美丽。",
   "heroCta": "选择服务项目",
