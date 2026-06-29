@@ -375,8 +375,8 @@ export default function App() {
 
   const fmtTime = (m) => {
     const h = Math.floor(m / 60), mn = m % 60;
-    const hl = lang === 'en' ? 'h.' : lang === 'ru' ? 'ч.' : 'сағ.';
-    const ml = lang === 'en' ? 'min.' : 'мин.';
+    const hl = t('hour_short', 'ч');
+    const ml = t('min_short', 'мин');
     return `${h > 0 ? `${h} ${hl} ` : ''}${mn > 0 ? `${mn} ${ml}` : ''}`;
   };
 

@@ -135,5 +135,8 @@
   "shape_sharp_square": "Анық квадрат",
   "shape_soft_square": "Жұмсақ квадрат",
   "shape_oval": "Овал",
-  "shape_almond": "Миндаль"
+  "shape_almond": "Миндаль",
+  "dragSliderToCompare": "← Салыстыру үшін жүгірткіні тартыңыз →",
+  "hour_short": "сағ",
+  "min_short": "мин"
 }

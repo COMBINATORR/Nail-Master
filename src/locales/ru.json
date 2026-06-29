@@ -135,5 +135,8 @@
   "shape_sharp_square": "Четкий квадрат",
   "shape_soft_square": "Мягкий квадрат",
   "shape_oval": "Овал",
-  "shape_almond": "Миндаль"
+  "shape_almond": "Миндаль",
+  "dragSliderToCompare": "← Потяните ползунок для сравнения →",
+  "hour_short": "ч",
+  "min_short": "мин"
 }

@@ -135,5 +135,8 @@
   "shape_sharp_square": "Sharp square",
   "shape_soft_square": "Soft square",
   "shape_oval": "Oval",
-  "shape_almond": "Almond"
+  "shape_almond": "Almond",
+  "dragSliderToCompare": "← Drag the slider to compare →",
+  "hour_short": "h",
+  "min_short": "min"
 }

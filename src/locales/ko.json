@@ -135,5 +135,8 @@
   "shape_sharp_square": "네추럴 스퀘어",
   "shape_soft_square": "라운드 스퀘어",
   "shape_oval": "오발",
-  "shape_almond": "아몬드"
+  "shape_almond": "아몬드",
+  "dragSliderToCompare": "← 슬라이더를 드래그하여 비교 →",
+  "hour_short": "시간",
+  "min_short": "분"
 }

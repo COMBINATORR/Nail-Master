@@ -135,5 +135,8 @@
   "shape_sharp_square": "直角方甲",
   "shape_soft_square": "圆角方甲",
   "shape_oval": "椭圆甲形",
-  "shape_almond": "杏仁甲形"
+  "shape_almond": "杏仁甲形",
+  "dragSliderToCompare": "← 左右拖动滑块对比效果 →",
+  "hour_short": "小时",
+  "min_short": "分钟"
 }

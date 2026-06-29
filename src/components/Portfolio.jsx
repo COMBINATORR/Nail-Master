@@ -153,7 +153,7 @@ export const Portfolio = () => {
           {/* Helper UX caption strictly below the slider */}
           <div className="text-center mt-3.5">
             <span className={`text-[10px] uppercase tracking-widest ${textMuted} font-bold opacity-80`}>
-              {lang === 'en' ? '← Drag the slider to compare →' : lang === 'ru' ? '← Потяните ползунок для сравнения →' : '← Салыстыру үшін жүгірткіні тартыңыз →'}
+              {t('dragSliderToCompare')}
             </span>
           </div>
 
@@ -176,7 +176,16 @@ export const Portfolio = () => {
               <div className="flex flex-col gap-1">
                 <span className={`${textMuted} text-[9px]`}>{t('timeLabel')}</span>
                 <span className="text-bronze-400 font-display text-sm">
-                  {lang === 'en' ? works[activeWork].time.replace('ч', 'h').replace('мин', 'min') : lang === 'ru' ? works[activeWork].time : works[activeWork].time.replace('ч', 'сағ').replace('мин', 'мин')}
+                  {(() => {
+                    const timeStr = works[activeWork].time;
+                    const match = timeStr.match(/(\d+)\s*ч\s*(?:(\d+)\s*мин)?/);
+                    if (!match) return timeStr;
+                    const h = parseInt(match[1], 10);
+                    const m = match[2] ? parseInt(match[2], 10) : 0;
+                    const hl = t('hour_short', 'ч');
+                    const ml = t('min_short', 'мин');
+                    return `${h} ${hl}${m > 0 ? ` ${m} ${ml}` : ''}`;
+                  })()}
                 </span>
               </div>
             </div>
