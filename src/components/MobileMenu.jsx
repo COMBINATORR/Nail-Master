@@ -136,7 +136,7 @@ export const MobileMenu = ({
           {/* Appearance selection in drawer */}
           <div className={`flex flex-col gap-3 mt-4 pt-4 border-t ${borderSubtle}`}>
             <span className={`text-[10px] uppercase font-bold tracking-wider ${textMuted}`}>
-              {lang === 'ru' ? 'Внешний вид / Тема:' : lang === 'kk' ? 'Сыртқы түрі / Тема:' : 'Appearance / Theme:'}
+              {t('appearance')}:
             </span>
             
             {/* Day / Night tactile buttons */}
@@ -147,7 +147,7 @@ export const MobileMenu = ({
                 className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 ${isDayTheme && theme === 'light' ? 'btn-switch-active-day' : `${textSecondary} hover:${textPrimary} border border-transparent`}`}
               >
                 <SunIcon className="w-3.5 h-3.5" />
-                <span>{lang === 'ru' ? 'День' : lang === 'kk' ? 'Күн' : 'Day'}</span>
+                <span>{t('day')}</span>
               </button>
               <button 
                 type="button"
@@ -155,7 +155,7 @@ export const MobileMenu = ({
                 className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 ${isNightTheme && theme === 'dark' ? 'btn-switch-active-night' : `${textSecondary} hover:${textPrimary} border border-transparent`}`}
               >
                 <MoonIcon className="w-3.5 h-3.5" />
-                <span>{lang === 'ru' ? 'Ночь' : lang === 'kk' ? 'Түн' : 'Night'}</span>
+                <span>{t('night')}</span>
               </button>
             </div>
 

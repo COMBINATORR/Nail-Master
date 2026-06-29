@@ -52,11 +52,6 @@ export const CareGuide = () => {
         {/* Interactive Care Tabs */}
         <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl tactile-container">
           {['manicure', 'pedicure', 'sugaring'].map((tab) => {
-            const tabLabels = {
-              manicure: lang === 'en' ? 'Manicure' : lang === 'ru' ? 'Маникюр' : 'Маникюр',
-              pedicure: lang === 'en' ? 'Pedicure' : lang === 'ru' ? 'Педикюр' : 'Педикюр',
-              sugaring: lang === 'en' ? 'Sugaring' : lang === 'ru' ? 'Шугаринг' : 'Шугаринг'
-            };
             const isActive = activeCareTab === tab;
             return (
               <button
@@ -69,7 +64,7 @@ export const CareGuide = () => {
                     : 'border border-transparent hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
               >
-                {tabLabels[tab]}
+                {t(tab)}
               </button>
             );
           })}

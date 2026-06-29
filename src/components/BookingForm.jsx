@@ -112,7 +112,7 @@ export const BookingForm = ({
                 {/* Date Picker Strip */}
                 <div className="space-y-1.5">
                   <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
-                    {lang === 'en' ? 'Select Date:' : lang === 'ru' ? 'Выбрать дату:' : 'Күнді таңдау:'}
+                    {t('selectDate')}
                   </span>
                   <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory">
                     {next10Days.map(d => {
@@ -139,7 +139,7 @@ export const BookingForm = ({
                 {/* Time slots Grid */}
                 <div className="space-y-1.5">
                   <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
-                    {lang === 'en' ? 'Select Time:' : lang === 'ru' ? 'Выбрать время:' : 'Уақытты таңдау:'}
+                    {t('selectTime')}
                   </span>
                   <div className="grid grid-cols-4 gap-1.5">
                     {['09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'].map(time => {
@@ -166,7 +166,7 @@ export const BookingForm = ({
               {/* Visit Mode Switch */}
               <div className="space-y-1.5">
                 <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
-                  {lang === 'en' ? 'Visit mode:' : lang === 'ru' ? 'Режим визита:' : 'Визит форматы:'}
+                  {t('visitModeLabel')}
                 </span>
                 <div className="grid grid-cols-2 p-1 gap-1 rounded-xl tactile-container">
                   <button
@@ -181,7 +181,7 @@ export const BookingForm = ({
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
-                    <span>{lang === 'en' ? 'Relax in silence' : lang === 'ru' ? 'Relax в тишине' : 'Тыныштықтағы Relax'}</span>
+                    <span>{t('relaxMode')}</span>
                   </button>
 
                   <button
@@ -196,7 +196,7 @@ export const BookingForm = ({
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
-                    <span>{lang === 'en' ? 'Friendly chat' : lang === 'ru' ? 'Душевная беседа' : 'Жылы сұхбат'}</span>
+                    <span>{t('talkMode')}</span>
                   </button>
                 </div>
               </div>

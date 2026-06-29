@@ -102,14 +102,10 @@ export const LocationMap = ({
     <section id="location" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
         <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-3`}>
-          {lang === 'en' ? 'HOW TO FIND US' : lang === 'ru' ? 'КАК ДОБРАТЬСЯ' : 'МЕКЕН-ЖАЙ'}
+          {t('findUs')}
         </h2>
         <p className={`${textSecondary} text-sm mb-8`}>
-          {lang === 'en'
-            ? 'The studio is located inside Shade laser hair removal studio. Entrance from the avenue side.'
-            : lang === 'ru'
-              ? 'Кабинет находится в студии лазерной эпиляции Shade. Вход со стороны проспекта.'
-              : 'Кабинет Shade лазерлік эпиляция студиясында орналасқан. Кіреберіс даңғыл жағынан.'}
+          {t('findUsDesc')}
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -131,14 +127,10 @@ export const LocationMap = ({
                 </div>
                 <div>
                   <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
-                    {lang === 'en' ? 'Address' : lang === 'ru' ? 'Адрес' : 'Мекен-жайы'}
+                    {t('addressLabel')}
                   </p>
                   <p className={`${textSecondary} text-sm leading-relaxed`}>
-                    {lang === 'en'
-                      ? '93 Azattyk Avenue — inside Shade laser hair removal studio'
-                      : lang === 'ru'
-                        ? 'Проспект Азаттык, 93 — студия лазерной эпиляции Shade'
-                        : 'Азаттық даңғылы, 93 — Shade лазерлік эпиляция студиясы'}
+                    {t('addressValue')}
                   </p>
                   <p className={`${textMuted} text-xs mt-1`}>Атырау, 60011/E01Y0B0</p>
                 </div>
@@ -152,13 +144,13 @@ export const LocationMap = ({
                 </div>
                 <div>
                   <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
-                    {lang === 'en' ? 'Working hours' : lang === 'ru' ? 'График' : 'Жұмыс уақыты'}
+                    {t('workingHoursLabel')}
                   </p>
                   <p className={`${textSecondary} text-sm`}>
-                    {lang === 'en' ? 'Mon–Sun: 09:00–23:00' : lang === 'ru' ? 'Пн–Вс: 09:00–23:00' : 'Дс–Жс: 09:00–23:00'}
+                    {t('workingHoursValue')}
                   </p>
                   <p className={`${textMuted} text-xs mt-0.5`}>
-                    {lang === 'en' ? 'By appointment only' : lang === 'ru' ? 'Только по записи' : 'Тек алдын ала жазылу'}
+                    {t('byAppointmentOnly')}
                   </p>
                 </div>
               </div>
@@ -169,7 +161,7 @@ export const LocationMap = ({
                 </div>
                 <div>
                   <p className={`font-display font-bold text-xs uppercase tracking-wider ${textPrimary} mb-1`}>
-                    {lang === 'en' ? 'Phone / WhatsApp' : lang === 'ru' ? 'Телефон / WhatsApp' : 'Телефон / WhatsApp'}
+                    {t('phoneOrWhatsApp')}
                   </p>
                   <a href="tel:+77016698086" className="text-bronze-400 hover:text-bronze-300 text-sm font-bold transition-colors">
                     +7 701 669 8086
@@ -186,7 +178,7 @@ export const LocationMap = ({
               className="w-full flex items-center justify-center gap-2 btn-premium-tactile py-3.5 px-5 rounded-xl text-xs uppercase transition-all"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              {lang === 'en' ? 'Open in 2GIS' : lang === 'ru' ? 'Открыть в 2ГИС' : '2ГИС-та ашу'}
+              {t('openIn2Gis')}
             </a>
 
             <a
@@ -196,7 +188,7 @@ export const LocationMap = ({
               className="flex items-center justify-center gap-2 border border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all"
             >
               <WhatsAppIcon className="w-4 h-4" />
-              {lang === 'en' ? 'Ask route' : lang === 'ru' ? 'Спросить маршрут' : 'Бағыт сұрау'}
+              {t('askRoute')}
             </a>
           </div>
         </div>

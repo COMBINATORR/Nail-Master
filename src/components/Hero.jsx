@@ -42,18 +42,18 @@ export const Hero = ({ scrollToServices }) => {
             {[
               { 
                 num: '28', 
-                unit: lang === 'en' ? 'days' : lang === 'ru' ? 'дней' : 'күн', 
-                label: lang === 'en' ? 'coating guarantee' : lang === 'ru' ? 'гарантия покрытия' : 'жабын кепілдігі' 
+                unit: t('unit_days'), 
+                label: t('stat_guarantee') 
               },
               { 
                 num: '100%', 
                 unit: '', 
-                label: lang === 'en' ? 'disposable consumables' : lang === 'ru' ? 'одноразовые расходники' : 'бір реттік шығын материалдары' 
+                label: t('stat_consumables') 
               },
               { 
                 num: '0 ₸', 
                 unit: '', 
-                label: lang === 'en' ? 'hidden charges' : lang === 'ru' ? 'скрытых доплат' : 'жасырын үстемелер' 
+                label: t('stat_charges') 
               },
             ].map((s, i) => (
               <div key={i} className={`${bgCard} border ${border} rounded-2xl p-5 hover:border-bronze-500/30 transition-all`}>

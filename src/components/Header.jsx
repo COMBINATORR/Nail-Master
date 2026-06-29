@@ -90,7 +90,7 @@ export const Header = ({
           <div className="relative" ref={themePopupRef}>
             <button onClick={() => setShowThemeMenu(!showThemeMenu)}
               className="p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all flex items-center"
-              title={lang === 'ru' ? 'Внешний вид' : lang === 'kk' ? 'Сыртқы түрі' : 'Appearance'}>
+              title={t('appearance')}>
               {isDayTheme ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
             </button>
             {showThemeMenu && (
@@ -101,19 +101,19 @@ export const Header = ({
                     className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all duration-300 ${isDayTheme && theme === 'light' ? 'btn-switch-active-day' : `${textMuted} hover:${textPrimary} border border-transparent`}`}
                   >
                     <SunIcon className="w-4 h-4" />
-                    <span>{lang === 'ru' ? 'День' : lang === 'kk' ? 'Күн' : 'Day'}</span>
+                    <span>{t('day')}</span>
                   </button>
                   <button 
                     onClick={() => setTheme('dark')}
                     className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-bold transition-all duration-300 ${isNightTheme && theme === 'dark' ? 'btn-switch-active-night' : `${textMuted} hover:${textPrimary} border border-transparent`}`}
                   >
                     <MoonIcon className="w-4 h-4" />
-                    <span>{lang === 'ru' ? 'Ночь' : lang === 'kk' ? 'Түн' : 'Night'}</span>
+                    <span>{t('night')}</span>
                   </button>
                 </div>
                 <div className="space-y-2">
                   <div className={`text-[10px] uppercase font-bold tracking-wider ${textMuted} mb-2`}>
-                    {lang === 'ru' ? 'Премиум палитры' : lang === 'kk' ? 'Премиум палитралар' : 'Premium Palettes'}
+                    {t('premiumPalettes')}
                   </div>
                   
                   <button 

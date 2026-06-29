@@ -96,7 +96,7 @@ export const Calculator = ({
             {activeCategory !== 'sugaring' && (
               <div>
                 <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">
-                  {lang === 'en' ? '2. Choose nail shape:' : lang === 'ru' ? '2. Выберите форму ногтей:' : '2. Тырнақ пішінін таңдаңыз:'}
+                  {t('chooseNailShape')}
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {nailShapes.map((shape) => {
@@ -132,7 +132,7 @@ export const Calculator = ({
                           />
                         </svg>
                         <span className="text-[11px] font-bold tracking-tight leading-snug">
-                          {lang === 'en' ? shape.nameEn : lang === 'ru' ? shape.nameRu : shape.nameKk}
+                          {t('shape_' + shape.id)}
                         </span>
                       </div>
                     );
@@ -145,7 +145,7 @@ export const Calculator = ({
             <div>
               <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500 mb-4">
                 {activeCategory !== 'sugaring' 
-                  ? (lang === 'en' ? '3. Extra options:' : lang === 'ru' ? '3. Дополнительные опции:' : '3. Қосымша опциялар:')
+                  ? t('extraOptions')
                   : t('servicesSelectOptions')
                 }
               </h3>
@@ -243,9 +243,9 @@ export const Calculator = ({
             {/* Trust badges */}
             <div className={`border ${border} rounded-2xl p-4 ${bgCard} grid grid-cols-3 gap-3 text-center`}>
               {[
-                { id:'guarantee', label: lang === 'en' ? '28 days\nguarantee' : lang === 'ru' ? '28 дней\nгарантия' : '28 күн\nкепілдік' },
-                { id:'sterility', label: lang === 'en' ? '3-stage\nsterility' : lang === 'ru' ? '3-уровн.\nстерильность' : '3 деңгейлі\nстерилизация' },
-                { id:'duration', label: lang === 'en' ? 'Up to 2 hours\nduration' : lang === 'ru' ? 'До 2 часов\nработа' : '2 сағатқа\ndейін' },
+                { id:'guarantee', label: t('badgeGuarantee') },
+                { id:'sterility', label: t('badgeSterility') },
+                { id:'duration', label: t('badgeDuration') },
               ].map((b, i) => (
                 <div key={i} className="flex flex-col items-center gap-1.5">
                   <span style={{color:'var(--accent)'}}>
