@@ -24,16 +24,18 @@ export const Hero = ({ scrollToServices }) => {
             <div className="inline-flex items-center border border-bronze-500/30 bg-bronze-500/5 px-3 py-1 rounded-full mb-5">
               <span className="text-bronze-300 font-bold tracking-widest text-[9px] uppercase">{t('heroSuperTitle')}</span>
             </div>
-            <h1 className={`font-display font-black tracking-tighter ${textPrimary} leading-[1.05] uppercase mb-5
+            <h1 className={`font-display font-black tracking-tighter ${textPrimary} leading-[1.05] uppercase mb-6
                            text-4xl sm:text-5xl lg:text-6xl xl:text-7xl`}>
               {t('heroTitlePre')}
               <AnimatedGradientText>{t('heroTitleHighlight')}</AnimatedGradientText>
               {t('heroTitlePost')}
             </h1>
-            <div className="border border-bronze-500/20 bg-bronze-950/20 rounded-xl p-3 mb-6 inline-block">
-              <span className="text-bronze-400 font-sans font-bold text-xs tracking-wider uppercase">{t('heroSubtitle')}</span>
-            </div>
-            <p className={`${textSecondary} text-sm leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8`}>{t('heroDesc')}</p>
+            <p className={`${textSecondary} text-sm leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8`}>
+              <span className="block text-bronze-400 font-display font-bold text-xs tracking-widest uppercase mb-3">
+                ✦ {t('heroSubtitle')}
+              </span>
+              {t('heroDesc')}
+            </p>
             <button onClick={scrollToServices} id="hero-cta-btn"
               className="w-full lg:w-auto btn-premium-tactile px-8 py-4 rounded-xl text-xs uppercase transition-all duration-300">
               {t('heroCta')}
