@@ -19,5 +19,19 @@ export const faqData = {
     { q: "What about sterility?", a: "3-stage medical-grade sterilization. The kraft bag is opened in front of you. Nail files are single-use." },
     { q: "Are there hidden costs?", a: "Prices are fixed before we start. Removal and plate alignment are already included." },
     { q: "What if the shape isn't right?", a: "The shape and length are aligned with you step-by-step before applying any base." }
+  ],
+  zh: [
+    { q: "美甲会很快脱落吗？", a: "我们承诺 28 天质保。如果发生脱落，我们将在当天为您免费重做。" },
+    { q: "使用打磨机会疼吗？", a: "我采用轻柔的微创精细化打磨技术，无灼烧感、无切口，过程舒适。" },
+    { q: "关于工具消毒？", a: "采用医疗级三阶段消毒。无菌密封袋仅在您面前拆封。指甲挫为一次性使用。" },
+    { q: "会有任何隐形消费吗？", a: "价格在开始前就已固定。卸甲和甲面建构抚平已包含在标价中。" },
+    { q: "指甲甲形不对怎么办？", a: "指甲甲形和长度会在涂底胶前与您逐步确认，确保完全符合您的要求。" }
+  ],
+  ko: [
+    { q: "젤 네일이 빨리 떨어지나요?", a: "28일 유지력을 보장합니다. 예약 당일에 칩이 생기면 무료로 보수해 드립니다." },
+    { q: "드릴 케어가 아픈가요?", a: "부드러운 미세 자극 조절 기법으로 케어합니다. 화끈거림이나 상처 없이 안전합니다." },
+    { q: "도구 소독은 어떻게 하나요?", a: "3단계 의료용 등급 멸균을 준수합니다. 크라프트 백은 고객님 앞에서만 개봉하며 파일은 일회용입니다." },
+    { q: "추가 금액이 발생하나요?", a: "시술 시작 전에 금액을 확정합니다. 젤 제거 및 오버레이 보강은 기본가에 포함되어 있습니다." },
+    { q: "원하는 모양과 다르면 어쩌죠?", a: "젤 베이스를 바르기 전에 손톱 모양과 길이를 고객님과 단계별로 소통하며 조율합니다." }
   ]
 };
