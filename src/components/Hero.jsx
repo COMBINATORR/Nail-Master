@@ -37,7 +37,7 @@ export const Hero = ({ scrollToServices }) => {
               {t('heroDesc')}
             </p>
             <button onClick={scrollToServices} id="hero-cta-btn"
-              className="w-full lg:w-auto btn-premium-tactile px-8 py-4 rounded-xl text-xs uppercase transition-all duration-300">
+              className="w-full lg:w-auto btn-premium-tactile border-beam-active px-8 py-4 rounded-xl text-xs uppercase transition-all duration-300">
               {t('heroCta')}
             </button>
           </div>

@@ -433,6 +433,8 @@ body.theme-dark {
   --text-muted: #737373;
   --border-color: rgba(255, 255, 255, 0.08);
   --border-subtle: rgba(255, 255, 255, 0.04);
+  --beam-color-1: #cbb075;
+  --beam-color-2: #ffffff;
 
   /* SVG Blob Colors */
   --blob-1: #25103a;
@@ -468,6 +470,8 @@ body.theme-light {
   --text-muted: #78716c;
   --border-color: rgba(28, 25, 23, 0.1);
   --border-subtle: rgba(28, 25, 23, 0.05);
+  --beam-color-1: #a3813c;
+  --beam-color-2: #f7f2e6;
 
   /* SVG Blob Colors */
   --blob-1: #f3ebd9;
@@ -510,6 +514,8 @@ body.theme-emerald {
   --text-muted: #9e9791;
   --border-color: rgba(239, 231, 225, 0.1);
   --border-subtle: rgba(239, 231, 225, 0.05);
+  --beam-color-1: #10B981;
+  --beam-color-2: #EFE7E1;
 
   /* SVG Blob Colors */
   --blob-1: #0a2c20;
@@ -545,6 +551,8 @@ body.theme-nudefashion {
   --text-muted: #7d7772;
   --border-color: rgba(30, 27, 24, 0.1);
   --border-subtle: rgba(30, 27, 24, 0.05);
+  --beam-color-1: #53504d;
+  --beam-color-2: #F4EFEA;
 
   /* SVG Blob Colors */
   --blob-1: #eae0d5;
@@ -580,6 +588,8 @@ body.theme-sage {
   --text-muted: #808f82;
   --border-color: rgba(45, 53, 46, 0.1);
   --border-subtle: rgba(45, 53, 46, 0.05);
+  --beam-color-1: #6c8270;
+  --beam-color-2: #F0F2EE;
 
   /* SVG Blob Colors */
   --blob-1: #e2e6df;
@@ -615,6 +625,8 @@ body.theme-cyber {
   --text-muted: #75737d;
   --border-color: rgba(253, 251, 247, 0.1);
   --border-subtle: rgba(253, 251, 247, 0.05);
+  --beam-color-1: #22D3EE;
+  --beam-color-2: #F43F5E;
 
   /* SVG Blob Colors */
   --blob-1: #1d0b30;
@@ -1100,4 +1112,48 @@ header.scrolled-capsule > div {
   100% {
     left: 200%;
   }
+}
+
+/* ─── Animated Border Beam ─── */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes beam-spin {
+  from {
+    --beam-angle: 0deg;
+  }
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+.border-beam-active {
+  position: relative !important;
+}
+
+.border-beam-active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid transparent;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 60%,
+    var(--beam-color-1) 75%,
+    var(--beam-color-2) 80%,
+    var(--beam-color-1) 85%,
+    transparent 100%
+  ) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  -webkit-mask-composite: destination-out;
+  mask-image: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: beam-spin 3s linear infinite;
+  z-index: 10;
 }

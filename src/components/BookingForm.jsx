@@ -202,7 +202,7 @@ export const BookingForm = ({
               </div>
 
               <button type="submit" disabled={isSubmitting} id="form-submit-btn"
-                className="w-full btn-premium-tactile disabled:opacity-50 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all duration-300 flex justify-center items-center gap-2 mt-4">
+                className={`w-full btn-premium-tactile disabled:opacity-50 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all duration-300 flex justify-center items-center gap-2 mt-4 ${!isSubmitting ? 'border-beam-active' : ''}`}>
                 {isSubmitting
                   ? <span className="w-4 h-4 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin"></span>
                   : t('formCta')}

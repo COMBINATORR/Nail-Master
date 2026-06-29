@@ -233,7 +233,7 @@ export const Calculator = ({
                 className={`w-full py-3.5 rounded-xl text-xs uppercase transition-all duration-300
                   ${(selectedServices.length === 0 && selectedOptions.length === 0)
                     ? 'bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-muted)] cursor-not-allowed opacity-50 shadow-none'
-                    : 'btn-premium-tactile'
+                    : 'btn-premium-tactile border-beam-active'
                   }`}
               >
                 {t('serviceCta')}
