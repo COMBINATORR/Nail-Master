@@ -19,54 +19,22 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Mock IntersectionObserver
-window.IntersectionObserver = class IntersectionObserver {
-  constructor(callback) {
-    this.callback = callback;
-  }
+class MockIntersectionObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
-};
-
-// Mock ResizeObserver
-window.ResizeObserver = class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-};
-
-// Mock window.AudioContext / window.webkitAudioContext
-window.AudioContext = class AudioContext {
-  createOscillator() {
-    return {
-      type: '',
-      frequency: {
-        setValueAtTime: vi.fn(),
-        exponentialRampToValueAtTime: vi.fn(),
-        linearRampToValueAtTime: vi.fn()
-      },
-      connect: vi.fn(),
-      start: vi.fn(),
-      stop: vi.fn(),
-    };
-  }
-  createGain() {
-    return {
-      gain: {
-        setValueAtTime: vi.fn(),
-        exponentialRampToValueAtTime: vi.fn(),
-        linearRampToValueAtTime: vi.fn()
-      },
-      connect: vi.fn(),
-    };
-  }
-  destination = {};
-  currentTime = 0;
-};
-window.webkitAudioContext = window.AudioContext;
-
+}
+window.IntersectionObserver = MockIntersectionObserver;
 
 afterEach(() => {
   cleanup()
 })
+
+// Mock ResizeObserver
+
+class MockResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+window.ResizeObserver = MockResizeObserver;
