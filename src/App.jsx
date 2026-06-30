@@ -21,7 +21,6 @@ import { BookingForm } from './components/BookingForm';
 import { Footer } from './components/Footer';
 import { SuccessModal } from './components/SuccessModal';
 
-let isConsoleMessagePrinted = false;
 
 const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
@@ -223,17 +222,6 @@ export default function App() {
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
   }, [theme]);
-
-  useEffect(() => {
-    if (!isConsoleMessagePrinted) {
-      console.log(
-        "%c🚀 Powered by SPCWLKR Digital Studio %c\n\nПонравился чистый код, скорость и кастомные микро-интерактивы этого сайта?\nЭтот интерфейс спроектирован в невесомости на передовом технологическом стеке.\n\nИщете кастомное цифровое решение для вашего бизнеса?\n💬 Telegram: @grokhunter\n💼 Портфолио: в разработке...\n",
-        "background: #0a0b0d; color: #22d3ee; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; border: 1px solid rgba(255,255,255,0.1);",
-        "color: #9ca3af; font-size: 12px; font-family: monospace;"
-      );
-      isConsoleMessagePrinted = true;
-    }
-  }, []);
 
   useEffect(() => {
     const lenis = new Lenis({
