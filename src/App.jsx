@@ -1,6 +1,7 @@
 import './i18n';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import Lenis from 'lenis';
 
 import { categories, nailShapes } from './data';
 import { generateWhatsAppText } from './whatsapp';
@@ -125,13 +126,13 @@ export default function App() {
   const [visitMode, setVisitMode] = useState('relax');
   const [showGravityRestore, setShowGravityRestore] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [leafletLoaded, setLeafletLoaded] = useState(() => typeof window !== 'undefined' && !!window.L);
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isScrolledCapsule, setIsScrolledCapsule] = useState(false);
 
+  const progressBarRef = useRef(null);
   const clickTracker = useRef({ count: 0, lastClickTime: 0 });
   const affectedElements = useRef([]);
 
@@ -154,15 +155,19 @@ export default function App() {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-          if (totalScroll > 0) {
-            setScrollProgress((window.scrollY / totalScroll) * 100);
-          } else {
-            setScrollProgress(0);
+          const progress = totalScroll > 0 ? (window.scrollY / totalScroll) * 100 : 0;
+          if (progressBarRef.current) {
+            progressBarRef.current.style.width = `${progress}%`;
           }
-          setShowBackToTop(window.scrollY > 300);
+          
+          const backToTop = window.scrollY > 300;
+          setShowBackToTop((prev) => (prev !== backToTop ? backToTop : prev));
 
-          setIsScrolled(window.scrollY > 10);
-          setIsScrolledCapsule(window.scrollY > 50);
+          const scrolled = window.scrollY > 10;
+          setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
+
+          const scrolledCapsule = window.scrollY > 50;
+          setIsScrolledCapsule((prev) => (prev !== scrolledCapsule ? scrolledCapsule : prev));
 
           ticking = false;
         });
@@ -228,6 +233,48 @@ export default function App() {
       );
       isConsoleMessagePrinted = true;
     }
+  }, []);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px 0px -80px 0px',
+      threshold: 0.05
+    });
+
+    const elements = document.querySelectorAll('.reveal-item');
+    elements.forEach(el => observer.observe(el));
+
+    return () => {
+      elements.forEach(el => observer.unobserve(el));
+    };
   }, []);
 
   const playPowerDown = () => {
@@ -466,8 +513,9 @@ export default function App() {
 
       {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}
       <div 
+        ref={progressBarRef}
         className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-bronze-700 via-bronze-400 to-bronze-200 z-[100] pointer-events-none" 
-        style={{ width: `${scrollProgress}%` }}
+        style={{ width: '0%' }}
       ></div>
 
       {/* ═══════════ HEADER ═══════════ */}
@@ -483,75 +531,95 @@ export default function App() {
       />
 
       {/* ═══════════ HERO ═══════════ */}
-      <Hero
-        scrollToServices={scrollToServices}
-      />
+      <div className="reveal-item">
+        <Hero
+          scrollToServices={scrollToServices}
+        />
+      </div>
 
       {/* ═══════════ TRUST ═══════════ */}
-      <Trust />
+      <div className="reveal-item">
+        <Trust />
+      </div>
 
       {/* ═══════════ SERVICES CALCULATOR ═══════════ */}
-      <Calculator
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-        selectedServiceIds={selectedServiceIds}
-        toggleService={toggleService}
-        selectedOptions={selectedOptions}
-        toggleOption={toggleOption}
-        nailShape={nailShape}
-        setNailShape={setNailShape}
-        totalPrice={totalPrice}
-        totalTime={totalTime}
-        fmtTime={fmtTime}
-        handleCalculatorCta={handleCalculatorCta}
-        selectedServices={selectedServices}
-        optionsById={optionsById}
-      />
+      <div className="reveal-item">
+        <Calculator
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          selectedServiceIds={selectedServiceIds}
+          toggleService={toggleService}
+          selectedOptions={selectedOptions}
+          toggleOption={toggleOption}
+          nailShape={nailShape}
+          setNailShape={setNailShape}
+          totalPrice={totalPrice}
+          totalTime={totalTime}
+          fmtTime={fmtTime}
+          handleCalculatorCta={handleCalculatorCta}
+          selectedServices={selectedServices}
+          optionsById={optionsById}
+        />
+      </div>
 
       {/* ═══════════ PORTFOLIO BEFORE/AFTER SLIDER ═══════════ */}
-      <Portfolio />
+      <div className="reveal-item">
+        <Portfolio />
+      </div>
 
       {/* ═══════════ CLIENT CARE GUIDE ═══════════ */}
-      <CareGuide />
+      <div className="reveal-item">
+        <CareGuide />
+      </div>
 
       {/* ═══════════ GUARANTEES ═══════════ */}
-      <Guarantees />
+      <div className="reveal-item">
+        <Guarantees />
+      </div>
 
       {/* ═══════════ FAQ ═══════════ */}
-      <FaqSection />
+      <div className="reveal-item">
+        <FaqSection />
+      </div>
 
       {/* ═══════════ LOCATION MAP ═══════════ */}
-      <LocationMap
-        theme={theme}
-        isNightTheme={isNightTheme}
-        leafletLoaded={leafletLoaded}
-      />
+      <div className="reveal-item">
+        <LocationMap
+          theme={theme}
+          isNightTheme={isNightTheme}
+          leafletLoaded={leafletLoaded}
+        />
+      </div>
 
       {/* ═══════════ BOOKING FORM ═══════════ */}
-      <BookingForm
-        name={name}
-        setName={setName}
-        phone={phone}
-        setPhone={setPhone}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        selectedTime={selectedTime}
-        setSelectedTime={setSelectedTime}
-        next10Days={next10Days}
-        visitMode={visitMode}
-        setVisitMode={setVisitMode}
-        isSubmitting={isSubmitting}
-        handleSubmit={handleSubmit}
-        selectedServices={selectedServices}
-        selectedOptions={selectedOptions}
-        optionsById={optionsById}
-        totalPrice={totalPrice}
-        totalTime={totalTime}
-        fmtTime={fmtTime}
-      />
+      <div className="reveal-item">
+        <BookingForm
+          name={name}
+          setName={setName}
+          phone={phone}
+          setPhone={setPhone}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedTime={selectedTime}
+          setSelectedTime={setSelectedTime}
+          next10Days={next10Days}
+          visitMode={visitMode}
+          setVisitMode={setVisitMode}
+          isSubmitting={isSubmitting}
+          handleSubmit={handleSubmit}
+          selectedServices={selectedServices}
+          selectedOptions={selectedOptions}
+          optionsById={optionsById}
+          totalPrice={totalPrice}
+          totalTime={totalTime}
+          fmtTime={fmtTime}
+        />
+      </div>
 
       {/* ═══════════ FOOTER ═══════════ */}
-      <Footer />
+      <div className="reveal-item">
+        <Footer />
+      </div>
 
       {/* ═══════════ SUCCESS MODAL ═══════════ */}
       <SuccessModal

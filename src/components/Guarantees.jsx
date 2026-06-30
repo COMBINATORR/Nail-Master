@@ -21,9 +21,8 @@ export const Guarantees = () => {
             { title: t('g4Title'), desc: t('g4Desc') },
           ].map((g, i) => (
             <div key={i} className={`flex flex-col gap-3 p-5 ${bgSubtle} border ${border} rounded-2xl hover:border-bronze-500/20 transition-all`}>
-              <div className="bg-bronze-500/10 p-2 rounded-lg w-fit"><CheckIcon /></div>
               <div>
-                <h3 className={`font-display text-sm font-bold uppercase tracking-wider ${textPrimary} mb-1.5`}>{g.title}</h3>
+                <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} mb-2`}>{g.title}</h3>
                 <p className={`${textSecondary} text-xs leading-relaxed`}>{g.desc}</p>
               </div>
             </div>

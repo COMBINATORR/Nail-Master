@@ -79,15 +79,12 @@ export const CareGuide = () => {
                 className={`flex flex-col gap-4 p-5 ${bgSubtle} border ${border} rounded-2xl hover:border-bronze-500/20 transition-all hover:-translate-y-1 duration-300`}
               >
                 <div className="flex justify-between items-center">
-                  <div className="bg-bronze-500/10 p-2.5 rounded-xl w-fit">
-                    {getIcon(tip.icon)}
-                  </div>
-                  <span className="text-[9px] font-sans font-black uppercase tracking-wider border border-bronze-500/20 bg-bronze-500/5 px-2 py-0.5 rounded-full text-bronze-400">
+                  <span className="text-[10px] font-sans font-black uppercase tracking-widest border border-bronze-500/35 bg-bronze-500/10 px-3 py-1 rounded-lg text-bronze-400">
                     {tip.badge}
                   </span>
                 </div>
                 <div>
-                  <h3 className={`font-display text-sm font-bold uppercase tracking-wider ${textPrimary} mb-2`}>
+                  <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} mb-2`}>
                     {tip.title}
                   </h3>
                   <p className={`${textSecondary} text-xs leading-relaxed`}>

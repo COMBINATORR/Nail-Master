@@ -20,8 +20,8 @@ export const Trust = () => {
           ].map((card) => (
             <div key={card.num} className={`border ${border} rounded-2xl p-6 ${bgCard} hover:border-bronze-500/25 transition-all group`}>
               <span className="font-display font-black text-4xl text-bronze-500/40 group-hover:text-bronze-500/70 transition-colors leading-none block mb-3">{card.num}</span>
-              <h3 className={`font-display font-bold text-sm tracking-wider uppercase ${textPrimary} mb-2`}>{card.title}</h3>
-              <p className={`${textSecondary} text-sm leading-relaxed`}>{card.desc}</p>
+              <h3 className={`font-display font-black text-base lg:text-lg tracking-wider uppercase ${textPrimary} mb-2`}>{card.title}</h3>
+              <p className={`${textSecondary} text-xs leading-relaxed`}>{card.desc}</p>
             </div>
           ))}
         </div>
