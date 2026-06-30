@@ -22,7 +22,6 @@ import { Footer } from './components/Footer';
 import { SuccessModal } from './components/SuccessModal';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 
-let isConsoleMessagePrinted = false;
 
 const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
@@ -37,7 +36,7 @@ let cachedDaysKk = null;
 let cachedDaysZh = null;
 let cachedDaysKo = null;
 
-const getNext10Days = (lang) => {
+export const getNext10Days = (lang) => {
   const now = new Date();
   const dateStr = now.toDateString();
 
@@ -221,17 +220,6 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    if (!isConsoleMessagePrinted) {
-      console.log(
-        "%c🚀 Powered by SPCWLKR Digital Studio %c\n\nПонравился чистый код, скорость и кастомные микро-интерактивы этого сайта?\nЭтот интерфейс спроектирован в невесомости на передовом технологическом стеке.\n\nИщете кастомное цифровое решение для вашего бизнеса?\n💬 Telegram: @grokhunter\n💼 Портфолио: в разработке...\n",
-        "background: #0a0b0d; color: #22d3ee; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; border: 1px solid rgba(255,255,255,0.1);",
-        "color: #9ca3af; font-size: 12px; font-family: monospace;"
-      );
-      isConsoleMessagePrinted = true;
-    }
-  }, []);
-
-  useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -290,7 +278,7 @@ export default function App() {
       osc.start();
       osc.stop(ctx.currentTime + 1.4);
     } catch (err) {
-      console.log("Audio play failed:", err);
+      // ignore audio errors
     }
   };
 
@@ -312,7 +300,7 @@ export default function App() {
       osc.start();
       osc.stop(ctx.currentTime + 0.9);
     } catch (err) {
-      console.log("Audio play failed:", err);
+      // ignore audio errors
     }
   };
 
