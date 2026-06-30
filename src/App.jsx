@@ -321,6 +321,9 @@ export default function App() {
     const els = document.querySelectorAll(selectors.join(', '));
     const list = [];
     
+    const elementsToUpdate = [];
+
+    // First pass: Read DOM (Layout) to avoid thrashing
     els.forEach((el) => {
       if (el.closest('.fixed') || el.classList.contains('fixed') || el.id === 'gravity-restore-btn') return;
       const rect = el.getBoundingClientRect();
@@ -336,11 +339,17 @@ export default function App() {
         pointerEvents: el.style.pointerEvents
       };
       
-      el.style.transition = 'transform 1100ms cubic-bezier(0.5, 0.05, 0.9, 0.45)';
-      el.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
-      el.style.pointerEvents = 'none';
-      
+      elementsToUpdate.push({ el, deltaX, deltaY, rotation });
       list.push({ el, origStyle });
+    });
+
+    // Second pass: Write DOM (Styles)
+    requestAnimationFrame(() => {
+      elementsToUpdate.forEach(({ el, deltaX, deltaY, rotation }) => {
+        el.style.transition = 'transform 1100ms cubic-bezier(0.5, 0.05, 0.9, 0.45)';
+        el.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
+        el.style.pointerEvents = 'none';
+      });
     });
     
     affectedElements.current = list;

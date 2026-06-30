@@ -29,8 +29,8 @@ export const BookingForm = ({
   totalTime,
   fmtTime
 }) => {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const { t } = useTranslation();
+
 
   return (
     <section id="appointment-form" className={`${bg} py-14 lg:py-20 transition-colors duration-300`}>

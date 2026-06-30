@@ -6,12 +6,11 @@ const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const textMuted = 'text-[var(--text-muted)]';
 const border = 'border-[var(--border-color)]';
-const borderSubtle = 'border-[var(--border-subtle)]';
 const bgCard = 'bg-[var(--bg-card)]';
 
 export const Portfolio = () => {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const { t } = useTranslation();
+
   const [activeWork, setActiveWork] = useState(0);
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
