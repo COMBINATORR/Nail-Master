@@ -1,5 +1,0 @@
-🧪 [Add unit tests for Icons component]
-
-🎯 What: Missing test file for Icons component.
-📊 Coverage: Added unit tests for rendering CheckIcon, ChevronDownIcon, WhatsAppIcon, and PhoneIcon. Tested that ChevronDownIcon correctly applies a custom className.
-✨ Result: Improved test coverage and provided a safety net for stateless functional components.
