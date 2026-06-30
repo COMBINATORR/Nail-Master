@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDownIcon } from './Icons';
 
+const bgCard = 'bg-[var(--bg-card)]';
+const bgSubtle = 'bg-[var(--bg-subtle)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
+const borderSubtle = 'border-[var(--border-subtle)]';
 const border = 'border-[var(--border-color)]';
-const bgCard = 'bg-[var(--bg-card)]';
 
 export const Trust = () => {
   const { t } = useTranslation();
@@ -29,26 +31,31 @@ export const Trust = () => {
             return (
               <div 
                 key={card.num} 
-                className={`border ${border} rounded-2xl p-5 md:p-6 ${bgCard} hover:border-bronze-500/25 transition-all group cursor-pointer md:cursor-default select-none`}
+                className={`flex flex-col ${bgCard} border ${borderSubtle} rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer md:cursor-default select-none`}
                 onClick={() => setActiveCard(isOpen ? null : i)}
               >
-                <div className="flex justify-between items-center md:block">
-                  <div className="flex items-center md:block gap-3">
-                    <span className="font-display font-black text-3xl md:text-4xl text-bronze-500/40 group-hover:text-bronze-500/70 transition-colors leading-none block md:mb-3">
+                <div className="w-full flex justify-between items-center p-5 text-left md:cursor-default">
+                  <div className="flex items-center gap-3">
+                    <span className="font-display font-black text-2xl text-bronze-500/40 leading-none">
                       {card.num}
                     </span>
-                    <h3 className={`font-display font-black text-base lg:text-lg tracking-wider uppercase ${textPrimary} md:mb-2`}>
+                    <span className={`font-display font-bold uppercase text-xs tracking-wide ${textPrimary} leading-snug`}>
                       {card.title}
-                    </h3>
+                    </span>
                   </div>
                   <div className="md:hidden">
-                    <ChevronDownIcon className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-bronze-500' : 'text-[var(--text-muted)]'}`} />
+                    <ChevronDownIcon className={`flex-shrink-0 ml-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-bronze-500' : 'text-[var(--text-muted)]'}`} />
                   </div>
                 </div>
-                <div className={`transition-all duration-300 ease-in-out overflow-hidden md:max-h-none md:opacity-100 md:mt-0 md:pt-0 md:border-t-0 ${isOpen ? 'max-h-60 opacity-100 mt-3 pt-3 border-t ' + border : 'max-h-0 opacity-0'}`}>
-                  <p className={`${textSecondary} text-xs leading-relaxed`}>
+                <div 
+                  className={`transition-all duration-300 ease-in-out overflow-hidden md:max-h-none md:opacity-100 md:border-t md:${borderSubtle} ${
+                    isOpen ? 'max-h-60 opacity-100 border-t ' + borderSubtle : 'max-h-0 opacity-0'
+                  }`}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <div className={`p-5 ${textSecondary} text-sm leading-relaxed ${bgSubtle}`}>
                     {card.desc}
-                  </p>
+                  </div>
                 </div>
               </div>
             );

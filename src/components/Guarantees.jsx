@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDownIcon } from './Icons';
 
+const bgCard = 'bg-[var(--bg-card)]';
+const bgSubtle = 'bg-[var(--bg-subtle)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
+const borderSubtle = 'border-[var(--border-subtle)]';
 const border = 'border-[var(--border-color)]';
-const bgSubtle = 'bg-[var(--bg-subtle)]';
 
 export const Guarantees = () => {
   const { t } = useTranslation();
@@ -30,21 +32,26 @@ export const Guarantees = () => {
             return (
               <div 
                 key={i} 
-                className={`flex flex-col p-5 ${bgSubtle} border ${border} rounded-2xl hover:border-bronze-500/20 transition-all cursor-pointer lg:cursor-default select-none`}
+                className={`flex flex-col ${bgCard} border ${borderSubtle} rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer lg:cursor-default select-none`}
                 onClick={() => setActiveCard(isOpen ? null : i)}
               >
-                <div className="flex justify-between items-center lg:block">
-                  <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} lg:mb-2`}>
+                <div className="w-full flex justify-between items-center p-5 text-left lg:cursor-default">
+                  <h3 className={`font-display font-bold uppercase text-xs tracking-wide ${textPrimary} leading-snug`}>
                     {g.title}
                   </h3>
                   <div className="lg:hidden">
-                    <ChevronDownIcon className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-bronze-500' : 'text-[var(--text-muted)]'}`} />
+                    <ChevronDownIcon className={`flex-shrink-0 ml-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-bronze-500' : 'text-[var(--text-muted)]'}`} />
                   </div>
                 </div>
-                <div className={`transition-all duration-300 ease-in-out overflow-hidden lg:max-h-none lg:opacity-100 lg:mt-0 lg:pt-0 lg:border-t-0 ${isOpen ? 'max-h-60 opacity-100 mt-3 pt-3 border-t ' + border : 'max-h-0 opacity-0'}`}>
-                  <p className={`${textSecondary} text-xs leading-relaxed`}>
+                <div 
+                  className={`transition-all duration-300 ease-in-out overflow-hidden lg:max-h-none lg:opacity-100 lg:border-t lg:${borderSubtle} ${
+                    isOpen ? 'max-h-60 opacity-100 border-t ' + borderSubtle : 'max-h-0 opacity-0'
+                  }`}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <div className={`p-5 ${textSecondary} text-sm leading-relaxed ${bgSubtle}`}>
                     {g.desc}
-                  </p>
+                  </div>
                 </div>
               </div>
             );
