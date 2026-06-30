@@ -364,7 +364,8 @@ export default function App() {
     
     affectedElements.current.forEach(({ el }) => {
       el.style.transition = 'transform 600ms cubic-bezier(0.25, 1, 0.5, 1)';
-      el.style.transform = 'none';
+      el.style.transform = 'translate(0, 0) rotate(0deg)';
+      el.style.pointerEvents = 'auto';
     });
     
     setTimeout(() => {
