@@ -1,6 +1,6 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import App from './App'
+import App, { getNext10Days } from './App'
 
 describe('App Component', () => {
   beforeEach(() => {
@@ -80,5 +80,56 @@ describe('Form Submission Validation', () => {
     const form = container.querySelector('form')
     fireEvent.submit(form)
     expect(window.alert).toHaveBeenCalledWith(expect.stringMatching(/услугу|service|қызметті/i))
+  })
+})
+
+describe('getNext10Days', () => {
+
+
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('returns exactly 10 days starting from the mocked current day', () => {
+    vi.setSystemTime(new Date(2023, 9, 15, 10, 0, 0)) // Oct 15, 2023
+    const days = getNext10Days('en')
+
+    expect(days).toHaveLength(10)
+    expect(days[0].id).toBe('2023-10-15')
+    expect(days[0].formatted).toBe('15.10')
+    expect(days[9].id).toBe('2023-10-24')
+    expect(days[9].formatted).toBe('24.10')
+  })
+
+  it('supports multiple languages correctly returning the translated day', () => {
+    vi.setSystemTime(new Date(2023, 9, 15, 10, 0, 0)) // Oct 15, 2023 is Sunday
+
+    expect(getNext10Days('en')[0].weekday).toBe('Sun')
+    expect(getNext10Days('ru')[0].weekday).toBe('Вс')
+    expect(getNext10Days('kk')[0].weekday).toBe('Жс')
+    expect(getNext10Days('zh')[0].weekday).toBe('周日')
+    expect(getNext10Days('ko')[0].weekday).toBe('일')
+  })
+
+  it('caches the results and breaks cache when date advances', () => {
+    vi.setSystemTime(new Date(2023, 9, 15, 10, 0, 0)) // Oct 15, 2023
+
+    const firstCall = getNext10Days('en')
+    const secondCall = getNext10Days('en')
+
+    // Check reference equality for cached result
+    expect(firstCall).toBe(secondCall)
+
+    // Advance time to next day
+    vi.setSystemTime(new Date(2023, 9, 16, 10, 0, 0)) // Oct 16, 2023
+
+    const nextDayCall = getNext10Days('en')
+
+    expect(nextDayCall).not.toBe(firstCall)
+    expect(nextDayCall[0].id).toBe('2023-10-16')
   })
 })
