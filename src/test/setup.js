@@ -19,15 +19,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Mock IntersectionObserver
-
 class MockIntersectionObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
 }
 window.IntersectionObserver = MockIntersectionObserver;
-
 
 afterEach(() => {
   cleanup()

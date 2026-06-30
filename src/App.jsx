@@ -35,7 +35,7 @@ let cachedDaysKk = null;
 let cachedDaysZh = null;
 let cachedDaysKo = null;
 
-const getNext10Days = (lang) => {
+export const getNext10Days = (lang) => {
   const now = new Date();
   const dateStr = now.toDateString();
 
