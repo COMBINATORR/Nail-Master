@@ -1,3 +1,0 @@
-🎯 **What:** The testing gap addressed was the untested form submission validation logic in `App.jsx`, specifically the `handleSubmit` function which validates user inputs for name, phone, and selected services.
-📊 **Coverage:** The scenarios now tested include an empty name, a name exceeding 50 characters, an invalid phone number format, and submitting the form without selecting a service.
-✨ **Result:** Increased test coverage for the form submission logic, ensuring the `window.alert` triggers correctly with appropriate error messages when users provide invalid data or miss required fields.

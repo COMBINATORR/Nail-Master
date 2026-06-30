@@ -20,6 +20,7 @@ import { LocationMap } from './components/LocationMap';
 import { BookingForm } from './components/BookingForm';
 import { Footer } from './components/Footer';
 import { SuccessModal } from './components/SuccessModal';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
 
 let isConsoleMessagePrinted = false;
 
@@ -132,8 +133,7 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isScrolledCapsule, setIsScrolledCapsule] = useState(false);
 
-  const progressBarRef = useRef(null);
-  const clickTracker = useRef({ count: 0, lastClickTime: 0 });
+    const clickTracker = useRef({ count: 0, lastClickTime: 0 });
   const affectedElements = useRef([]);
 
   useEffect(() => {
@@ -154,11 +154,7 @@ export default function App() {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = totalScroll > 0 ? (window.scrollY / totalScroll) * 100 : 0;
-          if (progressBarRef.current) {
-            progressBarRef.current.style.width = `${progress}%`;
-          }
+
           
           const backToTop = window.scrollY > 300;
           setShowBackToTop((prev) => (prev !== backToTop ? backToTop : prev));
@@ -512,11 +508,7 @@ export default function App() {
       </div>
 
       {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}
-      <div 
-        ref={progressBarRef}
-        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-bronze-700 via-bronze-400 to-bronze-200 z-[100] pointer-events-none" 
-        style={{ width: '0%' }}
-      ></div>
+      <ScrollProgressBar />
 
       {/* ═══════════ HEADER ═══════════ */}
       <Header
