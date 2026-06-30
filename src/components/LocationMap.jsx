@@ -54,9 +54,7 @@ export const LocationMap = ({
 
       L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-      const tileUrl = isNightTheme
-        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-        : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+      const tileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 
       L.tileLayer(tileUrl, {
         maxZoom: 20
