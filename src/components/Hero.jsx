@@ -8,8 +8,8 @@ const border = 'border-[var(--border-color)]';
 const bgCard = 'bg-[var(--bg-card)]';
 
 export const Hero = ({ scrollToServices }) => {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const { t } = useTranslation();
+
 
   return (
     <section className={`relative overflow-hidden border-b ${border}`}>

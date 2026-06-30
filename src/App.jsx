@@ -20,8 +20,8 @@ import { LocationMap } from './components/LocationMap';
 import { BookingForm } from './components/BookingForm';
 import { Footer } from './components/Footer';
 import { SuccessModal } from './components/SuccessModal';
+import { ScrollProgressBar } from './components/ScrollProgressBar';
 
-let isConsoleMessagePrinted = false;
 
 const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
@@ -36,7 +36,7 @@ let cachedDaysKk = null;
 let cachedDaysZh = null;
 let cachedDaysKo = null;
 
-const getNext10Days = (lang) => {
+export const getNext10Days = (lang) => {
   const now = new Date();
   const dateStr = now.toDateString();
 
@@ -132,8 +132,7 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isScrolledCapsule, setIsScrolledCapsule] = useState(false);
 
-  const progressBarRef = useRef(null);
-  const clickTracker = useRef({ count: 0, lastClickTime: 0 });
+    const clickTracker = useRef({ count: 0, lastClickTime: 0 });
   const affectedElements = useRef([]);
 
   useEffect(() => {
@@ -154,11 +153,7 @@ export default function App() {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = totalScroll > 0 ? (window.scrollY / totalScroll) * 100 : 0;
-          if (progressBarRef.current) {
-            progressBarRef.current.style.width = `${progress}%`;
-          }
+
           
           const backToTop = window.scrollY > 300;
           setShowBackToTop((prev) => (prev !== backToTop ? backToTop : prev));
@@ -225,17 +220,6 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    if (!isConsoleMessagePrinted) {
-      console.log(
-        "%c🚀 Powered by SPCWLKR Digital Studio %c\n\nПонравился чистый код, скорость и кастомные микро-интерактивы этого сайта?\nЭтот интерфейс спроектирован в невесомости на передовом технологическом стеке.\n\nИщете кастомное цифровое решение для вашего бизнеса?\n💬 Telegram: @grokhunter\n💼 Портфолио: в разработке...\n",
-        "background: #0a0b0d; color: #22d3ee; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: bold; border: 1px solid rgba(255,255,255,0.1);",
-        "color: #9ca3af; font-size: 12px; font-family: monospace;"
-      );
-      isConsoleMessagePrinted = true;
-    }
-  }, []);
-
-  useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -294,7 +278,7 @@ export default function App() {
       osc.start();
       osc.stop(ctx.currentTime + 1.4);
     } catch (err) {
-      console.log("Audio play failed:", err);
+      // ignore audio errors
     }
   };
 
@@ -316,7 +300,7 @@ export default function App() {
       osc.start();
       osc.stop(ctx.currentTime + 0.9);
     } catch (err) {
-      console.log("Audio play failed:", err);
+      // ignore audio errors
     }
   };
 
@@ -333,6 +317,9 @@ export default function App() {
     const els = document.querySelectorAll(selectors.join(', '));
     const list = [];
     
+    const elementsToUpdate = [];
+
+    // First pass: Read DOM (Layout) to avoid thrashing
     els.forEach((el) => {
       if (el.closest('.fixed') || el.classList.contains('fixed') || el.id === 'gravity-restore-btn') return;
       const rect = el.getBoundingClientRect();
@@ -348,11 +335,17 @@ export default function App() {
         pointerEvents: el.style.pointerEvents
       };
       
-      el.style.transition = 'transform 1100ms cubic-bezier(0.5, 0.05, 0.9, 0.45)';
-      el.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
-      el.style.pointerEvents = 'none';
-      
+      elementsToUpdate.push({ el, deltaX, deltaY, rotation });
       list.push({ el, origStyle });
+    });
+
+    // Second pass: Write DOM (Styles)
+    requestAnimationFrame(() => {
+      elementsToUpdate.forEach(({ el, deltaX, deltaY, rotation }) => {
+        el.style.transition = 'transform 1100ms cubic-bezier(0.5, 0.05, 0.9, 0.45)';
+        el.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
+        el.style.pointerEvents = 'none';
+      });
     });
     
     affectedElements.current = list;
@@ -364,7 +357,8 @@ export default function App() {
     
     affectedElements.current.forEach(({ el }) => {
       el.style.transition = 'transform 600ms cubic-bezier(0.25, 1, 0.5, 1)';
-      el.style.transform = 'none';
+      el.style.transform = 'translate(0, 0) rotate(0deg)';
+      el.style.pointerEvents = 'auto';
     });
     
     setTimeout(() => {
@@ -512,11 +506,7 @@ export default function App() {
       </div>
 
       {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}
-      <div 
-        ref={progressBarRef}
-        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-bronze-700 via-bronze-400 to-bronze-200 z-[100] pointer-events-none" 
-        style={{ width: '0%' }}
-      ></div>
+      <ScrollProgressBar />
 
       {/* ═══════════ HEADER ═══════════ */}
       <Header

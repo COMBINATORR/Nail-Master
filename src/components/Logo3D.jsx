@@ -11,11 +11,23 @@ export const Logo3D = () => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
 
+    let cachedRect = null;
+
+    const handleMouseEnter = () => {
+      cachedRect = wrapper.getBoundingClientRect();
+    };
+
     const handleMouseMove = (e) => {
       if (!specLightRef.current) return;
-      const rect = wrapper.getBoundingClientRect();
-      specLightRef.current.setAttribute('x', (((e.clientX - rect.left) / rect.width) * 32).toFixed(1));
-      specLightRef.current.setAttribute('y', (((e.clientY - rect.top) / rect.height) * 32).toFixed(1));
+      if (!cachedRect) {
+        cachedRect = wrapper.getBoundingClientRect();
+      }
+      specLightRef.current.setAttribute('x', (((e.clientX - cachedRect.left) / cachedRect.width) * 32).toFixed(1));
+      specLightRef.current.setAttribute('y', (((e.clientY - cachedRect.top) / cachedRect.height) * 32).toFixed(1));
+    };
+
+    const handleResize = () => {
+      cachedRect = null;
     };
 
     const handleMouseLeave = () => {
@@ -25,9 +37,15 @@ export const Logo3D = () => {
       }
     };
 
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleResize);
+    wrapper.addEventListener('mouseenter', handleMouseEnter);
     wrapper.addEventListener('mousemove', handleMouseMove);
     wrapper.addEventListener('mouseleave', handleMouseLeave);
     return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleResize);
+      wrapper.removeEventListener('mouseenter', handleMouseEnter);
       wrapper.removeEventListener('mousemove', handleMouseMove);
       wrapper.removeEventListener('mouseleave', handleMouseLeave);
     };
