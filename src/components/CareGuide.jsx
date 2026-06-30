@@ -1,17 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { careTipsData } from '../data/careRules';
-import {
-  ShieldIcon,
-  CreamIcon,
-  NailPolishIcon,
-  MirrorIcon,
-  NailFileIcon,
-  LipIcon,
-  ScissorsIcon,
-  CombIcon,
-  CheckIcon
-} from './Icons';
+
 
 const bgSubtle = 'bg-[var(--bg-subtle)]';
 const textPrimary = 'text-[var(--text-primary)]';
@@ -23,21 +13,7 @@ export const CareGuide = () => {
   const lang = i18n.language || 'ru';
   const [activeCareTab, setActiveCareTab] = useState('manicure');
 
-  const getIcon = (type) => {
-    const iconClasses = "w-5 h-5 text-bronze-500";
-    if (type === 'time' || type === 'ban') return <ShieldIcon className={iconClasses} />;
-    if (type === 'protect') return <CreamIcon className={iconClasses} />;
-    if (type === 'care') return <NailPolishIcon className={iconClasses} />;
-    if (type === 'calendar') return <MirrorIcon className={iconClasses} />;
-    if (type === 'shoe') return <ShieldIcon className={iconClasses} />;
-    if (type === 'cream') return <CreamIcon className={iconClasses} />;
-    if (type === 'dry') return <MirrorIcon className={iconClasses} />;
-    if (type === 'shape') return <NailFileIcon className={iconClasses} />;
-    if (type === 'cloth') return <LipIcon className={iconClasses} />;
-    if (type === 'peel') return <ScissorsIcon className={iconClasses} />;
-    if (type === 'lotion') return <CombIcon className={iconClasses} />;
-    return <CheckIcon className={iconClasses} />;
-  };
+
 
   return (
     <section id="care-guide" className={`border-b ${border} py-14 lg:py-20`}>

@@ -20,14 +20,19 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock IntersectionObserver
-const mockIntersectionObserver = vi.fn();
-mockIntersectionObserver.mockReturnValue({
-  observe: () => null,
-  unobserve: () => null,
-  disconnect: () => null
-});
-window.IntersectionObserver = mockIntersectionObserver;
+global.IntersectionObserver = class IntersectionObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
 
 afterEach(() => {
   cleanup()
 })
+
+
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};

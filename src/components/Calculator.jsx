@@ -28,8 +28,8 @@ export const Calculator = ({
   selectedServices,
   optionsById
 }) => {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const { t } = useTranslation();
+
   const catObj = categories[activeCategory];
 
   return (
