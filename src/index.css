@@ -1031,10 +1031,10 @@ body.theme-light .leaflet-tile {
   filter: contrast(1.05) saturate(0.8) brightness(0.98);
 }
 body.theme-emerald .leaflet-tile {
-  filter: invert(90%) hue-rotate(120deg) brightness(0.9) contrast(1.1) saturate(1.2);
+  filter: invert(90%) hue-rotate(250deg) brightness(0.95) contrast(1.15) saturate(1.5);
 }
 body.theme-cyber .leaflet-tile {
-  filter: invert(90%) hue-rotate(250deg) brightness(0.95) contrast(1.15) saturate(1.5);
+  filter: invert(90%) hue-rotate(120deg) brightness(0.9) contrast(1.1) saturate(1.2);
 }
 body.theme-dark .leaflet-tile {
   filter: invert(90%) hue-rotate(180deg) brightness(0.95) contrast(1.1) saturate(0.85);
