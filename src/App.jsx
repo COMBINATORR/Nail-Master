@@ -294,7 +294,6 @@ export default function App() {
       osc.start();
       osc.stop(ctx.currentTime + 1.4);
     } catch (err) {
-      console.log("Audio play failed:", err);
     }
   };
 
@@ -316,7 +315,6 @@ export default function App() {
       osc.start();
       osc.stop(ctx.currentTime + 0.9);
     } catch (err) {
-      console.log("Audio play failed:", err);
     }
   };
 
