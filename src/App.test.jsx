@@ -34,6 +34,46 @@ describe('App Component', () => {
     })
   })
 
+
+  it('handles audio errors gracefully when playPowerUp/playPowerDown throws', async () => {
+    const originalAudioContext = window.AudioContext;
+    window.AudioContext = class {
+      constructor() {
+        throw new Error('AudioContext error');
+      }
+    };
+
+    vi.useFakeTimers({ shouldAdvanceTime: true })
+    const { container } = render(<App />)
+    const logoContainer = container.querySelector('.logo-container')
+
+    const h1Elements = container.querySelectorAll('h1');
+    h1Elements.forEach(el => {
+      vi.spyOn(el, 'getBoundingClientRect').mockReturnValue({
+        bottom: 100, width: 100, height: 100, top: 0, left: 0, right: 100, x: 0, y: 0
+      })
+    })
+
+    expect(() => {
+      for (let i = 0; i < 5; i++) {
+        fireEvent.click(logoContainer)
+      }
+    }).not.toThrow()
+
+    let restoreBtn;
+    await waitFor(() => {
+      restoreBtn = document.getElementById('gravity-restore-btn')
+      expect(restoreBtn).toBeInTheDocument()
+    })
+
+    expect(() => {
+      fireEvent.click(restoreBtn)
+    }).not.toThrow()
+
+    window.AudioContext = originalAudioContext;
+    vi.useRealTimers()
+  })
+
   it('verifies gravity restore functionality', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true })
     const { container } = render(<App />)
