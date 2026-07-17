@@ -123,6 +123,48 @@ describe('App Component', () => {
     })
     vi.useRealTimers()
   })
+  it("handles AudioContext method errors gracefully during playPowerDown", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true })
+
+    const originalAudioContext = window.AudioContext;
+    const originalWebkitAudioContext = window.webkitAudioContext;
+
+    // Mock AudioContext to return an instance whose methods throw errors
+    window.AudioContext = vi.fn().mockImplementation(function() {
+      return {
+        createOscillator: () => { throw new Error("createOscillator error") },
+        createGain: () => ({}),
+        currentTime: 0,
+        destination: {}
+      };
+    });
+    window.webkitAudioContext = undefined;
+
+    const { container } = render(<App />)
+    const logoContainer = container.querySelector(".logo-container")
+
+    const h1Elements = container.querySelectorAll("h1");
+    h1Elements.forEach(el => {
+      vi.spyOn(el, "getBoundingClientRect").mockReturnValue({
+        bottom: 100, width: 100, height: 100, top: 0, left: 0, right: 100, x: 0, y: 0
+      })
+    })
+
+    expect(() => {
+      for (let i = 0; i < 5; i++) {
+        fireEvent.click(logoContainer)
+      }
+    }).not.toThrow()
+
+    await waitFor(() => {
+      expect(document.getElementById("gravity-restore-btn")).toBeInTheDocument()
+    })
+
+    window.AudioContext = originalAudioContext;
+    window.webkitAudioContext = originalWebkitAudioContext;
+    vi.useRealTimers()
+  })
+
   it("handles AudioContext errors gracefully during gravity explosion", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true })
 

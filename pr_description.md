@@ -1,9 +1,8 @@
-🎯 **What:** Replaced silent `catch` blocks in audio playback functions (`playPowerDown`, `playPowerUp`) with proper error logging and explanatory comments.
+🎯 **What:**
+Added a dedicated unit test in `src/App.test.jsx` to verify that `playPowerDown` correctly catches and suppresses errors thrown by `AudioContext` methods (e.g., `createOscillator`). This addresses a gap where the `try...catch` block around the Web Audio API initialization lacked corresponding test coverage for method-level failures.
 
-💡 **Why:** Silently ignoring errors makes debugging difficult. Since audio playback can be blocked by modern browser autoplay policies (e.g., if there's no prior user interaction), logging a warning helps developers understand why audio isn't playing without disrupting the user experience, improving maintainability.
+📊 **Coverage:**
+The new test explicitly covers the error path when `createOscillator()` throws an exception, ensuring the application gracefully recovers and continues rendering the expected UI (such as the gravity restore button) without crashing.
 
-✅ **Verification:**
-- Validated that the app logic remains unchanged.
-- Ensured tests and linters pass (`pnpm test`, `pnpm lint`).
-
-✨ **Result:** Improved codebase observability and developer experience by exposing hidden audio playback errors.
+✨ **Result:**
+Improved test coverage for edge cases involving browser media APIs, increasing confidence that audio failures will not interrupt core user workflows.
