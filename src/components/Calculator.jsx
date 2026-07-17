@@ -39,7 +39,7 @@ export const Calculator = ({
         <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2 text-center`}>{t('servicesTitle')}</h2>
         <p className={`${textSecondary} text-sm mb-10 text-center max-w-2xl mx-auto`}>{t('servicesSubtitle')}</p>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-8 mx-auto max-w-max p-1 rounded-2xl tactile-container">
+        <div className="flex flex-wrap justify-center gap-2 mb-8 mx-auto max-w-max p-1 rounded-2xl liquid-glass">
           {categoryValues.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
@@ -72,10 +72,10 @@ export const Calculator = ({
                   const isActive = selectedServiceIds.includes(svc.id);
                   return (
                     <div key={svc.id} onClick={() => toggleService(svc.id)}
-                      className={`border rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden bg-[var(--bg-card)] active:scale-[0.98] active:duration-100
+                      className={`liquid-glass rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden active:scale-[0.98] active:duration-100
                       ${isActive
-                        ? `border-bronze-500 shadow-[0_0_20px_rgba(197,168,128,0.12)] tactile-card-selected`
-                        : `${borderSubtle} opacity-70 hover:opacity-100`}`}>
+                        ? 'liquid-glass-chip-active tactile-card-selected'
+                        : 'opacity-80 hover:opacity-100 liquid-glass-hover'}`}>
                       {isActive && (
                         <div className="absolute top-0 right-0 w-9 h-9 bg-bronze-500/10 border-b border-l border-bronze-500/30 rounded-bl-xl flex items-center justify-center">
                           <span className="text-bronze-400 font-bold text-xs">✓</span>
@@ -106,10 +106,10 @@ export const Calculator = ({
                       <div
                         key={shape.id}
                         onClick={() => setNailShape(shape.id)}
-                        className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 flex flex-col items-center justify-between text-center bg-[var(--bg-card)] active:scale-[0.96] active:duration-100
-                          ${isActive 
-                            ? `border-bronze-500 text-bronze-400 bg-bronze-500/5 shadow-[0_0_15px_rgba(197,168,128,0.12)] tactile-card-selected`
-                            : `${borderSubtle} opacity-80 hover:opacity-100`
+                        className={`liquid-glass-chip rounded-xl p-4 cursor-pointer transition-all duration-300 flex flex-col items-center justify-between text-center active:scale-[0.96] active:duration-100
+                          ${isActive
+                            ? 'liquid-glass-chip-active text-bronze-400 tactile-card-selected'
+                            : 'opacity-80 hover:opacity-100'
                           }`}
                       >
                         {/* SVG Nail shape */}
@@ -155,9 +155,9 @@ export const Calculator = ({
                   const isChecked = selectedOptions.includes(opt.id);
                   return (
                     <div key={opt.id} onClick={() => toggleOption(opt.id)}
-                      className={`border rounded-xl p-3.5 cursor-pointer transition-all duration-300 flex items-center justify-between
-                        bg-[var(--bg-card)] active:scale-[0.98] active:duration-100
-                        ${isChecked ? 'border-bronze-500/50 tactile-card-selected' : `${borderSubtle} opacity-80 hover:opacity-100`}`}>
+                      className={`liquid-glass-chip rounded-xl p-3.5 cursor-pointer transition-all duration-300 flex items-center justify-between
+                        active:scale-[0.98] active:duration-100
+                        ${isChecked ? 'liquid-glass-chip-active tactile-card-selected' : 'opacity-80 hover:opacity-100'}`}>
                       <div className="flex items-center gap-3">
                         <div className={`w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-all
                           ${isChecked ? 'bg-bronze-500 border-bronze-500 text-charcoal-950' : 'border-[var(--border-color)]'}`}>
@@ -219,7 +219,7 @@ export const Calculator = ({
               </div>
 
               {/* Legal and Personal Guarantee Badge */}
-              <div className="flex gap-2.5 items-start p-3 border border-bronze-500/10 bg-bronze-500/5 rounded-xl mb-5">
+              <div className="flex gap-2.5 items-start p-3 liquid-glass rounded-xl mb-5">
                 <svg className="w-5 h-5 text-bronze-400 drop-shadow-[0_0_6px_rgba(197,168,128,0.5)] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>

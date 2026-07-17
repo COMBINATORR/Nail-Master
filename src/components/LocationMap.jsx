@@ -109,7 +109,7 @@ export const LocationMap = ({
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Interactive Custom Leaflet Map Container */}
-          <div className={`lg:col-span-2 rounded-2xl overflow-hidden border ${border} shadow-xl z-0 relative`} style={{height: '380px'}}>
+          <div className={`lg:col-span-2 rounded-2xl overflow-hidden liquid-glass-media shadow-xl z-0 relative`} style={{height: '380px'}}>
             <div id="studio-map" className="w-full h-full"></div>
           </div>
 
@@ -118,7 +118,7 @@ export const LocationMap = ({
             {/* Address */}
             <div className="liquid-glass rounded-2xl p-5 flex-1">
               <div className="flex items-start gap-3 mb-4">
-                <div className="bg-bronze-500/10 p-2 rounded-xl flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <svg className="w-4 h-4 text-bronze-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
@@ -136,7 +136,7 @@ export const LocationMap = ({
               </div>
 
               <div className={`border-t ${borderSubtle} pt-4 flex items-start gap-3 mb-4`}>
-                <div className="bg-bronze-500/10 p-2 rounded-xl flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <svg className="w-4 h-4 text-bronze-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -155,7 +155,7 @@ export const LocationMap = ({
               </div>
 
               <div className={`border-t ${borderSubtle} pt-4 flex items-start gap-3`}>
-                <div className="bg-bronze-500/10 p-2 rounded-xl flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <PhoneIcon className="w-4 h-4 text-bronze-500" />
                 </div>
                 <div>
@@ -184,7 +184,7 @@ export const LocationMap = ({
               href="https://wa.me/77016698086?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BC%D0%B0%D0%BD%D0%B8%D0%BA%D1%8E%D1%80%3F"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 border border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366]/10 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all"
+              className="liquid-glass flex items-center justify-center gap-2 text-[#25D366] hover:scale-105 font-bold py-3.5 px-5 rounded-full text-xs tracking-wider uppercase transition-all"
             >
               <WhatsAppIcon className="w-4 h-4" />
               {t('askRoute')}

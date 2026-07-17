@@ -10,7 +10,7 @@ export const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className={`border-t ${border} py-10 ${bgDeep} transition-colors duration-300`}>
+    <footer className={`liquid-glass-footer py-10 transition-colors duration-300`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
           {/* Logo */}

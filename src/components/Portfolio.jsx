@@ -78,10 +78,10 @@ export const Portfolio = () => {
                     setSliderPosition(50);
                     setIsDragging(false);
                   }}
-                  className={`flex-shrink-0 snap-start snap-always px-5 py-2.5 rounded-xl font-display font-bold text-[10px] uppercase tracking-wider transition-all duration-300 cursor-pointer
-                    ${isActive 
-                      ? 'active-tactile-pill scale-[1.02]' 
-                      : 'border border-[var(--border-color)] bg-[var(--bg-subtle)] hover:bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-bronze-500/30'
+                  className={`flex-shrink-0 snap-start snap-always px-5 py-2.5 rounded-full font-display font-bold text-[10px] uppercase tracking-wider transition-all duration-300 cursor-pointer
+                    liquid-glass-chip ${isActive 
+                      ? 'liquid-glass-chip-active active-tactile-pill scale-[1.02]' 
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                     }`}
                 >
                   {t(w.titleKey)}
@@ -93,7 +93,7 @@ export const Portfolio = () => {
           {/* The interactive container */}
           <div 
             ref={sliderRef}
-            className={`relative h-[320px] sm:h-[400px] md:h-[480px] w-full rounded-3xl overflow-hidden border ${border} shadow-2xl select-none touch-none cursor-ew-resize`}
+            className={`relative h-[320px] sm:h-[400px] md:h-[480px] w-full rounded-3xl overflow-hidden liquid-glass-media select-none touch-none cursor-ew-resize`}
             onMouseDown={(e) => {
               if (e.button === 0) handleStart(e.clientX);
             }}
@@ -157,7 +157,7 @@ export const Portfolio = () => {
           </div>
 
           {/* Work details block */}
-          <div className={`mt-6 p-5 border ${border} rounded-2xl ${bgCard} flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl transition-all duration-300`}>
+          <div className={`mt-6 p-5 liquid-glass rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl transition-all duration-300`}>
             <div className="max-w-xl">
               <h4 className={`font-display font-bold text-sm ${textPrimary} uppercase tracking-wider mb-1`}>
                 {t(works[activeWork].titleKey)}

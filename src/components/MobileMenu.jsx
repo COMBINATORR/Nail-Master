@@ -41,7 +41,7 @@ export const MobileMenu = ({
       ></div>
       
       {/* Drawer Panel */}
-      <div className={`absolute top-0 left-0 h-full w-4/5 max-w-[320px] bg-[var(--bg-header)] border-r ${border} shadow-2xl p-6 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 transform`}>
+      <div className={`absolute top-0 left-0 h-full w-4/5 max-w-[320px] liquid-glass-drawer shadow-2xl p-6 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 transform`}>
         <div>
           {/* Header inside Mobile Menu */}
           <div className="flex justify-between items-center mb-10">
@@ -53,7 +53,7 @@ export const MobileMenu = ({
             </div>
             <button 
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`p-1.5 rounded-full ${bgSubtle} text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors`}
+              className={`liquid-glass-icon-btn text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors`}
               aria-label="Close menu"
             >
               <CloseIcon className="w-4 h-4" />
@@ -99,7 +99,7 @@ export const MobileMenu = ({
           {/* Language selection in drawer */}
           <div className="flex flex-col gap-2">
             <span className={`text-[10px] uppercase font-bold tracking-wider ${textMuted}`}>Language / Язык / Тіл / 语言 / 언어:</span>
-            <div className={`flex p-0.5 border ${borderSubtle} rounded-lg tactile-container w-full`}>
+            <div className={`flex p-0.5 liquid-glass rounded-lg w-full`}>
               <button 
                 onClick={() => changeLanguage('ru')}
                 className={`flex-1 py-1.5 text-center rounded-md text-[10px] font-bold transition-all ${lang === 'ru' ? 'active-tactile-pill scale-[1.02]' : `${textSecondary} hover:${textPrimary}`}`}
@@ -140,7 +140,7 @@ export const MobileMenu = ({
             </span>
             
             {/* Day / Night tactile buttons */}
-            <div className={`flex p-1 border ${borderSubtle} tactile-container`}>
+            <div className={`flex p-1 liquid-glass`}>
               <button 
                 type="button"
                 onClick={() => setTheme('light')}

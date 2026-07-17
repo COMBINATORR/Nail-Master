@@ -44,11 +44,11 @@ export const BookingForm = ({
             {/* Contact links */}
             <div className="flex gap-3 justify-center flex-wrap">
               <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
-                 className="flex items-center gap-2 border border-[#25D366]/30 text-[#25D366] bg-[#25D366]/5 hover:bg-[#25D366]/10 px-4 py-2.5 rounded-xl text-xs font-bold transition-all">
+                 className="liquid-glass flex items-center gap-2 text-[#25D366] hover:scale-105 px-4 py-2.5 rounded-full text-xs font-bold transition-all">
                 <WhatsAppIcon className="w-4 h-4" /> WhatsApp
               </a>
               <a href="tel:+77016698086"
-                 className={`flex items-center gap-2 border ${border} ${textSecondary} hover:text-bronze-500 hover:border-bronze-500/30 px-4 py-2.5 rounded-xl text-xs font-bold transition-all`}>
+                 className={`liquid-glass flex items-center gap-2 ${textSecondary} hover:text-bronze-500 hover:scale-105 px-4 py-2.5 rounded-full text-xs font-bold transition-all`}>
                 <PhoneIcon className="w-4 h-4" /> +7 701 669 8086
               </a>
             </div>
@@ -57,11 +57,11 @@ export const BookingForm = ({
           {/* Right: form card */}
           <div className="liquid-glass-strong rounded-2xl p-6 lg:p-8 shadow-2xl">
             <div className="flex justify-center mb-4">
-              <span className="font-display text-[8px] tracking-widest text-bronze-500 font-bold uppercase border border-bronze-500/30 px-3 py-0.5 rounded-full">BOOK APPOINTMENT</span>
+              <span className="liquid-glass-pill font-display text-[8px] tracking-widest text-bronze-500 font-bold uppercase px-3 py-0.5 rounded-full">BOOK APPOINTMENT</span>
             </div>
 
             {/* Receipt */}
-            <div className="bg-bronze-500/5 border border-bronze-500/20 rounded-xl p-4 mb-5 text-sm">
+            <div className="liquid-glass rounded-xl p-4 mb-5 text-sm">
               <span className="text-bronze-400 font-bold block mb-2 uppercase tracking-wider text-[9px]">{t('servicesSelectedPreview')}:</span>
               {selectedServices.length === 0 && selectedOptions.length === 0 ? (
                 <div className={`text-center py-4 ${textSecondary} text-xs font-semibold`}>
@@ -102,9 +102,9 @@ export const BookingForm = ({
               {/* Input Fields */}
               <div className="space-y-2">
                 <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder={t('namePlaceholder')} required maxLength={50} pattern="[A-Za-zА-Яа-яЁёӘәІіҢңҒғҮүҰұҚқӨөҺһ\s\-]+"
-                  className="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
+                  className="liquid-glass-input text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
                 <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder={t('phonePlaceholder')} required maxLength={15} pattern="[\+0-9\s\-]+"
-                  className="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
+                  className="liquid-glass-input text-[var(--text-primary)] placeholder-[var(--text-muted)] rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-bronze-500 transition-all w-full" />
               </div>
 
               {/* Date & Time Picker */}
@@ -124,8 +124,8 @@ export const BookingForm = ({
                           onClick={() => setSelectedDate(d.id)}
                           className={`flex-shrink-0 snap-start w-[52px] py-2.5 border rounded-xl flex flex-col items-center justify-center transition-all duration-300 cursor-pointer
                             ${isSelected
-                              ? 'border-bronze-500 bg-bronze-500/10 text-[var(--text-primary)] shadow-[0_0_12px_rgba(197,168,128,0.2)]'
-                              : 'border-[var(--border-color)] bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-bronze-500/30'
+                              ? 'liquid-glass-chip liquid-glass-chip-active text-[var(--text-primary)]'
+                              : 'liquid-glass-chip text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                             }`}
                         >
                           <span className="text-[9px] uppercase opacity-60 font-medium tracking-tighter">{d.weekday}</span>
@@ -151,8 +151,8 @@ export const BookingForm = ({
                           onClick={() => setSelectedTime(time)}
                           className={`py-2 px-1 border rounded-xl text-center text-xs font-bold transition-all duration-300 cursor-pointer
                             ${isSelected
-                              ? 'border-bronze-500 bg-bronze-500/10 text-[var(--text-primary)] shadow-[0_0_12px_rgba(197,168,128,0.2)]'
-                              : 'border-[var(--border-color)] bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-bronze-500/30'
+                              ? 'liquid-glass-chip liquid-glass-chip-active text-[var(--text-primary)]'
+                              : 'liquid-glass-chip text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                             }`}
                         >
                           {time}
@@ -168,7 +168,7 @@ export const BookingForm = ({
                 <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
                   {t('visitModeLabel')}
                 </span>
-                <div className="grid grid-cols-2 p-1 gap-1 rounded-xl tactile-container">
+                <div className="grid grid-cols-2 p-1 gap-1 rounded-xl liquid-glass">
                   <button
                     type="button"
                     onClick={() => setVisitMode('relax')}
