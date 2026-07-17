@@ -16,16 +16,23 @@ export const generateWhatsAppText = ({
   name,
   phone
 }) => {
-  const safeT = (k) => typeof t === 'function' ? t(k) : t[k];
+  const safeT = (k) => (typeof t === 'function' ? t(k) : t[k]);
   const categoryName = safeT(catObj?.nameKey) || '';
-  const serviceNames = selectedServices.map(s => safeT(s.nameKey) || '').filter(Boolean);
-  const optionNames = selectedOptions
-    .map(id => {
-      const o = optionsById[id];
-      return o ? safeT(o.nameKey) : null;
-    })
-    .filter(Boolean);
-  const allServicesText = [...serviceNames, ...optionNames].join(' + ');
+
+  // Single-pass loops (no map+filter intermediate arrays) + i18n-safe lookups
+  const allServicesArr = [];
+  for (let i = 0; i < selectedServices.length; i++) {
+    const val = safeT(selectedServices[i].nameKey);
+    if (val) allServicesArr.push(val);
+  }
+  for (let i = 0; i < selectedOptions.length; i++) {
+    const o = optionsById[selectedOptions[i]];
+    if (o) {
+      const val = safeT(o.nameKey);
+      if (val) allServicesArr.push(val);
+    }
+  }
+  const allServicesText = allServicesArr.join(' + ');
 
   const shapeObj = nailShapes.find(s => s.id === nailShape);
   const shapeText = activeCategory !== 'sugaring'
