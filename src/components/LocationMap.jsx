@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { PhoneIcon, WhatsAppIcon } from './Icons';
-import PropTypes from 'prop-types';
 
 const bgCard = 'bg-[var(--bg-card)]';
 const bgAlt = 'bg-[var(--bg-alt)]';
