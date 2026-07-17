@@ -458,14 +458,16 @@ export default function App() {
 
       {/* ═══════════ PREMIUM BACKGROUND LAYERS (fixed, behind everything) ═══════════ */}
       <div className="fluid-background" aria-hidden="true">
-        <svg className="w-full h-full opacity-65" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
           <circle className="blob-1" cx="25" cy="30" r="28" fill="var(--blob-1)" />
           <circle className="blob-2" cx="75" cy="70" r="30" fill="var(--blob-2)" />
           <circle className="blob-3" cx="80" cy="20" r="25" fill="var(--blob-3)" />
           <circle className="blob-4" cx="20" cy="80" r="26" fill="var(--blob-4)" />
         </svg>
       </div>
+      <div className="ambient-atmosphere" aria-hidden="true" />
 
+      <div className="content-layer">
       {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}
       <ScrollProgressBar />
 
@@ -602,7 +604,9 @@ export default function App() {
         <ArrowUpIcon className="w-5 h-5" />
       </button>
 
-      {/* ═══════════ GRAVITY EXPLOSION RESTORE BUTTON ═══════════ */}
+      </div>{/* /.content-layer */}
+
+            {/* ═══════════ GRAVITY EXPLOSION RESTORE BUTTON ═══════════ */}
       {showGravityRestore && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm pointer-events-none">
           <button
