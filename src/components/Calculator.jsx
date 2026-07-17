@@ -11,6 +11,7 @@ const textMuted = 'text-[var(--text-muted)]';
 const border = 'border-[var(--border-color)]';
 const borderSubtle = 'border-[var(--border-subtle)]';
 const bgCard = 'bg-[var(--bg-card)]';
+const categoryValues = Object.values(categories);
 
 export const Calculator = ({
   activeCategory,
@@ -39,7 +40,7 @@ export const Calculator = ({
         <p className={`${textSecondary} text-sm mb-10`}>{t('servicesSubtitle')}</p>
 
         <div className="flex flex-wrap justify-center gap-2 mb-8 mx-auto max-w-max p-1 rounded-2xl tactile-container">
-          {Object.values(categories).map((cat) => {
+          {categoryValues.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
               <button

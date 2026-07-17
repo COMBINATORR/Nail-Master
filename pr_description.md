@@ -1,7 +1,8 @@
-🧪 [Test] Audio Error Handling Coverage
+🎯 **What:**
+Added a dedicated unit test in `src/App.test.jsx` to verify that `playPowerDown` correctly catches and suppresses errors thrown by `AudioContext` methods (e.g., `createOscillator`). This addresses a gap where the `try...catch` block around the Web Audio API initialization lacked corresponding test coverage for method-level failures.
 
-🎯 What: Added test coverage for `playPowerUp` and `playPowerDown` in `src/App.jsx` to verify they handle audio context errors gracefully, which was an identified testing gap.
+📊 **Coverage:**
+The new test explicitly covers the error path when `createOscillator()` throws an exception, ensuring the application gracefully recovers and continues rendering the expected UI (such as the gravity restore button) without crashing.
 
-📊 Coverage: Tests the `catch (err)` blocks of both functions by mocking `window.AudioContext` to throw an error and triggering the gravity explosion sequence. Verifies no unhandled exceptions crash the component.
-
-✨ Result: Test suite now explicitly verifies the error paths, ensuring the game/easter egg features degrade gracefully without breaking the app if audio context creation fails (e.g. strict browser policies).
+✨ **Result:**
+Improved test coverage for edge cases involving browser media APIs, increasing confidence that audio failures will not interrupt core user workflows.
