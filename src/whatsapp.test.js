@@ -6,7 +6,23 @@ describe('generateWhatsAppText', () => {
     catManicureName: 'Manicure',
     serviceManicureClassicName: 'Hygienic Manicure',
     optManiDesign: 'Design',
+    shape_oval: 'Oval',
+    waNotRequired: 'Not required',
+    relaxMode: 'Relax in silence',
+    talkMode: 'Friendly chat',
+    waGreeting: 'Hello!',
+    waRequestText: 'I would like to book an appointment at SVTL Nails & Aesthetic.',
+    waServicesLabel: 'Services',
+    waShapeLabel: 'Nail shape',
+    waPriceLabel: 'Fixed price',
+    waDateLabel: 'Appointment',
+    waTimeWord: 'at',
+    waModeWord: 'Mode',
+    waNameLabel: 'Name',
+    waPhoneLabel: 'Phone'
   };
+
+  const mockT = (key) => mockTranslations[key] || '';
 
   const mockNailShapes = [
     { id: 'oval', nameRu: 'Овал', nameKk: 'Овал', nameEn: 'Oval' },
@@ -15,7 +31,7 @@ describe('generateWhatsAppText', () => {
 
   const defaultProps = {
     includeNameAndPhone: false,
-    t: mockTranslations,
+    t: mockT,
     catObj: { nameKey: 'catManicureName' },
     selectedServices: [{ nameKey: 'serviceManicureClassicName' }],
     selectedOptions: ['design'],
@@ -60,11 +76,20 @@ describe('generateWhatsAppText', () => {
       ...defaultProps,
       lang: 'ru',
       visitMode: 'friendly',
-      t: {
+      t: (key) => ({
         catManicureName: 'Маникюр',
         serviceManicureClassicName: 'Гигиенический маникюр',
         optManiDesign: 'Дизайн',
-      }
+        shape_oval: 'Овал',
+        talkMode: 'Душевная беседа',
+        waGreeting: 'Салем!',
+        waRequestText: 'Хочу записаться в SVTL Nails & Aesthetic.',
+        waServicesLabel: 'Услуги',
+        waShapeLabel: 'Форма ногтей',
+        waDateLabel: 'Запись на',
+        waTimeWord: 'в',
+        waModeWord: 'Режим',
+      }[key] || ''),
     };
     const text = generateWhatsAppText(props);
 

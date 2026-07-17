@@ -140,5 +140,16 @@
   "shape_almond": "Миндаль",
   "dragSliderToCompare": "← Потяните ползунок для сравнения →",
   "hour_short": "ч",
-  "min_short": "мин"
+  "min_short": "мин",
+  "waGreeting": "Салем!",
+  "waRequestText": "Хочу записаться в SVTL Nails & Aesthetic.",
+  "waServicesLabel": "Услуги",
+  "waShapeLabel": "Форма ногтей",
+  "waPriceLabel": "Фиксированная цена",
+  "waDateLabel": "Запись на",
+  "waTimeWord": "в",
+  "waModeWord": "Режим",
+  "waNameLabel": "Имя",
+  "waPhoneLabel": "Телефон",
+  "waNotRequired": "Не требуется"
 }
