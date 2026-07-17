@@ -1,7 +1,9 @@
-🧪 [Test] Audio Error Handling Coverage
+🎯 **What:** Replaced silent `catch` blocks in audio playback functions (`playPowerDown`, `playPowerUp`) with proper error logging and explanatory comments.
 
-🎯 What: Added test coverage for `playPowerUp` and `playPowerDown` in `src/App.jsx` to verify they handle audio context errors gracefully, which was an identified testing gap.
+💡 **Why:** Silently ignoring errors makes debugging difficult. Since audio playback can be blocked by modern browser autoplay policies (e.g., if there's no prior user interaction), logging a warning helps developers understand why audio isn't playing without disrupting the user experience, improving maintainability.
 
-📊 Coverage: Tests the `catch (err)` blocks of both functions by mocking `window.AudioContext` to throw an error and triggering the gravity explosion sequence. Verifies no unhandled exceptions crash the component.
+✅ **Verification:**
+- Validated that the app logic remains unchanged.
+- Ensured tests and linters pass (`pnpm test`, `pnpm lint`).
 
-✨ Result: Test suite now explicitly verifies the error paths, ensuring the game/easter egg features degrade gracefully without breaking the app if audio context creation fails (e.g. strict browser policies).
+✨ **Result:** Improved codebase observability and developer experience by exposing hidden audio playback errors.
