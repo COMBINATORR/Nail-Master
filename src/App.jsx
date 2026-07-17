@@ -234,8 +234,10 @@ export default function App() {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 1.4);
-    } catch {
-      // ignore audio errors
+    } catch (err) {
+      // Audio playback is a non-critical enhancement.
+      // It may fail due to browser autoplay policies (e.g., lack of user interaction).
+      console.warn('Audio playback failed:', err);
     }
   };
 
@@ -256,8 +258,10 @@ export default function App() {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.9);
-    } catch {
-      // ignore audio errors
+    } catch (err) {
+      // Audio playback is a non-critical enhancement.
+      // It may fail due to browser autoplay policies (e.g., lack of user interaction).
+      console.warn('Audio playback failed:', err);
     }
   };
 
