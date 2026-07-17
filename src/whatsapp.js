@@ -18,14 +18,19 @@ export const generateWhatsAppText = ({
   phone
 }) => {
   const categoryName = t[catObj?.nameKey] || '';
-  const serviceNames = selectedServices.map(s => t[s.nameKey] || '').filter(Boolean);
-  const optionNames = selectedOptions
-    .map(id => {
-      const o = optionsById[id];
-      return o ? t[o.nameKey] : null;
-    })
-    .filter(Boolean);
-  const allServicesText = [...serviceNames, ...optionNames].join(' + ');
+  const allServicesArr = [];
+  for (let i = 0; i < selectedServices.length; i++) {
+    const val = t[selectedServices[i].nameKey];
+    if (val) allServicesArr.push(val);
+  }
+  for (let i = 0; i < selectedOptions.length; i++) {
+    const o = optionsById[selectedOptions[i]];
+    if (o) {
+      const val = t[o.nameKey];
+      if (val) allServicesArr.push(val);
+    }
+  }
+  const allServicesText = allServicesArr.join(' + ');
 
   const shapeObj = nailShapes.find(s => s.id === nailShape);
   const shapeText = activeCategory !== 'sugaring'
