@@ -197,7 +197,7 @@ export const LocationMap = ({
 };
 
 LocationMap.propTypes = {
-  theme: PropTypes.string,
-  isNightTheme: PropTypes.bool,
-  leafletLoaded: PropTypes.bool
+  theme: PropTypes.string.isRequired,
+  isNightTheme: PropTypes.bool.isRequired,
+  leafletLoaded: PropTypes.bool.isRequired,
 };
