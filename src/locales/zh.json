@@ -140,5 +140,16 @@
   "shape_almond": "杏仁甲形",
   "dragSliderToCompare": "← 左右拖动滑块对比效果 →",
   "hour_short": "小时",
-  "min_short": "分钟"
+  "min_short": "分钟",
+  "waGreeting": "你好！",
+  "waRequestText": "我想在 SVTL Nails & Aesthetic 预约。",
+  "waServicesLabel": "服务",
+  "waShapeLabel": "指甲形状",
+  "waPriceLabel": "固定价格",
+  "waDateLabel": "预约",
+  "waTimeWord": "时间：",
+  "waModeWord": "模式",
+  "waNameLabel": "姓名",
+  "waPhoneLabel": "电话",
+  "waNotRequired": "不需要"
 }

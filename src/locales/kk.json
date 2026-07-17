@@ -140,5 +140,16 @@
   "shape_almond": "Миндаль",
   "dragSliderToCompare": "← Салыстыру үшін жүгірткіні тартыңыз →",
   "hour_short": "сағ",
-  "min_short": "мин"
+  "min_short": "мин",
+  "waGreeting": "Сәлем!",
+  "waRequestText": "Мен SVTL Nails & Aesthetic-ке жазылғым келеді.",
+  "waServicesLabel": "Қызметтер",
+  "waShapeLabel": "Тырнақ пішіні",
+  "waPriceLabel": "Бекітілген баға",
+  "waDateLabel": "Жазылу",
+  "waTimeWord": "сағат",
+  "waModeWord": "Режимі",
+  "waNameLabel": "Аты",
+  "waPhoneLabel": "Телефон",
+  "waNotRequired": "Қажет емес"
 }

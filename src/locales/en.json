@@ -140,5 +140,16 @@
   "shape_almond": "Almond",
   "dragSliderToCompare": "← Drag the slider to compare →",
   "hour_short": "h",
-  "min_short": "min"
+  "min_short": "min",
+  "waGreeting": "Hello!",
+  "waRequestText": "I would like to book an appointment at SVTL Nails & Aesthetic.",
+  "waServicesLabel": "Services",
+  "waShapeLabel": "Nail shape",
+  "waPriceLabel": "Fixed price",
+  "waDateLabel": "Appointment",
+  "waTimeWord": "at",
+  "waModeWord": "Mode",
+  "waNameLabel": "Name",
+  "waPhoneLabel": "Phone",
+  "waNotRequired": "Not required"
 }

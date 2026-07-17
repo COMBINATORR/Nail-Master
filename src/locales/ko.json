@@ -140,5 +140,16 @@
   "shape_almond": "아몬드",
   "dragSliderToCompare": "← 슬라이더를 드래그하여 비교 →",
   "hour_short": "시간",
-  "min_short": "분"
+  "min_short": "분",
+  "waGreeting": "안녕하세요!",
+  "waRequestText": "SVTL Nails & Aesthetic 예약을 원합니다.",
+  "waServicesLabel": "서비스",
+  "waShapeLabel": "네일 모양",
+  "waPriceLabel": "고정 가격",
+  "waDateLabel": "예약일",
+  "waTimeWord": "시간:",
+  "waModeWord": "모드",
+  "waNameLabel": "이름",
+  "waPhoneLabel": "전화번호",
+  "waNotRequired": "필요 없음"
 }
