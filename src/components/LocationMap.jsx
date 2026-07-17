@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import { PhoneIcon, WhatsAppIcon } from './Icons';
 
 const bgCard = 'bg-[var(--bg-card)]';
@@ -193,4 +194,10 @@ export const LocationMap = ({
       </div>
     </section>
   );
+};
+
+LocationMap.propTypes = {
+  theme: PropTypes.string,
+  isNightTheme: PropTypes.bool,
+  leafletLoaded: PropTypes.bool
 };
