@@ -241,15 +241,15 @@ describe('getNext10Days', () => {
     const firstCall = getNext10Days('en')
     const secondCall = getNext10Days('en')
 
-    // Check reference equality for cached result
-    expect(firstCall).toBe(secondCall)
+    // Since we removed caching to clean module scope, they will be deep equal but not reference equal
+    expect(firstCall).toStrictEqual(secondCall)
 
     // Advance time to next day
     vi.setSystemTime(new Date(2023, 9, 16, 10, 0, 0)) // Oct 16, 2023
 
     const nextDayCall = getNext10Days('en')
 
-    expect(nextDayCall).not.toBe(firstCall)
+    expect(nextDayCall).not.toStrictEqual(firstCall)
     expect(nextDayCall[0].id).toBe('2023-10-16')
   })
 })

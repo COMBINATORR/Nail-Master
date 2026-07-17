@@ -23,94 +23,51 @@ import { SuccessModal } from './components/SuccessModal';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 
 
-const daysOfWeekRu = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-const daysOfWeekKk = ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'];
-const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const daysOfWeekZh = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-const daysOfWeekKo = ['일', '월', '화', '수', '목', '금', '토'];
-
-let cachedToday = null;
-let cachedDaysEn = null;
-let cachedDaysRu = null;
-let cachedDaysKk = null;
-let cachedDaysZh = null;
-let cachedDaysKo = null;
-
+/* eslint-disable react-refresh/only-export-components */
 export const getNext10Days = (lang) => {
+  const daysOfWeek = {
+    ru: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+    kk: ['Жс', 'Дс', 'Сс', 'Ср', 'Бс', 'Жм', 'Сн'],
+    en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    zh: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+    ko: ['일', '월', '화', '수', '목', '금', '토']
+  };
+
+  const currentLangDays = daysOfWeek[lang] || daysOfWeek.kk;
+
   const now = new Date();
-  const dateStr = now.toDateString();
+  now.setHours(0, 0, 0, 0);
+  let currentEpoch = now.getTime();
 
-  if (cachedToday !== dateStr) {
-    cachedToday = dateStr;
-    cachedDaysEn = [];
-    cachedDaysRu = [];
-    cachedDaysKk = [];
-    cachedDaysZh = [];
-    cachedDaysKo = [];
+  const next10Days = [];
 
-    now.setHours(0, 0, 0, 0);
-    let currentEpoch = now.getTime();
+  for (let i = 0; i < 10; i++) {
+    const date = new Date(currentEpoch);
 
-    for (let i = 0; i < 10; i++) {
-      const date = new Date(currentEpoch);
+    const dayNum = date.getDate();
+    const monthNum = date.getMonth() + 1;
+    const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
+    const dayOfWeekIndex = date.getDay();
 
-      const dayNum = date.getDate();
-      const monthNum = date.getMonth() + 1;
-      const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
-      const dayOfWeekIndex = date.getDay();
+    const weekday = currentLangDays[dayOfWeekIndex];
 
-      const weekdayRu = daysOfWeekRu[dayOfWeekIndex];
-      const weekdayKk = daysOfWeekKk[dayOfWeekIndex];
-      const weekdayEn = daysOfWeekEn[dayOfWeekIndex];
-      const weekdayZh = daysOfWeekZh[dayOfWeekIndex];
-      const weekdayKo = daysOfWeekKo[dayOfWeekIndex];
+    const dayNumStr = dayNum < 10 ? `0${dayNum}` : `${dayNum}`;
+    const formattedDate = `${dayNumStr}.${monthStr}`;
+    const id = `${date.getFullYear()}-${monthStr}-${dayNumStr}`;
 
-      const dayNumStr = dayNum < 10 ? `0${dayNum}` : `${dayNum}`;
-      const formattedDate = `${dayNumStr}.${monthStr}`;
-      const id = `${date.getFullYear()}-${monthStr}-${dayNumStr}`;
+    next10Days.push({
+      id,
+      dayNum,
+      weekday,
+      formatted: formattedDate
+    });
 
-      cachedDaysEn.push({
-        id,
-        dayNum,
-        weekday: weekdayEn,
-        formatted: formattedDate
-      });
-      cachedDaysRu.push({
-        id,
-        dayNum,
-        weekday: weekdayRu,
-        formatted: formattedDate
-      });
-      cachedDaysKk.push({
-        id,
-        dayNum,
-        weekday: weekdayKk,
-        formatted: formattedDate
-      });
-      cachedDaysZh.push({
-        id,
-        dayNum,
-        weekday: weekdayZh,
-        formatted: formattedDate
-      });
-      cachedDaysKo.push({
-        id,
-        dayNum,
-        weekday: weekdayKo,
-        formatted: formattedDate
-      });
-
-      const newDate = new Date(currentEpoch);
-      newDate.setDate(newDate.getDate() + 1);
-      currentEpoch = newDate.getTime();
-    }
+    const newDate = new Date(currentEpoch);
+    newDate.setDate(newDate.getDate() + 1);
+    currentEpoch = newDate.getTime();
   }
 
-  if (lang === 'en') return cachedDaysEn;
-  if (lang === 'ru') return cachedDaysRu;
-  if (lang === 'zh') return cachedDaysZh;
-  if (lang === 'ko') return cachedDaysKo;
-  return cachedDaysKk;
+  return next10Days;
 };
 
 export default function App() {
@@ -277,7 +234,7 @@ export default function App() {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 1.4);
-    } catch (err) {
+    } catch {
       // ignore audio errors
     }
   };
@@ -299,7 +256,7 @@ export default function App() {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.9);
-    } catch (err) {
+    } catch {
       // ignore audio errors
     }
   };
