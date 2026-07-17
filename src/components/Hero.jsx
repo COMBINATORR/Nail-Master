@@ -15,25 +15,25 @@ export const Hero = ({ scrollToServices }) => {
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-bronze-700/5 rounded-full blur-[80px] pointer-events-none"></div>
 
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <div className="pt-12 pb-14 lg:pt-20 lg:pb-24">
-          <div className="max-w-3xl text-center lg:text-left mx-auto lg:mx-0">
+        <div className="pt-12 pb-14 lg:pt-20 lg:pb-24 flex justify-center">
+          <div className="max-w-3xl w-full text-center flex flex-col items-center">
             <div className="inline-flex items-center border border-bronze-500/30 bg-bronze-500/5 px-3 py-1 rounded-full mb-5">
               <span className="text-bronze-300 font-bold tracking-widest text-[9px] uppercase">{t('heroSuperTitle')}</span>
             </div>
             <h1 className={`font-display font-black tracking-tighter ${textPrimary} leading-[1.05] uppercase mb-6
-                           text-4xl sm:text-5xl lg:text-6xl xl:text-7xl`}>
+                           text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-center`}>
               {t('heroTitlePre')}
               <AnimatedGradientText>{t('heroTitleHighlight')}</AnimatedGradientText>
               {t('heroTitlePost')}
             </h1>
-            <p className={`${textSecondary} text-sm leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8`}>
+            <p className={`${textSecondary} text-sm leading-relaxed max-w-lg mx-auto mb-8 text-center`}>
               <span className="block text-bronze-400 font-display font-bold text-xs tracking-widest uppercase mb-3">
                 {t('heroSubtitle')}
               </span>
               {t('heroDesc')}
             </p>
             <button onClick={scrollToServices} id="hero-cta-btn"
-              className="w-full lg:w-auto btn-premium-tactile border-beam-active px-8 py-4 rounded-xl text-xs uppercase transition-all duration-300">
+              className="btn-premium-tactile border-beam-active px-8 py-4 rounded-xl text-xs uppercase transition-all duration-300">
               {t('heroCta')}
             </button>
           </div>
