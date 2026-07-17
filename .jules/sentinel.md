@@ -12,3 +12,8 @@
   2. If passing state is necessary, use contexts or state management libraries designed to prevent unnecessary re-renders.
   3. Throttle or debounce the event handlers where immediate feedback is not strictly required.
 - **Verification:** Creating tests using `@testing-library/react` wrapping components to track render counts during high-frequency events helps identify and verify such performance fixes.
+
+### Performance Improvement: Object allocations in render cycle
+- **Pattern:** Using `Object.values()`, `Object.keys()`, or other object allocation functions directly inside a React functional component's render cycle or map function, especially when the object being evaluated is static and unchanging (like a configuration or data dictionary). This causes unnecessary object creation and garbage collection overhead on every render.
+- **Solution:** Extract the static object processing (`Object.values()`, mapping) outside the component scope if the data is static, or memoize it with `useMemo` if it depends on dynamic props or state.
+- **Verification:** Simple benchmarks can show large improvements in execution time by caching the static values outside the component.

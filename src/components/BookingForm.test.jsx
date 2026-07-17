@@ -40,6 +40,35 @@ describe('BookingForm', () => {
     expect(screen.getByText('formTitle')).toBeInTheDocument();
   });
 
+  it('calls setSelectedDate when a date is clicked', () => {
+    render(<BookingForm {...defaultProps} />);
+    // Select the first date button by its text content "25" (from next10Days defaultProps)
+    const dateButton = screen.getByText('25').closest('button');
+    fireEvent.click(dateButton);
+    expect(defaultProps.setSelectedDate).toHaveBeenCalledWith('2023-10-25');
+  });
+
+  it('calls setSelectedTime when a time is clicked', () => {
+    render(<BookingForm {...defaultProps} />);
+    const timeButton = screen.getByText('09:00');
+    fireEvent.click(timeButton);
+    expect(defaultProps.setSelectedTime).toHaveBeenCalledWith('09:00');
+  });
+
+  it('calls setVisitMode with relax when relax mode is clicked', () => {
+    render(<BookingForm {...defaultProps} />);
+    const relaxButton = screen.getByText('relaxMode').closest('button');
+    fireEvent.click(relaxButton);
+    expect(defaultProps.setVisitMode).toHaveBeenCalledWith('relax');
+  });
+
+  it('calls setVisitMode with talk when talk mode is clicked', () => {
+    render(<BookingForm {...defaultProps} />);
+    const talkButton = screen.getByText('talkMode').closest('button');
+    fireEvent.click(talkButton);
+    expect(defaultProps.setVisitMode).toHaveBeenCalledWith('talk');
+  });
+
   it('renders input fields correctly', () => {
     render(<BookingForm {...defaultProps} />);
     expect(screen.getByPlaceholderText('namePlaceholder')).toBeInTheDocument();
@@ -69,6 +98,20 @@ describe('BookingForm', () => {
     render(<BookingForm {...propsWithServices} />);
     expect(screen.getByText('Haircut')).toBeInTheDocument();
     expect(screen.getByText('5,000 ₸')).toBeInTheDocument();
+  });
+
+
+  it('renders selected options correctly and ignores invalid ones', () => {
+    const propsWithOptions = {
+      ...defaultProps,
+      selectedOptions: ['opt1', 'optInvalid'],
+      optionsById: {
+        'opt1': { nameKey: 'Massage', price: 2000 }
+      }
+    };
+    render(<BookingForm {...propsWithOptions} />);
+    expect(screen.getByText('+ Massage')).toBeInTheDocument();
+    expect(screen.getByText('+2,000 ₸')).toBeInTheDocument();
   });
 
   it('renders "servicesNotSelected" when no services are selected', () => {
