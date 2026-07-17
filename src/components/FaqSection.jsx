@@ -36,14 +36,14 @@ export const FaqSection = () => {
   return (
     <section id="faq" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>{t('fearTitle')}</h2>
+        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10 text-center`}>{t('fearTitle')}</h2>
         {/* Mobile FAQ list */}
-        <div className="flex flex-col gap-3 lg:hidden max-w-5xl">
+        <div className="flex flex-col gap-3 lg:hidden max-w-5xl mx-auto">
           {faqData[lang].map((item, i) => renderFaqCard(item, i, 'mob'))}
         </div>
 
         {/* Desktop FAQ columns */}
-        <div className="hidden lg:grid grid-cols-2 gap-3 max-w-5xl items-start">
+        <div className="hidden lg:grid grid-cols-2 gap-3 max-w-5xl items-start mx-auto">
           <div className="flex flex-col gap-3">
             {faqData[lang].map((item, i) => i % 2 === 0 ? renderFaqCard(item, i, 'desk-l') : null)}
           </div>

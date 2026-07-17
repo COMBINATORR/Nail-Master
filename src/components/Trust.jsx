@@ -22,7 +22,7 @@ export const Trust = () => {
   return (
     <section id="trust" className={`border-b ${border} py-14 lg:py-20`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10`}>
+        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-10 text-center`}>
           {t('trustTitle')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

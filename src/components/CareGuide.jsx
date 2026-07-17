@@ -18,15 +18,15 @@ export const CareGuide = () => {
   return (
     <section id="care-guide" className={`border-b ${border} py-14 lg:py-20`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>
+        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2 text-center`}>
           {t('careTitle')}
         </h2>
-        <p className={`${textSecondary} text-sm max-w-xl mb-8`}>
+        <p className={`${textSecondary} text-sm max-w-xl mb-8 text-center mx-auto`}>
           {t('careSubtitle')}
         </p>
 
         {/* Interactive Care Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl tactile-container">
+        <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl tactile-container mx-auto">
           {['manicure', 'pedicure', 'sugaring'].map((tab) => {
             const isActive = activeCareTab === tab;
             return (

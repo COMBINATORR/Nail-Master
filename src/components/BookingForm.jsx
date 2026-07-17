@@ -37,12 +37,12 @@ export const BookingForm = ({
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
           {/* Left: copy */}
-          <div>
-            <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-6`}>{t('formTitle')}</h2>
-            <p className={`${textSecondary} text-sm leading-relaxed mb-6`}>{t('formHelp')}</p>
+          <div className="text-center lg:text-center flex flex-col items-center">
+            <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-6 text-center`}>{t('formTitle')}</h2>
+            <p className={`${textSecondary} text-sm leading-relaxed mb-6 text-center max-w-md`}>{t('formHelp')}</p>
 
             {/* Contact links */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-center flex-wrap">
               <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer"
                  className="flex items-center gap-2 border border-[#25D366]/30 text-[#25D366] bg-[#25D366]/5 hover:bg-[#25D366]/10 px-4 py-2.5 rounded-xl text-xs font-bold transition-all">
                 <WhatsAppIcon className="w-4 h-4" /> WhatsApp
