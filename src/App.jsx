@@ -278,7 +278,9 @@ export default function App() {
       osc.start();
       osc.stop(ctx.currentTime + 1.4);
     } catch (err) {
-      // ignore audio errors
+      // Audio playback might fail if user hasn't interacted with the document yet,
+      // or if the browser blocks it. It's a non-critical progressive enhancement.
+      console.warn('Audio effect failed:', err);
     }
   };
 
@@ -300,7 +302,9 @@ export default function App() {
       osc.start();
       osc.stop(ctx.currentTime + 0.9);
     } catch (err) {
-      // ignore audio errors
+      // Audio playback might fail if user hasn't interacted with the document yet,
+      // or if the browser blocks it. It's a non-critical progressive enhancement.
+      console.warn('Audio effect failed:', err);
     }
   };
 
