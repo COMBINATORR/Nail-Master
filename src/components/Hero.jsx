@@ -3,13 +3,10 @@ import { AnimatedGradientText } from './AnimatedGradientText';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
-const textMuted = 'text-[var(--text-muted)]';
 const border = 'border-[var(--border-color)]';
-const bgCard = 'bg-[var(--bg-card)]';
 
 export const Hero = ({ scrollToServices }) => {
   const { t } = useTranslation();
-
 
   return (
     <section className={`relative overflow-hidden border-b ${border}`}>
@@ -18,9 +15,8 @@ export const Hero = ({ scrollToServices }) => {
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-bronze-700/5 rounded-full blur-[80px] pointer-events-none"></div>
 
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16 pt-12 pb-14 lg:pt-20 lg:pb-24">
-          {/* Left: text */}
-          <div className="flex-1 text-center lg:text-left">
+        <div className="pt-12 pb-14 lg:pt-20 lg:pb-24">
+          <div className="max-w-3xl text-center lg:text-left mx-auto lg:mx-0">
             <div className="inline-flex items-center border border-bronze-500/30 bg-bronze-500/5 px-3 py-1 rounded-full mb-5">
               <span className="text-bronze-300 font-bold tracking-widest text-[9px] uppercase">{t('heroSuperTitle')}</span>
             </div>
@@ -40,34 +36,6 @@ export const Hero = ({ scrollToServices }) => {
               className="w-full lg:w-auto btn-premium-tactile border-beam-active px-8 py-4 rounded-xl text-xs uppercase transition-all duration-300">
               {t('heroCta')}
             </button>
-          </div>
-
-          {/* Right: stat cards (desktop only) */}
-          <div className="hidden lg:grid grid-cols-1 gap-4 w-72 xl:w-80 flex-shrink-0">
-            {[
-              { 
-                num: '28', 
-                unit: t('unit_days'), 
-                label: t('stat_guarantee') 
-              },
-              { 
-                num: '100%', 
-                unit: '', 
-                label: t('stat_consumables') 
-              },
-              { 
-                num: '0 ₸', 
-                unit: '', 
-                label: t('stat_charges') 
-              },
-            ].map((s, i) => (
-              <div key={i} className={`${bgCard} border ${border} rounded-2xl p-5 hover:border-bronze-500/30 transition-all`}>
-                <div className={`font-display font-black text-3xl ${textPrimary} mb-0.5`}>
-                  {s.num} <span className="text-bronze-500 text-lg">{s.unit}</span>
-                </div>
-                <div className={`text-xs ${textMuted} uppercase tracking-wider font-bold`}>{s.label}</div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
