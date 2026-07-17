@@ -114,7 +114,8 @@ export const BookingForm = ({
                   <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
                     {t('selectDate')}
                   </span>
-                  <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory">
+                  <div className="date-scroll-strip snap-x snap-mandatory">
+                    <div className="date-scroll-strip-inner">
                     {next10Days.map(d => {
                       const isSelected = selectedDate === d.id;
                       return (
@@ -122,10 +123,10 @@ export const BookingForm = ({
                           key={d.id}
                           type="button"
                           onClick={() => setSelectedDate(d.id)}
-                          className={`flex-shrink-0 snap-start w-[52px] py-2.5 border rounded-xl flex flex-col items-center justify-center transition-all duration-300 cursor-pointer
+                          className={`flex-shrink-0 snap-start w-[52px] py-2.5 rounded-xl flex flex-col items-center justify-center transition-all duration-300 cursor-pointer
                             ${isSelected
-                              ? 'liquid-glass-chip liquid-glass-chip-active text-[var(--text-primary)]'
-                              : 'liquid-glass-chip text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                              ? 'liquid-glass-chip liquid-glass-chip-noscale liquid-glass-chip-active text-[var(--text-primary)]'
+                              : 'liquid-glass-chip liquid-glass-chip-noscale text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                             }`}
                         >
                           <span className="text-[9px] uppercase opacity-60 font-medium tracking-tighter">{d.weekday}</span>
@@ -133,6 +134,7 @@ export const BookingForm = ({
                         </button>
                       );
                     })}
+                    </div>
                   </div>
                 </div>
 
@@ -151,8 +153,8 @@ export const BookingForm = ({
                           onClick={() => setSelectedTime(time)}
                           className={`py-2 px-1 border rounded-xl text-center text-xs font-bold transition-all duration-300 cursor-pointer
                             ${isSelected
-                              ? 'liquid-glass-chip liquid-glass-chip-active text-[var(--text-primary)]'
-                              : 'liquid-glass-chip text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                              ? 'liquid-glass-chip liquid-glass-chip-noscale liquid-glass-chip-active text-[var(--text-primary)]'
+                              : 'liquid-glass-chip liquid-glass-chip-noscale text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                             }`}
                         >
                           {time}
