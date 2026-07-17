@@ -116,7 +116,7 @@ export const LocationMap = ({
           {/* Info card — 1/3 width */}
           <div className="flex flex-col gap-4">
             {/* Address */}
-            <div className={`${bgCard} border ${border} rounded-2xl p-5 flex-1`}>
+            <div className="liquid-glass rounded-2xl p-5 flex-1">
               <div className="flex items-start gap-3 mb-4">
                 <div className="bg-bronze-500/10 p-2 rounded-xl flex-shrink-0 mt-0.5">
                   <svg className="w-4 h-4 text-bronze-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">

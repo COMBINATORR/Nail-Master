@@ -3,12 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { faqData } from '../data/faqs';
 import { ChevronDownIcon } from './Icons';
 
-const bgCard = 'bg-[var(--bg-card)]';
-const bgSubtle = 'bg-[var(--bg-subtle)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const textMuted = 'text-[var(--text-muted)]';
-const borderSubtle = 'border-[var(--border-subtle)]';
 const border = 'border-[var(--border-color)]';
 const bgAlt = 'bg-[var(--bg-alt)]';
 
@@ -20,14 +17,14 @@ export const FaqSection = () => {
   const renderFaqCard = (item, i, keyPrefix) => {
     const isOpen = activeFaq === i;
     return (
-      <div key={`${keyPrefix}-${i}`} className={`${bgCard} border ${borderSubtle} rounded-2xl overflow-hidden transition-all duration-300`}>
+      <div key={`${keyPrefix}-${i}`} className="liquid-glass rounded-2xl overflow-hidden transition-all duration-300">
         <button onClick={() => setActiveFaq(isOpen ? null : i)}
           className="w-full flex justify-between items-center p-5 text-left hover:text-bronze-500 transition-colors">
           <span className={`font-display font-bold uppercase text-xs tracking-wide ${textPrimary} leading-snug`}>{item.q}</span>
-          <ChevronDownIcon className={`flex-shrink-0 ml-4 ${isOpen ? 'rotate-180 text-bronze-500' : textMuted}`} />
+          <ChevronDownIcon className={`flex-shrink-0 ml-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-bronze-500' : textMuted}`} />
         </button>
-        <div className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-40 border-t ' + borderSubtle : 'max-h-0'}`} style={{ overflow: 'hidden' }}>
-          <div className={`p-5 ${textSecondary} text-sm leading-relaxed ${bgSubtle}`}>{item.a}</div>
+        <div className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-40' : 'max-h-0'}`} style={{ overflow: 'hidden' }}>
+          <div className={`p-5 liquid-glass-body ${textSecondary} text-sm leading-relaxed`}>{item.a}</div>
         </div>
       </div>
     );

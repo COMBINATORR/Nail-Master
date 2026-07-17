@@ -55,7 +55,7 @@ export const BookingForm = ({
           </div>
 
           {/* Right: form card */}
-          <div className={`border border-bronze-500/20 rounded-2xl p-6 lg:p-8 ${bgCard} shadow-2xl`}>
+          <div className="liquid-glass-strong rounded-2xl p-6 lg:p-8 shadow-2xl">
             <div className="flex justify-center mb-4">
               <span className="font-display text-[8px] tracking-widest text-bronze-500 font-bold uppercase border border-bronze-500/30 px-3 py-0.5 rounded-full">BOOK APPOINTMENT</span>
             </div>

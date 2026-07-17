@@ -178,12 +178,12 @@ export const Calculator = ({
 
           {/* Right col: sticky total + form preview */}
           <div className="lg:sticky lg:top-24 lg:self-start space-y-4">
-            <div className={`border border-bronze-500/30 rounded-2xl p-6 ${bgDeep} shadow-2xl relative overflow-hidden`}>
+            <div className="liquid-glass-strong rounded-2xl p-6 shadow-2xl relative overflow-hidden">
               <div className="absolute -top-8 -right-8 w-32 h-32 bg-bronze-500/5 rounded-full blur-2xl pointer-events-none"></div>
               <h4 className="font-display font-black text-[10px] uppercase tracking-wider text-bronze-400 mb-5">{t('servicesTotal')}</h4>
 
               {/* Receipt */}
-              <div className={`${bgSubtle} rounded-xl p-4 mb-5 space-y-1.5`}>
+              <div className="liquid-glass-body rounded-xl p-4 mb-5 space-y-1.5">
                 {selectedServices.length === 0 && selectedOptions.length === 0 ? (
                   <div className={`text-center py-4 ${textSecondary} text-xs font-semibold`}>
                     {t('servicesNotSelected')}
@@ -242,7 +242,7 @@ export const Calculator = ({
             </div>
 
             {/* Trust badges */}
-            <div className={`border ${border} rounded-2xl p-4 ${bgCard} grid grid-cols-3 gap-3 text-center`}>
+            <div className="liquid-glass rounded-2xl p-4 grid grid-cols-3 gap-3 text-center">
               {[
                 { id:'guarantee', label: t('badgeGuarantee') },
                 { id:'sterility', label: t('badgeSterility') },

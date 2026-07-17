@@ -2,11 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDownIcon } from './Icons';
 
-const bgCard = 'bg-[var(--bg-card)]';
-const bgSubtle = 'bg-[var(--bg-subtle)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
-const borderSubtle = 'border-[var(--border-subtle)]';
 const border = 'border-[var(--border-color)]';
 
 export const Trust = () => {
@@ -29,14 +26,14 @@ export const Trust = () => {
           {cards.map((card, i) => {
             const isOpen = activeCard === i;
             return (
-              <div 
-                key={card.num} 
-                className={`flex flex-col ${bgCard} border ${borderSubtle} rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer md:cursor-default select-none`}
+              <div
+                key={card.num}
+                className="liquid-glass liquid-glass-hover flex flex-col rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer md:cursor-default select-none"
                 onClick={() => setActiveCard(isOpen ? null : i)}
               >
                 <div className="w-full flex justify-between items-center p-5 text-left md:cursor-default">
                   <div className="flex items-center gap-3">
-                    <span className="font-display font-black text-2xl text-bronze-500/40 leading-none">
+                    <span className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center font-display font-black text-sm text-bronze-400 leading-none">
                       {card.num}
                     </span>
                     <span className={`font-display font-bold uppercase text-xs tracking-wide ${textPrimary} leading-snug`}>
@@ -47,13 +44,12 @@ export const Trust = () => {
                     <ChevronDownIcon className={`flex-shrink-0 ml-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-bronze-500' : 'text-[var(--text-muted)]'}`} />
                   </div>
                 </div>
-                <div 
-                  className={`transition-all duration-300 ease-in-out overflow-hidden md:max-h-none md:opacity-100 md:border-t md:${borderSubtle} ${
-                    isOpen ? 'max-h-60 opacity-100 border-t ' + borderSubtle : 'max-h-0 opacity-0'
+                <div
+                  className={`transition-all duration-300 ease-in-out overflow-hidden md:max-h-none md:opacity-100 ${
+                    isOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0 md:max-h-none md:opacity-100'
                   }`}
-                  style={{ overflow: 'hidden' }}
                 >
-                  <div className={`p-5 ${textSecondary} text-sm leading-relaxed ${bgSubtle}`}>
+                  <div className={`p-5 liquid-glass-body ${textSecondary} text-sm leading-relaxed`}>
                     {card.desc}
                   </div>
                 </div>

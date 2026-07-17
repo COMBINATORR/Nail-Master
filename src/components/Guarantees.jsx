@@ -2,11 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDownIcon } from './Icons';
 
-const bgCard = 'bg-[var(--bg-card)]';
-const bgSubtle = 'bg-[var(--bg-subtle)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
-const borderSubtle = 'border-[var(--border-subtle)]';
 const border = 'border-[var(--border-color)]';
 
 export const Guarantees = () => {
@@ -30,9 +27,9 @@ export const Guarantees = () => {
           {cards.map((g, i) => {
             const isOpen = activeCard === i;
             return (
-              <div 
-                key={i} 
-                className={`flex flex-col ${bgCard} border ${borderSubtle} rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer lg:cursor-default select-none`}
+              <div
+                key={i}
+                className="liquid-glass liquid-glass-hover flex flex-col rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer lg:cursor-default select-none"
                 onClick={() => setActiveCard(isOpen ? null : i)}
               >
                 <div className="w-full flex justify-between items-center p-5 text-left lg:cursor-default">
@@ -43,13 +40,12 @@ export const Guarantees = () => {
                     <ChevronDownIcon className={`flex-shrink-0 ml-4 transition-transform duration-300 ${isOpen ? 'rotate-180 text-bronze-500' : 'text-[var(--text-muted)]'}`} />
                   </div>
                 </div>
-                <div 
-                  className={`transition-all duration-300 ease-in-out overflow-hidden lg:max-h-none lg:opacity-100 lg:border-t lg:${borderSubtle} ${
-                    isOpen ? 'max-h-60 opacity-100 border-t ' + borderSubtle : 'max-h-0 opacity-0'
+                <div
+                  className={`transition-all duration-300 ease-in-out overflow-hidden lg:max-h-none lg:opacity-100 ${
+                    isOpen ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0 lg:max-h-none lg:opacity-100'
                   }`}
-                  style={{ overflow: 'hidden' }}
                 >
-                  <div className={`p-5 ${textSecondary} text-sm leading-relaxed ${bgSubtle}`}>
+                  <div className={`p-5 liquid-glass-body ${textSecondary} text-sm leading-relaxed`}>
                     {g.desc}
                   </div>
                 </div>

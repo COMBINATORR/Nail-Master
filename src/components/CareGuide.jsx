@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { careTipsData } from '../data/careRules';
 
-
-const bgSubtle = 'bg-[var(--bg-subtle)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const border = 'border-[var(--border-color)]';
@@ -12,8 +10,6 @@ export const CareGuide = () => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language || 'ru';
   const [activeCareTab, setActiveCareTab] = useState('manicure');
-
-
 
   return (
     <section id="care-guide" className={`border-b ${border} py-14 lg:py-20`}>
@@ -26,7 +22,7 @@ export const CareGuide = () => {
         </p>
 
         {/* Interactive Care Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl tactile-container mx-auto">
+        <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl liquid-glass mx-auto">
           {['manicure', 'pedicure', 'sugaring'].map((tab) => {
             const isActive = activeCareTab === tab;
             return (
@@ -35,9 +31,9 @@ export const CareGuide = () => {
                 type="button"
                 onClick={() => setActiveCareTab(tab)}
                 className={`flex-1 text-center py-3 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 cursor-pointer
-                  ${isActive 
-                    ? 'active-tactile-pill scale-[1.02]' 
-                    : 'border border-transparent hover:bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                  ${isActive
+                    ? 'active-tactile-pill scale-[1.02]'
+                    : 'border border-transparent hover:bg-white/5 text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
               >
                 {t(tab)}
@@ -50,12 +46,12 @@ export const CareGuide = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {careTipsData[lang][activeCareTab].map((tip, index) => {
             return (
-              <div 
-                key={index} 
-                className={`flex flex-col gap-4 p-5 ${bgSubtle} border ${border} rounded-2xl hover:border-bronze-500/20 transition-all hover:-translate-y-1 duration-300`}
+              <div
+                key={index}
+                className="liquid-glass liquid-glass-hover flex flex-col gap-4 p-5 rounded-2xl"
               >
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-sans font-black uppercase tracking-widest border border-bronze-500/35 bg-bronze-500/10 px-3 py-1 rounded-lg text-bronze-400">
+                  <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-bronze-400">
                     {tip.badge}
                   </span>
                 </div>
