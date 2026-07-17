@@ -13,6 +13,11 @@
   3. Throttle or debounce the event handlers where immediate feedback is not strictly required.
 - **Verification:** Creating tests using `@testing-library/react` wrapping components to track render counts during high-frequency events helps identify and verify such performance fixes.
 
+### Code Health: Proper Error Handling for Non-Critical APIs
+- **Pattern:** Using a bare `catch (err) { }` block or simply commenting out errors suppresses potentially useful debugging information.
+- **Solution:** For non-critical progressive enhancements (e.g., `AudioContext` failing due to lack of user interaction or browser restrictions), instead of silencing the error entirely, use `console.warn` along with an explanatory comment. This provides visibility for developers without interrupting the user experience or cluttering `console.error` logs.
+- **Verification:** Mock global objects (e.g., `window.AudioContext`) in tests to throw an error and assert that it handles gracefully without crashing the app, while also capturing the stderr/stdout to verify the warning is correctly emitted.
+
 ### Performance Improvement: Object allocations in render cycle
 - **Pattern:** Using `Object.values()`, `Object.keys()`, or other object allocation functions directly inside a React functional component's render cycle or map function, especially when the object being evaluated is static and unchanging (like a configuration or data dictionary). This causes unnecessary object creation and garbage collection overhead on every render.
 - **Solution:** Extract the static object processing (`Object.values()`, mapping) outside the component scope if the data is static, or memoize it with `useMemo` if it depends on dynamic props or state.
