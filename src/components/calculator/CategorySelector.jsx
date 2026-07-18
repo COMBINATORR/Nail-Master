@@ -7,7 +7,7 @@ export const CategorySelector = ({ activeCategory, setActiveCategory }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 mb-8 mx-auto max-w-max p-1 rounded-2xl tactile-container">
+    <div className="flex flex-wrap justify-center gap-2 mb-8 mx-auto max-w-max p-1 rounded-2xl liquid-glass">
       {categoryValues.map((cat) => {
         const isActive = activeCategory === cat.id;
         return (

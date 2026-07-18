@@ -1,13 +1,13 @@
-import work1_before from '../assets/work1_before.png';
-import work1_after from '../assets/work1_after.png';
-import work2_before from '../assets/work2_before.png';
-import work2_after from '../assets/work2_after.png';
-import work3_before from '../assets/work3_before.png';
-import work3_after from '../assets/work3_after.png';
-import work4_before from '../assets/work4_before.png';
-import work4_after from '../assets/work4_after.png';
-import work5_before from '../assets/work5_before.png';
-import work5_after from '../assets/work5_after.png';
+import work1_before from '../assets/work1_before.webp';
+import work1_after from '../assets/work1_after.webp';
+import work2_before from '../assets/work2_before.webp';
+import work2_after from '../assets/work2_after.webp';
+import work3_before from '../assets/work3_before.webp';
+import work3_after from '../assets/work3_after.webp';
+import work4_before from '../assets/work4_before.webp';
+import work4_after from '../assets/work4_after.webp';
+import work5_before from '../assets/work5_before.webp';
+import work5_after from '../assets/work5_after.webp';
 
 export const works = [
   {

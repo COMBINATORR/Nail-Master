@@ -51,11 +51,11 @@ export const Header = ({
   };
 
   return (
-    <header className={`sticky top-0 z-40 backdrop-blur-xl ${bgHeader} border-b ${border} transition-all duration-300 ${isScrolledCapsule ? 'scrolled-capsule' : ''}`}>
+    <header className={`sticky top-0 z-40 liquid-glass-header transition-all duration-300 ${isScrolledCapsule ? 'scrolled-capsule' : ''}`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24 py-3 flex justify-between items-center relative">
         {/* Sandwich menu (Left side, visible on both mobile and desktop) */}
         <button onClick={() => setIsMobileMenuOpen(true)}
-          className="p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all z-10 cursor-pointer"
+          className="liquid-glass-icon-btn text-[var(--text-secondary)] hover:text-bronze-500 z-10 cursor-pointer"
           aria-label="Toggle menu"
         >
           <MenuIcon className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -78,23 +78,24 @@ export const Header = ({
         </div>
 
         <div className="flex items-center gap-1.5 z-10">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hidden sm:inline-flex p-2 text-[var(--text-secondary)] instagram-glow-hover">
-            <InstagramIcon className="w-4 h-4" />
-          </a>
-          <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="hidden sm:inline-flex p-2 text-[var(--text-secondary)] whatsapp-glow-hover">
-            <WhatsAppIcon className="w-4 h-4" />
-          </a>
-          <div className="hidden sm:block h-5 w-px bg-[var(--border-color)] mx-0.5" />
+          <div className="hidden sm:inline-flex liquid-glass-social-pill">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="liquid-glass-icon-btn !w-8 !h-8 text-[var(--text-secondary)] instagram-glow-hover">
+              <InstagramIcon className="w-4 h-4" />
+            </a>
+            <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="liquid-glass-icon-btn !w-8 !h-8 text-[var(--text-secondary)] whatsapp-glow-hover">
+              <WhatsAppIcon className="w-4 h-4" />
+            </a>
+          </div>
           
           {/* Appearance switch popover dropdown */}
           <div className="relative" ref={themePopupRef}>
             <button onClick={() => setShowThemeMenu(!showThemeMenu)}
-              className="p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all flex items-center"
+              className="liquid-glass-icon-btn text-[var(--text-secondary)] hover:text-bronze-500"
               title={t('appearance')}>
               {isDayTheme ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
             </button>
             {showThemeMenu && (
-              <div className={`absolute right-0 top-full mt-2 ${bgHeader} border ${border} rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-xl`}>
+              <div className={`absolute right-0 top-full mt-2 liquid-glass-strong rounded-2xl shadow-2xl p-4 min-w-[220px] z-50 popup-backdrop animate-fadeIn ${textPrimary}`}>
                 <div className="flex p-1 mb-4 tactile-container">
                   <button 
                     onClick={() => setTheme('light')}
@@ -177,16 +178,14 @@ export const Header = ({
           </div>
           
           {/* Divider between theme and language */}
-          <div className="h-4 w-px bg-[var(--border-color)] mx-1" />
-          
           {/* Language selector */}
           <div className="relative" ref={langPopupRef}>
             <button onClick={() => setShowLangPopup(!showLangPopup)}
-              className="p-2 text-[var(--text-secondary)] hover:text-bronze-500 transition-all flex items-center">
+              className="liquid-glass-icon-btn !w-auto !px-2.5 text-[var(--text-secondary)] hover:text-bronze-500 flex items-center">
               <span className="text-xs font-bold uppercase tracking-widest">{lang === 'kk' ? 'KZ' : lang.toUpperCase()}</span>
             </button>
             {showLangPopup && (
-              <div className={`absolute right-0 top-full mt-2 ${bgHeader} border ${border} rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn ${textPrimary} backdrop-blur-xl space-y-2`}>
+              <div className={`absolute right-0 top-full mt-2 liquid-glass-strong rounded-2xl shadow-2xl p-4 min-w-[180px] z-50 popup-backdrop animate-fadeIn ${textPrimary} space-y-2`}>
                 <div className={`text-[10px] uppercase font-bold tracking-wider ${textMuted} mb-2`}>
                   {t('Select Language', 'Выбор языка')}
                 </div>

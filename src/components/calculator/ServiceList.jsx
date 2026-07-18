@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
-const borderSubtle = 'border-[var(--border-subtle)]';
 
 export const ServiceList = ({ catObj, selectedServiceIds, toggleService, fmtTime }) => {
   const { t } = useTranslation();
@@ -15,10 +14,10 @@ export const ServiceList = ({ catObj, selectedServiceIds, toggleService, fmtTime
           const isActive = selectedServiceIds.includes(svc.id);
           return (
             <div key={svc.id} onClick={() => toggleService(svc.id)}
-              className={`border rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden bg-[var(--bg-card)] active:scale-[0.98] active:duration-100
+              className={`liquid-glass rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden active:scale-[0.98] active:duration-100
               ${isActive
-                ? `border-bronze-500 shadow-[0_0_20px_rgba(197,168,128,0.12)] tactile-card-selected`
-                : `${borderSubtle} opacity-70 hover:opacity-100`}`}>
+                ? 'liquid-glass-chip-active tactile-card-selected'
+                : 'opacity-80 hover:opacity-100 liquid-glass-hover'}`}>
               {isActive && (
                 <div className="absolute top-0 right-0 w-9 h-9 bg-bronze-500/10 border-b border-l border-bronze-500/30 rounded-bl-xl flex items-center justify-center">
                   <span className="text-bronze-400 font-bold text-xs">✓</span>

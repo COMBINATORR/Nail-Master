@@ -1,12 +1,9 @@
 import { useTranslation } from 'react-i18next';
 
-const bgDeep = 'bg-[var(--bg-deep)]';
-const bgSubtle = 'bg-[var(--bg-subtle)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const textMuted = 'text-[var(--text-muted)]';
 const border = 'border-[var(--border-color)]';
-const bgCard = 'bg-[var(--bg-card)]';
 
 export const CalculatorSummary = ({
   selectedServices,
@@ -21,12 +18,11 @@ export const CalculatorSummary = ({
 
   return (
     <div className="lg:sticky lg:top-24 lg:self-start space-y-4">
-      <div className={`border border-bronze-500/30 rounded-2xl p-6 ${bgDeep} shadow-2xl relative overflow-hidden`}>
+      <div className="liquid-glass-strong rounded-2xl p-6 shadow-2xl relative overflow-hidden">
         <div className="absolute -top-8 -right-8 w-32 h-32 bg-bronze-500/5 rounded-full blur-2xl pointer-events-none"></div>
         <h4 className="font-display font-black text-[10px] uppercase tracking-wider text-bronze-400 mb-5">{t('servicesTotal')}</h4>
 
-        {/* Receipt */}
-        <div className={`${bgSubtle} rounded-xl p-4 mb-5 space-y-1.5`}>
+        <div className="liquid-glass-body rounded-xl p-4 mb-5 space-y-1.5">
           {selectedServices.length === 0 && selectedOptions.length === 0 ? (
             <div className={`text-center py-4 ${textSecondary} text-xs font-semibold`}>
               {t('servicesNotSelected')}
@@ -61,8 +57,7 @@ export const CalculatorSummary = ({
           <span className="font-display font-bold text-bronze-300 text-sm tracking-wider">≈ {fmtTime(totalTime)}</span>
         </div>
 
-        {/* Legal and Personal Guarantee Badge */}
-        <div className="flex gap-2.5 items-start p-3 border border-bronze-500/10 bg-bronze-500/5 rounded-xl mb-5">
+        <div className="flex gap-2.5 items-start p-3 liquid-glass rounded-xl mb-5">
           <svg className="w-5 h-5 text-bronze-400 drop-shadow-[0_0_6px_rgba(197,168,128,0.5)] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
@@ -84,8 +79,7 @@ export const CalculatorSummary = ({
         </button>
       </div>
 
-      {/* Trust badges */}
-      <div className={`border ${border} rounded-2xl p-4 ${bgCard} grid grid-cols-3 gap-3 text-center`}>
+      <div className="liquid-glass rounded-2xl p-4 grid grid-cols-3 gap-3 text-center">
         {[
           { id:'guarantee', label: t('badgeGuarantee') },
           { id:'sterility', label: t('badgeSterility') },

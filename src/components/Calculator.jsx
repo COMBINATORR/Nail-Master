@@ -33,8 +33,8 @@ export const Calculator = ({
   return (
     <section id="services" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2`}>{t('servicesTitle')}</h2>
-        <p className={`${textSecondary} text-sm mb-10`}>{t('servicesSubtitle')}</p>
+        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2 text-center`}>{t('servicesTitle')}</h2>
+        <p className={`${textSecondary} text-sm mb-10 text-center max-w-2xl mx-auto`}>{t('servicesSubtitle')}</p>
 
         <CategorySelector
           activeCategory={activeCategory}
@@ -42,7 +42,6 @@ export const Calculator = ({
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Left col: selection */}
           <div className="space-y-8">
             <ServiceList
               catObj={catObj}
@@ -66,7 +65,6 @@ export const Calculator = ({
             />
           </div>
 
-          {/* Right col: sticky total + form preview */}
           <CalculatorSummary
             selectedServices={selectedServices}
             selectedOptions={selectedOptions}
