@@ -285,7 +285,7 @@ export const BookingForm = ({
                             title={busy ? t('formSlotBusy') : t('formSlotFree')}
                             className={`py-2 px-1 rounded-xl text-center text-xs font-bold transition-all duration-300
                               ${busy
-                                ? 'opacity-35 cursor-not-allowed line-through liquid-glass-chip liquid-glass-chip-noscale'
+                                ? 'slot-busy liquid-glass-chip liquid-glass-chip-noscale'
                                 : isSelected
                                   ? 'liquid-glass-chip liquid-glass-chip-noscale liquid-glass-chip-active text-[var(--text-primary)] cursor-pointer'
                                   : 'liquid-glass-chip liquid-glass-chip-noscale text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer disabled:opacity-40'
@@ -298,7 +298,7 @@ export const BookingForm = ({
                     </div>
                     {selectedDate && (
                       <p className={`text-[9px] ${textMuted} pt-1`}>
-                        {t('formSlotBusy')}: {[...busySlots].join(', ') || '—'}
+                        <span className="text-danger">{t('formSlotBusy')}</span>: {[...busySlots].join(', ') || '—'}
                       </p>
                     )}
                   </div>

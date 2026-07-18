@@ -51,7 +51,7 @@ export const CareGuide = () => {
                 className="liquid-glass liquid-glass-hover flex flex-col gap-4 p-5 rounded-2xl"
               >
                 <div className="flex justify-between items-center">
-                  <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-bronze-400">
+                  <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">
                     {tip.badge}
                   </span>
                 </div>

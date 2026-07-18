@@ -81,12 +81,12 @@ export const CalculatorSummary = ({
 
       <div className="liquid-glass rounded-2xl p-4 grid grid-cols-3 gap-3 text-center">
         {[
-          { id:'guarantee', label: t('badgeGuarantee') },
-          { id:'sterility', label: t('badgeSterility') },
-          { id:'duration', label: t('badgeDuration') },
+          { id: 'guarantee', label: t('badgeGuarantee'), role: 'var(--accent)' },
+          { id: 'sterility', label: t('badgeSterility'), role: 'var(--care)' },
+          { id: 'duration', label: t('badgeDuration'), role: 'var(--success)' },
         ].map((b, i) => (
           <div key={i} className="flex flex-col items-center gap-1.5">
-            <span style={{color:'var(--accent)'}}>
+            <span style={{ color: b.role || 'var(--accent)' }}>
               {b.id === 'guarantee' && (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><path d="m9 12 2 2 4-4"/></svg>
               )}
