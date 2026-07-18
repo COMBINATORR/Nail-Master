@@ -25,6 +25,12 @@
   --color-charcoal-900: #121212;
   --color-charcoal-950: #0a0a0a;
 
+  /* Semantic roles (resolved per body.theme-*) */
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-care: var(--care);
+
   --font-display: Montserrat, sans-serif;
   --font-sans: Inter, sans-serif;
 
@@ -473,6 +479,25 @@ body {
   color: var(--text-primary, #FFFFFF);
 }
 
+/* Semantic role defaults (overridden per theme-*) */
+body {
+  --accent: #B89548;
+  --accent-hover: #cbb075;
+  --accent-muted: rgba(184, 149, 72, 0.16);
+  --accent-contrast: #0a0a0a;
+  --success: #34d399;
+  --success-bg: rgba(52, 211, 153, 0.14);
+  --success-fg: #6ee7b7;
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.14);
+  --danger-fg: #fca5a5;
+  --care: #cbb075;
+  --care-bg: rgba(203, 176, 117, 0.12);
+  --btn-glow-color: rgba(184, 149, 72, 0.28);
+}
+
+
+
 /* 1. DARK (Original) */
 body.theme-dark {
   --bg-main: #08070b;
@@ -508,6 +533,20 @@ body.theme-dark {
   --color-charcoal-800: #1c1c1c;
   --color-charcoal-900: #121212;
   --color-charcoal-950: #0a0a0a;
+  /* Semantic roles — prestige gold */
+  --accent: #B89548;
+  --accent-hover: #cbb075;
+  --accent-muted: rgba(184, 149, 72, 0.16);
+  --accent-contrast: #0a0a0a;
+  --success: #34d399;
+  --success-bg: rgba(52, 211, 153, 0.14);
+  --success-fg: #6ee7b7;
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.14);
+  --danger-fg: #fca5a5;
+  --care: #cbb075;
+  --care-bg: rgba(203, 176, 117, 0.12);
+  --btn-glow-color: rgba(184, 149, 72, 0.28);
 }
 
 /* 2. LIGHT (Original) */
@@ -545,6 +584,20 @@ body.theme-light {
   --color-charcoal-800: #292522;
   --color-charcoal-900: #1E1B18;
   --color-charcoal-950: #12100E;
+  /* Semantic roles — clean gold */
+  --accent: #B89548;
+  --accent-hover: #a3813c;
+  --accent-muted: rgba(184, 149, 72, 0.14);
+  --accent-contrast: #ffffff;
+  --success: #059669;
+  --success-bg: rgba(5, 150, 105, 0.12);
+  --success-fg: #047857;
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.1);
+  --danger-fg: #b91c1c;
+  --care: #a3813c;
+  --care-bg: rgba(163, 129, 60, 0.1);
+  --btn-glow-color: rgba(163, 129, 60, 0.22);
 }
 
 /* Overwrite shadow-2xl globally for all light/day themes */
@@ -589,6 +642,20 @@ body.theme-emerald {
   --color-charcoal-800: #08241c;
   --color-charcoal-900: #051b14;
   --color-charcoal-950: #03110d;
+  /* Semantic roles — heal / steril (green + cream accent) */
+  --accent: #F1E4C3;
+  --accent-hover: #f7f2e6;
+  --accent-muted: rgba(241, 228, 195, 0.16);
+  --accent-contrast: #03110d;
+  --success: #10B981;
+  --success-bg: rgba(16, 185, 129, 0.16);
+  --success-fg: #34d399;
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.14);
+  --danger-fg: #fca5a5;
+  --care: #10B981;
+  --care-bg: rgba(16, 185, 129, 0.14);
+  --btn-glow-color: rgba(16, 185, 129, 0.28);
 }
 
 /* 4. FASHION NUDE */
@@ -626,6 +693,20 @@ body.theme-nudefashion {
   --color-charcoal-800: #2d2926;
   --color-charcoal-900: #1E1B18;
   --color-charcoal-950: #12100E;
+  /* Semantic roles — soft beauty / fashion charcoal */
+  --accent: #2B2927;
+  --accent-hover: #53504d;
+  --accent-muted: rgba(43, 41, 39, 0.1);
+  --accent-contrast: #F4EFEA;
+  --success: #6b8f71;
+  --success-bg: rgba(107, 143, 113, 0.14);
+  --success-fg: #4f6b55;
+  --danger: #b91c1c;
+  --danger-bg: rgba(185, 28, 28, 0.1);
+  --danger-fg: #991b1b;
+  --care: #b8956c;
+  --care-bg: rgba(184, 149, 108, 0.14);
+  --btn-glow-color: rgba(43, 41, 39, 0.18);
 }
 
 /* 5. SAGE ECO */
@@ -663,6 +744,20 @@ body.theme-sage {
   --color-charcoal-800: #384239;
   --color-charcoal-900: #2D352E;
   --color-charcoal-950: #1a201b;
+  /* Semantic roles — natural care / balance */
+  --accent: #4A5D4E;
+  --accent-hover: #6c8270;
+  --accent-muted: rgba(74, 93, 78, 0.12);
+  --accent-contrast: #F0F2EE;
+  --success: #4A5D4E;
+  --success-bg: rgba(74, 93, 78, 0.12);
+  --success-fg: #3b4b3e;
+  --danger: #b91c1c;
+  --danger-bg: rgba(185, 28, 28, 0.1);
+  --danger-fg: #991b1b;
+  --care: #6c8270;
+  --care-bg: rgba(108, 130, 112, 0.14);
+  --btn-glow-color: rgba(74, 93, 78, 0.22);
 }
 
 /* 6. CYBER BEAUTY */
@@ -700,6 +795,20 @@ body.theme-cyber {
   --color-charcoal-800: #14101e;
   --color-charcoal-900: #0d0b14;
   --color-charcoal-950: #07060b;
+  /* Semantic roles — bold modern (cyan accent, rose danger/care) */
+  --accent: #22D3EE;
+  --accent-hover: #67e8f9;
+  --accent-muted: rgba(34, 211, 238, 0.16);
+  --accent-contrast: #0D0B14;
+  --success: #22D3EE;
+  --success-bg: rgba(34, 211, 238, 0.14);
+  --success-fg: #67e8f9;
+  --danger: #F43F5E;
+  --danger-bg: rgba(244, 63, 94, 0.14);
+  --danger-fg: #fb7185;
+  --care: #fb7185;
+  --care-bg: rgba(251, 113, 133, 0.12);
+  --btn-glow-color: rgba(34, 211, 238, 0.3);
 }
 
 /* Tactile glow effects for Appearance switcher modes */
@@ -720,7 +829,7 @@ body.theme-cyber {
   align-items: center;
   justify-content: center;
   background: linear-gradient(180deg, var(--color-bronze-400) 0%, var(--color-bronze-600) 100%) !important;
-  color: var(--color-charcoal-950) !important;
+  color: var(--accent-contrast, var(--color-charcoal-950)) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.3) !important;
   border-bottom: 1.5px solid rgba(0, 0, 0, 0.3) !important;
@@ -833,6 +942,53 @@ body.theme-light .btn-tactile-circle {
   box-shadow: 
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+
+/* ══════════════════════════════════════════
+   SEMANTIC COLOR UTILITIES (theme-aware)
+   ══════════════════════════════════════════ */
+.text-accent { color: var(--accent) !important; }
+.bg-accent { background-color: var(--accent) !important; color: var(--accent-contrast) !important; }
+.bg-accent-muted { background-color: var(--accent-muted) !important; }
+.border-accent { border-color: var(--accent) !important; }
+
+.text-success { color: var(--success-fg, var(--success)) !important; }
+.bg-success-soft {
+  background-color: var(--success-bg) !important;
+  color: var(--success-fg, var(--success)) !important;
+}
+.icon-success {
+  background-color: var(--success-bg) !important;
+  color: var(--success) !important;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--success) 25%, transparent);
+}
+
+.text-danger { color: var(--danger-fg, var(--danger)) !important; }
+.bg-danger-soft {
+  background-color: var(--danger-bg) !important;
+  color: var(--danger-fg, var(--danger)) !important;
+}
+.border-danger { border-color: color-mix(in srgb, var(--danger) 45%, transparent) !important; }
+
+.text-care { color: var(--care) !important; }
+.bg-care-soft {
+  background-color: var(--care-bg) !important;
+  color: var(--care) !important;
+}
+
+.icon-care {
+  background-color: var(--care-bg) !important;
+  color: var(--care) !important;
+}
+
+/* Slot / chip states */
+.slot-busy {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  color: var(--danger-fg, var(--danger)) !important;
+  border-color: color-mix(in srgb, var(--danger) 30%, transparent) !important;
 }
 
 /* Social Icon Glow on Hover/Tap */

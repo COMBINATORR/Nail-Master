@@ -128,7 +128,7 @@ export const Header = ({
                       </span>
                       <span>Emerald Spa</span>
                     </div>
-                    {theme === 'emerald' && <span className="text-emerald-400">✓</span>}
+                    {theme === 'emerald' && <span className="text-success">✓</span>}
                   </button>
 
                   <button 
@@ -156,7 +156,7 @@ export const Header = ({
                       </span>
                       <span>Sage Eco</span>
                     </div>
-                    {theme === 'sage' && <span className="text-green-400">✓</span>}
+                    {theme === 'sage' && <span className="text-success">✓</span>}
                   </button>
 
                   <button 
