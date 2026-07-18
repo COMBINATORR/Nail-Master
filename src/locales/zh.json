@@ -151,5 +151,19 @@
   "waModeWord": "模式",
   "waNameLabel": "姓名",
   "waPhoneLabel": "电话",
-  "waNotRequired": "不需要"
+  "waNotRequired": "不需要",
+  "formStep1": "服务",
+  "formStep2": "日期时间",
+  "formStep3": "联系方式",
+  "formStepNext": "下一步",
+  "formStepBack": "返回",
+  "formPreviewTitle": "您的预约",
+  "formPreviewEmptyServices": "请先在上方计算器中选择服务",
+  "formPickServices": "去选服务",
+  "formSlotBusy": "已约满",
+  "formSlotFree": "可约",
+  "formCtaWhatsApp": "通过 WhatsApp 预约",
+  "formNeedDate": "请选择日期",
+  "formNeedTime": "请选择时间",
+  "formNeedServices": "请至少选择一项服务"
 }

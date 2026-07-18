@@ -151,5 +151,19 @@
   "waModeWord": "Режимі",
   "waNameLabel": "Аты",
   "waPhoneLabel": "Телефон",
-  "waNotRequired": "Қажет емес"
+  "waNotRequired": "Қажет емес",
+  "formStep1": "Қызметтер",
+  "formStep2": "Күні мен уақыты",
+  "formStep3": "Байланыс",
+  "formStepNext": "Келесі",
+  "formStepBack": "Артқа",
+  "formPreviewTitle": "Жазылуыңыз",
+  "formPreviewEmptyServices": "Алдымен жоғарыдағы калькулятордан қызмет таңдаңыз",
+  "formPickServices": "Қызметтерге",
+  "formSlotBusy": "Бос емес",
+  "formSlotFree": "Бос",
+  "formCtaWhatsApp": "WhatsApp арқылы жазылу",
+  "formNeedDate": "Күнді таңдаңыз",
+  "formNeedTime": "Уақытты таңдаңыз",
+  "formNeedServices": "Кемінде бір қызмет таңдаңыз"
 }

@@ -109,6 +109,9 @@ export const Portfolio = () => {
               alt="After manicure" 
               className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
               draggable="false"
+              loading={activeWork === 0 ? "eager" : "lazy"}
+              decoding="async"
+              fetchPriority={activeWork === 0 ? "high" : "auto"}
             />
             {/* After label */}
             <div className="absolute right-6 top-6 bg-bronze-500/90 backdrop-blur-md text-charcoal-950 font-display font-black text-[10px] sm:text-xs px-4 py-2 rounded-xl z-20 tracking-widest shadow-lg">
@@ -125,6 +128,8 @@ export const Portfolio = () => {
                 alt="Before manicure" 
                 className="absolute inset-0 w-full h-full object-cover select-none"
                 draggable="false"
+                loading={activeWork === 0 ? "eager" : "lazy"}
+                decoding="async"
               />
             </div>
             {/* Before label */}

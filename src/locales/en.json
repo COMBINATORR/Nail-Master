@@ -151,5 +151,19 @@
   "waModeWord": "Mode",
   "waNameLabel": "Name",
   "waPhoneLabel": "Phone",
-  "waNotRequired": "Not required"
+  "waNotRequired": "Not required",
+  "formStep1": "Services",
+  "formStep2": "Date & time",
+  "formStep3": "Contacts",
+  "formStepNext": "Next",
+  "formStepBack": "Back",
+  "formPreviewTitle": "Your booking",
+  "formPreviewEmptyServices": "Select services in the calculator above first",
+  "formPickServices": "Go to services",
+  "formSlotBusy": "Booked",
+  "formSlotFree": "Open",
+  "formCtaWhatsApp": "Book via WhatsApp",
+  "formNeedDate": "Please select a date",
+  "formNeedTime": "Please select a time",
+  "formNeedServices": "Please select at least one service"
 }

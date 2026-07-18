@@ -151,5 +151,19 @@
   "waModeWord": "모드",
   "waNameLabel": "이름",
   "waPhoneLabel": "전화번호",
-  "waNotRequired": "필요 없음"
+  "waNotRequired": "필요 없음",
+  "formStep1": "시술",
+  "formStep2": "날짜·시간",
+  "formStep3": "연락처",
+  "formStepNext": "다음",
+  "formStepBack": "뒤로",
+  "formPreviewTitle": "예약 내역",
+  "formPreviewEmptyServices": "위에서 먼저 시술을 선택하세요",
+  "formPickServices": "시술 고르기",
+  "formSlotBusy": "예약됨",
+  "formSlotFree": "가능",
+  "formCtaWhatsApp": "WhatsApp으로 예약",
+  "formNeedDate": "날짜를 선택하세요",
+  "formNeedTime": "시간을 선택하세요",
+  "formNeedServices": "시술을 하나 이상 선택하세요"
 }

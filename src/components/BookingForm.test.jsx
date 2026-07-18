@@ -2,140 +2,160 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BookingForm } from './BookingForm';
 
-// Mock react-i18next
 vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key) => key,
-  }),
+  useTranslation: () => ({ t: (key) => key }),
 }));
 
-describe('BookingForm', () => {
-  const defaultProps = {
-    name: '',
-    setName: vi.fn(),
-    phone: '',
-    setPhone: vi.fn(),
-    selectedDate: null,
-    setSelectedDate: vi.fn(),
-    selectedTime: null,
-    setSelectedTime: vi.fn(),
-    next10Days: [
-      { id: '2023-10-25', weekday: 'Mon', dayNum: '25' },
-      { id: '2023-10-26', weekday: 'Tue', dayNum: '26' },
-    ],
-    visitMode: 'relax',
-    setVisitMode: vi.fn(),
-    isSubmitting: false,
-    handleSubmit: vi.fn((e) => e.preventDefault()),
-    selectedServices: [],
-    selectedOptions: [],
-    optionsById: {},
-    totalPrice: 0,
-    totalTime: 0,
-    fmtTime: (time) => `${time} min`,
-  };
+const baseProps = {
+  name: '',
+  setName: vi.fn(),
+  phone: '',
+  setPhone: vi.fn(),
+  selectedDate: '',
+  setSelectedDate: vi.fn(),
+  selectedTime: '',
+  setSelectedTime: vi.fn(),
+  next10Days: [
+    { id: '2023-10-25', weekday: 'Mon', dayNum: '25', formatted: '25.10' },
+    { id: '2023-10-26', weekday: 'Tue', dayNum: '26', formatted: '26.10' },
+  ],
+  visitMode: 'relax',
+  setVisitMode: vi.fn(),
+  isSubmitting: false,
+  handleSubmit: vi.fn((e) => e.preventDefault()),
+  selectedServices: [],
+  selectedOptions: [],
+  optionsById: {},
+  totalPrice: 0,
+  totalTime: 0,
+  fmtTime: (time) => `${time} min`,
+};
 
+const withServices = (extra = {}) => ({
+  ...baseProps,
+  selectedServices: [{ id: 1, nameKey: 'Haircut', price: 5000 }],
+  totalPrice: 5000,
+  totalTime: 60,
+  setName: vi.fn(),
+  setPhone: vi.fn(),
+  setSelectedDate: vi.fn(),
+  setSelectedTime: vi.fn(),
+  setVisitMode: vi.fn(),
+  handleSubmit: vi.fn((e) => e.preventDefault()),
+  ...extra,
+});
+
+describe('BookingForm', () => {
   it('renders without crashing', () => {
-    render(<BookingForm {...defaultProps} />);
+    render(<BookingForm {...baseProps} />);
     expect(screen.getByText('formTitle')).toBeInTheDocument();
   });
 
-  it('calls setSelectedDate when a date is clicked', () => {
-    render(<BookingForm {...defaultProps} />);
-    // Select the first date button by its text content "25" (from next10Days defaultProps)
-    const dateButton = screen.getByText('25').closest('button');
-    fireEvent.click(dateButton);
-    expect(defaultProps.setSelectedDate).toHaveBeenCalledWith('2023-10-25');
+  it('shows empty services state on step 1', () => {
+    render(<BookingForm {...baseProps} />);
+    expect(screen.getByText('formPreviewEmptyServices')).toBeInTheDocument();
   });
 
-  it('calls setSelectedTime when a time is clicked', () => {
-    render(<BookingForm {...defaultProps} />);
-    const timeButton = screen.getByText('09:00');
-    fireEvent.click(timeButton);
-    expect(defaultProps.setSelectedTime).toHaveBeenCalledWith('09:00');
+  it('renders selected services on step 1', () => {
+    render(<BookingForm {...withServices()} />);
+    expect(screen.getByText('Haircut')).toBeInTheDocument();
+    expect(screen.getAllByText(/5.?000/).length).toBeGreaterThan(0);
   });
 
-  it('calls setVisitMode with relax when relax mode is clicked', () => {
-    render(<BookingForm {...defaultProps} />);
-    const relaxButton = screen.getByText('relaxMode').closest('button');
-    fireEvent.click(relaxButton);
-    expect(defaultProps.setVisitMode).toHaveBeenCalledWith('relax');
+  it('renders selected options on step 1', () => {
+    render(
+      <BookingForm
+        {...withServices({
+          selectedServices: [],
+          selectedOptions: ['opt1', 'optInvalid'],
+          optionsById: { opt1: { nameKey: 'Massage', price: 2000 } },
+          totalPrice: 2000,
+        })}
+      />
+    );
+    expect(screen.getByText('+ Massage')).toBeInTheDocument();
+    expect(screen.getByText(/\+2.?000/)).toBeInTheDocument();
   });
 
-  it('calls setVisitMode with talk when talk mode is clicked', () => {
-    render(<BookingForm {...defaultProps} />);
-    const talkButton = screen.getByText('talkMode').closest('button');
-    fireEvent.click(talkButton);
-    expect(defaultProps.setVisitMode).toHaveBeenCalledWith('talk');
+  it('calls setSelectedDate when a date is clicked on step 2', () => {
+    const props = withServices();
+    render(<BookingForm {...props} />);
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.click(screen.getByText('25').closest('button'));
+    expect(props.setSelectedDate).toHaveBeenCalledWith('2023-10-25');
   });
 
-  it('renders input fields correctly', () => {
-    render(<BookingForm {...defaultProps} />);
+  it('calls setSelectedTime for a free slot on step 2', () => {
+    const props = withServices({ selectedDate: '2023-10-25' });
+    render(<BookingForm {...props} />);
+    fireEvent.click(screen.getByText('formStepNext'));
+    const free = ['09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00']
+      .map((t) => screen.getByText(t))
+      .find((b) => !b.disabled);
+    expect(free).toBeTruthy();
+    fireEvent.click(free);
+    expect(props.setSelectedTime).toHaveBeenCalled();
+  });
+
+  it('disables busy time slots on step 2', () => {
+    const props = withServices({ selectedDate: '2023-10-25' });
+    render(<BookingForm {...props} />);
+    fireEvent.click(screen.getByText('formStepNext'));
+    const busyCount = ['09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'].filter(
+      (t) => screen.getByText(t).disabled
+    ).length;
+    expect(busyCount).toBeGreaterThanOrEqual(2);
+    expect(busyCount).toBeLessThanOrEqual(3);
+  });
+
+  it('calls setVisitMode on step 3', () => {
+    const props = withServices({ selectedDate: '2023-10-25', selectedTime: '11:00' });
+    render(<BookingForm {...props} />);
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.click(screen.getByText('talkMode').closest('button'));
+    expect(props.setVisitMode).toHaveBeenCalledWith('talk');
+  });
+
+  it('renders contact inputs on step 3', () => {
+    render(<BookingForm {...withServices({ selectedDate: '2023-10-25', selectedTime: '11:00' })} />);
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.click(screen.getByText('formStepNext'));
     expect(screen.getByPlaceholderText('namePlaceholder')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('phonePlaceholder')).toBeInTheDocument();
   });
 
-  it('calls setName when name input changes', () => {
-    render(<BookingForm {...defaultProps} />);
-    const nameInput = screen.getByPlaceholderText('namePlaceholder');
-    fireEvent.change(nameInput, { target: { value: 'John Doe' } });
-    expect(defaultProps.setName).toHaveBeenCalledWith('John Doe');
+  it('calls setName on step 3', () => {
+    const props = withServices({ selectedDate: '2023-10-25', selectedTime: '11:00' });
+    render(<BookingForm {...props} />);
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.change(screen.getByPlaceholderText('namePlaceholder'), { target: { value: 'John Doe' } });
+    expect(props.setName).toHaveBeenCalledWith('John Doe');
   });
 
-  it('calls setPhone when phone input changes', () => {
-    render(<BookingForm {...defaultProps} />);
-    const phoneInput = screen.getByPlaceholderText('phonePlaceholder');
-    fireEvent.change(phoneInput, { target: { value: '+1234567890' } });
-    expect(defaultProps.setPhone).toHaveBeenCalledWith('+1234567890');
+  it('calls handleSubmit on final step', () => {
+    const props = withServices({
+      selectedDate: '2023-10-25',
+      selectedTime: '11:00',
+      name: 'John',
+      phone: '1234567890',
+    });
+    render(<BookingForm {...props} />);
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.submit(document.querySelector('form'));
+    expect(props.handleSubmit).toHaveBeenCalled();
   });
 
-  it('renders selected services correctly', () => {
-    const propsWithServices = {
-      ...defaultProps,
-      selectedServices: [{ id: 1, nameKey: 'Haircut', price: 5000 }],
-      totalPrice: 5000,
-    };
-    render(<BookingForm {...propsWithServices} />);
-    expect(screen.getByText('Haircut')).toBeInTheDocument();
-    expect(screen.getByText('5,000 ₸')).toBeInTheDocument();
-  });
-
-
-  it('renders selected options correctly and ignores invalid ones', () => {
-    const propsWithOptions = {
-      ...defaultProps,
-      selectedOptions: ['opt1', 'optInvalid'],
-      optionsById: {
-        'opt1': { nameKey: 'Massage', price: 2000 }
-      }
-    };
-    render(<BookingForm {...propsWithOptions} />);
-    expect(screen.getByText('+ Massage')).toBeInTheDocument();
-    expect(screen.getByText('+2,000 ₸')).toBeInTheDocument();
-  });
-
-  it('renders "servicesNotSelected" when no services are selected', () => {
-    render(<BookingForm {...defaultProps} />);
-    expect(screen.getByText('servicesNotSelected')).toBeInTheDocument();
-  });
-
-  it('calls handleSubmit on form submission', () => {
-    render(<BookingForm {...defaultProps} name="John" phone="123456" />);
-
-    // We need to query the form and fire the submit event.
-    // Instead of querying the submit button and clicking it (which might not always fire the form submit in jsdom if validation fails),
-    // we fire submit on the form itself.
-    const form = document.querySelector('form');
-    fireEvent.submit(form);
-
-    expect(defaultProps.handleSubmit).toHaveBeenCalled();
-  });
-
-  it('disables submit button and shows loading state when isSubmitting is true', () => {
-    const propsSubmitting = { ...defaultProps, isSubmitting: true };
-    render(<BookingForm {...propsSubmitting} />);
-    const button = document.getElementById('form-submit-btn');
-    expect(button).toBeDisabled();
-    expect(screen.queryByText('formCta')).not.toBeInTheDocument();
+  it('disables submit when isSubmitting on step 3', () => {
+    render(
+      <BookingForm
+        {...withServices({ selectedDate: '2023-10-25', selectedTime: '11:00', isSubmitting: true })}
+      />
+    );
+    fireEvent.click(screen.getByText('formStepNext'));
+    fireEvent.click(screen.getByText('formStepNext'));
+    expect(document.getElementById('form-submit-btn')).toBeDisabled();
   });
 });

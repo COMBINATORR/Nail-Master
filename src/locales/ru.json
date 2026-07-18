@@ -151,5 +151,19 @@
   "waModeWord": "Режим",
   "waNameLabel": "Имя",
   "waPhoneLabel": "Телефон",
-  "waNotRequired": "Не требуется"
+  "waNotRequired": "Не требуется",
+  "formStep1": "Услуги",
+  "formStep2": "Дата и время",
+  "formStep3": "Контакты",
+  "formStepNext": "Далее",
+  "formStepBack": "Назад",
+  "formPreviewTitle": "Ваша запись",
+  "formPreviewEmptyServices": "Сначала выберите услуги в калькуляторе выше",
+  "formPickServices": "К услугам",
+  "formSlotBusy": "Занято",
+  "formSlotFree": "Свободно",
+  "formCtaWhatsApp": "Записаться в WhatsApp",
+  "formNeedDate": "Выберите дату",
+  "formNeedTime": "Выберите время",
+  "formNeedServices": "Выберите хотя бы одну услугу"
 }
