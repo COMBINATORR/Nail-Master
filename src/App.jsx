@@ -22,6 +22,7 @@ import { useTheme } from './hooks/useTheme';
 import { useScroll } from './hooks/useScroll';
 import { useEasterEgg } from './hooks/useEasterEgg';
 import { useBooking } from './hooks/useBooking';
+import { useDocumentMeta } from './hooks/useDocumentMeta';
 
 
 /* eslint-disable react-refresh/only-export-components */
@@ -74,6 +75,8 @@ export const getNext10Days = (lang) => {
 export default function App() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
+
+  useDocumentMeta();
 
   useEffect(() => {
     localStorage.setItem('svtl-lang', lang);
