@@ -22,7 +22,7 @@ i18n
     lng: localStorage.getItem('svtl-lang') || 'ru',
     fallbackLng: 'ru',
     interpolation: {
-      escapeValue: false // react already safes from xss
+      escapeValue: true
     }
   });
 
