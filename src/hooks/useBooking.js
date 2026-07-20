@@ -23,7 +23,10 @@ export function useBooking({ lang, t, next10Days }) {
     return acc;
   }, {}) || {}, [catObj]);
 
-  const selectedServices = useMemo(() => catObj.services.filter(s => selectedServiceIds.includes(s.id)), [catObj, selectedServiceIds]);
+  const selectedServices = useMemo(() => {
+    const selectedIdsSet = new Set(selectedServiceIds);
+    return catObj.services.filter(s => selectedIdsSet.has(s.id));
+  }, [catObj, selectedServiceIds]);
 
   const totalPrice = useMemo(() => {
     const sPrice = selectedServices.reduce((sum, svc) => sum + svc.price, 0);
