@@ -377,12 +377,12 @@ export const BookingForm = ({
               )}
 
               {/* Nav buttons */}
-              <div className={`flex gap-2 mt-4 ${step === 1 ? '' : ''}`}>
+              <div className="flex gap-2 mt-4 items-stretch">
                 {step > 1 && (
                   <button
                     type="button"
                     onClick={() => setStep((s) => s - 1)}
-                    className="liquid-glass flex-1 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all hover:scale-[1.02]"
+                    className="liquid-glass flex-1 min-w-0 py-3.5 px-3 rounded-xl text-[11px] sm:text-xs uppercase font-bold tracking-wider transition-all hover:scale-[1.02]"
                   >
                     {t('formStepBack')}
                   </button>
@@ -392,7 +392,7 @@ export const BookingForm = ({
                     type="button"
                     onClick={onNext}
                     disabled={step === 1 ? !canNextFrom1 : !canNextFrom2}
-                    className={`flex-[1.4] btn-premium-tactile disabled:opacity-40 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all border-beam-active ${step === 1 && !canNextFrom1 ? 'cursor-not-allowed' : ''}`}
+                    className={`flex-[1.4] min-w-0 btn-premium-tactile disabled:opacity-40 py-3.5 px-3 rounded-xl text-[11px] sm:text-xs uppercase font-bold tracking-wider transition-all border-beam-active ${step === 1 && !canNextFrom1 ? 'cursor-not-allowed' : ''}`}
                   >
                     {t('formStepNext')}
                   </button>
@@ -401,14 +401,16 @@ export const BookingForm = ({
                     type="submit"
                     disabled={isSubmitting}
                     id="form-submit-btn"
-                    className={`flex-[1.6] btn-premium-tactile disabled:opacity-50 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all duration-300 flex justify-center items-center gap-2 ${!isSubmitting ? 'border-beam-active' : ''}`}
+                    className={`flex-[1.6] min-w-0 btn-premium-tactile disabled:opacity-50 py-3.5 px-2.5 sm:px-4 rounded-xl text-[10px] sm:text-xs uppercase font-bold tracking-wide sm:tracking-wider transition-all duration-300 flex justify-center items-center gap-1.5 sm:gap-2 leading-tight ${!isSubmitting ? 'border-beam-active' : ''}`}
                   >
                     {isSubmitting ? (
-                      <span className="w-4 h-4 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin flex-shrink-0" />
                     ) : (
                       <>
-                        <WhatsAppIcon className="w-4 h-4" />
-                        {t('formCtaWhatsApp')}
+                        <WhatsAppIcon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-center whitespace-normal break-words">
+                          {t('formCtaWhatsApp')}
+                        </span>
                       </>
                     )}
                   </button>
