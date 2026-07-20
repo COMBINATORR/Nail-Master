@@ -46,6 +46,8 @@
 .border-glow-card::before {
   border: 1px solid transparent;
   background:
+    linear-gradient(var(--card-bg, #120F17) 0 100%) padding-box,
+    linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
     var(--gradient-one, radial-gradient(at 80% 55%, hsla(268, 100%, 76%, 1) 0px, transparent 50%)) border-box,
     var(--gradient-two, radial-gradient(at 69% 34%, hsla(349, 100%, 74%, 1) 0px, transparent 50%)) border-box,
     var(--gradient-three, radial-gradient(at 8% 6%, hsla(136, 100%, 78%, 1) 0px, transparent 50%)) border-box,
@@ -57,24 +59,18 @@
 
   opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
 
-  /* Webkit prefix */
-  -webkit-mask-image: 
-    conic-gradient(from var(--cursor-angle) at center, #fff calc(var(--cone-spread) * 1%), transparent calc((var(--cone-spread) + 15) * 1%), transparent calc((100 - var(--cone-spread) - 15) * 1%), #fff calc((100 - var(--cone-spread)) * 1%)),
-    conic-gradient(from var(--cursor-angle) at center, #fff calc(var(--cone-spread) * 1%), transparent calc((var(--cone-spread) + 15) * 1%), transparent calc((100 - var(--cone-spread) - 15) * 1%), #fff calc((100 - var(--cone-spread)) * 1%));
-  -webkit-mask-clip: padding-box, border-box;
-  -webkit-mask-composite: destination-out;
-
-  /* Standard */
-  mask-image: 
-    conic-gradient(from var(--cursor-angle) at center, #fff calc(var(--cone-spread) * 1%), transparent calc((var(--cone-spread) + 15) * 1%), transparent calc((100 - var(--cone-spread) - 15) * 1%), #fff calc((100 - var(--cone-spread)) * 1%)),
-    conic-gradient(from var(--cursor-angle) at center, #fff calc(var(--cone-spread) * 1%), transparent calc((var(--cone-spread) + 15) * 1%), transparent calc((100 - var(--cone-spread) - 15) * 1%), #fff calc((100 - var(--cone-spread)) * 1%));
-  mask-clip: padding-box, border-box;
-  mask-composite: subtract;
+  mask-image:
+    conic-gradient(
+      from var(--cursor-angle) at center,
+      black calc(var(--cone-spread) * 1%),
+      transparent calc((var(--cone-spread) + 15) * 1%),
+      transparent calc((100 - var(--cone-spread) - 15) * 1%),
+      black calc((100 - var(--cone-spread)) * 1%)
+    );
 }
 
 /* colored mesh-gradient background fill near edges */
 .border-glow-card::after {
-  display: none;
   border: 1px solid transparent;
   background:
     var(--gradient-one, radial-gradient(at 80% 55%, hsla(268, 100%, 76%, 1) 0px, transparent 50%)) padding-box,
@@ -102,7 +98,6 @@
 
 /* outer glow layer */
 .border-glow-card > .edge-light {
-  display: none;
   inset: calc(var(--glow-padding) * -1);
   pointer-events: none;
   z-index: 1;
