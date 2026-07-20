@@ -78,22 +78,31 @@ export function useBooking({ lang, t, next10Days }) {
     return selectedServiceIds.some(hasNailCat) || selectedOptions.some(hasNailCat);
   }, [selectedServiceIds, selectedOptions]);
 
-  const totalPrice = useMemo(() => {
-    const sPrice = selectedServices.reduce((sum, svc) => sum + svc.price, 0);
-    const oPrice = selectedOptions.reduce((sum, id) => {
-      const o = optionsById[id];
-      return sum + (o ? o.price : 0);
-    }, 0);
-    return sPrice + oPrice;
-  }, [selectedServices, selectedOptions, optionsById]);
+  // Single pass for price + time (Jules #76) — multi-category cart keys already resolved
+  const { totalPrice, totalTime } = useMemo(() => {
+    let sPrice = 0;
+    let sTime = 0;
+    let oPrice = 0;
+    let oTime = 0;
 
-  const totalTime = useMemo(() => {
-    const sTime = selectedServices.reduce((sum, svc) => sum + svc.time, 0);
-    const oTime = selectedOptions.reduce((sum, id) => {
-      const o = optionsById[id];
-      return sum + (o ? o.time : 0);
-    }, 0);
-    return sTime + oTime;
+    for (let i = 0; i < selectedServices.length; i++) {
+      const svc = selectedServices[i];
+      sPrice += svc.price || 0;
+      sTime += svc.time || 0;
+    }
+
+    for (let i = 0; i < selectedOptions.length; i++) {
+      const o = optionsById[selectedOptions[i]];
+      if (o) {
+        oPrice += o.price || 0;
+        oTime += o.time || 0;
+      }
+    }
+
+    return {
+      totalPrice: sPrice + oPrice,
+      totalTime: sTime + oTime,
+    };
   }, [selectedServices, selectedOptions, optionsById]);
 
   const fmtTime = (m) => {
