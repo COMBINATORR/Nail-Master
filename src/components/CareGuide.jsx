@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { careTipsData } from '../data/careRules';
-import ScrollStack, { ScrollStackItem } from './ui/ScrollStack';
-import { mobileStackProps } from './ui/scrollStackDefaults';
+import StickyStack, { StickyStackItem } from './ui/StickyStack';
 import { useIsMobileStack } from '../hooks/useMediaQuery';
 
 const textPrimary = 'text-[var(--text-primary)]';
@@ -44,7 +43,6 @@ export const CareGuide = () => {
           {t('careSubtitle')}
         </p>
 
-        {/* Interactive Care Tabs */}
         <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl liquid-glass mx-auto">
           {['manicure', 'pedicure', 'sugaring'].map((tab) => {
             const isActive = activeCareTab === tab;
@@ -66,13 +64,13 @@ export const CareGuide = () => {
         </div>
 
         {isMobile ? (
-          <ScrollStack key={activeCareTab} {...mobileStackProps}>
+          <StickyStack key={activeCareTab}>
             {tips.map((tip, index) => (
-              <ScrollStackItem key={`${activeCareTab}-${index}`}>
+              <StickyStackItem key={`${activeCareTab}-${index}`}>
                 <CareTipCard tip={tip} />
-              </ScrollStackItem>
+              </StickyStackItem>
             ))}
-          </ScrollStack>
+          </StickyStack>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {tips.map((tip, index) => (

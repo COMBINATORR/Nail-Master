@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import BorderGlow from './ui/BorderGlow';
-import ScrollStack, { ScrollStackItem } from './ui/ScrollStack';
-import { mobileStackProps } from './ui/scrollStackDefaults';
+import StickyStack, { StickyStackItem } from './ui/StickyStack';
 import { useIsMobileStack } from '../hooks/useMediaQuery';
 
 const textPrimary = 'text-[var(--text-primary)]';
@@ -60,13 +59,13 @@ export const Guarantees = () => {
         </p>
 
         {isMobile ? (
-          <ScrollStack {...mobileStackProps}>
+          <StickyStack>
             {cards.map((g) => (
-              <ScrollStackItem key={g.badge}>
+              <StickyStackItem key={g.badge}>
                 <GuaranteeCard {...g} />
-              </ScrollStackItem>
+              </StickyStackItem>
             ))}
-          </ScrollStack>
+          </StickyStack>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {cards.map((g) => (

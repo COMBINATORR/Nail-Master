@@ -1469,9 +1469,12 @@ header.scrolled-capsule > div {
   will-change: opacity, transform;
 }
 
+/* transform: none is required — any transform (even translateY(0))
+   creates a containing block and breaks position:sticky descendants */
 .reveal-item.revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  will-change: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1479,6 +1482,7 @@ header.scrolled-capsule > div {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+    will-change: auto !important;
   }
 }
 
