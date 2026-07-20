@@ -1,12 +1,46 @@
 import { useTranslation } from 'react-i18next';
 import BorderGlow from './ui/BorderGlow';
+import ScrollStack, { ScrollStackItem } from './ui/ScrollStack';
+import { mobileStackProps } from './ui/scrollStackDefaults';
+import { useIsMobileStack } from '../hooks/useMediaQuery';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const border = 'border-[var(--border-color)]';
 
+const TrustCard = ({ badge, title, desc }) => (
+  <BorderGlow
+    edgeSensitivity={35}
+    glowColor="40 80 60"
+    backgroundColor="var(--bg-card)"
+    borderRadius={16}
+    glowRadius={30}
+    glowIntensity={1.2}
+    coneSpread={25}
+    colors={['var(--beam-color-1)', 'var(--beam-color-2, var(--accent))', 'var(--accent)']}
+    className="w-full"
+  >
+    <div className="flex flex-col gap-4 p-5 h-full">
+      <div className="flex justify-between items-center">
+        <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">
+          {badge}
+        </span>
+      </div>
+      <div>
+        <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} mb-2`}>
+          {title}
+        </h3>
+        <p className={`${textSecondary} text-xs leading-relaxed`}>
+          {desc}
+        </p>
+      </div>
+    </div>
+  </BorderGlow>
+);
+
 export const Trust = () => {
   const { t } = useTranslation();
+  const isMobile = useIsMobileStack();
 
   const cards = [
     { badge: '01', title: t('trust1Title'), desc: t('trust1Desc') },
@@ -24,38 +58,21 @@ export const Trust = () => {
           {t('trustSubtitle')}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {cards.map((card) => (
-            <BorderGlow
-              key={card.badge}
-              edgeSensitivity={35}
-              glowColor="40 80 60"
-              backgroundColor="var(--bg-card)"
-              borderRadius={16}
-              glowRadius={30}
-              glowIntensity={1.2}
-              coneSpread={25}
-              colors={['var(--beam-color-1)', 'var(--beam-color-2, var(--accent))', 'var(--accent)']}
-              className="w-full"
-            >
-              <div className="flex flex-col gap-4 p-5 h-full">
-                <div className="flex justify-between items-center">
-                  <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">
-                    {card.badge}
-                  </span>
-                </div>
-                <div>
-                  <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} mb-2`}>
-                    {card.title}
-                  </h3>
-                  <p className={`${textSecondary} text-xs leading-relaxed`}>
-                    {card.desc}
-                  </p>
-                </div>
-              </div>
-            </BorderGlow>
-          ))}
-        </div>
+        {isMobile ? (
+          <ScrollStack {...mobileStackProps}>
+            {cards.map((card) => (
+              <ScrollStackItem key={card.badge}>
+                <TrustCard {...card} />
+              </ScrollStackItem>
+            ))}
+          </ScrollStack>
+        ) : (
+          <div className="grid md:grid-cols-3 gap-4">
+            {cards.map((card) => (
+              <TrustCard key={card.badge} {...card} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

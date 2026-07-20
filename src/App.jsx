@@ -148,6 +148,7 @@ export default function App() {
         setTheme={setTheme}
         isDayTheme={isDayTheme}
         isNightTheme={isNightTheme}
+        isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
         isScrolled={isScrolled}
         isScrolledCapsule={isScrolledCapsule}
