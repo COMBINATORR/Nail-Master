@@ -1,37 +1,15 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { careTipsData } from '../data/careRules';
-import StickyStack, { StickyStackItem } from './ui/StickyStack';
-import { useIsMobileStack } from '../hooks/useMediaQuery';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const border = 'border-[var(--border-color)]';
 
-const CareTipCard = ({ tip }) => (
-  <div className="liquid-glass liquid-glass-hover flex flex-col gap-4 p-5 rounded-2xl">
-    <div className="flex justify-between items-center">
-      <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">
-        {tip.badge}
-      </span>
-    </div>
-    <div>
-      <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} mb-2`}>
-        {tip.title}
-      </h3>
-      <p className={`${textSecondary} text-xs leading-relaxed`}>
-        {tip.desc}
-      </p>
-    </div>
-  </div>
-);
-
 export const CareGuide = () => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language || 'ru';
-  const isMobile = useIsMobileStack();
   const [activeCareTab, setActiveCareTab] = useState('manicure');
-  const tips = careTipsData[lang]?.[activeCareTab] || careTipsData.ru[activeCareTab] || [];
 
   return (
     <section id="care-guide" className={`border-b ${border} py-14 lg:py-20`}>
@@ -43,6 +21,7 @@ export const CareGuide = () => {
           {t('careSubtitle')}
         </p>
 
+        {/* Interactive Care Tabs */}
         <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl liquid-glass mx-auto">
           {['manicure', 'pedicure', 'sugaring'].map((tab) => {
             const isActive = activeCareTab === tab;
@@ -63,21 +42,31 @@ export const CareGuide = () => {
           })}
         </div>
 
-        {isMobile ? (
-          <StickyStack key={activeCareTab}>
-            {tips.map((tip, index) => (
-              <StickyStackItem key={`${activeCareTab}-${index}`}>
-                <CareTipCard tip={tip} />
-              </StickyStackItem>
-            ))}
-          </StickyStack>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {tips.map((tip, index) => (
-              <CareTipCard key={`${activeCareTab}-${index}`} tip={tip} />
-            ))}
-          </div>
-        )}
+        {/* Tips Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {careTipsData[lang][activeCareTab].map((tip, index) => {
+            return (
+              <div
+                key={index}
+                className="liquid-glass liquid-glass-hover flex flex-col gap-4 p-5 rounded-2xl"
+              >
+                <div className="flex justify-between items-center">
+                  <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">
+                    {tip.badge}
+                  </span>
+                </div>
+                <div>
+                  <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} mb-2`}>
+                    {tip.title}
+                  </h3>
+                  <p className={`${textSecondary} text-xs leading-relaxed`}>
+                    {tip.desc}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
