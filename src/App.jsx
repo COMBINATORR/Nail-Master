@@ -98,14 +98,20 @@ function AppContent() {
   useEffect(() => {
     if (leafletLoaded) return;
 
-    const interval = setInterval(() => {
+    if (typeof window !== 'undefined' && window.L) {
+      // eslint-disable-next-line
+      setLeafletLoaded(true);
+      return;
+    }
+
+    const handleLoad = () => {
       if (typeof window !== 'undefined' && window.L) {
         setLeafletLoaded(true);
-        clearInterval(interval);
       }
-    }, 50);
+    };
 
-    return () => clearInterval(interval);
+    window.addEventListener('load', handleLoad);
+    return () => window.removeEventListener('load', handleLoad);
   }, [leafletLoaded]);
 
   const next10Days = useMemo(() => getNext10Days(lang), [lang]);
