@@ -2,6 +2,39 @@ import { useState, useMemo } from 'react';
 import { categories, nailShapes } from '../data';
 import { generateWhatsAppText } from '../whatsapp';
 
+/** Composite key so manicure/pedicure options with same local id don't collide */
+export const itemKey = (categoryId, id) => `${categoryId}:${id}`;
+
+const buildCatalog = () => {
+  const servicesByKey = {};
+  const optionsByKey = {};
+  for (const cat of Object.values(categories)) {
+    for (const svc of cat.services) {
+      const key = itemKey(cat.id, svc.id);
+      servicesByKey[key] = {
+        ...svc,
+        key,
+        categoryId: cat.id,
+        categoryNameKey: cat.nameKey,
+      };
+    }
+    for (const opt of cat.options || []) {
+      const key = itemKey(cat.id, opt.id);
+      optionsByKey[key] = {
+        ...opt,
+        key,
+        categoryId: cat.id,
+        categoryNameKey: cat.nameKey,
+      };
+    }
+  }
+  return { servicesByKey, optionsByKey };
+};
+
+const CATALOG = buildCatalog();
+
+const categoryOfKey = (key) => (typeof key === 'string' ? key.split(':')[0] : '');
+
 export function useBooking({ lang, t, next10Days }) {
   const [activeCategory, setActiveCategory] = useState('manicure');
   const [selectedServiceIds, setSelectedServiceIds] = useState([]);
@@ -17,18 +50,39 @@ export function useBooking({ lang, t, next10Days }) {
   const [visitMode, setVisitMode] = useState('relax');
 
   const catObj = categories[activeCategory];
+  const optionsById = CATALOG.optionsByKey;
 
-  const optionsById = useMemo(() => catObj?.options?.reduce((acc, opt) => {
-    acc[opt.id] = opt;
-    return acc;
-  }, {}) || {}, [catObj]);
+  const selectedServices = useMemo(
+    () => selectedServiceIds.map((k) => CATALOG.servicesByKey[k]).filter(Boolean),
+    [selectedServiceIds]
+  );
 
-  const selectedServices = useMemo(() => catObj.services.filter(s => selectedServiceIds.includes(s.id)), [catObj, selectedServiceIds]);
+  const categoryCounts = useMemo(() => {
+    const counts = { manicure: 0, pedicure: 0, sugaring: 0 };
+    for (const id of selectedServiceIds) {
+      const c = categoryOfKey(id);
+      if (c in counts) counts[c] += 1;
+    }
+    for (const id of selectedOptions) {
+      const c = categoryOfKey(id);
+      if (c in counts) counts[c] += 1;
+    }
+    return counts;
+  }, [selectedServiceIds, selectedOptions]);
+
+  const needsNailShape = useMemo(() => {
+    const hasNailCat = (key) => {
+      const c = categoryOfKey(key);
+      return c === 'manicure' || c === 'pedicure';
+    };
+    return selectedServiceIds.some(hasNailCat) || selectedOptions.some(hasNailCat);
+  }, [selectedServiceIds, selectedOptions]);
 
   const totalPrice = useMemo(() => {
     const sPrice = selectedServices.reduce((sum, svc) => sum + svc.price, 0);
     const oPrice = selectedOptions.reduce((sum, id) => {
-      const o = optionsById[id]; return sum + (o ? o.price : 0);
+      const o = optionsById[id];
+      return sum + (o ? o.price : 0);
     }, 0);
     return sPrice + oPrice;
   }, [selectedServices, selectedOptions, optionsById]);
@@ -36,20 +90,31 @@ export function useBooking({ lang, t, next10Days }) {
   const totalTime = useMemo(() => {
     const sTime = selectedServices.reduce((sum, svc) => sum + svc.time, 0);
     const oTime = selectedOptions.reduce((sum, id) => {
-      const o = optionsById[id]; return sum + (o ? o.time : 0);
+      const o = optionsById[id];
+      return sum + (o ? o.time : 0);
     }, 0);
     return sTime + oTime;
   }, [selectedServices, selectedOptions, optionsById]);
 
   const fmtTime = (m) => {
-    const h = Math.floor(m / 60), mn = m % 60;
+    const h = Math.floor(m / 60);
+    const mn = m % 60;
     const hl = t('hour_short', 'ч');
     const ml = t('min_short', 'мин');
     return `${h > 0 ? `${h} ${hl} ` : ''}${mn > 0 ? `${mn} ${ml}` : ''}`;
   };
 
-  const toggleService = (id) => setSelectedServiceIds(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
-  const toggleOption = (id) => setSelectedOptions(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
+  /** Tabs only switch the list — cart keeps all categories */
+  const changeCategory = (id) => {
+    if (id === activeCategory) return;
+    setActiveCategory(id);
+  };
+
+  const toggleService = (key) =>
+    setSelectedServiceIds((p) => (p.includes(key) ? p.filter((x) => x !== key) : [...p, key]));
+
+  const toggleOption = (key) =>
+    setSelectedOptions((p) => (p.includes(key) ? p.filter((x) => x !== key) : [...p, key]));
 
   const handleCalculatorCta = () => {
     document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
@@ -79,21 +144,19 @@ export function useBooking({ lang, t, next10Days }) {
     const waText = generateWhatsAppText({
       includeNameAndPhone: true,
       t: (key, defaultValue) => t(key, defaultValue),
-      catObj,
       selectedServices,
       selectedOptions,
       optionsById,
       nailShape,
       nailShapes,
-      activeCategory,
-      lang,
+      needsNailShape,
       visitMode,
       next10Days,
       selectedDate,
       selectedTime,
       totalPrice,
       name,
-      phone
+      phone,
     });
     const waUrl = `https://wa.me/77016698086?text=${encodeURIComponent(waText)}`;
 
@@ -118,20 +181,40 @@ export function useBooking({ lang, t, next10Days }) {
   };
 
   return {
-    activeCategory, setActiveCategory,
-    selectedServiceIds, setSelectedServiceIds,
-    selectedOptions, setSelectedOptions,
-    selectedDate, setSelectedDate,
-    selectedTime, setSelectedTime,
-    phone, setPhone,
-    name, setName,
-    showModal, setShowModal,
-    isSubmitting, setIsSubmitting,
-    nailShape, setNailShape,
-    visitMode, setVisitMode,
-    catObj, optionsById, selectedServices,
-    totalPrice, totalTime, fmtTime,
-    toggleService, toggleOption,
-    handleCalculatorCta, handleSubmit, handleModalClose
+    activeCategory,
+    setActiveCategory: changeCategory,
+    selectedServiceIds,
+    setSelectedServiceIds,
+    selectedOptions,
+    setSelectedOptions,
+    selectedDate,
+    setSelectedDate,
+    selectedTime,
+    setSelectedTime,
+    phone,
+    setPhone,
+    name,
+    setName,
+    showModal,
+    setShowModal,
+    isSubmitting,
+    setIsSubmitting,
+    nailShape,
+    setNailShape,
+    visitMode,
+    setVisitMode,
+    catObj,
+    optionsById,
+    selectedServices,
+    categoryCounts,
+    needsNailShape,
+    totalPrice,
+    totalTime,
+    fmtTime,
+    toggleService,
+    toggleOption,
+    handleCalculatorCta,
+    handleSubmit,
+    handleModalClose,
   };
 }
