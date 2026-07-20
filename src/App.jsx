@@ -41,13 +41,11 @@ export const getNext10Days = (lang) => {
 
   const now = new Date();
   now.setHours(0, 0, 0, 0);
-  let currentEpoch = now.getTime();
 
   const next10Days = [];
+  const date = new Date(now.getTime());
 
   for (let i = 0; i < 10; i++) {
-    const date = new Date(currentEpoch);
-
     const dayNum = date.getDate();
     const monthNum = date.getMonth() + 1;
     const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
@@ -66,9 +64,7 @@ export const getNext10Days = (lang) => {
       formatted: formattedDate
     });
 
-    const newDate = new Date(currentEpoch);
-    newDate.setDate(newDate.getDate() + 1);
-    currentEpoch = newDate.getTime();
+    date.setDate(date.getDate() + 1);
   }
 
   return next10Days;
