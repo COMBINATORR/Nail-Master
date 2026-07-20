@@ -138,7 +138,8 @@ export const Portfolio = () => {
             </div>
 
             {/* Slide Line Divider */}
-            <div 
+            <div
+              data-testid="slide-line"
               className="absolute top-0 bottom-0 w-[1.5px] bg-gradient-to-b from-bronze-400 via-bronze-500 to-bronze-600 z-30 cursor-ew-resize shadow-[0_0_10px_rgba(197,168,128,0.5)]"
               style={{ left: `${sliderPosition}%` }}
             >
