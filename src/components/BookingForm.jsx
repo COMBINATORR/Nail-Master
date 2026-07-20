@@ -43,14 +43,20 @@ export const BookingForm = ({
   }, [selectedDate, selectedTime, busySlots, setSelectedTime]);
 
   const servicesLine = useMemo(() => {
-    const parts = [
-      ...selectedServices.map((s) => t(s.nameKey)),
-      ...selectedOptions.map((id) => {
-        const o = optionsById[id];
-        return o ? t(o.nameKey) : null;
-      }).filter(Boolean),
-    ];
-    return parts.join(' · ') || '—';
+    if (selectedServices.length === 0 && selectedOptions.length === 0) {
+      return '—';
+    }
+    const parts = [];
+    for (let i = 0; i < selectedServices.length; i++) {
+      parts.push(t(selectedServices[i].nameKey));
+    }
+    for (let i = 0; i < selectedOptions.length; i++) {
+      const o = optionsById[selectedOptions[i]];
+      if (o) {
+        parts.push(t(o.nameKey));
+      }
+    }
+    return parts.length > 0 ? parts.join(' · ') : '—';
   }, [selectedServices, selectedOptions, optionsById, t]);
 
   const dateLine = useMemo(() => {
