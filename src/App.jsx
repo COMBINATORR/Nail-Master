@@ -133,6 +133,7 @@ function AppContent() {
     nailShape, setNailShape,
     visitMode, setVisitMode,
     selectedServices, optionsById,
+    categoryCounts, needsNailShape,
     totalPrice, totalTime, fmtTime,
     toggleService, toggleOption,
     handleCalculatorCta, handleSubmit, handleModalClose
@@ -197,6 +198,8 @@ function AppContent() {
           handleCalculatorCta={handleCalculatorCta}
           selectedServices={selectedServices}
           optionsById={optionsById}
+          categoryCounts={categoryCounts}
+          needsNailShape={needsNailShape}
         />
       </div>
 

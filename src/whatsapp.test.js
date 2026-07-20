@@ -32,12 +32,23 @@ describe('generateWhatsAppText', () => {
   const defaultProps = {
     includeNameAndPhone: false,
     t: mockT,
-    catObj: { nameKey: 'catManicureName' },
-    selectedServices: [{ nameKey: 'serviceManicureClassicName' }],
-    selectedOptions: ['design'],
-    optionsById: { design: { nameKey: 'optManiDesign' } },
+    catObj: { nameKey: 'catManicureName', id: 'manicure' },
+    selectedServices: [{
+      nameKey: 'serviceManicureClassicName',
+      categoryId: 'manicure',
+      categoryNameKey: 'catManicureName',
+    }],
+    selectedOptions: ['manicure:design'],
+    optionsById: {
+      'manicure:design': {
+        nameKey: 'optManiDesign',
+        categoryId: 'manicure',
+        categoryNameKey: 'catManicureName',
+      },
+    },
     nailShape: 'oval',
     nailShapes: mockNailShapes,
+    needsNailShape: true,
     activeCategory: 'manicure',
     lang: 'en',
     visitMode: 'relax',
@@ -99,14 +110,52 @@ describe('generateWhatsAppText', () => {
     expect(text).toContain('Запись на: Oct 27, Fri в 14:00. Режим: Душевная беседа');
   });
 
-  it('handles sugaring category by setting nail shape to not required', () => {
+  it('handles sugaring-only cart by setting nail shape to not required', () => {
     const props = {
       ...defaultProps,
+      needsNailShape: false,
       activeCategory: 'sugaring',
+      selectedServices: [{
+        nameKey: 'serviceSugarBikiniName',
+        categoryId: 'sugaring',
+        categoryNameKey: 'catSugaringName',
+      }],
+      selectedOptions: [],
+      optionsById: {},
     };
+    mockTranslations.serviceSugarBikiniName = 'Bikini';
+    mockTranslations.catSugaringName = 'Sugaring';
     const text = generateWhatsAppText(props);
 
     expect(text).toContain('Nail shape: Not required');
+  });
+
+  it('combines multiple categories in one WhatsApp message', () => {
+    const props = {
+      ...defaultProps,
+      selectedServices: [
+        {
+          nameKey: 'serviceManicureClassicName',
+          categoryId: 'manicure',
+          categoryNameKey: 'catManicureName',
+        },
+        {
+          nameKey: 'servicePediExpressName',
+          categoryId: 'pedicure',
+          categoryNameKey: 'catPedicureName',
+        },
+      ],
+      selectedOptions: [],
+      optionsById: {},
+      totalPrice: 12000,
+    };
+    mockTranslations.servicePediExpressName = 'Express Pedicure';
+    mockTranslations.catPedicureName = 'Pedicure';
+    const text = generateWhatsAppText(props);
+
+    expect(text).toContain('Hygienic Manicure (Manicure)');
+    expect(text).toContain('Express Pedicure (Pedicure)');
+    expect(text).toContain('Nail shape: Oval');
   });
 
   it('handles missing date gracefully', () => {

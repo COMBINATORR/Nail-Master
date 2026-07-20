@@ -206,18 +206,25 @@ export const BookingForm = ({
                     ) : (
                       <>
                         {selectedServices.map((svc) => (
-                          <div key={svc.id} className={`flex justify-between font-bold ${textPrimary} mb-1`}>
-                            <span>{t(svc.nameKey)}</span>
-                            <span className="text-bronze-500">{svc.price.toLocaleString()} ₸</span>
+                          <div key={svc.key || svc.id} className={`flex justify-between font-bold ${textPrimary} mb-1 gap-2`}>
+                            <span className="leading-snug">
+                              {svc.categoryNameKey ? (
+                                <span className="text-bronze-400/80 font-semibold text-[10px] uppercase tracking-wider mr-1.5">
+                                  {t(svc.categoryNameKey)}
+                                </span>
+                              ) : null}
+                              {t(svc.nameKey)}
+                            </span>
+                            <span className="text-bronze-500 flex-shrink-0">{svc.price.toLocaleString()} ₸</span>
                           </div>
                         ))}
                         {selectedOptions.map((id) => {
                           const o = optionsById[id];
                           if (!o) return null;
                           return (
-                            <div key={id} className={`flex justify-between text-xs ${textMuted} pl-3`}>
+                            <div key={id} className={`flex justify-between text-xs ${textMuted} pl-3 gap-2`}>
                               <span>+ {t(o.nameKey)}</span>
-                              <span>+{o.price.toLocaleString()} ₸</span>
+                              <span className="flex-shrink-0">+{o.price.toLocaleString()} ₸</span>
                             </div>
                           );
                         })}

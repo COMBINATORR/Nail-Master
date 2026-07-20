@@ -6,7 +6,6 @@ import { NailShapeSelector } from './calculator/NailShapeSelector';
 import { ExtraOptions } from './calculator/ExtraOptions';
 import { CalculatorSummary } from './calculator/CalculatorSummary';
 
-const bgAlt = 'bg-[var(--bg-alt)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const border = 'border-[var(--border-color)]';
@@ -25,24 +24,37 @@ export const Calculator = ({
   fmtTime,
   handleCalculatorCta,
   selectedServices,
-  optionsById
+  optionsById,
+  categoryCounts = {},
+  needsNailShape = false,
 }) => {
   const { t } = useTranslation();
   const catObj = categories[activeCategory];
+  const hasSelection = selectedServices.length > 0 || selectedOptions.length > 0;
 
   return (
-    <section id="services" className={`${bgAlt} border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
+    <section id="services" className={`border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2 text-center`}>{t('servicesTitle')}</h2>
-        <p className={`${textSecondary} text-sm mb-10 text-center max-w-2xl mx-auto`}>{t('servicesSubtitle')}</p>
+        <div className="flex justify-center mb-4">
+          <span className="liquid-glass-pill font-display text-[8px] tracking-[0.2em] text-bronze-500 font-bold uppercase px-3 py-0.5 rounded-full">
+            {t('servicesPill')}
+          </span>
+        </div>
+        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2 text-center`}>
+          {t('servicesTitle')}
+        </h2>
+        <p className={`${textSecondary} text-sm mb-10 text-center max-w-2xl mx-auto`}>
+          {t('servicesSubtitle')}
+        </p>
 
         <CategorySelector
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
+          categoryCounts={categoryCounts}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          <div className="space-y-8">
+          <div key={activeCategory} className="space-y-8 calc-panel-enter">
             <ServiceList
               catObj={catObj}
               selectedServiceIds={selectedServiceIds}
@@ -73,6 +85,9 @@ export const Calculator = ({
             totalTime={totalTime}
             fmtTime={fmtTime}
             handleCalculatorCta={handleCalculatorCta}
+            nailShape={nailShape}
+            needsNailShape={needsNailShape}
+            hasSelection={hasSelection}
           />
         </div>
       </div>

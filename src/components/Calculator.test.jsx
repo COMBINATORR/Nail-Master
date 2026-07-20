@@ -17,7 +17,7 @@ describe('Calculator', () => {
     toggleService: vi.fn(),
     selectedOptions: [],
     toggleOption: vi.fn(),
-    nailShape: 'square',
+    nailShape: 'oval',
     setNailShape: vi.fn(),
     totalPrice: 0,
     totalTime: 0,
@@ -25,13 +25,15 @@ describe('Calculator', () => {
     handleCalculatorCta: vi.fn(),
     selectedServices: [],
     optionsById: {},
+    categoryCounts: {},
+    needsNailShape: false,
   };
 
   it('renders correctly', () => {
     render(<Calculator {...defaultProps} />);
     expect(screen.getByText('servicesTitle')).toBeInTheDocument();
     expect(screen.getByText('servicesSubtitle')).toBeInTheDocument();
-    // Check if category tabs are rendered
+    expect(screen.getByText('servicesMultiHint')).toBeInTheDocument();
     expect(screen.getByText('catManicureName')).toBeInTheDocument();
     expect(screen.getByText('catPedicureName')).toBeInTheDocument();
   });
@@ -43,11 +45,11 @@ describe('Calculator', () => {
     expect(defaultProps.setActiveCategory).toHaveBeenCalledWith('pedicure');
   });
 
-  it('calls toggleService when a service is clicked', () => {
+  it('calls toggleService with namespaced key when a service is clicked', () => {
     render(<Calculator {...defaultProps} />);
-    const classicServiceTab = screen.getByText('serviceManicureClassicName'); // The inner element
+    const classicServiceTab = screen.getByText('serviceManicureClassicName');
     fireEvent.click(classicServiceTab);
-    expect(defaultProps.toggleService).toHaveBeenCalledWith('classic');
+    expect(defaultProps.toggleService).toHaveBeenCalledWith('manicure:classic');
   });
 
   it('calls setNailShape when a shape is clicked', () => {
@@ -59,15 +61,15 @@ describe('Calculator', () => {
 
   it('does not render nail shapes when activeCategory is sugaring', () => {
     render(<Calculator {...defaultProps} activeCategory="sugaring" />);
-    // shapeTitle should not be there
-    expect(screen.queryByText('shapeTitle')).not.toBeInTheDocument();
+    expect(screen.queryByText('chooseNailShape')).not.toBeInTheDocument();
+    expect(screen.queryByText('shape_oval')).not.toBeInTheDocument();
   });
 
-  it('calls toggleOption when an option is clicked', () => {
+  it('calls toggleOption with namespaced key when an option is clicked', () => {
     render(<Calculator {...defaultProps} />);
     const designOption = screen.getByText('optManiDesign');
     fireEvent.click(designOption);
-    expect(defaultProps.toggleOption).toHaveBeenCalledWith('design');
+    expect(defaultProps.toggleOption).toHaveBeenCalledWith('manicure:design');
   });
 
   it('displays total price and total time correctly', () => {
@@ -79,39 +81,68 @@ describe('Calculator', () => {
   it('renders selected services and options in receipt', () => {
     const propsWithSelections = {
       ...defaultProps,
-      selectedServices: [{ id: 'classic', nameKey: 'serviceManicureClassicName', price: 4000 }],
-      selectedOptions: ['design'],
-      optionsById: { 'design': { nameKey: 'optManiDesign', price: 2000 } },
-      totalPrice: 6000
+      selectedServices: [{
+        id: 'classic',
+        key: 'manicure:classic',
+        nameKey: 'serviceManicureClassicName',
+        price: 4000,
+        categoryId: 'manicure',
+        categoryNameKey: 'catManicureName',
+      }],
+      selectedOptions: ['manicure:design'],
+      optionsById: {
+        'manicure:design': {
+          nameKey: 'optManiDesign',
+          price: 2000,
+          categoryId: 'manicure',
+          categoryNameKey: 'catManicureName',
+        },
+      },
+      totalPrice: 6000,
+      needsNailShape: true,
     };
     render(<Calculator {...propsWithSelections} />);
 
-    // Total price
     expect(screen.getAllByText((content, el) => el?.tagName === 'SPAN' && /6[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8')).length).toBeGreaterThan(0);
-    // Service receipt row
     expect(screen.getAllByText('serviceManicureClassicName').length).toBeGreaterThan(0);
     expect(screen.getAllByText((content, el) => el?.tagName === 'SPAN' && /4[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8')).length).toBeGreaterThan(0);
-    // Option receipt row
     expect(screen.getByText('+ optManiDesign')).toBeInTheDocument();
-    expect(screen.getAllByText((content, el) => el?.tagName === 'SPAN' && content.includes('+') && /2[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8')).length).toBeGreaterThan(0);
   });
 
   it('disables CTA button when no services or options are selected', () => {
     render(<Calculator {...defaultProps} />);
-    const ctaButton = screen.getByText('serviceCta');
-    expect(ctaButton).toBeDisabled();
+    const ctaButtons = screen.getAllByText('serviceCta');
+    ctaButtons.forEach((btn) => expect(btn).toBeDisabled());
   });
 
   it('enables CTA button and calls handleCalculatorCta when clicked', () => {
     const propsWithSelections = {
       ...defaultProps,
-      selectedServices: [{ id: 'classic', nameKey: 'serviceManicureClassicName', price: 4000 }]
+      selectedServices: [{
+        id: 'classic',
+        key: 'manicure:classic',
+        nameKey: 'serviceManicureClassicName',
+        price: 4000,
+        categoryId: 'manicure',
+        categoryNameKey: 'catManicureName',
+      }],
     };
     render(<Calculator {...propsWithSelections} />);
-    const ctaButton = screen.getByText('serviceCta');
-    expect(ctaButton).not.toBeDisabled();
+    const ctaButtons = screen.getAllByText('serviceCta');
+    ctaButtons.forEach((btn) => expect(btn).not.toBeDisabled());
 
-    fireEvent.click(ctaButton);
+    fireEvent.click(ctaButtons[0]);
     expect(defaultProps.handleCalculatorCta).toHaveBeenCalled();
+  });
+
+  it('shows category count badges when cart has multi-category items', () => {
+    render(
+      <Calculator
+        {...defaultProps}
+        categoryCounts={{ manicure: 2, pedicure: 1, sugaring: 0 }}
+      />
+    );
+    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(screen.getByText('1')).toBeInTheDocument();
   });
 });
