@@ -4,7 +4,7 @@ export const borderGlowSiteProps = {
   glowColor: '40 55 58',
   backgroundColor: 'var(--border-glow-bg, #120F17)',
   borderRadius: 16,
-  glowRadius: 32,
+  glowRadius: 28,
   glowIntensity: 1,
   coneSpread: 22,
   colors: ['#cbb075', '#B89548', '#8c6c2e'],

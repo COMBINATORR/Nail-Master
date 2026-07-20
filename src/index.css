@@ -93,7 +93,7 @@
   user-select: none;
   filter: blur(12px) drop-shadow(0 0 14px rgba(255, 248, 240, 0.55));
   opacity: 0.85;
-  transform: scale(1.04);
+  /* no scale — was contributing to horizontal overflow on mobile */
 }
 
 .agt__fill {
@@ -105,17 +105,32 @@
 
 html {
   scroll-behavior: smooth;
+  /* Prevent mobile “light strip” on the right from horizontal overflow */
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
-  background-color: #0e0e0e;
+  /* Match page canvas so any residual edge never shows browser chrome gap */
+  background-color: var(--bg-main, #0e0e0e);
   color: #f3f4f6;
   transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  position: relative;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  min-height: 100%;
 }
 
 /* ─── Light Theme Override ─── */
 body.light {
-  background-color: #f8f6f2;
+  background-color: var(--bg-main, #f8f6f2);
   color: #1E1B18;
   --color-charcoal-800: #292522;
   --color-charcoal-900: #1E1B18;
@@ -216,6 +231,8 @@ body.light .ambient-atmosphere {
 .content-layer {
   position: relative;
   z-index: 3;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .animate-fadeIn {

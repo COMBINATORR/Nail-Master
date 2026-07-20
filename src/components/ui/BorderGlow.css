@@ -170,6 +170,23 @@ body.theme-sage .border-glow-card {
   opacity: calc(var(--fill-opacity, 0.18) * (var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
 }
 
+/* Mobile: smaller outer bloom so glow doesn’t widen the page past 100% */
+@media (max-width: 767px) {
+  .border-glow-card--site {
+    /* still allow edge glow, but clip at section level via overflow-x on ancestors */
+    max-width: 100%;
+  }
+
+  .border-glow-card--site > .edge-light {
+    /* shrink bleed from 32px → ~14px equivalent visual */
+    inset: -14px;
+  }
+
+  .border-glow-card--site > .edge-light::before {
+    inset: 14px;
+  }
+}
+
 /* Outer bloom: slightly gentler so dark theme doesn't flash white */
 .border-glow-card--site > .edge-light {
   mix-blend-mode: screen;
