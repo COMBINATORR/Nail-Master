@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import { Calculator } from './Calculator';
 
 // Mock react-i18next
@@ -29,57 +29,36 @@ describe('Calculator', () => {
     needsNailShape: false,
   };
 
+  const mobile = () => within(screen.getByTestId('calc-mobile'));
+
+  const goNext = () => {
+    fireEvent.click(mobile().getByText('formStepNext'));
+  };
+
   it('renders correctly', () => {
     render(<Calculator {...defaultProps} />);
     expect(screen.getByText('servicesTitle')).toBeInTheDocument();
     expect(screen.getByText('servicesSubtitle')).toBeInTheDocument();
-    expect(screen.getByText('servicesMultiHint')).toBeInTheDocument();
-    expect(screen.getByText('catManicureName')).toBeInTheDocument();
-    expect(screen.getByText('catPedicureName')).toBeInTheDocument();
+    expect(mobile().getByText('servicesMultiHint')).toBeInTheDocument();
+    expect(mobile().getByText('catManicureName')).toBeInTheDocument();
+    expect(mobile().getByText('catPedicureName')).toBeInTheDocument();
+    expect(mobile().getByText('calcStepService')).toBeInTheDocument();
   });
 
   it('calls setActiveCategory when a category is clicked', () => {
     render(<Calculator {...defaultProps} />);
-    const pedicureTab = screen.getByText('catPedicureName');
-    fireEvent.click(pedicureTab);
+    fireEvent.click(mobile().getByText('catPedicureName'));
     expect(defaultProps.setActiveCategory).toHaveBeenCalledWith('pedicure');
   });
 
   it('calls toggleService with namespaced key when a service is clicked', () => {
     render(<Calculator {...defaultProps} />);
-    const classicServiceTab = screen.getByText('serviceManicureClassicName');
-    fireEvent.click(classicServiceTab);
+    fireEvent.click(mobile().getByText('serviceManicureClassicName'));
     expect(defaultProps.toggleService).toHaveBeenCalledWith('manicure:classic');
   });
 
-  it('calls setNailShape when a shape is clicked', () => {
-    render(<Calculator {...defaultProps} />);
-    const ovalShape = screen.getByText('shape_oval');
-    fireEvent.click(ovalShape);
-    expect(defaultProps.setNailShape).toHaveBeenCalledWith('oval');
-  });
-
-  it('does not render nail shapes when activeCategory is sugaring', () => {
-    render(<Calculator {...defaultProps} activeCategory="sugaring" />);
-    expect(screen.queryByText('chooseNailShape')).not.toBeInTheDocument();
-    expect(screen.queryByText('shape_oval')).not.toBeInTheDocument();
-  });
-
-  it('calls toggleOption with namespaced key when an option is clicked', () => {
-    render(<Calculator {...defaultProps} />);
-    const designOption = screen.getByText('optManiDesign');
-    fireEvent.click(designOption);
-    expect(defaultProps.toggleOption).toHaveBeenCalledWith('manicure:design');
-  });
-
-  it('displays total price and total time correctly', () => {
-    render(<Calculator {...defaultProps} totalPrice={5000} totalTime={90} />);
-    expect(screen.getByText((content, el) => el?.tagName === 'SPAN' && /5[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8'))).toBeInTheDocument();
-    expect(screen.getByText((content) => content.includes('90 min') && (content.includes('\u2248') || content.includes('≈')))).toBeInTheDocument();
-  });
-
-  it('renders selected services and options in receipt', () => {
-    const propsWithSelections = {
+  it('walks mobile steps: service → shape → options → summary', () => {
+    const props = {
       ...defaultProps,
       selectedServices: [{
         id: 'classic',
@@ -89,34 +68,58 @@ describe('Calculator', () => {
         categoryId: 'manicure',
         categoryNameKey: 'catManicureName',
       }],
-      selectedOptions: ['manicure:design'],
-      optionsById: {
-        'manicure:design': {
-          nameKey: 'optManiDesign',
-          price: 2000,
-          categoryId: 'manicure',
-          categoryNameKey: 'catManicureName',
-        },
-      },
-      totalPrice: 6000,
+      totalPrice: 4000,
+      totalTime: 60,
       needsNailShape: true,
     };
-    render(<Calculator {...propsWithSelections} />);
+    render(<Calculator {...props} />);
 
-    expect(screen.getAllByText((content, el) => el?.tagName === 'SPAN' && /6[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8')).length).toBeGreaterThan(0);
-    expect(screen.getAllByText('serviceManicureClassicName').length).toBeGreaterThan(0);
-    expect(screen.getAllByText((content, el) => el?.tagName === 'SPAN' && /4[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8')).length).toBeGreaterThan(0);
-    expect(screen.getByText('+ optManiDesign')).toBeInTheDocument();
+    expect(mobile().getByText('serviceManicureClassicName')).toBeInTheDocument();
+    expect(mobile().queryByText('shape_oval')).not.toBeInTheDocument();
+
+    goNext();
+    expect(mobile().getByText('shape_oval')).toBeInTheDocument();
+    fireEvent.click(mobile().getByText('shape_oval'));
+    expect(props.setNailShape).toHaveBeenCalledWith('oval');
+
+    goNext();
+    expect(mobile().getByText('optManiDesign')).toBeInTheDocument();
+    fireEvent.click(mobile().getByText('optManiDesign'));
+    expect(props.toggleOption).toHaveBeenCalledWith('manicure:design');
+
+    goNext();
+    expect(mobile().getByText('serviceCta')).toBeInTheDocument();
+    expect(mobile().getByText('calcAddMore')).toBeInTheDocument();
   });
 
-  it('disables CTA button when no services or options are selected', () => {
+  it('skips nail shape step for sugaring', () => {
+    const props = {
+      ...defaultProps,
+      activeCategory: 'sugaring',
+      selectedServices: [{
+        id: 'bikini',
+        key: 'sugaring:bikini',
+        nameKey: 'serviceSugarBikiniName',
+        price: 5000,
+        categoryId: 'sugaring',
+        categoryNameKey: 'catSugaringName',
+      }],
+      totalPrice: 5000,
+    };
+    render(<Calculator {...props} />);
+
+    expect(mobile().queryByText('calcStepShape')).not.toBeInTheDocument();
+    goNext();
+    expect(mobile().queryByText('shape_oval')).not.toBeInTheDocument();
+  });
+
+  it('disables next on first step without selection', () => {
     render(<Calculator {...defaultProps} />);
-    const ctaButtons = screen.getAllByText('serviceCta');
-    ctaButtons.forEach((btn) => expect(btn).toBeDisabled());
+    expect(mobile().getByText('formStepNext')).toBeDisabled();
   });
 
-  it('enables CTA button and calls handleCalculatorCta when clicked', () => {
-    const propsWithSelections = {
+  it('enables CTA on summary and calls handleCalculatorCta', () => {
+    const props = {
       ...defaultProps,
       selectedServices: [{
         id: 'classic',
@@ -126,13 +129,19 @@ describe('Calculator', () => {
         categoryId: 'manicure',
         categoryNameKey: 'catManicureName',
       }],
+      totalPrice: 4000,
+      totalTime: 60,
     };
-    render(<Calculator {...propsWithSelections} />);
-    const ctaButtons = screen.getAllByText('serviceCta');
-    ctaButtons.forEach((btn) => expect(btn).not.toBeDisabled());
+    render(<Calculator {...props} />);
 
-    fireEvent.click(ctaButtons[0]);
-    expect(defaultProps.handleCalculatorCta).toHaveBeenCalled();
+    goNext();
+    goNext();
+    goNext();
+
+    const cta = mobile().getByText('serviceCta');
+    expect(cta).not.toBeDisabled();
+    fireEvent.click(cta);
+    expect(props.handleCalculatorCta).toHaveBeenCalled();
   });
 
   it('shows category count badges when cart has multi-category items', () => {
@@ -142,7 +151,32 @@ describe('Calculator', () => {
         categoryCounts={{ manicure: 2, pedicure: 1, sugaring: 0 }}
       />
     );
-    expect(screen.getByText('2')).toBeInTheDocument();
-    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(mobile().getByLabelText('2')).toBeInTheDocument();
+    expect(mobile().getByLabelText('1')).toBeInTheDocument();
+  });
+
+  it('displays running total in mobile preview strip', () => {
+    render(
+      <Calculator
+        {...defaultProps}
+        selectedServices={[{
+          id: 'classic',
+          key: 'manicure:classic',
+          nameKey: 'serviceManicureClassicName',
+          price: 5000,
+          categoryId: 'manicure',
+          categoryNameKey: 'catManicureName',
+        }]}
+        totalPrice={5000}
+        totalTime={90}
+      />
+    );
+    expect(
+      mobile().getAllByText((content) => /5[\s\u00a0\u202f]?000/.test(content) && content.includes('₸')).length
+    ).toBeGreaterThan(0);
+    expect(
+      mobile().getAllByText((content) => content.includes('90 min')).length
+    ).toBeGreaterThan(0);
   });
 });
+

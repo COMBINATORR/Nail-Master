@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { nailShapes } from '../../data/nailShapes';
 
-export const NailShapeSelector = ({ activeCategory, nailShape, setNailShape }) => {
+export const NailShapeSelector = ({ activeCategory, nailShape, setNailShape, hideHeader = false }) => {
   const { t } = useTranslation();
 
   // Shape applies to hands/feet — hide only on sugaring tab
@@ -9,14 +9,16 @@ export const NailShapeSelector = ({ activeCategory, nailShape, setNailShape }) =
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4">
-        <span className="liquid-glass-pill font-display text-[9px] font-black tracking-widest text-bronze-500 uppercase px-2.5 py-0.5 rounded-full">
-          02
-        </span>
-        <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500">
-          {t('chooseNailShape')}
-        </h3>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center gap-2 mb-4">
+          <span className="liquid-glass-pill font-display text-[9px] font-black tracking-widest text-bronze-500 uppercase px-2.5 py-0.5 rounded-full">
+            02
+          </span>
+          <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500">
+            {t('chooseNailShape')}
+          </h3>
+        </div>
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3" role="radiogroup" aria-label={t('chooseNailShape')}>
         {nailShapes.map((shape) => {
           const isActive = nailShape === shape.id;

@@ -4,19 +4,21 @@ import { itemKey } from '../../hooks/useBooking';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 
-export const ServiceList = ({ catObj, selectedServiceIds, toggleService, fmtTime }) => {
+export const ServiceList = ({ catObj, selectedServiceIds, toggleService, fmtTime, hideHeader = false }) => {
   const { t } = useTranslation();
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4">
-        <span className="liquid-glass-pill font-display text-[9px] font-black tracking-widest text-bronze-500 uppercase px-2.5 py-0.5 rounded-full">
-          01
-        </span>
-        <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500">
-          {t('servicesSelectBase')}
-        </h3>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center gap-2 mb-4">
+          <span className="liquid-glass-pill font-display text-[9px] font-black tracking-widest text-bronze-500 uppercase px-2.5 py-0.5 rounded-full">
+            01
+          </span>
+          <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500">
+            {t('servicesSelectBase')}
+          </h3>
+        </div>
+      )}
       <div className="space-y-3" role="group" aria-label={t('servicesSelectBase')}>
         {catObj.services.map((svc) => {
           const key = itemKey(catObj.id, svc.id);

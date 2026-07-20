@@ -4,21 +4,23 @@ import { itemKey } from '../../hooks/useBooking';
 const textPrimary = 'text-[var(--text-primary)]';
 const textMuted = 'text-[var(--text-muted)]';
 
-export const ExtraOptions = ({ activeCategory, catObj, selectedOptions, toggleOption, fmtTime }) => {
+export const ExtraOptions = ({ activeCategory, catObj, selectedOptions, toggleOption, fmtTime, hideHeader = false }) => {
   const { t } = useTranslation();
   const stepLabel = activeCategory !== 'sugaring' ? '03' : '02';
   const title = activeCategory !== 'sugaring' ? t('extraOptions') : t('servicesSelectOptions');
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4">
-        <span className="liquid-glass-pill font-display text-[9px] font-black tracking-widest text-bronze-500 uppercase px-2.5 py-0.5 rounded-full">
-          {stepLabel}
-        </span>
-        <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500">
-          {title}
-        </h3>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center gap-2 mb-4">
+          <span className="liquid-glass-pill font-display text-[9px] font-black tracking-widest text-bronze-500 uppercase px-2.5 py-0.5 rounded-full">
+            {stepLabel}
+          </span>
+          <h3 className="font-display font-bold text-[10px] uppercase tracking-wider text-bronze-500">
+            {title}
+          </h3>
+        </div>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2" role="group" aria-label={title}>
         {catObj?.options?.map((opt) => {
           const key = itemKey(catObj.id, opt.id);

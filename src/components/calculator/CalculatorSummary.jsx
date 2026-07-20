@@ -19,6 +19,9 @@ export const CalculatorSummary = ({
   nailShape,
   needsNailShape,
   hasSelection,
+  showMobileBar = true,
+  compact = false,
+  hideBadges = false,
 }) => {
   const { t } = useTranslation();
   const empty = selectedServices.length === 0 && selectedOptions.length === 0;
@@ -55,11 +58,19 @@ export const CalculatorSummary = ({
       .concat([...map.values()].filter((g) => !CAT_ORDER.includes(g.categoryId)));
   }, [selectedServices, selectedOptions, optionsById]);
 
+  const shellClass = compact
+    ? 'relative'
+    : 'liquid-glass-strong rounded-2xl p-6 shadow-2xl relative overflow-hidden';
+
   return (
-    <div className="lg:sticky lg:top-24 lg:self-start space-y-4">
-      <div className="liquid-glass-strong rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-        <div className="absolute -top-8 -right-8 w-32 h-32 bg-bronze-500/5 rounded-full blur-2xl pointer-events-none" />
-        <div className="absolute -bottom-10 -left-6 w-28 h-28 bg-bronze-500/5 rounded-full blur-2xl pointer-events-none" />
+    <div className={compact ? 'space-y-4' : 'lg:sticky lg:top-24 lg:self-start space-y-4'}>
+      <div className={shellClass}>
+        {!compact && (
+          <>
+            <div className="absolute -top-8 -right-8 w-32 h-32 bg-bronze-500/5 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute -bottom-10 -left-6 w-28 h-28 bg-bronze-500/5 rounded-full blur-2xl pointer-events-none" />
+          </>
+        )}
 
         <div className="flex items-center justify-between gap-3 mb-5 relative">
           <h4 className="font-display font-black text-[10px] uppercase tracking-wider text-bronze-400">
@@ -151,30 +162,32 @@ export const CalculatorSummary = ({
         </button>
       </div>
 
-      <div className="liquid-glass rounded-2xl p-4 grid grid-cols-3 gap-3 text-center">
-        {[
-          { id: 'guarantee', label: t('badgeGuarantee'), role: 'var(--accent)' },
-          { id: 'sterility', label: t('badgeSterility'), role: 'var(--care)' },
-          { id: 'duration', label: t('badgeDuration'), role: 'var(--success)' },
-        ].map((b) => (
-          <div key={b.id} className="flex flex-col items-center gap-1.5">
-            <span style={{ color: b.role || 'var(--accent)' }}>
-              {b.id === 'guarantee' && (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><path d="m9 12 2 2 4-4"/></svg>
-              )}
-              {b.id === 'sterility' && (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden="true"><path d="M12 3v2m0 14v2M5.6 5.6l1.4 1.4m10 10 1.4 1.4M3 12h2m14 0h2M5.6 18.4l1.4-1.4m10-10 1.4-1.4"/><circle cx="12" cy="12" r="3"/></svg>
-              )}
-              {b.id === 'duration' && (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-              )}
-            </span>
-            <span className={`text-[9px] font-bold uppercase tracking-wider ${textMuted} leading-tight whitespace-pre-line`}>{b.label}</span>
-          </div>
-        ))}
-      </div>
+      {!hideBadges && (
+        <div className="liquid-glass rounded-2xl p-4 grid grid-cols-3 gap-3 text-center">
+          {[
+            { id: 'guarantee', label: t('badgeGuarantee'), role: 'var(--accent)' },
+            { id: 'sterility', label: t('badgeSterility'), role: 'var(--care)' },
+            { id: 'duration', label: t('badgeDuration'), role: 'var(--success)' },
+          ].map((b) => (
+            <div key={b.id} className="flex flex-col items-center gap-1.5">
+              <span style={{ color: b.role || 'var(--accent)' }}>
+                {b.id === 'guarantee' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><path d="m9 12 2 2 4-4"/></svg>
+                )}
+                {b.id === 'sterility' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden="true"><path d="M12 3v2m0 14v2M5.6 5.6l1.4 1.4m10 10 1.4 1.4M3 12h2m14 0h2M5.6 18.4l1.4-1.4m10-10 1.4-1.4"/><circle cx="12" cy="12" r="3"/></svg>
+                )}
+                {b.id === 'duration' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                )}
+              </span>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${textMuted} leading-tight whitespace-pre-line`}>{b.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
-      {hasSelection && (
+      {showMobileBar && hasSelection && (
         <div className="calc-mobile-bar lg:hidden fixed bottom-0 inset-x-0 z-30 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pointer-events-none">
           <div className="liquid-glass-strong rounded-2xl px-4 py-3 flex items-center justify-between gap-3 shadow-2xl pointer-events-auto max-w-lg mx-auto">
             <div className="min-w-0">
