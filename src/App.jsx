@@ -94,14 +94,34 @@ function AppContent() {
   useEffect(() => {
     if (leafletLoaded) return;
 
-    const interval = setInterval(() => {
-      if (typeof window !== 'undefined' && window.L) {
+    let cancelled = false;
+    const tryMark = () => {
+      if (!cancelled && typeof window !== 'undefined' && window.L) {
         setLeafletLoaded(true);
-        clearInterval(interval);
+        return true;
       }
-    }, 50);
+      return false;
+    };
 
-    return () => clearInterval(interval);
+    if (tryMark()) return undefined;
+
+    // Prefer load event (Jules #77); sparse poll only as fallback for late CDN scripts
+    const onLoad = () => {
+      tryMark();
+    };
+    window.addEventListener('load', onLoad);
+
+    const interval = setInterval(() => {
+      if (tryMark()) clearInterval(interval);
+    }, 250);
+    const maxTimer = setTimeout(() => clearInterval(interval), 10000);
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', onLoad);
+      clearInterval(interval);
+      clearTimeout(maxTimer);
+    };
   }, [leafletLoaded]);
 
   const next10Days = useMemo(() => getNext10Days(lang), [lang]);
