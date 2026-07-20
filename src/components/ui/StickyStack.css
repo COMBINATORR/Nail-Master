@@ -1,37 +1,33 @@
-/* Pure CSS sticky card stack — no JS transforms, no Lenis conflict.
-   Each card has a tall scroll runway; as you scroll, the next card
-   sticks over the previous one (one-after-another, not "all then assemble"). */
+/* CSS sticky card stack — tight spacing, no huge empty runways */
 
 .sticky-stack {
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .sticky-stack__slot {
-  /* One card "moment" per scroll stretch */
-  min-height: min(78vh, 34rem);
-  display: flex;
-  align-items: flex-start;
   position: relative;
-  /* Last slot can be shorter so we don't leave huge empty space */
+  /* No 78vh runway — only natural card height + tiny hold */
+  min-height: 0;
 }
 
-.sticky-stack__slot:last-child {
-  min-height: auto;
+.sticky-stack__slot:not(:last-child) {
+  /* Short pin hold so next card can cover previous without a desert of space */
   padding-bottom: 0.5rem;
 }
 
 .sticky-stack__card {
   position: sticky;
   /* Below sticky header; each next card peeks a few px lower (physical deck) */
-  top: calc(5.25rem + var(--stack-i, 0) * 0.7rem);
+  top: calc(5.25rem + var(--stack-i, 0) * 0.55rem);
   width: 100%;
   z-index: calc(1 + var(--stack-i, 0));
-  /* Soft lift so the deck reads as stacked glass */
-  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.18));
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.14));
 }
 
-/* Prefer reduced motion: still sticky, no fancy extras */
 @media (prefers-reduced-motion: reduce) {
   .sticky-stack__card {
     filter: none;
