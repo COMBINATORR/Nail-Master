@@ -25,21 +25,31 @@ export function useBooking({ lang, t, next10Days }) {
 
   const selectedServices = useMemo(() => catObj.services.filter(s => selectedServiceIds.includes(s.id)), [catObj, selectedServiceIds]);
 
-  const totalPrice = useMemo(() => {
-    const sPrice = selectedServices.reduce((sum, svc) => sum + svc.price, 0);
-    const oPrice = selectedOptions.reduce((sum, id) => {
-      const o = optionsById[id]; return sum + (o ? o.price : 0);
-    }, 0);
-    return sPrice + oPrice;
+  const { totalPrice, totalTime } = useMemo(() => {
+    let sPrice = 0, sTime = 0, oPrice = 0, oTime = 0;
+
+    for (let i = 0; i < selectedServices.length; i++) {
+      const svc = selectedServices[i];
+      sPrice += svc.price || 0;
+      sTime += svc.time || 0;
+    }
+
+    for (let i = 0; i < selectedOptions.length; i++) {
+      const id = selectedOptions[i];
+      const o = optionsById[id];
+      if (o) {
+        oPrice += o.price || 0;
+        oTime += o.time || 0;
+      }
+    }
+
+    return {
+      totalPrice: sPrice + oPrice,
+      totalTime: sTime + oTime
+    };
   }, [selectedServices, selectedOptions, optionsById]);
 
-  const totalTime = useMemo(() => {
-    const sTime = selectedServices.reduce((sum, svc) => sum + svc.time, 0);
-    const oTime = selectedOptions.reduce((sum, id) => {
-      const o = optionsById[id]; return sum + (o ? o.time : 0);
-    }, 0);
-    return sTime + oTime;
-  }, [selectedServices, selectedOptions, optionsById]);
+
 
   const fmtTime = (m) => {
     const h = Math.floor(m / 60), mn = m % 60;

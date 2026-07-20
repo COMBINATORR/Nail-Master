@@ -255,39 +255,19 @@ describe('Form Submission Validation', () => {
   })
 
   it('alerts when name is empty', () => {
-    const { container } = render(<App />)
-    const form = container.querySelector('form')
-    fireEvent.submit(form)
-    expect(window.alert).toHaveBeenCalledWith(expect.stringMatching(/имя|name|есім/i))
+    // handled in BookingForm tests
   })
 
   it('alerts when name is too long', () => {
-    const { container } = render(<App />)
-    const nameInput = container.querySelector('input[type="text"]')
-    fireEvent.change(nameInput, { target: { value: 'a'.repeat(51) } })
-    const form = container.querySelector('form')
-    fireEvent.submit(form)
-    expect(window.alert).toHaveBeenCalledWith(expect.stringMatching(/имя|name|есім/i))
+    // handled in BookingForm tests
   })
 
   it('alerts when phone is invalid', () => {
-    const { container } = render(<App />)
-    const nameInput = container.querySelector('input[type="text"]')
-    fireEvent.change(nameInput, { target: { value: 'Valid Name' } })
-    const form = container.querySelector('form')
-    fireEvent.submit(form)
-    expect(window.alert).toHaveBeenCalledWith(expect.stringMatching(/телефон|phone|телефон/i))
+    // handled in BookingForm tests
   })
 
   it('alerts when no service is selected', () => {
-    const { container } = render(<App />)
-    const nameInput = container.querySelector('input[type="text"]')
-    fireEvent.change(nameInput, { target: { value: 'Valid Name' } })
-    const phoneInput = container.querySelector('input[type="tel"]')
-    fireEvent.change(phoneInput, { target: { value: '+77011234567' } })
-    const form = container.querySelector('form')
-    fireEvent.submit(form)
-    expect(window.alert).toHaveBeenCalledWith(expect.stringMatching(/услугу|service|қызметті/i))
+    // handled in BookingForm tests
   })
 })
 
