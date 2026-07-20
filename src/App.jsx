@@ -23,6 +23,8 @@ import { useScroll } from './hooks/useScroll';
 import { useEasterEgg } from './hooks/useEasterEgg';
 import { useBooking } from './hooks/useBooking';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
+import LightRays from './components/ui/LightRays';
+import { getLightRaysProps } from './components/ui/lightRaysTheme';
 
 
 /* eslint-disable react-refresh/only-export-components */
@@ -103,6 +105,12 @@ export default function App() {
   const { theme, setTheme, isDayTheme, isNightTheme } = useTheme();
   const { isScrolled, isScrolledCapsule, showBackToTop } = useScroll();
   const { showGravityRestore, handleRestoreGravity, handleLogoClick } = useEasterEgg();
+  // Light Rays only for dark themes: night / emerald / cyber
+  const showLightRays = isNightTheme;
+  const lightRaysProps = useMemo(
+    () => (isNightTheme ? getLightRaysProps(theme) : null),
+    [theme, isNightTheme]
+  );
 
   const {
     activeCategory, setActiveCategory,
@@ -127,16 +135,13 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-transparent bg-grain text-[var(--text-primary)] font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950">
 
-      {/* ═══════════ PREMIUM BACKGROUND LAYERS (fixed, behind everything) ═══════════ */}
-      <div className="fluid-background" aria-hidden="true">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <circle className="blob-1" cx="25" cy="30" r="28" fill="var(--blob-1)" />
-          <circle className="blob-2" cx="75" cy="70" r="30" fill="var(--blob-2)" />
-          <circle className="blob-3" cx="80" cy="20" r="25" fill="var(--blob-3)" />
-          <circle className="blob-4" cx="20" cy="80" r="26" fill="var(--blob-4)" />
-        </svg>
+      {/* ═══════════ BACKGROUND: Light Rays on dark themes only ═══════════ */}
+      <div className="light-rays-layer" aria-hidden="true">
+        <div className="light-rays-layer__base" />
+        {showLightRays && lightRaysProps && (
+          <LightRays key={theme} {...lightRaysProps} />
+        )}
       </div>
-      <div className="ambient-atmosphere" aria-hidden="true" />
 
       <div className="content-layer">
       {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}

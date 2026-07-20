@@ -1,12 +1,14 @@
-
-
+/**
+ * Hero highlight — cream / rose / gold flowing gradient + soft outer glow.
+ * Glow is a blurred duplicate under the clipped fill (reliable in Chromium).
+ */
 export const AnimatedGradientText = ({ children, className = '' }) => {
   return (
-    <span 
-      className={`inline-block bg-gradient-to-tr from-[#A855F7] via-[#FF4B91] via-[#FF7636] to-[#00D2C4] 
-                 bg-[length:300%_300%] animate-gradient-flow bg-clip-text text-transparent px-[0.15em] mx-[-0.15em] ${className}`}
-    >
-      {children}
+    <span className={`agt ${className}`.trim()}>
+      <span className="agt__glow" aria-hidden="true">
+        {children}
+      </span>
+      <span className="agt__fill">{children}</span>
     </span>
   );
 };
