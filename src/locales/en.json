@@ -26,7 +26,7 @@
   "servicesTotalTime": "Duration",
   "servicesSelectedPreview": "Your Visit",
   "servicesNotSelected": "No services selected",
-  "servicesEmptyHint": "Pick a service on the left — price and time will show up here",
+  "servicesEmptyHint": "Choose a service — price and time will appear here",
   "servicesItems": "items",
   "shapeLabel": "Shape",
   "serviceCta": "Book now",

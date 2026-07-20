@@ -26,7 +26,7 @@
   "servicesTotalTime": "소요시간",
   "servicesSelectedPreview": "선택한 예약 정보",
   "servicesNotSelected": "선택한 서비스가 없습니다",
-  "servicesEmptyHint": "왼쪽에서 시술을 선택하면 금액과 시간이 여기에 표시됩니다",
+  "servicesEmptyHint": "시술을 선택하면 금액과 시간이 여기에 표시됩니다",
   "servicesItems": "개",
   "shapeLabel": "쉐입",
   "serviceCta": "지금 예약하기",

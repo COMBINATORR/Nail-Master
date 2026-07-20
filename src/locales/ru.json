@@ -26,7 +26,7 @@
   "servicesTotalTime": "Время",
   "servicesSelectedPreview": "Ваш визит",
   "servicesNotSelected": "Услуги не выбраны",
-  "servicesEmptyHint": "Отметьте услугу слева — цена и время появятся здесь",
+  "servicesEmptyHint": "Выберите услугу — цена и время появятся здесь",
   "servicesItems": "поз.",
   "shapeLabel": "Форма",
   "serviceCta": "Записаться",
