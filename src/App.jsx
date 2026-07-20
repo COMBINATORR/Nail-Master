@@ -18,7 +18,7 @@ import { Footer } from './components/Footer';
 import { SuccessModal } from './components/SuccessModal';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 
-import { useTheme } from './hooks/useTheme';
+import { ThemeProvider, useTheme } from './hooks/useTheme';
 import { useScroll } from './hooks/useScroll';
 import { useEasterEgg } from './hooks/useEasterEgg';
 import { useBooking } from './hooks/useBooking';
@@ -75,6 +75,14 @@ export const getNext10Days = (lang) => {
 };
 
 export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
+function AppContent() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
 

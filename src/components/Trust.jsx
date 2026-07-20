@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import BorderGlow from './ui/BorderGlow';
-import { borderGlowSiteProps } from './ui/borderGlowSiteProps';
+import { getBorderGlowProps } from './ui/borderGlowSiteProps';
+import { useTheme } from '../hooks/useTheme';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
@@ -8,6 +9,8 @@ const border = 'border-[var(--border-color)]';
 
 export const Trust = () => {
   const { t } = useTranslation();
+  const { theme } = useTheme();
+  const glowProps = getBorderGlowProps(theme);
 
   const cards = [
     { badge: '01', title: t('trust1Title'), desc: t('trust1Desc') },
@@ -27,7 +30,7 @@ export const Trust = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {cards.map((card) => (
-            <BorderGlow key={card.badge} {...borderGlowSiteProps}>
+            <BorderGlow key={`${card.badge}-${theme}`} {...glowProps}>
               <div className="flex flex-col gap-4 p-5 h-full">
                 <div className="flex justify-between items-center">
                   <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">

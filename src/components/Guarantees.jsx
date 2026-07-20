@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import BorderGlow from './ui/BorderGlow';
-import { borderGlowSiteProps } from './ui/borderGlowSiteProps';
+import { getBorderGlowProps } from './ui/borderGlowSiteProps';
+import { useTheme } from '../hooks/useTheme';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
@@ -8,6 +9,8 @@ const border = 'border-[var(--border-color)]';
 
 export const Guarantees = () => {
   const { t } = useTranslation();
+  const { theme } = useTheme();
+  const glowProps = getBorderGlowProps(theme);
 
   const cards = [
     { badge: '01', title: t('g1Title'), desc: t('g1Desc') },
@@ -28,7 +31,7 @@ export const Guarantees = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {cards.map((g, i) => (
-            <BorderGlow key={i} {...borderGlowSiteProps}>
+            <BorderGlow key={`${i}-${theme}`} {...glowProps}>
               <div className="flex flex-col gap-4 p-5 h-full">
                 <div className="flex justify-between items-center">
                   <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-accent">

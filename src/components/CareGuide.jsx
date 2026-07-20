@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { careTipsData } from '../data/careRules';
 import BorderGlow from './ui/BorderGlow';
-import { borderGlowSiteProps } from './ui/borderGlowSiteProps';
+import { getBorderGlowProps } from './ui/borderGlowSiteProps';
+import { useTheme } from '../hooks/useTheme';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
@@ -11,6 +12,8 @@ const border = 'border-[var(--border-color)]';
 export const CareGuide = () => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language || 'ru';
+  const { theme } = useTheme();
+  const glowProps = getBorderGlowProps(theme);
   const [activeCareTab, setActiveCareTab] = useState('manicure');
   const tips = careTipsData[lang]?.[activeCareTab] || careTipsData.ru[activeCareTab] || [];
 
@@ -46,7 +49,7 @@ export const CareGuide = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {tips.map((tip, index) => (
-            <BorderGlow key={`${activeCareTab}-${index}`} {...borderGlowSiteProps}>
+            <BorderGlow key={`${activeCareTab}-${index}-${theme}`} {...glowProps}>
               <div className="flex flex-col gap-4 p-5 h-full">
                 <div className="flex justify-between items-center">
                   <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">
