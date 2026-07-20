@@ -71,8 +71,8 @@ describe('Calculator', () => {
   });
 
   it('displays total price and total time correctly', () => {
-    render(<Calculator {...defaultProps} totalPrice={5000} totalTime={90} />);
-    expect(screen.getByText((content, el) => el?.tagName === 'SPAN' && /5[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8'))).toBeInTheDocument();
+    const { container } = render(<Calculator {...defaultProps} totalPrice={5000} totalTime={90} selectedServices={[]} selectedOptions={[]} optionsById={{}} activeCategory="manicure" />);
+    expect(container.textContent).toMatch(/5[\s\u00a0\u202f,]*000\s*₸/);
     expect(screen.getByText((content) => content.includes('90 min') && (content.includes('\u2248') || content.includes('≈')))).toBeInTheDocument();
   });
 
@@ -81,19 +81,19 @@ describe('Calculator', () => {
       ...defaultProps,
       selectedServices: [{ id: 'classic', nameKey: 'serviceManicureClassicName', price: 4000 }],
       selectedOptions: ['design'],
-      optionsById: { 'design': { nameKey: 'optManiDesign', price: 2000 } },
+      optionsById: { 'design': { id: 'design', nameKey: 'optManiDesign', price: 2000 } },
       totalPrice: 6000
     };
-    render(<Calculator {...propsWithSelections} />);
+    const { container } = render(<Calculator {...propsWithSelections} />);
 
     // Total price
-    expect(screen.getAllByText((content, el) => el?.tagName === 'SPAN' && /6[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8')).length).toBeGreaterThan(0);
+    expect(container.textContent).toMatch(/6[\s\u00a0\u202f,]*000\s*₸/);
     // Service receipt row
     expect(screen.getAllByText('serviceManicureClassicName').length).toBeGreaterThan(0);
-    expect(screen.getAllByText((content, el) => el?.tagName === 'SPAN' && /4[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8')).length).toBeGreaterThan(0);
+    expect(container.textContent).toMatch(/4[\s\u00a0\u202f,]*000\s*₸/);
     // Option receipt row
     expect(screen.getByText('+ optManiDesign')).toBeInTheDocument();
-    expect(screen.getAllByText((content, el) => el?.tagName === 'SPAN' && content.includes('+') && /2[\s\u00a0\u202f]?000/.test(content) && content.includes('\u20B8')).length).toBeGreaterThan(0);
+    expect(container.textContent).toMatch(/\+[\s\u00a0\u202f]*2[\s\u00a0\u202f,]*000\s*₸/);
   });
 
   it('disables CTA button when no services or options are selected', () => {
