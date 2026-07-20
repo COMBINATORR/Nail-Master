@@ -10,4 +10,9 @@ export const borderGlowSiteProps = {
   colors: ['#cbb075', '#B89548', '#8c6c2e'],
   fillOpacity: 0.18,
   className: 'w-full border-glow-card--site',
+  /** Tap → full bronze orbit (~1 turn). Desktop keeps hover + can also click. */
+  sweepOnTap: true,
+  /** On mobile, one auto-sweep when the card first scrolls into view. */
+  sweepOnView: true,
 };
+

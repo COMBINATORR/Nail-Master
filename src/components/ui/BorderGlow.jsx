@@ -38,14 +38,94 @@ function easeInCubic(x) { return x * x * x; }
 
 function animateValue({ start = 0, end = 100, duration = 1000, delay = 0, ease = easeOutCubic, onUpdate, onEnd }) {
   const t0 = performance.now() + delay;
+  let raf = 0;
+  let timeout = 0;
   function tick() {
     const elapsed = performance.now() - t0;
     const t = Math.min(elapsed / duration, 1);
     onUpdate(start + (end - start) * ease(t));
-    if (t < 1) requestAnimationFrame(tick);
+    if (t < 1) raf = requestAnimationFrame(tick);
     else if (onEnd) onEnd();
   }
-  setTimeout(() => requestAnimationFrame(tick), delay);
+  timeout = setTimeout(() => {
+    raf = requestAnimationFrame(tick);
+  }, delay);
+  return () => {
+    clearTimeout(timeout);
+    cancelAnimationFrame(raf);
+  };
+}
+
+/** Full orbit sweep (~1 turn) — same motion as React Bits `animated` demo. */
+function playSweep(card, { onDone } = {}) {
+  if (!card) return () => {};
+
+  const angleStart = 110;
+  const angleEnd = 465; // ~355° travel ≈ full orbit
+  const cleanups = [];
+
+  card.classList.add('sweep-active');
+  card.style.setProperty('--cursor-angle', `${angleStart}deg`);
+
+  cleanups.push(
+    animateValue({
+      duration: 450,
+      onUpdate: (v) => card.style.setProperty('--edge-proximity', String(v)),
+    })
+  );
+  cleanups.push(
+    animateValue({
+      ease: easeInCubic,
+      duration: 1400,
+      end: 50,
+      onUpdate: (v) => {
+        card.style.setProperty(
+          '--cursor-angle',
+          `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`
+        );
+      },
+    })
+  );
+  cleanups.push(
+    animateValue({
+      ease: easeOutCubic,
+      delay: 1400,
+      duration: 2000,
+      start: 50,
+      end: 100,
+      onUpdate: (v) => {
+        card.style.setProperty(
+          '--cursor-angle',
+          `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`
+        );
+      },
+    })
+  );
+  cleanups.push(
+    animateValue({
+      ease: easeInCubic,
+      delay: 2300,
+      duration: 1200,
+      start: 100,
+      end: 0,
+      onUpdate: (v) => card.style.setProperty('--edge-proximity', String(v)),
+      onEnd: () => {
+        card.classList.remove('sweep-active');
+        onDone?.();
+      },
+    })
+  );
+
+  return () => {
+    cleanups.forEach((fn) => fn?.());
+    card.classList.remove('sweep-active');
+    card.style.setProperty('--edge-proximity', '0');
+  };
+}
+
+function prefersCoarsePointer() {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(hover: none), (pointer: coarse)').matches;
 }
 
 const BorderGlow = ({
@@ -59,10 +139,17 @@ const BorderGlow = ({
   glowIntensity = 1.0,
   coneSpread = 25,
   animated = false,
+  /** Tap/click plays a full glow orbit (great for mobile). */
+  sweepOnTap = false,
+  /** When card enters viewport, play one sweep (once). Best on mobile. */
+  sweepOnView = false,
   colors = ['#c084fc', '#f472b6', '#38bdf8'],
   fillOpacity = 0.5,
 }) => {
   const cardRef = useRef(null);
+  const sweepingRef = useRef(false);
+  const cancelSweepRef = useRef(null);
+  const viewedRef = useRef(false);
 
   const getCenterOfElement = useCallback((el) => {
     const { width, height } = el.getBoundingClientRect();
@@ -92,6 +179,8 @@ const BorderGlow = ({
   }, [getCenterOfElement]);
 
   const handlePointerMove = useCallback((e) => {
+    // During sweep, don't fight the animation with finger/mouse noise
+    if (sweepingRef.current) return;
     const card = cardRef.current;
     if (!card) return;
 
@@ -106,34 +195,93 @@ const BorderGlow = ({
     card.style.setProperty('--cursor-angle', `${angle.toFixed(3)}deg`);
   }, [getEdgeProximity, getCursorAngle]);
 
-  useEffect(() => {
-    if (!animated || !cardRef.current) return;
+  const triggerSweep = useCallback(() => {
     const card = cardRef.current;
-    const angleStart = 110;
-    const angleEnd = 465;
-    card.classList.add('sweep-active');
-    card.style.setProperty('--cursor-angle', `${angleStart}deg`);
+    if (!card || sweepingRef.current) return;
 
-    animateValue({ duration: 500, onUpdate: v => card.style.setProperty('--edge-proximity', v) });
-    animateValue({ ease: easeInCubic, duration: 1500, end: 50, onUpdate: v => {
-      card.style.setProperty('--cursor-angle', `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`);
-    }});
-    animateValue({ ease: easeOutCubic, delay: 1500, duration: 2250, start: 50, end: 100, onUpdate: v => {
-      card.style.setProperty('--cursor-angle', `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`);
-    }});
-    animateValue({ ease: easeInCubic, delay: 2500, duration: 1500, start: 100, end: 0,
-      onUpdate: v => card.style.setProperty('--edge-proximity', v),
-      onEnd: () => card.classList.remove('sweep-active'),
+    cancelSweepRef.current?.();
+    sweepingRef.current = true;
+    cancelSweepRef.current = playSweep(card, {
+      onDone: () => {
+        sweepingRef.current = false;
+        cancelSweepRef.current = null;
+      },
     });
-  }, [animated]);
+  }, []);
+
+  // Demo-style mount animation
+  useEffect(() => {
+    if (!animated) return undefined;
+    triggerSweep();
+    return () => {
+      cancelSweepRef.current?.();
+      sweepingRef.current = false;
+    };
+  }, [animated, triggerSweep]);
+
+  // One sweep when card scrolls into view (coarse pointer / mobile)
+  useEffect(() => {
+    if (!sweepOnView || !cardRef.current) return undefined;
+    if (!prefersCoarsePointer()) return undefined;
+
+    const el = cardRef.current;
+    let delayTimer = 0;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || viewedRef.current) return;
+        viewedRef.current = true;
+        delayTimer = window.setTimeout(() => triggerSweep(), 180);
+      },
+      { threshold: 0.45, rootMargin: '0px 0px -8% 0px' }
+    );
+
+    io.observe(el);
+    return () => {
+      clearTimeout(delayTimer);
+      io.disconnect();
+    };
+  }, [sweepOnView, triggerSweep]);
+
+  useEffect(() => () => {
+    cancelSweepRef.current?.();
+  }, []);
+
+  const handleActivate = useCallback(() => {
+    if (!sweepOnTap) return;
+    triggerSweep();
+  }, [sweepOnTap, triggerSweep]);
+
+  // iOS/Safari: pointerup is more reliable than click for non-links
+  const handlePointerUp = useCallback((e) => {
+    if (!sweepOnTap) return;
+    if (e.pointerType === 'touch' || e.pointerType === 'pen') {
+      e.preventDefault();
+      triggerSweep();
+    }
+  }, [sweepOnTap, triggerSweep]);
+
+  const handleKeyDown = useCallback((e) => {
+    if (!sweepOnTap) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      triggerSweep();
+    }
+  }, [sweepOnTap, triggerSweep]);
 
   const glowVars = buildGlowVars(glowColor, glowIntensity);
+  const interactive = sweepOnTap;
 
   return (
     <div
       ref={cardRef}
       onPointerMove={handlePointerMove}
-      className={`border-glow-card ${className}`}
+      onPointerUp={handlePointerUp}
+      onClick={handleActivate}
+      onKeyDown={handleKeyDown}
+      role={interactive ? 'button' : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      aria-label={interactive ? 'Play border glow' : undefined}
+      className={`border-glow-card ${className}${interactive ? ' border-glow-card--tappable' : ''}`}
       style={{
         '--card-bg': backgroundColor,
         '--edge-sensitivity': edgeSensitivity,
@@ -145,7 +293,7 @@ const BorderGlow = ({
         ...buildGradientVars(colors),
       }}
     >
-      <span className="edge-light" />
+      <span className="edge-light" aria-hidden="true" />
       <div className="border-glow-inner">
         {children}
       </div>

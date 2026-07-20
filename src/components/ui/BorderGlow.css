@@ -181,3 +181,27 @@ body.theme-nudefashion .border-glow-card--site > .edge-light,
 body.theme-sage .border-glow-card--site > .edge-light {
   mix-blend-mode: multiply;
 }
+
+/* Mobile: tap target + affordance */
+.border-glow-card--tappable {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.border-glow-card--tappable:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent, #B89548) 70%, transparent);
+  outline-offset: 3px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /* Soft idle hint: very faint rim so cards don’t look dead without hover */
+  .border-glow-card--site.border-glow-card--tappable:not(:hover):not(.sweep-active) > .edge-light {
+    opacity: 0.12;
+    transition: opacity 0.6s ease;
+  }
+  .border-glow-card--site.border-glow-card--tappable:not(:hover):not(.sweep-active)::before {
+    opacity: 0.08;
+    transition: opacity 0.6s ease;
+  }
+}
