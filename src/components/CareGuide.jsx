@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { careTipsData } from '../data/careRules';
+import BorderGlow from './ui/BorderGlow';
+import { borderGlowSiteProps } from './ui/borderGlowSiteProps';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
@@ -10,6 +12,7 @@ export const CareGuide = () => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language || 'ru';
   const [activeCareTab, setActiveCareTab] = useState('manicure');
+  const tips = careTipsData[lang]?.[activeCareTab] || careTipsData.ru[activeCareTab] || [];
 
   return (
     <section id="care-guide" className={`border-b ${border} py-14 lg:py-20`}>
@@ -21,7 +24,6 @@ export const CareGuide = () => {
           {t('careSubtitle')}
         </p>
 
-        {/* Interactive Care Tabs */}
         <div className="flex flex-wrap gap-2 mb-8 max-w-md p-1 rounded-2xl liquid-glass mx-auto">
           {['manicure', 'pedicure', 'sugaring'].map((tab) => {
             const isActive = activeCareTab === tab;
@@ -42,14 +44,10 @@ export const CareGuide = () => {
           })}
         </div>
 
-        {/* Tips Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {careTipsData[lang][activeCareTab].map((tip, index) => {
-            return (
-              <div
-                key={index}
-                className="liquid-glass liquid-glass-hover flex flex-col gap-4 p-5 rounded-2xl"
-              >
+          {tips.map((tip, index) => (
+            <BorderGlow key={`${activeCareTab}-${index}`} {...borderGlowSiteProps}>
+              <div className="flex flex-col gap-4 p-5 h-full">
                 <div className="flex justify-between items-center">
                   <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">
                     {tip.badge}
@@ -64,8 +62,8 @@ export const CareGuide = () => {
                   </p>
                 </div>
               </div>
-            );
-          })}
+            </BorderGlow>
+          ))}
         </div>
       </div>
     </section>
