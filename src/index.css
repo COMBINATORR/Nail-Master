@@ -105,27 +105,34 @@
 
 html {
   scroll-behavior: smooth;
-  /* Prevent mobile “light strip” on the right from horizontal overflow */
-  overflow-x: hidden;
+  /* Kill mobile right-edge “light strip” (overflow + mismatched canvas) */
+  overflow-x: clip;
   max-width: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 body {
-  /* Match page canvas so any residual edge never shows browser chrome gap */
-  background-color: var(--bg-main, #0e0e0e);
-  color: #f3f4f6;
+  /* Always same color as page shell — no browser default peeking through */
+  background-color: var(--bg-main, #0e0e0e) !important;
+  color: var(--text-primary, #f3f4f6);
   transition: background-color 0.4s ease, color 0.4s ease;
-  overflow-x: hidden;
-  max-width: 100%;
-  width: 100%;
-  position: relative;
-}
-
-#root {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
   width: 100%;
   min-height: 100%;
+  position: relative;
+  /* iOS overscroll rubber-band: keep bg painted */
+  overscroll-behavior-x: none;
+}
+
+#root {
+  overflow-x: clip;
+  max-width: 100%;
+  width: 100%;
+  min-height: 100%;
+  position: relative;
+  isolation: isolate;
 }
 
 /* ─── Light Theme Override ─── */
@@ -232,7 +239,10 @@ body.light .ambient-atmosphere {
   position: relative;
   z-index: 3;
   max-width: 100%;
+  width: 100%;
   overflow-x: clip;
+  /* contain layout so descendants can’t widen the page */
+  contain: inline-size;
 }
 
 .animate-fadeIn {

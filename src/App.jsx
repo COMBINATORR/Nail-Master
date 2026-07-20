@@ -133,7 +133,7 @@ export default function App() {
   const scrollToServices = () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <div className="relative min-h-screen bg-transparent bg-grain text-[var(--text-primary)] font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950">
+    <div className="relative min-h-screen w-full max-w-full overflow-x-clip bg-transparent bg-grain text-[var(--text-primary)] font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950">
 
       {/* ═══════════ BACKGROUND: Light Rays on dark themes only ═══════════ */}
       <div className="light-rays-layer" aria-hidden="true">
