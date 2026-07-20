@@ -24,10 +24,10 @@ describe('CategorySelector', () => {
 
   it('applies active class to the active category button', () => {
     render(<CategorySelector {...defaultProps} />);
-    const manicureButton = screen.getByText('catManicureName');
+    const manicureButton = screen.getByText('catManicureName').closest('button');
     expect(manicureButton.className).toContain('active-tactile-pill');
 
-    const pedicureButton = screen.getByText('catPedicureName');
+    const pedicureButton = screen.getByText('catPedicureName').closest('button');
     expect(pedicureButton.className).not.toContain('active-tactile-pill');
     expect(pedicureButton.className).toContain('border-transparent');
   });

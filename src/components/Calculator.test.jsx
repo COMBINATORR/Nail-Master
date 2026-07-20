@@ -172,7 +172,7 @@ describe('Calculator', () => {
       />
     );
     expect(
-      mobile().getAllByText((content) => /5[\s\u00a0\u202f]?000/.test(content) && content.includes('₸')).length
+      mobile().getAllByText((content) => /5[\s\u00a0\u202f]?000/.test(content.replace(/,/g, '')) && content.includes('₸')).length
     ).toBeGreaterThan(0);
     expect(
       mobile().getAllByText((content) => content.includes('90 min')).length
