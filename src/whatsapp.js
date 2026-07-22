@@ -1,4 +1,5 @@
-export const generateWhatsAppText = ({
+export const generateWhatsAppText = (options = {}) => {
+  const {
   includeNameAndPhone = false,
   t,
   catObj,
@@ -15,7 +16,7 @@ export const generateWhatsAppText = ({
   totalPrice,
   name,
   phone
-}) => {
+} = options;
   const safeT = (k) => (typeof t === 'function' ? t(k) : t[k]);
   const categoryName = safeT(catObj?.nameKey) || '';
 
