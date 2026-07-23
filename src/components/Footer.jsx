@@ -6,8 +6,29 @@ import { StudioCreditMenu } from './StudioCreditMenu';
 const textMuted = 'text-[var(--text-muted)]';
 const borderSubtle = 'border-[var(--border-subtle)]';
 
-const socialClass =
-  'text-[var(--text-muted)] hover:text-bronze-400 transition-colors duration-200';
+const SOCIALS = [
+  {
+    id: 'instagram',
+    href: 'https://instagram.com',
+    label: 'Instagram',
+    accent: '#E1306C',
+    Icon: InstagramIcon,
+  },
+  {
+    id: 'whatsapp',
+    href: 'https://wa.me/77016698086',
+    label: 'WhatsApp',
+    accent: '#25D366',
+    Icon: WhatsAppIcon,
+  },
+  {
+    id: 'phone',
+    href: 'tel:+77016698086',
+    label: 'Телефон',
+    accent: '#4A90D9',
+    Icon: PhoneIcon,
+  },
+];
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -38,43 +59,34 @@ export const Footer = () => {
               </p>
             </div>
 
-            <div className="flex items-center justify-center sm:justify-end gap-6 sm:pt-2">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className={`${socialClass} hover:text-[#E1306C]`}
-              >
-                <InstagramIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="https://wa.me/77016698086"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className={`${socialClass} hover:text-[#25D366]`}
-              >
-                <WhatsAppIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="tel:+77016698086"
-                aria-label="Call"
-                className={`${socialClass} hover:text-[#4A90D9]`}
-              >
-                <PhoneIcon className="w-5 h-5" />
-              </a>
+            <div className="footer-socials flex items-center justify-center sm:justify-end gap-5 sm:gap-6 sm:pt-1">
+              {SOCIALS.map(({ id, href, label, accent, Icon }) => (
+                <a
+                  key={id}
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  aria-label={label}
+                  className="footer-social-link group"
+                  style={{ '--social-accent': accent }}
+                >
+                  <span className="footer-social-icon">
+                    <Icon className="w-[18px] h-[18px]" />
+                  </span>
+                  <span className="footer-social-label">{label}</span>
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Row 2: award — own row, truly centered */}
+          {/* Row 2: award */}
           <div className="flex justify-center">
             <AwardBadge brand={t('awardBrand')} title={t('awardTitle')} />
           </div>
 
           {/* Row 3: legal */}
           <div className={`border-t ${borderSubtle} pt-6 flex flex-col items-center gap-2 text-center`}>
-            <p className="text-[var(--text-muted)]/60 text-[10px] tracking-wide">
+            <p className="footer-copy text-[10px] tracking-wide">
               © {year} {t('brand')}. {t('rights')}
             </p>
             <StudioCreditMenu />
