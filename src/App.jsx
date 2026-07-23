@@ -25,6 +25,7 @@ import { useBooking } from './hooks/useBooking';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import LightRays from './components/ui/LightRays';
 import { getLightRaysProps } from './components/ui/lightRaysTheme';
+import { canUseHeavyFx } from './lib/perf';
 
 
 /* eslint-disable react-refresh/only-export-components */
@@ -129,11 +130,28 @@ function AppContent() {
   const { theme, setTheme, isDayTheme, isNightTheme } = useTheme();
   const { isScrolled, isScrolledCapsule, showBackToTop } = useScroll();
   const { showGravityRestore, handleRestoreGravity, handleLogoClick } = useEasterEgg();
-  // Light Rays only for dark themes: night / emerald / cyber
-  const showLightRays = isNightTheme;
+  // Light Rays: dark themes + desktop only (WebGL heats phones)
+  const [allowHeavyFx, setAllowHeavyFx] = useState(() =>
+    typeof window !== 'undefined' ? canUseHeavyFx() : false,
+  );
+
+  useEffect(() => {
+    const update = () => setAllowHeavyFx(canUseHeavyFx());
+    update();
+    const mq = window.matchMedia('(max-width: 768px)');
+    const mq2 = window.matchMedia('(pointer: coarse)');
+    mq.addEventListener?.('change', update);
+    mq2.addEventListener?.('change', update);
+    return () => {
+      mq.removeEventListener?.('change', update);
+      mq2.removeEventListener?.('change', update);
+    };
+  }, []);
+
+  const showLightRays = isNightTheme && allowHeavyFx;
   const lightRaysProps = useMemo(
-    () => (isNightTheme ? getLightRaysProps(theme) : null),
-    [theme, isNightTheme]
+    () => (showLightRays ? getLightRaysProps(theme) : null),
+    [theme, showLightRays],
   );
 
   const {

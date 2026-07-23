@@ -82,6 +82,22 @@
   color: transparent;
 }
 
+/* Cooler phones: slow continuous CSS animations */
+@media (max-width: 768px) {
+  .agt__glow,
+  .agt__fill {
+    animation-duration: 18s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agt__glow,
+  .agt__fill {
+    animation: none !important;
+    background-position: 50% 50%;
+  }
+}
+
 .agt__glow {
   position: absolute;
   left: 0;

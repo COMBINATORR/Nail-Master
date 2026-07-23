@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { isMobileLike, prefersReducedMotion } from '../../lib/perf';
 
 const identityMatrix =
   '1, 0, 0, 0, ' +
@@ -10,14 +11,17 @@ const maxRotate = 0.25;
 const minRotate = -0.25;
 const maxScale = 1;
 const minScale = 0.97;
-
-/** place 1 gold · 2 silver · 3 bronze */
 const backgroundColor = ['#f3e3ac', '#ddd', '#f1cfa6'];
-
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
+// Gyro: max ~12 updates/sec, only when badge is on screen
+const GYRO_MIN_MS = 80;
+const GYRO_DELTA = 0.8;
+
 /**
- * 3D award badge — mouse tilt on desktop, gyroscope on mobile.
+ * Award badge with optional 3D tilt.
+ * Mobile: lightweight CSS rotate, gyro only while in viewport & throttled.
+ * Desktop: full mouse matrix interaction.
  */
 export const AwardBadge = ({
   brand = 'SVTL AWARDS',
@@ -27,14 +31,17 @@ export const AwardBadge = ({
 }) => {
   const uid = useId().replace(/:/g, '');
   const ref = useRef(null);
-  const [firstOverlayPosition, setFirstOverlayPosition] = useState(0);
+  const tiltRef = useRef(null);
+  const overlayLayerRef = useRef(null);
+
   const [matrix, setMatrix] = useState(identityMatrix);
+  const [firstOverlayPosition, setFirstOverlayPosition] = useState(0);
   const [currentMatrix, setCurrentMatrix] = useState(identityMatrix);
   const [disableInOutOverlayAnimation, setDisableInOutOverlayAnimation] = useState(true);
-  const [disableOverlayAnimation, setDisableOverlayAnimation] = useState(false);
+  const [disableOverlayAnimation, setDisableOverlayAnimation] = useState(true);
   const [isTimeoutFinished, setIsTimeoutFinished] = useState(false);
   const [useGyro, setUseGyro] = useState(false);
-  const [gyroReady, setGyroReady] = useState(false);
+  const [inView, setInView] = useState(false);
 
   const enterTimeout = useRef(null);
   const leaveTimeout1 = useRef(null);
@@ -43,22 +50,53 @@ export const AwardBadge = ({
   const moveTimeout = useRef(null);
   const enterAnimTimeout = useRef(null);
   const hoverActive = useRef(false);
-  const rafGyro = useRef(null);
+  const lastGyroAt = useRef(0);
+  const lastBeta = useRef(null);
+  const lastGamma = useRef(null);
+  const mobile = useRef(false);
+  const reduced = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    mobile.current = isMobileLike();
+    reduced.current = prefersReducedMotion();
+    setIsMobile(mobile.current);
+    // Never run idle infinite overlay loops on mobile — major GPU heat
+    setDisableOverlayAnimation(true);
+  }, []);
+
+  // Only spend work when badge is visible
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting && entry.intersectionRatio > 0.15),
+      { threshold: [0, 0.15, 0.5] },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     return () => {
-      [
-        enterTimeout,
-        leaveTimeout1,
-        leaveTimeout2,
-        leaveTimeout3,
-        moveTimeout,
-        enterAnimTimeout,
-      ].forEach((r) => {
-        if (r.current) clearTimeout(r.current);
-      });
-      if (rafGyro.current) cancelAnimationFrame(rafGyro.current);
+      [enterTimeout, leaveTimeout1, leaveTimeout2, leaveTimeout3, moveTimeout, enterAnimTimeout].forEach(
+        (r) => {
+          if (r.current) clearTimeout(r.current);
+        },
+      );
     };
+  }, []);
+
+  const applyTiltDom = useCallback((rotX, rotY, overlayDeg) => {
+    if (tiltRef.current) {
+      tiltRef.current.style.transform = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    }
+    if (overlayLayerRef.current && overlayDeg != null) {
+      overlayLayerRef.current.style.transform = `rotate(${overlayDeg}deg)`;
+    }
   }, []);
 
   const getDimensions = () => {
@@ -116,9 +154,7 @@ export const AwardBadge = ({
         if (index === 2 || index === 4 || index === 8) {
           return (-parseFloat(item) * multiplier) / weakening;
         }
-        if (index === 0 || index === 5 || index === 10) {
-          return '1';
-        }
+        if (index === 0 || index === 5 || index === 10) return '1';
         if (index === 6) {
           return (
             (multiplier *
@@ -137,104 +173,80 @@ export const AwardBadge = ({
       .join(', ');
   };
 
-  /** Map deviceorientation → matrix3d-like tilt + holographic spin */
-  const applyGyro = useCallback((beta, gamma) => {
-    // beta: front-back, gamma: left-right
-    const b = clamp((beta ?? 45) - 45, -35, 35);
-    const g = clamp(gamma ?? 0, -45, 45);
+  /** Gyro → DOM only (no React re-render storm) */
+  const applyGyro = useCallback(
+    (beta, gamma) => {
+      if (reduced.current || document.hidden) return;
+      const now = performance.now();
+      if (now - lastGyroAt.current < GYRO_MIN_MS) return;
 
-    // approximate matrix3d from small rotations (radians)
-    const rx = (-b / 45) * 0.35;
-    const ry = (g / 45) * 0.4;
-    const sx = 1 - Math.abs(g) * 0.0004;
-    const sy = 1 - Math.abs(b) * 0.0004;
-    const sz = 1 - (Math.abs(g) + Math.abs(b)) * 0.00025;
+      const b = clamp((beta ?? 45) - 45, -35, 35);
+      const g = clamp(gamma ?? 0, -45, 45);
 
-    const next =
-      `${sx}, 0, ${ry}, 0, ` +
-      `${rx * 0.3}, ${sy}, ${-rx}, 0, ` +
-      `${-ry * 0.5}, ${rx * 0.4}, ${sz}, 0, ` +
-      `0, 0, 0, 1`;
-
-    setMatrix(next);
-    setFirstOverlayPosition(g * 1.2 + b * 0.4);
-  }, []);
-
-  const enableGyro = useCallback(async () => {
-    if (typeof window === 'undefined') return false;
-
-    const attach = () => {
-      const onOrient = (e) => {
-        // Some desktops fire empty events — ignore
-        if (e.beta == null && e.gamma == null) return;
-        if (hoverActive.current) return; // mouse wins when hovering
-        if (rafGyro.current) cancelAnimationFrame(rafGyro.current);
-        rafGyro.current = requestAnimationFrame(() => {
-          applyGyro(e.beta, e.gamma);
-        });
-      };
-      window.addEventListener('deviceorientation', onOrient, { passive: true });
-      setUseGyro(true);
-      setGyroReady(true);
-      setDisableOverlayAnimation(true);
-      return () => window.removeEventListener('deviceorientation', onOrient);
-    };
-
-    try {
-      // iOS 13+ requires permission on a user gesture
       if (
-        typeof DeviceOrientationEvent !== 'undefined' &&
-        typeof DeviceOrientationEvent.requestPermission === 'function'
+        lastBeta.current != null &&
+        Math.abs(b - lastBeta.current) < GYRO_DELTA &&
+        Math.abs(g - lastGamma.current) < GYRO_DELTA
       ) {
-        const state = await DeviceOrientationEvent.requestPermission();
-        if (state === 'granted') {
-          return attach();
-        }
-        return null;
-      }
-      // Android / desktop with sensors
-      if ('DeviceOrientationEvent' in window) {
-        return attach();
-      }
-    } catch {
-      // permission denied or unavailable
-    }
-    return null;
-  }, [applyGyro]);
-
-  // Auto-subscribe on non-iOS (no permission API)
-  useEffect(() => {
-    let cleanup;
-    let cancelled = false;
-
-    const setup = async () => {
-      if (
-        typeof DeviceOrientationEvent !== 'undefined' &&
-        typeof DeviceOrientationEvent.requestPermission === 'function'
-      ) {
-        // wait for first tap on badge
         return;
       }
-      if ('DeviceOrientationEvent' in window) {
-        cleanup = await enableGyro();
-      }
+      lastBeta.current = b;
+      lastGamma.current = g;
+      lastGyroAt.current = now;
+
+      // Simple rotateX/Y is cheaper than matrix3d re-layout
+      const rotX = clamp((-b / 45) * 12, -12, 12);
+      const rotY = clamp((g / 45) * 16, -16, 16);
+      applyTiltDom(rotX, rotY, g * 0.9 + b * 0.3);
+    },
+    [applyTiltDom],
+  );
+
+  // Gyro only when visible + allowed
+  useEffect(() => {
+    if (!inView || reduced.current || typeof window === 'undefined') return undefined;
+    if (!('DeviceOrientationEvent' in window)) return undefined;
+
+    // iOS needs explicit permission — only after user tap
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      return undefined;
+    }
+
+    let alive = true;
+    const onOrient = (e) => {
+      if (!alive || e.beta == null && e.gamma == null) return;
+      if (hoverActive.current) return;
+      applyGyro(e.beta, e.gamma);
     };
 
-    setup();
+    window.addEventListener('deviceorientation', onOrient, { passive: true });
+    setUseGyro(true);
+
     return () => {
-      cancelled = true;
-      if (typeof cleanup === 'function') cleanup();
+      alive = false;
+      window.removeEventListener('deviceorientation', onOrient);
+      setUseGyro(false);
+      applyTiltDom(0, 0, 0);
     };
-  }, [enableGyro]);
+  }, [inView, applyGyro, applyTiltDom]);
+
+  // Pause gyro work when tab hidden
+  useEffect(() => {
+    const onVis = () => {
+      if (document.hidden) applyTiltDom(0, 0, 0);
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, [applyTiltDom]);
 
   const onMouseEnter = (e) => {
+    if (mobile.current || reduced.current) return;
     if (useGyro && !window.matchMedia('(pointer: fine)').matches) return;
     hoverActive.current = true;
 
     if (leaveTimeout1.current) clearTimeout(leaveTimeout1.current);
     if (leaveTimeout2.current) clearTimeout(leaveTimeout2.current);
     if (leaveTimeout3.current) clearTimeout(leaveTimeout3.current);
-    setDisableOverlayAnimation(true);
 
     const { left, right, top, bottom } = getDimensions();
     const xCenter = (left + right) / 2;
@@ -242,25 +254,17 @@ export const AwardBadge = ({
 
     setDisableInOutOverlayAnimation(false);
     enterTimeout.current = setTimeout(() => setDisableInOutOverlayAnimation(true), 350);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setFirstOverlayPosition((Math.abs(xCenter - e.clientX) + Math.abs(yCenter - e.clientY)) / 1.5);
-      });
-    });
+    setFirstOverlayPosition((Math.abs(xCenter - e.clientX) + Math.abs(yCenter - e.clientY)) / 1.5);
 
     const nextMatrix = getMatrix(e.clientX, e.clientY);
-    const oppositeMatrix = getOppositeMatrix(nextMatrix, e.clientY, true);
-
-    setMatrix(oppositeMatrix);
+    setMatrix(getOppositeMatrix(nextMatrix, e.clientY, true));
     setIsTimeoutFinished(false);
     if (enterAnimTimeout.current) clearTimeout(enterAnimTimeout.current);
-    enterAnimTimeout.current = setTimeout(() => {
-      setIsTimeoutFinished(true);
-    }, 200);
+    enterAnimTimeout.current = setTimeout(() => setIsTimeoutFinished(true), 200);
   };
 
   const onMouseMove = (e) => {
-    if (useGyro && !window.matchMedia('(pointer: fine)').matches) return;
+    if (mobile.current || reduced.current) return;
     if (!hoverActive.current) return;
 
     const { left, right, top, bottom } = getDimensions();
@@ -278,27 +282,21 @@ export const AwardBadge = ({
   };
 
   const onMouseLeave = (e) => {
-    if (useGyro && !window.matchMedia('(pointer: fine)').matches) return;
+    if (mobile.current || reduced.current) return;
     hoverActive.current = false;
 
     const oppositeMatrix = getOppositeMatrix(matrix, e.clientY);
-
     if (enterTimeout.current) clearTimeout(enterTimeout.current);
 
     setCurrentMatrix(oppositeMatrix);
     setTimeout(() => setCurrentMatrix(identityMatrix), 200);
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setDisableInOutOverlayAnimation(false);
-        leaveTimeout1.current = setTimeout(() => setFirstOverlayPosition(-firstOverlayPosition / 4), 150);
-        leaveTimeout2.current = setTimeout(() => setFirstOverlayPosition(0), 300);
-        leaveTimeout3.current = setTimeout(() => {
-          setDisableOverlayAnimation(false);
-          setDisableInOutOverlayAnimation(true);
-        }, 500);
-      });
-    });
+    setDisableInOutOverlayAnimation(false);
+    leaveTimeout1.current = setTimeout(() => setFirstOverlayPosition((p) => -p / 4), 150);
+    leaveTimeout2.current = setTimeout(() => setFirstOverlayPosition(0), 300);
+    leaveTimeout3.current = setTimeout(() => {
+      setDisableInOutOverlayAnimation(true);
+    }, 500);
   };
 
   useEffect(() => {
@@ -308,44 +306,53 @@ export const AwardBadge = ({
   }, [currentMatrix, isTimeoutFinished]);
 
   const onPointerDown = async () => {
-    // iOS: enable sensors on first interaction
-    if (!gyroReady && typeof DeviceOrientationEvent?.requestPermission === 'function') {
-      await enableGyro();
+    if (reduced.current) return;
+    if (!inView) return;
+    if (typeof DeviceOrientationEvent?.requestPermission !== 'function') return;
+    if (useGyro) return;
+    try {
+      const state = await DeviceOrientationEvent.requestPermission();
+      if (state !== 'granted') return;
+      // one-shot attach while visible
+      const onOrient = (e) => {
+        if (e.beta == null && e.gamma == null) return;
+        applyGyro(e.beta, e.gamma);
+      };
+      window.addEventListener('deviceorientation', onOrient, { passive: true });
+      setUseGyro(true);
+      ref.current.__gyroCleanup = () => window.removeEventListener('deviceorientation', onOrient);
+    } catch {
+      /* denied */
     }
   };
 
-  const overlayAnimations = [...Array(10).keys()]
-    .map(
-      (e) => `
-    @keyframes overlayAnimation${uid}${e + 1} {
-      0% { transform: rotate(${e * 10}deg); }
-      50% { transform: rotate(${(e + 1) * 10}deg); }
-      100% { transform: rotate(${e * 10}deg); }
-    }
-  `,
-    )
-    .join(' ');
+  useEffect(() => {
+    return () => {
+      ref.current?.__gyroCleanup?.();
+    };
+  }, []);
 
   const fill = backgroundColor[(place || 1) - 1] || backgroundColor[0];
   const displayTitle = place ? `${title} #${place}` : title;
   const blurId = `blur-${uid}`;
   const maskId = `badgeMask-${uid}`;
-
-  // Slightly smaller type for longer titles
   const titleSize = displayTitle.length > 20 ? 13 : 15;
 
-  const overlayColors = [
-    'hsl(358, 100%, 62%)',
-    'hsl(30, 100%, 50%)',
-    'hsl(60, 100%, 50%)',
-    'hsl(96, 100%, 50%)',
-    'hsl(233, 85%, 47%)',
-    'hsl(271, 85%, 47%)',
-    'hsl(300, 20%, 35%)',
-    'transparent',
-    'transparent',
-    'white',
-  ];
+  // Fewer overlay layers on mobile (blur filters are expensive)
+  const overlayColors = isMobile
+    ? ['hsl(30, 100%, 50%)', 'hsl(271, 85%, 47%)', 'white']
+    : [
+        'hsl(358, 100%, 62%)',
+        'hsl(30, 100%, 50%)',
+        'hsl(60, 100%, 50%)',
+        'hsl(96, 100%, 50%)',
+        'hsl(233, 85%, 47%)',
+        'hsl(271, 85%, 47%)',
+        'hsl(300, 20%, 35%)',
+        'transparent',
+        'transparent',
+        'white',
+      ];
 
   const Tag = link ? 'a' : 'div';
   const linkProps = link
@@ -363,19 +370,25 @@ export const AwardBadge = ({
       onMouseEnter={onMouseEnter}
       onPointerDown={onPointerDown}
     >
-      <style>{overlayAnimations}</style>
       <div
+        ref={tiltRef}
         style={{
-          transform: `perspective(700px) matrix3d(${matrix})`,
+          // Mobile: transform only via ref (gyro) so React re-renders don't reset tilt
+          // Desktop: matrix3d from mouse state
+          ...(isMobile
+            ? {}
+            : {
+                transform: `perspective(700px) matrix3d(${matrix})`,
+              }),
           transformOrigin: 'center center',
-          transition: useGyro && !hoverActive.current ? 'transform 80ms linear' : 'transform 200ms ease-out',
-          willChange: 'transform',
+          transition: useGyro ? 'transform 100ms linear' : 'transform 200ms ease-out',
+          willChange: inView && useGyro ? 'transform' : 'auto',
         }}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 54" className="w-full h-auto">
           <defs>
-            <filter id={blurId}>
-              <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+            <filter id={blurId} x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation={isMobile ? 1.5 : 3} />
             </filter>
             <mask id={maskId}>
               <rect width="260" height="54" fill="white" rx="10" />
@@ -418,33 +431,26 @@ export const AwardBadge = ({
               d="M17 2.5l2.4 7.2H27l-6 4.4 2.3 7.1L17 17l-6.3 4.2 2.3-7.1-6-4.4h7.6L17 2.5z"
             />
           </g>
+          {/* Single rotating overlay group on mobile instead of 10 animated layers */}
           <g style={{ mixBlendMode: 'overlay' }} mask={`url(#${maskId})`}>
-            {overlayColors.map((color, i) => (
-              <g
-                key={i}
-                style={{
-                  transform: `rotate(${firstOverlayPosition + i * 10}deg)`,
-                  transformOrigin: 'center center',
-                  transition:
-                    useGyro && !hoverActive.current
-                      ? 'transform 80ms linear'
-                      : !disableInOutOverlayAnimation
-                        ? 'transform 200ms ease-out'
-                        : 'none',
-                  animation: disableOverlayAnimation
-                    ? 'none'
-                    : `overlayAnimation${uid}${i + 1} 5s infinite`,
-                  willChange: 'transform',
-                }}
-              >
+            <g
+              ref={overlayLayerRef}
+              style={{
+                transformOrigin: 'center center',
+                transition: !disableInOutOverlayAnimation ? 'transform 200ms ease-out' : 'none',
+              }}
+            >
+              {overlayColors.map((color, i) => (
                 <polygon
+                  key={i}
                   points="0,0 260,54 260,0 0,54"
                   fill={color}
-                  filter={`url(#${blurId})`}
-                  opacity="0.5"
+                  filter={i === 0 ? `url(#${blurId})` : undefined}
+                  opacity="0.45"
+                  transform={`rotate(${firstOverlayPosition + i * (isMobile ? 30 : 10)} 130 27)`}
                 />
-              </g>
-            ))}
+              ))}
+            </g>
           </g>
         </svg>
       </div>
