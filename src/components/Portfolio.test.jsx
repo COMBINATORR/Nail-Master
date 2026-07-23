@@ -1,5 +1,5 @@
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { Portfolio } from './Portfolio';
 import { works } from '../data/works';
 
@@ -10,21 +10,6 @@ vi.mock('react-i18next', () => ({
 }));
 
 describe('Portfolio', () => {
-  beforeEach(() => {
-    // Predictable width/offset for slider math
-    Element.prototype.getBoundingClientRect = vi.fn(() => ({
-      width: 1000,
-      height: 400,
-      top: 0,
-      left: 0,
-      bottom: 400,
-      right: 1000,
-      x: 0,
-      y: 0,
-      toJSON: () => ({}),
-    }));
-  });
-
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -39,86 +24,23 @@ describe('Portfolio', () => {
       expect(screen.getAllByText(w.titleKey).length).toBeGreaterThan(0);
     });
 
-    expect(screen.getByText('beforeText')).toBeInTheDocument();
-    expect(screen.getByText('afterText')).toBeInTheDocument();
+    expect(screen.getByText(works[0].descKey)).toBeInTheDocument();
   });
 
-  it('changes active work when clicking on a tab', () => {
+  it('changes active work when clicking a panel', () => {
     render(<Portfolio />);
 
-    expect(screen.getAllByText(works[0].titleKey).length).toBe(2);
+    expect(screen.getByText(works[0].descKey)).toBeInTheDocument();
 
-    fireEvent.click(screen.getAllByText(works[1].titleKey)[0]);
+    fireEvent.click(screen.getByRole('button', { name: works[1].titleKey }));
 
-    expect(screen.getAllByText(works[1].titleKey).length).toBe(2);
+    expect(screen.getByText(works[1].descKey)).toBeInTheDocument();
   });
 
-  it('handles drag interactions on the slider via mouse events', () => {
+  it('renders accordion panels for all works', () => {
     render(<Portfolio />);
-
-    // Events are bound on the slider root (ref container)
-    const sliderContainer = screen.getByTestId('slide-line').parentElement;
-    const slideLine = screen.getByTestId('slide-line');
-
-    expect(slideLine.style.left).toBe('50%');
-
-    fireEvent.mouseDown(sliderContainer, { clientX: 0, button: 0 });
-
-    act(() => {
-      window.dispatchEvent(new MouseEvent('mousemove', { clientX: 250 }));
-    });
-    expect(slideLine.style.left).toBe('25%');
-
-    act(() => {
-      window.dispatchEvent(new MouseEvent('mousemove', { clientX: 1500 }));
-    });
-    expect(slideLine.style.left).toBe('100%');
-
-    act(() => {
-      window.dispatchEvent(new MouseEvent('mousemove', { clientX: -500 }));
-    });
-    expect(slideLine.style.left).toBe('0%');
-
-    act(() => {
-      window.dispatchEvent(new MouseEvent('mouseup'));
-    });
-
-    act(() => {
-      window.dispatchEvent(new MouseEvent('mousemove', { clientX: 500 }));
-    });
-    expect(slideLine.style.left).toBe('0%');
-  });
-
-  it('handles drag interactions on the slider via touch events', () => {
-    render(<Portfolio />);
-
-    const sliderContainer = screen.getByTestId('slide-line').parentElement;
-    const slideLine = screen.getByTestId('slide-line');
-
-    expect(slideLine.style.left).toBe('50%');
-
-    fireEvent.touchStart(sliderContainer, { touches: [{ clientX: 0 }] });
-
-    act(() => {
-      // jsdom TouchEvent may not carry touches reliably — use fireEvent when available
-      fireEvent.touchMove(window, { touches: [{ clientX: 750 }] });
-    });
-
-    // If fireEvent didn't update (window target), fall back to synthetic with touches
-    if (slideLine.style.left === '50%') {
-      act(() => {
-        const evt = new Event('touchmove', { bubbles: true });
-        Object.defineProperty(evt, 'touches', {
-          value: [{ clientX: 750 }],
-        });
-        window.dispatchEvent(evt);
-      });
-    }
-
-    expect(slideLine.style.left).toBe('75%');
-
-    act(() => {
-      fireEvent.touchEnd(window);
+    works.forEach((w) => {
+      expect(screen.getByRole('button', { name: w.titleKey })).toBeInTheDocument();
     });
   });
 });
