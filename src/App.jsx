@@ -112,16 +112,20 @@ function AppContent() {
     };
     window.addEventListener('load', onLoad);
 
-    const interval = setInterval(() => {
-      if (tryMark()) clearInterval(interval);
-    }, 250);
-    const maxTimer = setTimeout(() => clearInterval(interval), 10000);
+    let timerId;
+    let attempts = 0;
+    const poll = () => {
+      if (tryMark()) return;
+      if (++attempts < 40) {
+        timerId = setTimeout(poll, 250);
+      }
+    };
+    timerId = setTimeout(poll, 250);
 
     return () => {
       cancelled = true;
       window.removeEventListener('load', onLoad);
-      clearInterval(interval);
-      clearTimeout(maxTimer);
+      clearTimeout(timerId);
     };
   }, [leafletLoaded]);
 
