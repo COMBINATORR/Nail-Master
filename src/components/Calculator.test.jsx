@@ -13,9 +13,9 @@ describe('Calculator', () => {
   const defaultProps = {
     activeCategory: 'manicure',
     setActiveCategory: vi.fn(),
-    selectedServiceIds: [],
+    selectedServiceIds: new Set(),
     toggleService: vi.fn(),
-    selectedOptions: [],
+    selectedOptions: new Set(),
     toggleOption: vi.fn(),
     nailShape: 'oval',
     setNailShape: vi.fn(),

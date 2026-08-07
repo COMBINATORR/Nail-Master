@@ -2,7 +2,7 @@ export const generateWhatsAppText = ({
   includeNameAndPhone = false,
   t,
   selectedServices = [],
-  selectedOptions = [],
+  selectedOptions = new Set(),
   optionsById = {},
   nailShape,
   nailShapes = [],
@@ -43,8 +43,9 @@ export const generateWhatsAppText = ({
     if (val) group.items.push(val);
   }
 
-  for (let i = 0; i < selectedOptions.length; i++) {
-    const o = optionsById[selectedOptions[i]];
+  const selectedOptionsArray = Array.from(selectedOptions);
+  for (let i = 0; i < selectedOptionsArray.length; i++) {
+    const o = optionsById[selectedOptionsArray[i]];
     if (!o) continue;
     const catId = o.categoryId || catObj?.id || activeCategory || 'service';
     const nameKey = o.categoryNameKey || catObj?.nameKey;
@@ -54,15 +55,16 @@ export const generateWhatsAppText = ({
   }
 
   // Fallback for legacy single-category tests (no categoryId on items)
-  if (groups.size === 0 && (selectedServices.length || selectedOptions.length)) {
+  if (groups.size === 0 && (selectedServices.length || selectedOptions.size)) {
     const fallbackName = safeT(catObj?.nameKey) || '';
     const items = [];
     for (let i = 0; i < selectedServices.length; i++) {
       const val = safeT(selectedServices[i].nameKey);
       if (val) items.push(val);
     }
-    for (let i = 0; i < selectedOptions.length; i++) {
-      const o = optionsById[selectedOptions[i]];
+    const selectedOptionsArr = Array.from(selectedOptions);
+    for (let i = 0; i < selectedOptionsArr.length; i++) {
+      const o = optionsById[selectedOptionsArr[i]];
       if (o) {
         const val = safeT(o.nameKey);
         if (val) items.push(val);

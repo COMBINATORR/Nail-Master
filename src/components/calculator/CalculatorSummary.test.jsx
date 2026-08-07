@@ -14,7 +14,7 @@ vi.mock('react-i18next', () => ({
 describe('CalculatorSummary', () => {
   const defaultProps = {
     selectedServices: [],
-    selectedOptions: [],
+    selectedOptions: new Set(),
     optionsById: {},
     totalPrice: 0,
     totalTime: 0,
@@ -44,7 +44,7 @@ describe('CalculatorSummary', () => {
         { id: 's1', nameKey: 'Manicure', price: 5000 },
         { id: 's2', nameKey: 'Pedicure', price: 7000 }
       ],
-      selectedOptions: ['o1'],
+      selectedOptions: new Set(['o1']),
       optionsById: {
         o1: { id: 'o1', nameKey: 'French', price: 2000 }
       },

@@ -38,7 +38,7 @@ describe('generateWhatsAppText', () => {
       categoryId: 'manicure',
       categoryNameKey: 'catManicureName',
     }],
-    selectedOptions: ['manicure:design'],
+    selectedOptions: new Set(['manicure:design']),
     optionsById: {
       'manicure:design': {
         nameKey: 'optManiDesign',
@@ -120,7 +120,7 @@ describe('generateWhatsAppText', () => {
         categoryId: 'sugaring',
         categoryNameKey: 'catSugaringName',
       }],
-      selectedOptions: [],
+      selectedOptions: new Set(),
       optionsById: {},
     };
     mockTranslations.serviceSugarBikiniName = 'Bikini';
@@ -145,7 +145,7 @@ describe('generateWhatsAppText', () => {
           categoryNameKey: 'catPedicureName',
         },
       ],
-      selectedOptions: [],
+      selectedOptions: new Set(),
       optionsById: {},
       totalPrice: 12000,
     };

@@ -32,7 +32,7 @@ export const BookingForm = ({
   const { t } = useTranslation();
   const [step, setStep] = useState(1);
 
-  const hasServices = selectedServices.length > 0 || selectedOptions.length > 0;
+  const hasServices = selectedServices.length > 0 || selectedOptions.size > 0;
   const busySlots = useMemo(() => getBusySlots(selectedDate), [selectedDate]);
 
   // If selected time becomes busy when date changes — clear it
@@ -43,15 +43,16 @@ export const BookingForm = ({
   }, [selectedDate, selectedTime, busySlots, setSelectedTime]);
 
   const servicesLine = useMemo(() => {
-    if (selectedServices.length === 0 && selectedOptions.length === 0) {
+    if (selectedServices.length === 0 && selectedOptions.size === 0) {
       return '—';
     }
     const parts = [];
     for (let i = 0; i < selectedServices.length; i++) {
       parts.push(t(selectedServices[i].nameKey));
     }
-    for (let i = 0; i < selectedOptions.length; i++) {
-      const o = optionsById[selectedOptions[i]];
+    const selectedOptionsArray = Array.from(selectedOptions);
+    for (let i = 0; i < selectedOptionsArray.length; i++) {
+      const o = optionsById[selectedOptionsArray[i]];
       if (o) {
         parts.push(t(o.nameKey));
       }
@@ -224,7 +225,7 @@ export const BookingForm = ({
                             <span className="text-bronze-500 flex-shrink-0">{svc.price.toLocaleString()} ₸</span>
                           </div>
                         ))}
-                        {selectedOptions.map((id) => {
+                        {Array.from(selectedOptions).map((id) => {
                           const o = optionsById[id];
                           if (!o) return null;
                           return (
