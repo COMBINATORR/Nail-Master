@@ -5,33 +5,33 @@ import { generateWhatsAppText } from '../whatsapp';
 /** Composite key so manicure/pedicure options with same local id don't collide */
 export const itemKey = (categoryId, id) => `${categoryId}:${id}`;
 
-const buildCatalog = () => {
-  const servicesByKey = {};
-  const optionsByKey = {};
-  for (const cat of Object.values(categories)) {
-    for (const svc of cat.services) {
-      const key = itemKey(cat.id, svc.id);
-      servicesByKey[key] = {
-        ...svc,
-        key,
-        categoryId: cat.id,
-        categoryNameKey: cat.nameKey,
-      };
-    }
-    for (const opt of cat.options || []) {
-      const key = itemKey(cat.id, opt.id);
-      optionsByKey[key] = {
-        ...opt,
-        key,
-        categoryId: cat.id,
-        categoryNameKey: cat.nameKey,
-      };
-    }
+// NOTE: This object is statically built from data/categories.js for performance. Ensure they stay in sync!
+const CATALOG = {
+  servicesByKey: {
+    'manicure:classic': { id: 'classic', nameKey: 'serviceManicureClassicName', descKey: 'serviceManicureClassicDesc', price: 4000, time: 60, key: 'manicure:classic', categoryId: 'manicure', categoryNameKey: 'catManicureName' },
+    'manicure:gel': { id: 'gel', nameKey: 'serviceManicureGelName', descKey: 'serviceManicureGelDesc', price: 6000, time: 90, key: 'manicure:gel', categoryId: 'manicure', categoryNameKey: 'catManicureName' },
+    'pedicure:express': { id: 'express', nameKey: 'servicePediExpressName', descKey: 'servicePediExpressDesc', price: 8000, time: 60, key: 'pedicure:express', categoryId: 'pedicure', categoryNameKey: 'catPedicureName' },
+    'pedicure:smart': { id: 'smart', nameKey: 'servicePediSmartName', descKey: 'servicePediSmartDesc', price: 12000, time: 90, key: 'pedicure:smart', categoryId: 'pedicure', categoryNameKey: 'catPedicureName' },
+    'pedicure:hygiene': { id: 'hygiene', nameKey: 'servicePediHygieneName', descKey: 'servicePediHygieneDesc', price: 9000, time: 60, key: 'pedicure:hygiene', categoryId: 'pedicure', categoryNameKey: 'catPedicureName' },
+    'sugaring:bikini': { id: 'bikini', nameKey: 'serviceSugarBikiniName', descKey: 'serviceSugarBikiniDesc', price: 5000, time: 30, key: 'sugaring:bikini', categoryId: 'sugaring', categoryNameKey: 'catSugaringName' },
+    'sugaring:legs': { id: 'legs', nameKey: 'serviceSugarLegsName', descKey: 'serviceSugarLegsDesc', price: 6000, time: 40, key: 'sugaring:legs', categoryId: 'sugaring', categoryNameKey: 'catSugaringName' },
+    'sugaring:underarms': { id: 'underarms', nameKey: 'serviceSugarUnderarmsName', descKey: 'serviceSugarUnderarmsDesc', price: 2000, time: 15, key: 'sugaring:underarms', categoryId: 'sugaring', categoryNameKey: 'catSugaringName' },
+    'sugaring:arms': { id: 'arms', nameKey: 'serviceSugarArmsName', descKey: 'serviceSugarArmsDesc', price: 5000, time: 25, key: 'sugaring:arms', categoryId: 'sugaring', categoryNameKey: 'catSugaringName' },
+    'sugaring:fullbody': { id: 'fullbody', nameKey: 'serviceSugarFullBodyName', descKey: 'serviceSugarFullBodyDesc', price: 15000, time: 90, key: 'sugaring:fullbody', categoryId: 'sugaring', categoryNameKey: 'catSugaringName' }
+  },
+  optionsByKey: {
+    'manicure:design': { id: 'design', nameKey: 'optManiDesign', price: 2000, time: 20, key: 'manicure:design', categoryId: 'manicure', categoryNameKey: 'catManicureName' },
+    'manicure:strengthen': { id: 'strengthen', nameKey: 'optManiStrengthen', price: 1500, time: 15, key: 'manicure:strengthen', categoryId: 'manicure', categoryNameKey: 'catManicureName' },
+    'manicure:repair': { id: 'repair', nameKey: 'optManiRepair', price: 1000, time: 10, key: 'manicure:repair', categoryId: 'manicure', categoryNameKey: 'catManicureName' },
+    'manicure:spa': { id: 'spa', nameKey: 'optManiSpa', price: 1500, time: 15, key: 'manicure:spa', categoryId: 'manicure', categoryNameKey: 'catManicureName' },
+    'pedicure:design': { id: 'design', nameKey: 'optPediDesign', price: 2000, time: 20, key: 'pedicure:design', categoryId: 'pedicure', categoryNameKey: 'catPedicureName' },
+    'pedicure:cracks': { id: 'cracks', nameKey: 'optPediCracks', price: 3000, time: 20, key: 'pedicure:cracks', categoryId: 'pedicure', categoryNameKey: 'catPedicureName' },
+    'pedicure:spa': { id: 'spa', nameKey: 'optPediSpa', price: 2000, time: 20, key: 'pedicure:spa', categoryId: 'pedicure', categoryNameKey: 'catPedicureName' },
+    'sugaring:bikinipit': { id: 'bikinipit', nameKey: 'optSugarBikiniPit', price: 6000, time: 30, key: 'sugaring:bikinipit', categoryId: 'sugaring', categoryNameKey: 'catSugaringName' },
+    'sugaring:cleaning': { id: 'cleaning', nameKey: 'optSugarCleaning', price: 3000, time: 15, key: 'sugaring:cleaning', categoryId: 'sugaring', categoryNameKey: 'catSugaringName' },
+    'sugaring:face': { id: 'face', nameKey: 'optSugarFace', price: 1500, time: 10, key: 'sugaring:face', categoryId: 'sugaring', categoryNameKey: 'catSugaringName' }
   }
-  return { servicesByKey, optionsByKey };
 };
-
-const CATALOG = buildCatalog();
 
 const categoryOfKey = (key) => (typeof key === 'string' ? key.split(':')[0] : '');
 
