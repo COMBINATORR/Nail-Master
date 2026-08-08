@@ -68,7 +68,6 @@ export function useBooking({ lang, t, next10Days }) {
     for (const id of selectedOptions) countItem(id);
     return counts;
   }, [selectedServiceIds, selectedOptions]);
->>>>>>> origin/main
 
   const needsNailShape = useMemo(() => {
     const hasNailCat = (key) => typeof key === 'string' && (key.startsWith('manicure:') || key.startsWith('pedicure:'));

@@ -104,7 +104,6 @@ describe('LocationMap', () => {
     );
   });
 
-<<<<<<< HEAD
   it('clears pre-existing Leaflet instance on the DOM node to avoid "Map container is already initialized" crash', () => {
     const L = makeLeafletMock();
     window.L = L;
@@ -131,7 +130,7 @@ describe('LocationMap', () => {
 
     document.body.removeChild(parentNode);
   });
-=======
+
   it('handles map instance removal during initialization', () => {
     const removeMock = vi.fn();
     const L = makeLeafletMock({ remove: removeMock });
@@ -144,7 +143,6 @@ describe('LocationMap', () => {
     expect(removeMock).toHaveBeenCalledTimes(1);
     expect(console.error).not.toHaveBeenCalled();
   });
-
 
   it('handles existing Leaflet DOM node safely to avoid crash', () => {
     const L = makeLeafletMock();
@@ -171,7 +169,6 @@ describe('LocationMap', () => {
     expect(originalParentNode.replaceChild).toHaveBeenCalled();
   });
 
-
   it('handles error gracefully when mapInstance.remove() throws during initialization', () => {
     const throwMock = vi.fn().mockImplementation(() => {
         throw new Error('remove error');
@@ -191,6 +188,4 @@ describe('LocationMap', () => {
       expect.any(Error)
     );
   });
-
->>>>>>> origin/main
 });
