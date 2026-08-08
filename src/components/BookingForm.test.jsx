@@ -24,7 +24,7 @@ const baseProps = {
   isSubmitting: false,
   handleSubmit: vi.fn((e) => e.preventDefault()),
   selectedServices: [],
-  selectedOptions: [],
+  selectedOptions: new Set(),
   optionsById: {},
   totalPrice: 0,
   totalTime: 0,
@@ -67,7 +67,7 @@ describe('BookingForm', () => {
       <BookingForm
         {...withServices({
           selectedServices: [],
-          selectedOptions: ['opt1', 'optInvalid'],
+          selectedOptions: new Set(['opt1', 'optInvalid']),
           optionsById: { opt1: { nameKey: 'Massage', price: 2000 } },
           totalPrice: 2000,
         })}

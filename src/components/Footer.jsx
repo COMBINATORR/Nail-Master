@@ -1,45 +1,96 @@
 import { useTranslation } from 'react-i18next';
 import { InstagramIcon, WhatsAppIcon, PhoneIcon } from './Icons';
+import { AwardBadge } from './ui/AwardBadge';
+import { StudioCreditMenu } from './StudioCreditMenu';
 
-const bgDeep = 'bg-[var(--bg-deep)]';
 const textMuted = 'text-[var(--text-muted)]';
 const borderSubtle = 'border-[var(--border-subtle)]';
-const border = 'border-[var(--border-color)]';
+
+const SOCIALS = [
+  {
+    id: 'instagram',
+    href: 'https://instagram.com',
+    label: 'Instagram',
+    accent: '#E1306C',
+    Icon: InstagramIcon,
+  },
+  {
+    id: 'whatsapp',
+    href: 'https://wa.me/77016698086',
+    label: 'WhatsApp',
+    accent: '#25D366',
+    Icon: WhatsAppIcon,
+  },
+  {
+    id: 'phone',
+    href: 'tel:+77016698086',
+    label: 'Телефон',
+    accent: '#4A90D9',
+    Icon: PhoneIcon,
+  },
+];
 
 export const Footer = () => {
   const { t } = useTranslation();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className={`liquid-glass-footer py-10 transition-colors duration-300`}>
-      <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6">
-          {/* Logo */}
-          <div className="static-logo">
-            <span className="static-logo-title text-3xl sm:text-4xl">
-              <span>S</span><span>V</span><span>T</span><span>L</span>
-            </span>
-            <span className="static-logo-subtitle text-[13px] sm:text-[15px]">Nails &amp; Aesthetic</span>
+    <footer className="liquid-glass-footer py-12 sm:py-14 transition-colors duration-300">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="flex flex-col gap-10 sm:gap-12">
+          {/* Row 1: brand left · socials right */}
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-8">
+            <div className="flex flex-col items-center sm:items-start gap-3">
+              <div className="static-logo">
+                <span className="static-logo-title text-3xl sm:text-4xl">
+                  <span>S</span>
+                  <span>V</span>
+                  <span>T</span>
+                  <span>L</span>
+                </span>
+                <span className="static-logo-subtitle text-[13px] sm:text-[15px]">
+                  Nails &amp; Aesthetic
+                </span>
+              </div>
+              <p
+                className={`${textMuted} text-xs leading-relaxed max-w-[240px] text-center sm:text-left whitespace-pre-line`}
+              >
+                {t('footerText')}
+              </p>
+            </div>
+
+            <div className="footer-socials flex items-center justify-center sm:justify-end gap-5 sm:gap-6 sm:pt-1">
+              {SOCIALS.map(({ id, href, label, accent, Icon }) => (
+                <a
+                  key={id}
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  aria-label={label}
+                  className="footer-social-link group"
+                  style={{ '--social-accent': accent }}
+                >
+                  <span className="footer-social-icon">
+                    <Icon className="w-[18px] h-[18px]" />
+                  </span>
+                  <span className="footer-social-label">{label}</span>
+                </a>
+              ))}
+            </div>
           </div>
 
-          <p className={`${textMuted} text-xs max-w-xs lg:text-center`}>{t('footerText')}</p>
-
-          {/* Social icons — clean, no circles */}
-          <div className="flex gap-5 items-center">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-[var(--text-muted)] hover:text-[#E1306C] transition-colors duration-200">
-              <InstagramIcon className="w-5 h-5" />
-            </a>
-            <a href="https://wa.me/77016698086" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="text-[var(--text-muted)] hover:text-[#25D366] transition-colors duration-200">
-              <WhatsAppIcon className="w-5 h-5" />
-            </a>
-            <a href="tel:+77016698086" aria-label="Call" className="text-[var(--text-muted)] hover:text-[#4A90D9] transition-colors duration-200">
-              <PhoneIcon className="w-5 h-5" />
-            </a>
+          {/* Row 2: award */}
+          <div className="flex justify-center">
+            <AwardBadge brand={t('awardBrand')} title={t('awardTitle')} />
           </div>
-        </div>
 
-        <div className={`border-t ${borderSubtle} mt-8 pt-6 text-center`}>
-          <p className="text-[var(--text-muted)]/60 text-[10px]">© {new Date().getFullYear()} {t('brand')}. {t('rights')}</p>
-          <p className="spcwlkr-credit mt-3">Powered by SPCWLKR Digital Studio</p>
+          {/* Row 3: legal */}
+          <div className={`border-t ${borderSubtle} pt-6 flex flex-col items-center gap-2 text-center`}>
+            <p className="footer-copy text-[10px] tracking-wide">
+              © {year} {t('brand')}. {t('rights')}
+            </p>
+            <StudioCreditMenu />
+          </div>
         </div>
       </div>
     </footer>
