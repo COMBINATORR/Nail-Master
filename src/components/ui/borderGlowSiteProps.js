@@ -57,9 +57,6 @@ export const borderGlowByTheme = {
   },
 };
 
-/** @deprecated use getBorderGlowProps(theme) */
-export const borderGlowSiteProps = borderGlowByTheme.dark;
-
 export function getBorderGlowProps(theme) {
   return borderGlowByTheme[theme] || borderGlowByTheme.dark;
 }
