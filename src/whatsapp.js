@@ -1,4 +1,5 @@
-export const generateWhatsAppText = ({
+export const generateWhatsAppText = (options = {}) => {
+  const {
   includeNameAndPhone = false,
   t,
   selectedServices = [],
@@ -17,8 +18,8 @@ export const generateWhatsAppText = ({
   selectedTime,
   totalPrice,
   name,
-  phone,
-}) => {
+  phone
+} = options;
   const safeT = (k) => (typeof t === 'function' ? t(k) : t?.[k]);
 
   // Group services + options by category for a clear multi-direction message
