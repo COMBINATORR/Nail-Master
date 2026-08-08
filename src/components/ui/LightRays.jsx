@@ -75,9 +75,10 @@ const LightRays = ({
 
       let renderer;
       try {
-        // webgl:1 — shaders use gl_FragColor
+        // Cap DPR — full retina WebGL is a major heat source
+        const maxDpr = window.matchMedia('(max-width: 900px)').matches ? 1 : 1.5;
         renderer = new Renderer({
-          dpr: Math.min(window.devicePixelRatio || 1, 2),
+          dpr: Math.min(window.devicePixelRatio || 1, maxDpr),
           alpha: true,
           premultipliedAlpha: false,
           depth: false,
@@ -253,7 +254,8 @@ void main() {
       const updatePlacement = () => {
         if (!containerRef.current || !renderer) return;
 
-        renderer.dpr = Math.min(window.devicePixelRatio, 2);
+        const maxDpr = window.matchMedia('(max-width: 900px)').matches ? 1 : 1.5;
+        renderer.dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
 
         const { clientWidth: wCSS, clientHeight: hCSS } = containerRef.current;
         renderer.setSize(wCSS, hCSS);
@@ -269,8 +271,24 @@ void main() {
         uniforms.rayDir.value = dir;
       };
 
-      const loop = t => {
+      let frame = 0;
+      let pageVisible = !document.hidden;
+
+      const loop = (t) => {
         if (!rendererRef.current || !uniformsRef.current || !meshRef.current) {
+          return;
+        }
+
+        // Pause completely when tab hidden — stops GPU heat in background
+        if (!pageVisible) {
+          animationIdRef.current = null;
+          return;
+        }
+
+        // ~30fps is enough for soft rays; half the GPU load of 60fps
+        frame += 1;
+        if (frame % 2 === 0) {
+          animationIdRef.current = requestAnimationFrame(loop);
           return;
         }
 
@@ -294,6 +312,14 @@ void main() {
         }
       };
 
+      const onVisibility = () => {
+        pageVisible = !document.hidden;
+        if (pageVisible && !animationIdRef.current) {
+          animationIdRef.current = requestAnimationFrame(loop);
+        }
+      };
+      document.addEventListener('visibilitychange', onVisibility);
+
       window.addEventListener('resize', updatePlacement);
       updatePlacement();
       animationIdRef.current = requestAnimationFrame(loop);
@@ -304,6 +330,7 @@ void main() {
           animationIdRef.current = null;
         }
 
+        document.removeEventListener('visibilitychange', onVisibility);
         window.removeEventListener('resize', updatePlacement);
 
         if (renderer) {
