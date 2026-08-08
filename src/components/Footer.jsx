@@ -35,36 +35,36 @@ export const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="liquid-glass-footer py-6 lg:py-8 transition-colors duration-300">
+    <footer className="liquid-glass-footer py-4 lg:py-5 transition-colors duration-300">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-3 sm:gap-3.5">
           {/* Main row: Brand + Award + Socials */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
             {/* Brand */}
-            <div className="flex flex-col items-center md:items-start gap-1">
+            <div className="flex flex-col items-center md:items-start gap-0.5">
               <div className="static-logo">
-                <span className="static-logo-title text-2xl sm:text-3xl">
+                <span className="static-logo-title text-xl sm:text-2xl">
                   <span>S</span>
                   <span>V</span>
                   <span>T</span>
                   <span>L</span>
                 </span>
-                <span className="static-logo-subtitle text-[11px] sm:text-[13px]">
+                <span className="static-logo-subtitle text-[10px] sm:text-[11px]">
                   Nails &amp; Aesthetic
                 </span>
               </div>
-              <p className={`${textMuted} text-[11px] leading-tight max-w-[260px] text-center md:text-left`}>
+              <p className={`${textMuted} text-[10px] leading-none max-w-[260px] text-center md:text-left`}>
                 {t('footerText')}
               </p>
             </div>
 
             {/* Award badge */}
-            <div className="flex justify-center flex-shrink-0">
+            <div className="flex justify-center flex-shrink-0 scale-90 sm:scale-95">
               <AwardBadge brand={t('awardBrand')} title={t('awardTitle')} />
             </div>
 
             {/* Socials */}
-            <div className="footer-socials flex items-center justify-center md:justify-end gap-4 sm:gap-5">
+            <div className="footer-socials flex items-center justify-center md:justify-end gap-3 sm:gap-4">
               {SOCIALS.map(({ id, href, label, accent, Icon }) => (
                 <a
                   key={id}
@@ -72,21 +72,21 @@ export const Footer = () => {
                   target={href.startsWith('http') ? '_blank' : undefined}
                   rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   aria-label={label}
-                  className="footer-social-link group"
+                  className="footer-social-link group py-1"
                   style={{ '--social-accent': accent }}
                 >
                   <span className="footer-social-icon">
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-3.5 h-3.5" />
                   </span>
-                  <span className="footer-social-label text-xs">{label}</span>
+                  <span className="footer-social-label text-[11px]">{label}</span>
                 </a>
               ))}
             </div>
           </div>
 
           {/* Legal row */}
-          <div className={`border-t ${borderSubtle} pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left`}>
-            <p className="footer-copy text-[10px] tracking-wide">
+          <div className={`border-t ${borderSubtle} pt-2.5 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left`}>
+            <p className="footer-copy text-[9px] sm:text-[10px] tracking-wide">
               © {year} {t('brand')}. {t('rights')}
             </p>
             <StudioCreditMenu />
