@@ -4,7 +4,8 @@ import { itemKey } from '../../hooks/useBooking';
 const textPrimary = 'text-[var(--text-primary)]';
 const textMuted = 'text-[var(--text-muted)]';
 
-export const ExtraOptions = ({ activeCategory, catObj, selectedOptions, toggleOption, fmtTime, hideHeader = false }) => {
+export const ExtraOptions = (props) => {
+  const { activeCategory, catObj, selectedOptions, toggleOption, fmtTime, hideHeader = false } = props;
   const { t } = useTranslation();
   const stepLabel = activeCategory !== 'sugaring' ? '03' : '02';
   const title = activeCategory !== 'sugaring' ? t('extraOptions') : t('servicesSelectOptions');
@@ -24,7 +25,7 @@ export const ExtraOptions = ({ activeCategory, catObj, selectedOptions, toggleOp
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2" role="group" aria-label={title}>
         {catObj?.options?.map((opt) => {
           const key = itemKey(catObj.id, opt.id);
-          const isChecked = selectedOptions.includes(key);
+          const isChecked = selectedOptions.has(key);
           return (
             <button
               key={key}

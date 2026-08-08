@@ -38,7 +38,7 @@ describe('generateWhatsAppText', () => {
       categoryId: 'manicure',
       categoryNameKey: 'catManicureName',
     }],
-    selectedOptions: ['manicure:design'],
+    selectedOptions: new Set(['manicure:design']),
     optionsById: {
       'manicure:design': {
         nameKey: 'optManiDesign',
@@ -49,7 +49,6 @@ describe('generateWhatsAppText', () => {
     nailShape: 'oval',
     nailShapes: mockNailShapes,
     needsNailShape: true,
-    activeCategory: 'manicure',
     lang: 'en',
     visitMode: 'relax',
     next10Days: [{ id: '2023-10-27', formatted: 'Oct 27, Fri' }],
@@ -114,13 +113,12 @@ describe('generateWhatsAppText', () => {
     const props = {
       ...defaultProps,
       needsNailShape: false,
-      activeCategory: 'sugaring',
       selectedServices: [{
         nameKey: 'serviceSugarBikiniName',
         categoryId: 'sugaring',
         categoryNameKey: 'catSugaringName',
       }],
-      selectedOptions: [],
+      selectedOptions: new Set(),
       optionsById: {},
     };
     mockTranslations.serviceSugarBikiniName = 'Bikini';
@@ -145,7 +143,7 @@ describe('generateWhatsAppText', () => {
           categoryNameKey: 'catPedicureName',
         },
       ],
-      selectedOptions: [],
+      selectedOptions: new Set(),
       optionsById: {},
       totalPrice: 12000,
     };

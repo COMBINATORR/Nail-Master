@@ -32,7 +32,7 @@ export const Calculator = ({
 }) => {
   const { t } = useTranslation();
   const catObj = categories[activeCategory];
-  const hasSelection = selectedServices.length > 0 || selectedOptions.length > 0;
+  const hasSelection = selectedServices.length > 0 || selectedOptions.size > 0;
   const isSugaring = activeCategory === 'sugaring';
 
   const mobileSteps = useMemo(() => {
@@ -184,7 +184,7 @@ export const Calculator = ({
                   {totalTime > 0 ? ` · ≈ ${fmtTime(totalTime)}` : ''}
                   <span className={`${textMuted} font-medium`}>
                     {' · '}
-                    {selectedServices.length + selectedOptions.length} {t('servicesItems')}
+                    {selectedServices.length + selectedOptions.size} {t('servicesItems')}
                   </span>
                 </p>
               ) : (

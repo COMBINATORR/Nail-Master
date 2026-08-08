@@ -25,6 +25,7 @@ import { useBooking } from './hooks/useBooking';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import LightRays from './components/ui/LightRays';
 import { getLightRaysProps } from './components/ui/lightRaysTheme';
+import { canUseHeavyFx } from './lib/perf';
 
 
 /* eslint-disable react-refresh/only-export-components */
@@ -94,14 +95,38 @@ function AppContent() {
   useEffect(() => {
     if (leafletLoaded) return;
 
-    const interval = setInterval(() => {
-      if (typeof window !== 'undefined' && window.L) {
+    let cancelled = false;
+    const tryMark = () => {
+      if (!cancelled && typeof window !== 'undefined' && window.L) {
         setLeafletLoaded(true);
-        clearInterval(interval);
+        return true;
       }
-    }, 50);
+      return false;
+    };
 
-    return () => clearInterval(interval);
+    if (tryMark()) return undefined;
+
+    // Prefer load event (Jules #77); sparse poll only as fallback for late CDN scripts
+    const onLoad = () => {
+      tryMark();
+    };
+    window.addEventListener('load', onLoad);
+
+    let timerId;
+    let attempts = 0;
+    const poll = () => {
+      if (tryMark()) return;
+      if (++attempts < 40) {
+        timerId = setTimeout(poll, 250);
+      }
+    };
+    timerId = setTimeout(poll, 250);
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', onLoad);
+      clearTimeout(timerId);
+    };
   }, [leafletLoaded]);
 
   const next10Days = useMemo(() => getNext10Days(lang), [lang]);
@@ -109,11 +134,28 @@ function AppContent() {
   const { theme, setTheme, isDayTheme, isNightTheme } = useTheme();
   const { isScrolled, isScrolledCapsule, showBackToTop } = useScroll();
   const { showGravityRestore, handleRestoreGravity, handleLogoClick } = useEasterEgg();
-  // Light Rays only for dark themes: night / emerald / cyber
-  const showLightRays = isNightTheme;
+  // Light Rays: dark themes + desktop only (WebGL heats phones)
+  const [allowHeavyFx, setAllowHeavyFx] = useState(() =>
+    typeof window !== 'undefined' ? canUseHeavyFx() : false,
+  );
+
+  useEffect(() => {
+    const update = () => setAllowHeavyFx(canUseHeavyFx());
+    update();
+    const mq = window.matchMedia('(max-width: 768px)');
+    const mq2 = window.matchMedia('(pointer: coarse)');
+    mq.addEventListener?.('change', update);
+    mq2.addEventListener?.('change', update);
+    return () => {
+      mq.removeEventListener?.('change', update);
+      mq2.removeEventListener?.('change', update);
+    };
+  }, []);
+
+  const showLightRays = isNightTheme && allowHeavyFx;
   const lightRaysProps = useMemo(
-    () => (isNightTheme ? getLightRaysProps(theme) : null),
-    [theme, isNightTheme]
+    () => (showLightRays ? getLightRaysProps(theme) : null),
+    [theme, showLightRays],
   );
 
   const {

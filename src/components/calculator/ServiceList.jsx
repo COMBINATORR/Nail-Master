@@ -22,7 +22,7 @@ export const ServiceList = ({ catObj, selectedServiceIds, toggleService, fmtTime
       <div className="space-y-3" role="group" aria-label={t('servicesSelectBase')}>
         {catObj.services.map((svc) => {
           const key = itemKey(catObj.id, svc.id);
-          const isActive = selectedServiceIds.includes(key);
+          const isActive = selectedServiceIds.has(key);
           return (
             <button
               key={key}

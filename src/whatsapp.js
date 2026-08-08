@@ -1,14 +1,13 @@
-export const generateWhatsAppText = ({
+export const generateWhatsAppText = (options = {}) => {
+  const {
   includeNameAndPhone = false,
   t,
   selectedServices = [],
-  selectedOptions = [],
+  selectedOptions = new Set(),
   optionsById = {},
   nailShape,
   nailShapes = [],
   needsNailShape,
-  /** @deprecated use needsNailShape; kept for older call sites/tests */
-  activeCategory,
   /** @deprecated multi-category cart no longer uses single catObj */
   catObj,
   visitMode,
@@ -17,8 +16,8 @@ export const generateWhatsAppText = ({
   selectedTime,
   totalPrice,
   name,
-  phone,
-}) => {
+  phone
+} = options;
   const safeT = (k) => (typeof t === 'function' ? t(k) : t?.[k]);
 
   // Group services + options by category for a clear multi-direction message
@@ -36,17 +35,18 @@ export const generateWhatsAppText = ({
 
   for (let i = 0; i < selectedServices.length; i++) {
     const svc = selectedServices[i];
-    const catId = svc.categoryId || catObj?.id || activeCategory || 'service';
+    const catId = svc.categoryId || catObj?.id || 'service';
     const nameKey = svc.categoryNameKey || catObj?.nameKey;
     const group = ensureGroup(catId, nameKey);
     const val = safeT(svc.nameKey);
     if (val) group.items.push(val);
   }
 
-  for (let i = 0; i < selectedOptions.length; i++) {
-    const o = optionsById[selectedOptions[i]];
+  const selectedOptionsArray = Array.from(selectedOptions);
+  for (let i = 0; i < selectedOptionsArray.length; i++) {
+    const o = optionsById[selectedOptionsArray[i]];
     if (!o) continue;
-    const catId = o.categoryId || catObj?.id || activeCategory || 'service';
+    const catId = o.categoryId || catObj?.id || 'service';
     const nameKey = o.categoryNameKey || catObj?.nameKey;
     const group = ensureGroup(catId, nameKey);
     const val = safeT(o.nameKey);
@@ -54,15 +54,16 @@ export const generateWhatsAppText = ({
   }
 
   // Fallback for legacy single-category tests (no categoryId on items)
-  if (groups.size === 0 && (selectedServices.length || selectedOptions.length)) {
+  if (groups.size === 0 && (selectedServices.length || selectedOptions.size)) {
     const fallbackName = safeT(catObj?.nameKey) || '';
     const items = [];
     for (let i = 0; i < selectedServices.length; i++) {
       const val = safeT(selectedServices[i].nameKey);
       if (val) items.push(val);
     }
-    for (let i = 0; i < selectedOptions.length; i++) {
-      const o = optionsById[selectedOptions[i]];
+    const selectedOptionsArr = Array.from(selectedOptions);
+    for (let i = 0; i < selectedOptionsArr.length; i++) {
+      const o = optionsById[selectedOptionsArr[i]];
       if (o) {
         const val = safeT(o.nameKey);
         if (val) items.push(val);
@@ -80,10 +81,7 @@ export const generateWhatsAppText = ({
   }
   const allServicesText = serviceParts.join('; ');
 
-  const shapeNeeded =
-    typeof needsNailShape === 'boolean'
-      ? needsNailShape
-      : activeCategory !== 'sugaring';
+  const shapeNeeded = typeof needsNailShape === 'boolean' ? needsNailShape : true;
 
   const shapeObj = nailShapes.find((s) => s.id === nailShape);
   const shapeText = shapeNeeded

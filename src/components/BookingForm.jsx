@@ -32,7 +32,7 @@ export const BookingForm = ({
   const { t } = useTranslation();
   const [step, setStep] = useState(1);
 
-  const hasServices = selectedServices.length > 0 || selectedOptions.length > 0;
+  const hasServices = selectedServices.length > 0 || selectedOptions.size > 0;
   const busySlots = useMemo(() => getBusySlots(selectedDate), [selectedDate]);
 
   // If selected time becomes busy when date changes — clear it
@@ -43,15 +43,16 @@ export const BookingForm = ({
   }, [selectedDate, selectedTime, busySlots, setSelectedTime]);
 
   const servicesLine = useMemo(() => {
-    if (selectedServices.length === 0 && selectedOptions.length === 0) {
+    if (selectedServices.length === 0 && selectedOptions.size === 0) {
       return '—';
     }
     const parts = [];
     for (let i = 0; i < selectedServices.length; i++) {
       parts.push(t(selectedServices[i].nameKey));
     }
-    for (let i = 0; i < selectedOptions.length; i++) {
-      const o = optionsById[selectedOptions[i]];
+    const selectedOptionsArray = Array.from(selectedOptions);
+    for (let i = 0; i < selectedOptionsArray.length; i++) {
+      const o = optionsById[selectedOptionsArray[i]];
       if (o) {
         parts.push(t(o.nameKey));
       }
@@ -224,7 +225,7 @@ export const BookingForm = ({
                             <span className="text-bronze-500 flex-shrink-0">{svc.price.toLocaleString()} ₸</span>
                           </div>
                         ))}
-                        {selectedOptions.map((id) => {
+                        {Array.from(selectedOptions).map((id) => {
                           const o = optionsById[id];
                           if (!o) return null;
                           return (
@@ -377,12 +378,12 @@ export const BookingForm = ({
               )}
 
               {/* Nav buttons */}
-              <div className={`flex gap-2 mt-4 ${step === 1 ? '' : ''}`}>
+              <div className="flex gap-2 mt-4 items-stretch">
                 {step > 1 && (
                   <button
                     type="button"
                     onClick={() => setStep((s) => s - 1)}
-                    className="liquid-glass flex-1 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all hover:scale-[1.02]"
+                    className="liquid-glass flex-1 min-w-0 py-3.5 px-3 rounded-xl text-[11px] sm:text-xs uppercase font-bold tracking-wider transition-all hover:scale-[1.02]"
                   >
                     {t('formStepBack')}
                   </button>
@@ -392,7 +393,7 @@ export const BookingForm = ({
                     type="button"
                     onClick={onNext}
                     disabled={step === 1 ? !canNextFrom1 : !canNextFrom2}
-                    className={`flex-[1.4] btn-premium-tactile disabled:opacity-40 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all border-beam-active ${step === 1 && !canNextFrom1 ? 'cursor-not-allowed' : ''}`}
+                    className={`flex-[1.4] min-w-0 btn-premium-tactile disabled:opacity-40 py-3.5 px-3 rounded-xl text-[11px] sm:text-xs uppercase font-bold tracking-wider transition-all border-beam-active ${step === 1 && !canNextFrom1 ? 'cursor-not-allowed' : ''}`}
                   >
                     {t('formStepNext')}
                   </button>
@@ -401,14 +402,16 @@ export const BookingForm = ({
                     type="submit"
                     disabled={isSubmitting}
                     id="form-submit-btn"
-                    className={`flex-[1.6] btn-premium-tactile disabled:opacity-50 py-3.5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all duration-300 flex justify-center items-center gap-2 ${!isSubmitting ? 'border-beam-active' : ''}`}
+                    className={`flex-[1.6] min-w-0 btn-premium-tactile disabled:opacity-50 py-3.5 px-2.5 sm:px-4 rounded-xl text-[10px] sm:text-xs uppercase font-bold tracking-wide sm:tracking-wider transition-all duration-300 flex justify-center items-center gap-1.5 sm:gap-2 leading-tight ${!isSubmitting ? 'border-beam-active' : ''}`}
                   >
                     {isSubmitting ? (
-                      <span className="w-4 h-4 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin flex-shrink-0" />
                     ) : (
                       <>
-                        <WhatsAppIcon className="w-4 h-4" />
-                        {t('formCtaWhatsApp')}
+                        <WhatsAppIcon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-center whitespace-normal break-words">
+                          {t('formCtaWhatsApp')}
+                        </span>
                       </>
                     )}
                   </button>
