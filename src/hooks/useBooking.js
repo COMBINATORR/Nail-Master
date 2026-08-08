@@ -37,8 +37,8 @@ const categoryOfKey = (key) => (typeof key === 'string' ? key.split(':')[0] : ''
 
 export function useBooking({ lang, t, next10Days }) {
   const [activeCategory, setActiveCategory] = useState('manicure');
-  const [selectedServiceIds, setSelectedServiceIds] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedServiceIds, setSelectedServiceIds] = useState(new Set());
+  const [selectedOptions, setSelectedOptions] = useState(new Set());
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
 
@@ -53,7 +53,7 @@ export function useBooking({ lang, t, next10Days }) {
   const optionsById = CATALOG.optionsByKey;
 
   const selectedServices = useMemo(
-    () => selectedServiceIds.map((k) => CATALOG.servicesByKey[k]).filter(Boolean),
+    () => Array.from(selectedServiceIds).map((k) => CATALOG.servicesByKey[k]).filter(Boolean),
     [selectedServiceIds]
   );
 
@@ -75,7 +75,7 @@ export function useBooking({ lang, t, next10Days }) {
       const c = categoryOfKey(key);
       return c === 'manicure' || c === 'pedicure';
     };
-    return selectedServiceIds.some(hasNailCat) || selectedOptions.some(hasNailCat);
+    return Array.from(selectedServiceIds).some(hasNailCat) || Array.from(selectedOptions).some(hasNailCat);
   }, [selectedServiceIds, selectedOptions]);
 
   // Single pass for price + time (Jules #76) — multi-category cart keys already resolved
@@ -91,8 +91,9 @@ export function useBooking({ lang, t, next10Days }) {
       sTime += svc.time || 0;
     }
 
-    for (let i = 0; i < selectedOptions.length; i++) {
-      const o = optionsById[selectedOptions[i]];
+    const selectedOptionsArray = Array.from(selectedOptions);
+    for (let i = 0; i < selectedOptionsArray.length; i++) {
+      const o = optionsById[selectedOptionsArray[i]];
       if (o) {
         oPrice += o.price || 0;
         oTime += o.time || 0;
@@ -120,10 +121,20 @@ export function useBooking({ lang, t, next10Days }) {
   };
 
   const toggleService = (key) =>
-    setSelectedServiceIds((p) => (p.includes(key) ? p.filter((x) => x !== key) : [...p, key]));
+    setSelectedServiceIds((p) => {
+      const next = new Set(p);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
 
   const toggleOption = (key) =>
-    setSelectedOptions((p) => (p.includes(key) ? p.filter((x) => x !== key) : [...p, key]));
+    setSelectedOptions((p) => {
+      const next = new Set(p);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
 
   const handleCalculatorCta = () => {
     document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
@@ -140,7 +151,7 @@ export function useBooking({ lang, t, next10Days }) {
       alert(lang === 'en' ? 'Please enter a valid phone number.' : lang === 'ru' ? 'Пожалуйста, введите корректный номер телефона.' : 'Жарамды телефон нөмірін енгізіңіз.');
       return;
     }
-    if (selectedServices.length === 0 && selectedOptions.length === 0) {
+    if (selectedServices.length === 0 && selectedOptions.size === 0) {
       alert(lang === 'en' ? 'Please select at least one service.' : lang === 'ru' ? 'Пожалуйста, выберите хотя бы одну услугу.' : 'Кем дегенде бір қызметті таңдаңыз.');
       return;
     }

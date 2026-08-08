@@ -24,7 +24,7 @@ export const ExtraOptions = ({ activeCategory, catObj, selectedOptions, toggleOp
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2" role="group" aria-label={title}>
         {catObj?.options?.map((opt) => {
           const key = itemKey(catObj.id, opt.id);
-          const isChecked = selectedOptions.includes(key);
+          const isChecked = selectedOptions.has(key);
           return (
             <button
               key={key}

@@ -24,7 +24,7 @@ export const CalculatorSummary = ({
   hideBadges = false,
 }) => {
   const { t } = useTranslation();
-  const empty = selectedServices.length === 0 && selectedOptions.length === 0;
+  const empty = selectedServices.length === 0 && selectedOptions.size === 0;
   const showShape = needsNailShape && nailShape && !empty;
 
   const groups = useMemo(() => {
@@ -78,7 +78,7 @@ export const CalculatorSummary = ({
           </h4>
           {!empty && (
             <span className="liquid-glass-pill text-[9px] font-bold uppercase tracking-wider text-bronze-400 px-2.5 py-0.5 rounded-full">
-              {selectedServices.length + selectedOptions.length} {t('servicesItems')}
+              {selectedServices.length + selectedOptions.size} {t('servicesItems')}
             </span>
           )}
         </div>
