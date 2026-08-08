@@ -4,7 +4,8 @@ import { itemKey } from '../../hooks/useBooking';
 const textPrimary = 'text-[var(--text-primary)]';
 const textMuted = 'text-[var(--text-muted)]';
 
-export const ExtraOptions = ({ activeCategory, catObj, selectedOptions, toggleOption, fmtTime, hideHeader = false }) => {
+export const ExtraOptions = (props) => {
+  const { activeCategory, catObj, selectedOptions, toggleOption, fmtTime, hideHeader = false } = props;
   const { t } = useTranslation();
   const stepLabel = activeCategory !== 'sugaring' ? '03' : '02';
   const title = activeCategory !== 'sugaring' ? t('extraOptions') : t('servicesSelectOptions');
