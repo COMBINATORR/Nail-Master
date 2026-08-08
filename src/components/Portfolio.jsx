@@ -1,197 +1,86 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { works } from '../data/works';
+import { ImageAccordion } from './ui/interactive-image-accordion';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const textMuted = 'text-[var(--text-muted)]';
 const border = 'border-[var(--border-color)]';
 
+const formatWorkTime = (timeStr, t) => {
+  const match = timeStr.match(/(\d+)\s*ч\s*(?:(\d+)\s*мин)?/);
+  if (!match) return timeStr;
+  const h = parseInt(match[1], 10);
+  const m = match[2] ? parseInt(match[2], 10) : 0;
+  const hl = t('hour_short', 'ч');
+  const ml = t('min_short', 'мин');
+  return `${h} ${hl}${m > 0 ? ` ${m} ${ml}` : ''}`;
+};
+
 export const Portfolio = () => {
   const { t } = useTranslation();
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const [activeWork, setActiveWork] = useState(0);
-  const [sliderPosition, setSliderPosition] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
-  const sliderRef = useRef(null);
+  const accordionItems = useMemo(
+    () =>
+      works.map((w) => ({
+        id: w.id,
+        title: t(w.titleKey),
+        imageUrl: w.after,
+        titleKey: w.titleKey,
+        descKey: w.descKey,
+        age: w.age,
+        time: w.time,
+      })),
+    [t],
+  );
 
-  const handleSliderMove = (clientX) => {
-    if (!sliderRef.current) return;
-    const rect = sliderRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    let percentage = (x / rect.width) * 100;
-    if (percentage < 0) percentage = 0;
-    if (percentage > 100) percentage = 100;
-    setSliderPosition(percentage);
-  };
-
-  const handleStart = (clientX) => {
-    setIsDragging(true);
-    handleSliderMove(clientX);
-  };
-
-  useEffect(() => {
-    const handleMove = (e) => {
-      if (!isDragging) return;
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      handleSliderMove(clientX);
-    };
-
-    const handleUp = () => setIsDragging(false);
-
-    if (isDragging) {
-      window.addEventListener('mousemove', handleMove);
-      window.addEventListener('touchmove', handleMove, { passive: true });
-      window.addEventListener('mouseup', handleUp);
-      window.addEventListener('touchend', handleUp);
-    }
-
-    return () => {
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('touchmove', handleMove);
-      window.removeEventListener('mouseup', handleUp);
-      window.removeEventListener('touchend', handleUp);
-    };
-  }, [isDragging]);
+  const current = works[activeIndex] ?? works[0];
 
   return (
-    <section id="portfolio" className={`border-b ${border} py-14 lg:py-20 transition-colors duration-300`}>
+    <section id="portfolio" className={`border-b ${border} py-10 sm:py-14 lg:py-20 transition-colors duration-300`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24">
-        <h2 className={`font-display text-3xl lg:text-5xl font-black ${textPrimary} leading-none tracking-tighter uppercase mb-2 text-center`}>
-          {t('portfolioTitle')}
-        </h2>
-        <p className={`${textSecondary} text-sm mb-8 text-center max-w-2xl mx-auto`}>
-          {t('portfolioSubtitle')}
-        </p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 md:gap-10 lg:gap-12">
+          <div className="w-full md:w-1/2 text-center md:text-left order-2 md:order-1 min-w-0">
+            <h2 className={`font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black ${textPrimary} leading-tight tracking-tighter uppercase`}>
+              {t('portfolioTitle')}
+            </h2>
+            <p className={`mt-3 sm:mt-4 md:mt-6 text-sm sm:text-base md:text-lg ${textSecondary} max-w-xl mx-auto md:mx-0`}>
+              {t('portfolioSubtitle')}
+            </p>
 
-        <div className="max-w-3xl mx-auto">
-          {/* Tabs for switching works */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {works.map((w, index) => {
-              const isActive = activeWork === index;
-              return (
-                <button
-                  key={w.id}
-                  onClick={() => {
-                    setActiveWork(index);
-                    setSliderPosition(50);
-                    setIsDragging(false);
-                  }}
-                  className={`flex-shrink-0 snap-start snap-always px-5 py-2.5 rounded-full font-display font-bold text-[10px] uppercase tracking-wider transition-all duration-300 cursor-pointer
-                    liquid-glass-chip ${isActive 
-                      ? 'liquid-glass-chip-active active-tactile-pill scale-[1.02]' 
-                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                    }`}
-                >
-                  {t(w.titleKey)}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* The interactive container */}
-          <div 
-            ref={sliderRef}
-            className={`relative h-[320px] sm:h-[400px] md:h-[480px] w-full rounded-3xl overflow-hidden liquid-glass-media select-none touch-none cursor-ew-resize`}
-            onMouseDown={(e) => {
-              if (e.button === 0) handleStart(e.clientX);
-            }}
-            onTouchStart={(e) => {
-              if (e.touches && e.touches[0]) {
-                handleStart(e.touches[0].clientX);
-              }
-            }}
-          >
-            {/* After Image (Full width background) */}
-            <img 
-              src={works[activeWork].after} 
-              alt="After manicure" 
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-              draggable="false"
-              loading={activeWork === 0 ? "eager" : "lazy"}
-              decoding="async"
-              fetchPriority={activeWork === 0 ? "high" : "auto"}
-            />
-            {/* After label */}
-            <div className="absolute right-6 top-6 bg-bronze-500/90 backdrop-blur-md text-charcoal-950 font-display font-black text-[10px] sm:text-xs px-4 py-2 rounded-xl z-20 tracking-widest shadow-lg">
-              {t('afterText')}
-            </div>
-
-            {/* Before Image (Positioned absolutely, clipped horizontally) */}
-            <div 
-              className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none"
-              style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
-            >
-              <img 
-                src={works[activeWork].before} 
-                alt="Before manicure" 
-                className="absolute inset-0 w-full h-full object-cover select-none"
-                draggable="false"
-                loading={activeWork === 0 ? "eager" : "lazy"}
-                decoding="async"
-              />
-            </div>
-            {/* Before label */}
-            <div className="absolute left-6 top-6 bg-charcoal-950/80 backdrop-blur-md text-white border border-white/10 font-display font-black text-[10px] sm:text-xs px-4 py-2 rounded-xl z-20 tracking-widest shadow-lg">
-              {t('beforeText')}
-            </div>
-
-            {/* Slide Line Divider */}
-            <div 
-              className="absolute top-0 bottom-0 w-[1.5px] bg-gradient-to-b from-bronze-400 via-bronze-500 to-bronze-600 z-30 cursor-ew-resize shadow-[0_0_10px_rgba(197,168,128,0.5)]"
-              style={{ left: `${sliderPosition}%` }}
-            >
-              {/* Drag handle */}
-              <div 
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[var(--bg-deep)]/40 backdrop-blur-md border border-bronze-500/60 shadow-xl flex items-center justify-center cursor-ew-resize transition-transform duration-150 ${isDragging ? 'scale-110' : 'hover:scale-105'}`}
-              >
-                {/* Left & Right custom vector arrows */}
-                <svg className="w-5 h-5 text-bronze-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 16l-4-4 4-4m4 8l4-4-4-4" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {/* Helper UX caption strictly below the slider */}
-          <div className="text-center mt-3.5">
-            <span className={`text-[10px] uppercase tracking-widest ${textMuted} font-bold opacity-80`}>
-              {t('dragSliderToCompare')}
-            </span>
-          </div>
-
-          {/* Work details block */}
-          <div className={`mt-6 p-5 liquid-glass rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl transition-all duration-300`}>
-            <div className="max-w-xl">
-              <h4 className={`font-display font-bold text-sm ${textPrimary} uppercase tracking-wider mb-1`}>
-                {t(works[activeWork].titleKey)}
-              </h4>
-              <p className={`${textSecondary} text-xs leading-relaxed`}>
-                {t(works[activeWork].descKey)}
+            <div className="mt-5 sm:mt-6 md:mt-8 liquid-glass rounded-2xl p-4 sm:p-5 md:p-6 text-left shadow-xl max-w-xl mx-auto md:mx-0">
+              <h3 className={`font-display font-bold text-sm sm:text-base md:text-lg ${textPrimary} uppercase tracking-wider mb-2`}>
+                {t(current.titleKey)}
+              </h3>
+              <p className={`${textSecondary} text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5`}>
+                {t(current.descKey)}
               </p>
-            </div>
-            <div className="flex gap-6 flex-shrink-0 text-xs font-bold uppercase tracking-wider w-full md:w-auto pt-3 md:pt-0 border-t md:border-t-0 border-[var(--border-subtle)]">
-              <div className="flex flex-col gap-1">
-                <span className={`${textMuted} text-[9px]`}>{t('ageLabel')}</span>
-                <span className="text-bronze-400 font-display text-sm">{works[activeWork].age}</span>
-              </div>
-              <div className="h-8 w-px bg-[var(--border-color)] hidden md:block" />
-              <div className="flex flex-col gap-1">
-                <span className={`${textMuted} text-[9px]`}>{t('timeLabel')}</span>
-                <span className="text-bronze-400 font-display text-sm">
-                  {(() => {
-                    const timeStr = works[activeWork].time;
-                    const match = timeStr.match(/(\d+)\s*ч\s*(?:(\d+)\s*мин)?/);
-                    if (!match) return timeStr;
-                    const h = parseInt(match[1], 10);
-                    const m = match[2] ? parseInt(match[2], 10) : 0;
-                    const hl = t('hour_short', 'ч');
-                    const ml = t('min_short', 'мин');
-                    return `${h} ${hl}${m > 0 ? ` ${m} ${ml}` : ''}`;
-                  })()}
-                </span>
+
+              <div className="flex gap-6 text-xs font-bold uppercase tracking-wider pt-4 border-t border-[var(--border-subtle)]">
+                <div className="flex flex-col gap-1">
+                  <span className={`${textMuted} text-[9px]`}>{t('ageLabel')}</span>
+                  <span className="text-bronze-400 font-display text-sm">{current.age}</span>
+                </div>
+                <div className="h-8 w-px bg-[var(--border-color)]" />
+                <div className="flex flex-col gap-1">
+                  <span className={`${textMuted} text-[9px]`}>{t('timeLabel')}</span>
+                  <span className="text-bronze-400 font-display text-sm">
+                    {formatWorkTime(current.time, t)}
+                  </span>
+                </div>
               </div>
             </div>
+          </div>
+
+          <div className="w-full md:w-1/2 min-w-0 order-1 md:order-2">
+            <ImageAccordion
+              items={accordionItems}
+              activeIndex={activeIndex}
+              onActiveChange={(index) => setActiveIndex(index)}
+              maxVisible={5}
+            />
           </div>
         </div>
       </div>

@@ -1,0 +1,100 @@
+.light-rays-container {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.light-rays-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Shared fixed page background shell — full bleed past mobile safe areas */
+.light-rays-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* Extra bleed kills 1px subpixel gaps on mobile browsers */
+  width: 100vw;
+  width: 100dvw;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  /* Anchor left; avoid right:0 + 100vw double-count scrollbar gaps */
+  transform: translateZ(0);
+}
+
+/* Default / dark base (under WebGL rays) */
+.light-rays-layer__base {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(255, 248, 240, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(184, 149, 72, 0.16) 0%, transparent 50%),
+    var(--bg-main, #08070b);
+  transition: background 0.45s ease;
+}
+
+/* ── Light themes: CSS-only spa atmosphere (no WebGL) ── */
+
+/* Day — cream + rose gold wash */
+body.theme-light .light-rays-layer__base {
+  background:
+    radial-gradient(ellipse 100% 75% at 50% -5%, rgba(255, 255, 255, 0.95) 0%, transparent 52%),
+    radial-gradient(ellipse 65% 55% at 92% 12%, rgba(232, 196, 160, 0.42) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 50% at 8% 88%, rgba(245, 220, 200, 0.38) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 45% at 70% 70%, rgba(184, 149, 72, 0.1) 0%, transparent 60%),
+    linear-gradient(165deg, #fffdf9 0%, #faf4ec 45%, #f5ebe0 100%);
+}
+
+/* Fashion Nude — warmer blush / champagne */
+body.theme-nudefashion .light-rays-layer__base {
+  background:
+    radial-gradient(ellipse 100% 70% at 48% -8%, rgba(255, 252, 249, 0.9) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 55% at 95% 18%, rgba(224, 180, 150, 0.38) 0%, transparent 56%),
+    radial-gradient(ellipse 55% 48% at 5% 85%, rgba(236, 210, 190, 0.4) 0%, transparent 54%),
+    radial-gradient(ellipse 70% 40% at 55% 60%, rgba(196, 164, 132, 0.12) 0%, transparent 58%),
+    linear-gradient(168deg, #faf6f2 0%, #f4ebe4 50%, #efe4db 100%);
+}
+
+/* Sage Eco — soft green mist + warm sand */
+body.theme-sage .light-rays-layer__base {
+  background:
+    radial-gradient(ellipse 100% 70% at 50% -8%, rgba(255, 255, 255, 0.88) 0%, transparent 50%),
+    radial-gradient(ellipse 58% 52% at 90% 15%, rgba(200, 210, 185, 0.4) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 48% at 6% 90%, rgba(220, 210, 185, 0.35) 0%, transparent 52%),
+    radial-gradient(ellipse 65% 40% at 40% 65%, rgba(168, 184, 154, 0.12) 0%, transparent 58%),
+    linear-gradient(168deg, #f7f8f5 0%, #eef1eb 48%, #e8ebe3 100%);
+}
+
+/* Emerald — soft gold + deep green under rays */
+body.theme-emerald .light-rays-layer__base {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(241, 228, 195, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 20% 10%, rgba(59, 207, 152, 0.12) 0%, transparent 50%),
+    var(--bg-main, #061F17);
+}
+
+/* Cyber — cool rim light under rays */
+body.theme-cyber .light-rays-layer__base {
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -10%, rgba(168, 240, 255, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(196, 122, 154, 0.12) 0%, transparent 50%),
+    var(--bg-main, #0D0B14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light-rays-container {
+    display: none;
+  }
+}

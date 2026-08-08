@@ -6,8 +6,8 @@ import {
   WhatsAppIcon,
   SunIcon,
   MoonIcon,
-  MenuIcon
 } from './Icons';
+import { AnimatedMenuIcon } from '@/components/ui/skiper-ui/skiper99';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
@@ -20,6 +20,7 @@ export const Header = ({
   setTheme,
   isDayTheme,
   isNightTheme,
+  isMobileMenuOpen = false,
   setIsMobileMenuOpen,
   isScrolled,
   isScrolledCapsule,
@@ -51,12 +52,19 @@ export const Header = ({
   return (
     <header className={`sticky top-0 z-40 liquid-glass-header transition-all duration-300 ${isScrolledCapsule ? 'scrolled-capsule' : ''}`}>
       <div className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-24 py-3 flex justify-between items-center relative">
-        {/* Sandwich menu (Left side, visible on both mobile and desktop) */}
-        <button onClick={() => setIsMobileMenuOpen(true)}
+        {/* Sandwich menu — Skiper99 animated hamburger */}
+        <button
+          type="button"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="liquid-glass-icon-btn text-[var(--text-secondary)] hover:text-bronze-500 z-10 cursor-pointer"
           aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
         >
-          <MenuIcon className="w-5 h-5 lg:w-6 lg:h-6" />
+          <AnimatedMenuIcon
+            open={isMobileMenuOpen}
+            sizeClassName="size-5 lg:size-6"
+            className="w-5 h-5 lg:w-6 lg:h-6"
+          />
         </button>
 
         {/* Logo with hover SVG neon animation (Absolute-centered on all screens) */}
@@ -126,7 +134,7 @@ export const Header = ({
                       </span>
                       <span>Emerald Spa</span>
                     </div>
-                    {theme === 'emerald' && <span className="text-emerald-400">✓</span>}
+                    {theme === 'emerald' && <span className="text-success">✓</span>}
                   </button>
 
                   <button 
@@ -154,7 +162,7 @@ export const Header = ({
                       </span>
                       <span>Sage Eco</span>
                     </div>
-                    {theme === 'sage' && <span className="text-green-400">✓</span>}
+                    {theme === 'sage' && <span className="text-success">✓</span>}
                   </button>
 
                   <button 

@@ -18,11 +18,14 @@ import { Footer } from './components/Footer';
 import { SuccessModal } from './components/SuccessModal';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 
-import { useTheme } from './hooks/useTheme';
+import { ThemeProvider, useTheme } from './hooks/useTheme';
 import { useScroll } from './hooks/useScroll';
 import { useEasterEgg } from './hooks/useEasterEgg';
 import { useBooking } from './hooks/useBooking';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
+import LightRays from './components/ui/LightRays';
+import { getLightRaysProps } from './components/ui/lightRaysTheme';
+import { canUseHeavyFx } from './lib/perf';
 
 
 /* eslint-disable react-refresh/only-export-components */
@@ -39,13 +42,11 @@ export const getNext10Days = (lang) => {
 
   const now = new Date();
   now.setHours(0, 0, 0, 0);
-  let currentEpoch = now.getTime();
 
   const next10Days = [];
+  const date = new Date(now.getTime());
 
   for (let i = 0; i < 10; i++) {
-    const date = new Date(currentEpoch);
-
     const dayNum = date.getDate();
     const monthNum = date.getMonth() + 1;
     const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
@@ -64,15 +65,21 @@ export const getNext10Days = (lang) => {
       formatted: formattedDate
     });
 
-    const newDate = new Date(currentEpoch);
-    newDate.setDate(newDate.getDate() + 1);
-    currentEpoch = newDate.getTime();
+    date.setDate(date.getDate() + 1);
   }
 
   return next10Days;
 };
 
 export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
+function AppContent() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
 
@@ -88,14 +95,38 @@ export default function App() {
   useEffect(() => {
     if (leafletLoaded) return;
 
-    const interval = setInterval(() => {
-      if (typeof window !== 'undefined' && window.L) {
+    let cancelled = false;
+    const tryMark = () => {
+      if (!cancelled && typeof window !== 'undefined' && window.L) {
         setLeafletLoaded(true);
-        clearInterval(interval);
+        return true;
       }
-    }, 50);
+      return false;
+    };
 
-    return () => clearInterval(interval);
+    if (tryMark()) return undefined;
+
+    // Prefer load event (Jules #77); sparse poll only as fallback for late CDN scripts
+    const onLoad = () => {
+      tryMark();
+    };
+    window.addEventListener('load', onLoad);
+
+    let timerId;
+    let attempts = 0;
+    const poll = () => {
+      if (tryMark()) return;
+      if (++attempts < 40) {
+        timerId = setTimeout(poll, 250);
+      }
+    };
+    timerId = setTimeout(poll, 250);
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', onLoad);
+      if (timerId) clearTimeout(timerId);
+    };
   }, [leafletLoaded]);
 
   const next10Days = useMemo(() => getNext10Days(lang), [lang]);
@@ -103,6 +134,29 @@ export default function App() {
   const { theme, setTheme, isDayTheme, isNightTheme } = useTheme();
   const { isScrolled, isScrolledCapsule, showBackToTop } = useScroll();
   const { showGravityRestore, handleRestoreGravity, handleLogoClick } = useEasterEgg();
+  // Light Rays: dark themes + desktop only (WebGL heats phones)
+  const [allowHeavyFx, setAllowHeavyFx] = useState(() =>
+    typeof window !== 'undefined' ? canUseHeavyFx() : false,
+  );
+
+  useEffect(() => {
+    const update = () => setAllowHeavyFx(canUseHeavyFx());
+    update();
+    const mq = window.matchMedia('(max-width: 768px)');
+    const mq2 = window.matchMedia('(pointer: coarse)');
+    mq.addEventListener?.('change', update);
+    mq2.addEventListener?.('change', update);
+    return () => {
+      mq.removeEventListener?.('change', update);
+      mq2.removeEventListener?.('change', update);
+    };
+  }, []);
+
+  const showLightRays = isNightTheme && allowHeavyFx;
+  const lightRaysProps = useMemo(
+    () => (showLightRays ? getLightRaysProps(theme) : null),
+    [theme, showLightRays],
+  );
 
   const {
     activeCategory, setActiveCategory,
@@ -117,6 +171,7 @@ export default function App() {
     nailShape, setNailShape,
     visitMode, setVisitMode,
     selectedServices, optionsById,
+    categoryCounts, needsNailShape,
     totalPrice, totalTime, fmtTime,
     toggleService, toggleOption,
     handleCalculatorCta, handleSubmit, handleModalClose
@@ -125,18 +180,15 @@ export default function App() {
   const scrollToServices = () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <div className="relative min-h-screen bg-transparent bg-grain text-[var(--text-primary)] font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950">
+    <div className="relative min-h-screen w-full max-w-full overflow-x-clip bg-transparent bg-grain text-[var(--text-primary)] font-sans transition-colors duration-300 selection:bg-bronze-500 selection:text-charcoal-950">
 
-      {/* ═══════════ PREMIUM BACKGROUND LAYERS (fixed, behind everything) ═══════════ */}
-      <div className="fluid-background" aria-hidden="true">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <circle className="blob-1" cx="25" cy="30" r="28" fill="var(--blob-1)" />
-          <circle className="blob-2" cx="75" cy="70" r="30" fill="var(--blob-2)" />
-          <circle className="blob-3" cx="80" cy="20" r="25" fill="var(--blob-3)" />
-          <circle className="blob-4" cx="20" cy="80" r="26" fill="var(--blob-4)" />
-        </svg>
+      {/* ═══════════ BACKGROUND: Light Rays on dark themes only ═══════════ */}
+      <div className="light-rays-layer" aria-hidden="true">
+        <div className="light-rays-layer__base" />
+        {showLightRays && lightRaysProps && (
+          <LightRays key={theme} {...lightRaysProps} />
+        )}
       </div>
-      <div className="ambient-atmosphere" aria-hidden="true" />
 
       <div className="content-layer">
       {/* ═══════════ SCROLL PROGRESS BAR ═══════════ */}
@@ -148,6 +200,7 @@ export default function App() {
         setTheme={setTheme}
         isDayTheme={isDayTheme}
         isNightTheme={isNightTheme}
+        isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
         isScrolled={isScrolled}
         isScrolledCapsule={isScrolledCapsule}
@@ -183,6 +236,8 @@ export default function App() {
           handleCalculatorCta={handleCalculatorCta}
           selectedServices={selectedServices}
           optionsById={optionsById}
+          categoryCounts={categoryCounts}
+          needsNailShape={needsNailShape}
         />
       </div>
 

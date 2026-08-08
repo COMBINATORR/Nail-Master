@@ -104,6 +104,7 @@ describe('LocationMap', () => {
     );
   });
 
+<<<<<<< HEAD
   it('clears pre-existing Leaflet instance on the DOM node to avoid "Map container is already initialized" crash', () => {
     const L = makeLeafletMock();
     window.L = L;
@@ -130,4 +131,66 @@ describe('LocationMap', () => {
 
     document.body.removeChild(parentNode);
   });
+=======
+  it('handles map instance removal during initialization', () => {
+    const removeMock = vi.fn();
+    const L = makeLeafletMock({ remove: removeMock });
+    window.L = L;
+
+    const { rerender } = render(<LocationMap leafletLoaded={true} theme="light" />);
+    expect(L.map).toHaveBeenCalledTimes(1);
+
+    rerender(<LocationMap leafletLoaded={true} theme="dark" />);
+    expect(removeMock).toHaveBeenCalledTimes(1);
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+
+  it('handles existing Leaflet DOM node safely to avoid crash', () => {
+    const L = makeLeafletMock();
+    window.L = L;
+
+    const { container, rerender } = render(<LocationMap leafletLoaded={true} theme="light" />);
+
+    const mapNode = container.querySelector('#studio-map');
+
+    // Simulate Leaflet's internal state
+    mapNode._leaflet_id = 'test-id';
+
+    // Provide a replaceChild spy on parentNode for the specific branch testing
+    const originalParentNode = mapNode.parentNode;
+    if (originalParentNode) {
+        originalParentNode.replaceChild = vi.fn((newChild, oldChild) => {
+            originalParentNode.removeChild(oldChild);
+            originalParentNode.appendChild(newChild);
+        });
+    }
+
+    rerender(<LocationMap leafletLoaded={true} theme="dark" />);
+
+    expect(originalParentNode.replaceChild).toHaveBeenCalled();
+  });
+
+
+  it('handles error gracefully when mapInstance.remove() throws during initialization', () => {
+    const throwMock = vi.fn().mockImplementation(() => {
+        throw new Error('remove error');
+    });
+    const L = makeLeafletMock();
+    window.L = L;
+
+    const { rerender } = render(<LocationMap leafletLoaded={true} theme="light" />);
+
+    // Apply the throwing mock for the second render
+    L.map().remove = throwMock;
+
+    rerender(<LocationMap leafletLoaded={true} theme="dark" />);
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Leaflet Map Initialization Error:',
+      expect.any(Error)
+    );
+  });
+
+>>>>>>> origin/main
 });

@@ -1,4 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import BorderGlow from './ui/BorderGlow';
+import { getBorderGlowProps } from './ui/borderGlowSiteProps';
+import { useTheme } from '../hooks/useTheme';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
@@ -6,6 +9,8 @@ const border = 'border-[var(--border-color)]';
 
 export const Trust = () => {
   const { t } = useTranslation();
+  const { theme } = useTheme();
+  const glowProps = getBorderGlowProps(theme);
 
   const cards = [
     { badge: '01', title: t('trust1Title'), desc: t('trust1Desc') },
@@ -25,24 +30,23 @@ export const Trust = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {cards.map((card) => (
-            <div
-              key={card.badge}
-              className="liquid-glass liquid-glass-hover flex flex-col gap-4 p-5 rounded-2xl"
-            >
-              <div className="flex justify-between items-center">
-                <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-bronze-400">
-                  {card.badge}
-                </span>
+            <BorderGlow key={`${card.badge}-${theme}`} {...glowProps}>
+              <div className="flex flex-col gap-4 p-5 h-full">
+                <div className="flex justify-between items-center">
+                  <span className="liquid-glass-pill text-[10px] font-sans font-black uppercase tracking-widest px-3 py-1 rounded-full text-care">
+                    {card.badge}
+                  </span>
+                </div>
+                <div>
+                  <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} mb-2`}>
+                    {card.title}
+                  </h3>
+                  <p className={`${textSecondary} text-xs leading-relaxed`}>
+                    {card.desc}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className={`font-display text-base lg:text-lg font-black uppercase tracking-wider ${textPrimary} mb-2`}>
-                  {card.title}
-                </h3>
-                <p className={`${textSecondary} text-xs leading-relaxed`}>
-                  {card.desc}
-                </p>
-              </div>
-            </div>
+            </BorderGlow>
           ))}
         </div>
       </div>
