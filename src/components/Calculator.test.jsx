@@ -57,7 +57,6 @@ describe('Calculator', () => {
     expect(defaultProps.toggleService).toHaveBeenCalledWith('manicure:classic');
   });
 
-<<<<<<< HEAD
   it('calls setNailShape when a shape is clicked', () => {
     render(<Calculator {...defaultProps} />);
     const ovalShape = screen.getByText('shape_oval');
@@ -75,7 +74,7 @@ describe('Calculator', () => {
     render(<Calculator {...defaultProps} />);
     const designOption = screen.getByText('optManiDesign');
     fireEvent.click(designOption);
-    expect(defaultProps.toggleOption).toHaveBeenCalledWith('design');
+    expect(defaultProps.toggleOption).toHaveBeenCalledWith('manicure:design');
   });
 
   it('displays total price and total time correctly', () => {
@@ -117,10 +116,6 @@ describe('Calculator', () => {
     goNext();
     expect(mobile().getByText('serviceCta')).toBeInTheDocument();
     expect(mobile().getByText('calcAddMore')).toBeInTheDocument();
->>>>>>> origin/main
->>>>>>> origin/main
->>>>>>> origin/main
->>>>>>> origin/main
   });
 
   it('skips nail shape step for sugaring', () => {
