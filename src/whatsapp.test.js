@@ -32,7 +32,6 @@ describe('generateWhatsAppText', () => {
   const defaultProps = {
     includeNameAndPhone: false,
     t: mockT,
-    catObj: { nameKey: 'catManicureName', id: 'manicure' },
     selectedServices: [{
       nameKey: 'serviceManicureClassicName',
       categoryId: 'manicure',

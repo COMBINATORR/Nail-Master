@@ -10,8 +10,6 @@ export const generateWhatsAppText = (options = {}) => {
   needsNailShape,
   /** @deprecated use needsNailShape; kept for older call sites/tests */
   activeCategory,
-  /** @deprecated multi-category cart no longer uses single catObj */
-  catObj,
   visitMode,
   next10Days = [],
   selectedDate,
@@ -37,8 +35,8 @@ export const generateWhatsAppText = (options = {}) => {
 
   for (let i = 0; i < selectedServices.length; i++) {
     const svc = selectedServices[i];
-    const catId = svc.categoryId || catObj?.id || activeCategory || 'service';
-    const nameKey = svc.categoryNameKey || catObj?.nameKey;
+    const catId = svc.categoryId || activeCategory || 'service';
+    const nameKey = svc.categoryNameKey;
     const group = ensureGroup(catId, nameKey);
     const val = safeT(svc.nameKey);
     if (val) group.items.push(val);
@@ -48,32 +46,11 @@ export const generateWhatsAppText = (options = {}) => {
   for (let i = 0; i < selectedOptionsArray.length; i++) {
     const o = optionsById[selectedOptionsArray[i]];
     if (!o) continue;
-    const catId = o.categoryId || catObj?.id || activeCategory || 'service';
-    const nameKey = o.categoryNameKey || catObj?.nameKey;
+    const catId = o.categoryId || activeCategory || 'service';
+    const nameKey = o.categoryNameKey;
     const group = ensureGroup(catId, nameKey);
     const val = safeT(o.nameKey);
     if (val) group.items.push(val);
-  }
-
-  // Fallback for legacy single-category tests (no categoryId on items)
-  if (groups.size === 0 && (selectedServices.length || selectedOptions.size)) {
-    const fallbackName = safeT(catObj?.nameKey) || '';
-    const items = [];
-    for (let i = 0; i < selectedServices.length; i++) {
-      const val = safeT(selectedServices[i].nameKey);
-      if (val) items.push(val);
-    }
-    const selectedOptionsArr = Array.from(selectedOptions);
-    for (let i = 0; i < selectedOptionsArr.length; i++) {
-      const o = optionsById[selectedOptionsArr[i]];
-      if (o) {
-        const val = safeT(o.nameKey);
-        if (val) items.push(val);
-      }
-    }
-    if (items.length) {
-      groups.set('_legacy', { name: fallbackName, items });
-    }
   }
 
   const serviceParts = [];

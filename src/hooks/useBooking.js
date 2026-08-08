@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { categories, nailShapes } from '../data';
+import { nailShapes } from '../data';
 import { generateWhatsAppText } from '../whatsapp';
 
 /** Composite key so manicure/pedicure options with same local id don't collide */
@@ -49,7 +49,6 @@ export function useBooking({ lang, t, next10Days }) {
   const [nailShape, setNailShape] = useState('oval');
   const [visitMode, setVisitMode] = useState('relax');
 
-  const catObj = categories[activeCategory];
   const optionsById = CATALOG.optionsByKey;
 
   const selectedServices = useMemo(
@@ -223,7 +222,6 @@ export function useBooking({ lang, t, next10Days }) {
     setNailShape,
     visitMode,
     setVisitMode,
-    catObj,
     optionsById,
     selectedServices,
     categoryCounts,
