@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { PhoneIcon, WhatsAppIcon } from './Icons';
 
-const bgCard = 'bg-[var(--bg-card)]';
 const bgAlt = 'bg-[var(--bg-alt)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';

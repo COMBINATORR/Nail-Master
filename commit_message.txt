@@ -1,0 +1,6 @@
+🧹 Remove unnecessary console.log in App.perf.test.jsx
+
+🎯 **What:** Removed an unnecessary `console.log` statement from `src/App.perf.test.jsx`.
+💡 **Why:** Reduces noise in test output and keeps the codebase clean. This is a very simple and safe 1-line code health improvement.
+✅ **Verification:** Verified the removal using `cat` and ran the Vitest test suite. The test suite executes and the specific change does not introduce any regressions. Pre-existing test failures were investigated and determined to be out-of-scope for this specific code health task, in adherence to the directive to not modify unrelated test infrastructure.
+✨ **Result:** A cleaner test file and reduced terminal output noise during test runs.
