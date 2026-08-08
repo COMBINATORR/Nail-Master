@@ -103,4 +103,31 @@ describe('LocationMap', () => {
       expect.any(Error)
     );
   });
+
+  it('clears pre-existing Leaflet instance on the DOM node to avoid "Map container is already initialized" crash', () => {
+    const L = makeLeafletMock();
+    window.L = L;
+
+    // Create a mock parent node and map node to simulate existing leaflet initialization
+    const parentNode = document.createElement('div');
+    const existingMapNode = document.createElement('div');
+    existingMapNode.id = 'studio-map';
+    existingMapNode.className = 'w-full h-full';
+    // Add the property that Leaflet uses to check for existing initialization
+    existingMapNode._leaflet_id = 123;
+    parentNode.appendChild(existingMapNode);
+
+    // We need to append it to the document body because the component uses document.getElementById
+    document.body.appendChild(parentNode);
+
+    render(<LocationMap leafletLoaded={true} />);
+
+    // The component should have created a new node and replaced the old one
+    const newMapNode = document.getElementById('studio-map');
+    expect(newMapNode).toBeTruthy();
+    expect(newMapNode._leaflet_id).toBeUndefined(); // Should be a new node without the ID
+    expect(L.map).toHaveBeenCalledWith('studio-map', expect.any(Object));
+
+    document.body.removeChild(parentNode);
+  });
 });

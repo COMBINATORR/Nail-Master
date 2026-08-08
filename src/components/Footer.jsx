@@ -1,10 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { InstagramIcon, WhatsAppIcon, PhoneIcon } from './Icons';
 
-const bgDeep = 'bg-[var(--bg-deep)]';
 const textMuted = 'text-[var(--text-muted)]';
 const borderSubtle = 'border-[var(--border-subtle)]';
-const border = 'border-[var(--border-color)]';
 
 export const Footer = () => {
   const { t } = useTranslation();

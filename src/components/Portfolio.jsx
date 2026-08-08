@@ -6,7 +6,6 @@ const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const textMuted = 'text-[var(--text-muted)]';
 const border = 'border-[var(--border-color)]';
-const bgCard = 'bg-[var(--bg-card)]';
 
 export const Portfolio = () => {
   const { t } = useTranslation();

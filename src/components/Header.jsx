@@ -9,11 +9,9 @@ import {
   MenuIcon
 } from './Icons';
 
-const bgHeader = 'bg-[var(--bg-header)]';
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
 const textMuted = 'text-[var(--text-muted)]';
-const border = 'border-[var(--border-color)]';
 const borderSubtle = 'border-[var(--border-subtle)]';
 const bgSubtle = 'bg-[var(--bg-subtle)]';
 
