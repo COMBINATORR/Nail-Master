@@ -4,6 +4,8 @@ import App, { getNext10Days } from './App'
 
 describe('App Component', () => {
   beforeEach(() => {
+    window.L = {};
+    window.dispatchEvent(new Event('load'));
     window.localStorage.clear()
     vi.clearAllMocks()
     document.body.className = ''
@@ -247,6 +249,8 @@ describe('App Component', () => {
 
 describe('Form Submission Validation', () => {
   beforeEach(() => {
+    window.L = {};
+    window.dispatchEvent(new Event('load'));
     vi.spyOn(window, 'alert').mockImplementation(() => {})
   })
 
@@ -255,6 +259,7 @@ describe('Form Submission Validation', () => {
   })
 
   it('alerts when name is empty', () => {
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
     const { container } = render(<App />)
     const form = container.querySelector('form')
     fireEvent.submit(form)
@@ -262,6 +267,7 @@ describe('Form Submission Validation', () => {
   })
 
   it('alerts when name is too long', () => {
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
     const { container } = render(<App />)
     const nameInput = container.querySelector('input[type="text"]')
     if (nameInput) fireEvent.change(nameInput, { target: { value: 'a'.repeat(51) } })
@@ -271,6 +277,7 @@ describe('Form Submission Validation', () => {
   })
 
   it('alerts when phone is invalid', () => {
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
     const { container } = render(<App />)
     const nameInput = container.querySelector('input[type="text"]')
     if (nameInput) fireEvent.change(nameInput, { target: { value: 'Valid Name' } })
@@ -280,6 +287,7 @@ describe('Form Submission Validation', () => {
   })
 
   it('alerts when no service is selected', () => {
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
     const { container } = render(<App />)
     const nameInput = container.querySelector('input[type="text"]')
     if (nameInput) fireEvent.change(nameInput, { target: { value: 'Valid Name' } })
@@ -295,6 +303,8 @@ describe('getNext10Days', () => {
 
 
   beforeEach(() => {
+    window.L = {};
+    window.dispatchEvent(new Event('load'));
     vi.useFakeTimers()
   })
 

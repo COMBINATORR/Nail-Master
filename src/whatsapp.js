@@ -60,10 +60,7 @@ export const generateWhatsAppText = (options = {}) => {
   }
   const allServicesText = serviceParts.join('; ');
 
-  const shapeNeeded =
-    typeof needsNailShape === 'boolean'
-      ? needsNailShape
-      : activeCategory !== 'sugaring';
+  const shapeNeeded = typeof needsNailShape === 'boolean' ? needsNailShape : true;
 
   const shapeObj = nailShapes.find((s) => s.id === nailShape);
   const shapeText = shapeNeeded

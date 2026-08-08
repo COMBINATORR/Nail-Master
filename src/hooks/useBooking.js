@@ -58,23 +58,27 @@ export function useBooking({ lang, t, next10Days }) {
 
   const categoryCounts = useMemo(() => {
     const counts = { manicure: 0, pedicure: 0, sugaring: 0 };
-    for (const id of selectedServiceIds) {
-      const c = categoryOfKey(id);
-      if (c in counts) counts[c] += 1;
-    }
-    for (const id of selectedOptions) {
-      const c = categoryOfKey(id);
-      if (c in counts) counts[c] += 1;
-    }
+    const countItem = (id) => {
+      if (typeof id !== 'string') return;
+      if (id.startsWith('manicure:')) counts.manicure += 1;
+      else if (id.startsWith('pedicure:')) counts.pedicure += 1;
+      else if (id.startsWith('sugaring:')) counts.sugaring += 1;
+    };
+    for (const id of selectedServiceIds) countItem(id);
+    for (const id of selectedOptions) countItem(id);
     return counts;
   }, [selectedServiceIds, selectedOptions]);
+>>>>>>> origin/main
 
   const needsNailShape = useMemo(() => {
-    const hasNailCat = (key) => {
-      const c = categoryOfKey(key);
-      return c === 'manicure' || c === 'pedicure';
-    };
-    return Array.from(selectedServiceIds).some(hasNailCat) || Array.from(selectedOptions).some(hasNailCat);
+    const hasNailCat = (key) => typeof key === 'string' && (key.startsWith('manicure:') || key.startsWith('pedicure:'));
+    for (const id of selectedServiceIds) {
+      if (hasNailCat(id)) return true;
+    }
+    for (const id of selectedOptions) {
+      if (hasNailCat(id)) return true;
+    }
+    return false;
   }, [selectedServiceIds, selectedOptions]);
 
   // Single pass for price + time (Jules #76) — multi-category cart keys already resolved
