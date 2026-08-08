@@ -49,7 +49,6 @@ describe('generateWhatsAppText', () => {
     nailShape: 'oval',
     nailShapes: mockNailShapes,
     needsNailShape: true,
-    activeCategory: 'manicure',
     lang: 'en',
     visitMode: 'relax',
     next10Days: [{ id: '2023-10-27', formatted: 'Oct 27, Fri' }],
@@ -114,7 +113,6 @@ describe('generateWhatsAppText', () => {
     const props = {
       ...defaultProps,
       needsNailShape: false,
-      activeCategory: 'sugaring',
       selectedServices: [{
         nameKey: 'serviceSugarBikiniName',
         categoryId: 'sugaring',
