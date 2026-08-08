@@ -158,4 +158,22 @@ describe('BookingForm', () => {
     fireEvent.click(screen.getByText('formStepNext'));
     expect(document.getElementById('form-submit-btn')).toBeDisabled();
   });
+
+  it('filters time slots when period filter buttons are clicked on step 2', () => {
+    const props = withServices({ selectedDate: '2023-10-25' });
+    render(<BookingForm {...props} />);
+    fireEvent.click(screen.getByText('formStepNext'));
+
+    // Morning filter click
+    fireEvent.click(screen.getByText('timeFilterMorning'));
+    expect(screen.getByText('09:00')).toBeInTheDocument();
+    expect(screen.getByText('11:00')).toBeInTheDocument();
+    expect(screen.queryByText('19:00')).not.toBeInTheDocument();
+
+    // Evening filter click
+    fireEvent.click(screen.getByText('timeFilterEvening'));
+    expect(screen.getByText('17:00')).toBeInTheDocument();
+    expect(screen.getByText('19:00')).toBeInTheDocument();
+    expect(screen.queryByText('09:00')).not.toBeInTheDocument();
+  });
 });

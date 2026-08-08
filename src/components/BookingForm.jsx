@@ -31,9 +31,35 @@ export const BookingForm = ({
 }) => {
   const { t } = useTranslation();
   const [step, setStep] = useState(1);
+  const [timeFilter, setTimeFilter] = useState('all'); // 'all' | 'morning' | 'afternoon' | 'evening'
 
   const hasServices = selectedServices.length > 0 || selectedOptions.size > 0;
   const busySlots = useMemo(() => getBusySlots(selectedDate), [selectedDate]);
+
+  const getTimePeriod = (timeStr) => {
+    const hour = parseInt(timeStr.split(':')[0], 10);
+    if (hour < 12) return 'morning';
+    if (hour < 16) return 'afternoon';
+    return 'evening';
+  };
+
+  const periodCounts = useMemo(() => {
+    const counts = { all: 0, morning: 0, afternoon: 0, evening: 0 };
+    for (const time of ALL_TIMES) {
+      const busy = selectedDate ? busySlots.has(time) : false;
+      if (!busy) {
+        counts.all += 1;
+        const period = getTimePeriod(time);
+        counts[period] += 1;
+      }
+    }
+    return counts;
+  }, [selectedDate, busySlots]);
+
+  const filteredTimes = useMemo(() => {
+    if (timeFilter === 'all') return ALL_TIMES;
+    return ALL_TIMES.filter((tStr) => getTimePeriod(tStr) === timeFilter);
+  }, [timeFilter]);
 
   // If selected time becomes busy when date changes — clear it
   useEffect(() => {
@@ -282,12 +308,46 @@ export const BookingForm = ({
                     </div>
                   </div>
 
-                  <div className="space-y-1.5">
-                    <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
-                      {t('selectTime')}
-                    </span>
-                    <div className="grid grid-cols-4 gap-1.5">
-                      {ALL_TIMES.map((time) => {
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className={`block font-display font-bold text-[9px] uppercase tracking-wider ${textMuted}`}>
+                        {t('selectTime')}
+                      </span>
+                    </div>
+
+                    {/* Period Filters: All | Morning | Afternoon | Evening */}
+                    <div className="flex gap-1 overflow-x-auto pb-1 no-scrollbar text-[10px]">
+                      {[
+                        { id: 'all', label: t('timeFilterAll'), count: periodCounts.all },
+                        { id: 'morning', label: t('timeFilterMorning'), count: periodCounts.morning },
+                        { id: 'afternoon', label: t('timeFilterAfternoon'), count: periodCounts.afternoon },
+                        { id: 'evening', label: t('timeFilterEvening'), count: periodCounts.evening },
+                      ].map((f) => {
+                        const isActive = timeFilter === f.id;
+                        return (
+                          <button
+                            key={f.id}
+                            type="button"
+                            onClick={() => setTimeFilter(f.id)}
+                            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold transition-all whitespace-nowrap cursor-pointer ${
+                              isActive
+                                ? 'liquid-glass-chip liquid-glass-chip-active text-[var(--text-primary)] scale-[1.02]'
+                                : 'liquid-glass text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-white/5'
+                            }`}
+                          >
+                            <span>{f.label}</span>
+                            {selectedDate && (
+                              <span className={`text-[8px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-bronze-500/30 text-bronze-300' : 'bg-white/10 text-[var(--text-muted)]'}`}>
+                                {f.count}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-1.5 min-h-[90px] content-start">
+                      {filteredTimes.map((time) => {
                         const busy = selectedDate ? busySlots.has(time) : false;
                         const isSelected = selectedTime === time && !busy;
                         return (

@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { ProgressiveImage } from './ProgressiveImage';
 
 const ACCORDION_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
 const ACCORDION_MS = 900;
@@ -44,19 +45,16 @@ export const AccordionItem = ({ item, isActive, onActivate }) => {
         }
       }}
     >
-      <img
+      <ProgressiveImage
         src={item.imageUrl}
         alt={item.title}
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        className="absolute inset-0 w-full h-full pointer-events-none select-none"
+        imgClassName="pointer-events-none select-none"
         style={{
           transform: isActive ? 'scale(1)' : 'scale(1.06)',
           transition: `transform ${ACCORDION_MS}ms ${ACCORDION_EASE}`,
         }}
         draggable={false}
-        onError={(e) => {
-          e.target.onerror = null;
-          e.target.src = 'https://placehold.co/400x450/2d3748/ffffff?text=Image+Error';
-        }}
       />
 
       <span
