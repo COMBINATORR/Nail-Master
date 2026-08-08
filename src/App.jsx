@@ -25,6 +25,7 @@ import { useBooking } from './hooks/useBooking';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import LightRays from './components/ui/LightRays';
 import { getLightRaysProps } from './components/ui/lightRaysTheme';
+import { canUseHeavyFx } from './lib/perf';
 
 
 /* eslint-disable react-refresh/only-export-components */
@@ -41,13 +42,11 @@ export const getNext10Days = (lang) => {
 
   const now = new Date();
   now.setHours(0, 0, 0, 0);
-  let currentEpoch = now.getTime();
 
   const next10Days = [];
+  const date = new Date(now.getTime());
 
   for (let i = 0; i < 10; i++) {
-    const date = new Date(currentEpoch);
-
     const dayNum = date.getDate();
     const monthNum = date.getMonth() + 1;
     const monthStr = monthNum < 10 ? `0${monthNum}` : `${monthNum}`;
@@ -66,9 +65,7 @@ export const getNext10Days = (lang) => {
       formatted: formattedDate
     });
 
-    const newDate = new Date(currentEpoch);
-    newDate.setDate(newDate.getDate() + 1);
-    currentEpoch = newDate.getTime();
+    date.setDate(date.getDate() + 1);
   }
 
   return next10Days;
@@ -98,20 +95,38 @@ function AppContent() {
   useEffect(() => {
     if (leafletLoaded) return;
 
-    if (typeof window !== 'undefined' && window.L) {
-      // eslint-disable-next-line
-      setLeafletLoaded(true);
-      return;
-    }
-
-    const handleLoad = () => {
-      if (typeof window !== 'undefined' && window.L) {
+    let cancelled = false;
+    const tryMark = () => {
+      if (!cancelled && typeof window !== 'undefined' && window.L) {
         setLeafletLoaded(true);
+        return true;
       }
+      return false;
     };
 
-    window.addEventListener('load', handleLoad);
-    return () => window.removeEventListener('load', handleLoad);
+    if (tryMark()) return undefined;
+
+    // Prefer load event (Jules #77); sparse poll only as fallback for late CDN scripts
+    const onLoad = () => {
+      tryMark();
+    };
+    window.addEventListener('load', onLoad);
+
+    let timerId;
+    let attempts = 0;
+    const poll = () => {
+      if (tryMark()) return;
+      if (++attempts < 40) {
+        timerId = setTimeout(poll, 250);
+      }
+    };
+    timerId = setTimeout(poll, 250);
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', onLoad);
+      if (timerId) clearTimeout(timerId);
+    };
   }, [leafletLoaded]);
 
   const next10Days = useMemo(() => getNext10Days(lang), [lang]);
@@ -119,11 +134,28 @@ function AppContent() {
   const { theme, setTheme, isDayTheme, isNightTheme } = useTheme();
   const { isScrolled, isScrolledCapsule, showBackToTop } = useScroll();
   const { showGravityRestore, handleRestoreGravity, handleLogoClick } = useEasterEgg();
-  // Light Rays only for dark themes: night / emerald / cyber
-  const showLightRays = isNightTheme;
+  // Light Rays: dark themes + desktop only (WebGL heats phones)
+  const [allowHeavyFx, setAllowHeavyFx] = useState(() =>
+    typeof window !== 'undefined' ? canUseHeavyFx() : false,
+  );
+
+  useEffect(() => {
+    const update = () => setAllowHeavyFx(canUseHeavyFx());
+    update();
+    const mq = window.matchMedia('(max-width: 768px)');
+    const mq2 = window.matchMedia('(pointer: coarse)');
+    mq.addEventListener?.('change', update);
+    mq2.addEventListener?.('change', update);
+    return () => {
+      mq.removeEventListener?.('change', update);
+      mq2.removeEventListener?.('change', update);
+    };
+  }, []);
+
+  const showLightRays = isNightTheme && allowHeavyFx;
   const lightRaysProps = useMemo(
-    () => (isNightTheme ? getLightRaysProps(theme) : null),
-    [theme, isNightTheme]
+    () => (showLightRays ? getLightRaysProps(theme) : null),
+    [theme, showLightRays],
   );
 
   const {
@@ -139,6 +171,7 @@ function AppContent() {
     nailShape, setNailShape,
     visitMode, setVisitMode,
     selectedServices, optionsById,
+    categoryCounts, needsNailShape,
     totalPrice, totalTime, fmtTime,
     toggleService, toggleOption,
     handleCalculatorCta, handleSubmit, handleModalClose
@@ -203,6 +236,8 @@ function AppContent() {
           handleCalculatorCta={handleCalculatorCta}
           selectedServices={selectedServices}
           optionsById={optionsById}
+          categoryCounts={categoryCounts}
+          needsNailShape={needsNailShape}
         />
       </div>
 

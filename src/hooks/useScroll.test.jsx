@@ -103,7 +103,19 @@ describe('useScroll Lenis', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation(() => 1);
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(() => 1);
+    // Desktop fine pointer → Lenis allowed
+    vi.spyOn(window, 'matchMedia').mockImplementation((query) => ({
+      matches:
+        query.includes('pointer: fine') ||
+        (query.includes('max-width') ? false : query.includes('hover: none') ? false : false),
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+      onchange: null,
+    }));
   });
 
   afterEach(() => {
@@ -119,6 +131,22 @@ describe('useScroll Lenis', () => {
 
     const lenisInstance = vi.mocked(Lenis).mock.results[0].value;
     expect(lenisInstance.destroy).toHaveBeenCalledTimes(1);
+  });
+
+  it('skips Lenis on mobile-like / coarse pointer', () => {
+    vi.spyOn(window, 'matchMedia').mockImplementation((query) => ({
+      matches: query.includes('pointer: coarse') || query.includes('max-width: 768px'),
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+      onchange: null,
+    }));
+
+    renderHook(() => useScroll());
+    expect(Lenis).not.toHaveBeenCalled();
   });
 });
 
