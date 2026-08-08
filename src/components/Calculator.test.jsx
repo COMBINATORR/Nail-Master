@@ -57,6 +57,32 @@ describe('Calculator', () => {
     expect(defaultProps.toggleService).toHaveBeenCalledWith('manicure:classic');
   });
 
+  it('calls setNailShape when a shape is clicked', () => {
+    render(<Calculator {...defaultProps} />);
+    const ovalShape = screen.getByText('shape_oval');
+    fireEvent.click(ovalShape);
+    expect(defaultProps.setNailShape).toHaveBeenCalledWith('oval');
+  });
+
+  it('does not render nail shapes when activeCategory is sugaring', () => {
+    render(<Calculator {...defaultProps} activeCategory="sugaring" />);
+    // shapeTitle should not be there
+    expect(screen.queryByText('shapeTitle')).not.toBeInTheDocument();
+  });
+
+  it('calls toggleOption when an option is clicked', () => {
+    render(<Calculator {...defaultProps} />);
+    const designOption = screen.getByText('optManiDesign');
+    fireEvent.click(designOption);
+    expect(defaultProps.toggleOption).toHaveBeenCalledWith('manicure:design');
+  });
+
+  it('displays total price and total time correctly', () => {
+    render(<Calculator {...defaultProps} totalPrice={5000} totalTime={90} />);
+    expect(document.body.textContent.replace(/[^\d]/g, '').includes('5000')).toBe(true);
+    expect(screen.getByText((content) => content.includes('90 min') && (content.includes('\u2248') || content.includes('≈')))).toBeInTheDocument();
+  });
+
   it('walks mobile steps: service → shape → options → summary', () => {
     const props = {
       ...defaultProps,

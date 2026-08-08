@@ -57,11 +57,24 @@ function influenceFromDist(dist, max = INFLUENCE_RADIUS) {
 }
 
 function openAction(action) {
-  if (!action) return;
-  if (action.external) {
-    window.open(action.href, '_blank', 'noopener,noreferrer');
-  } else {
-    window.location.href = action.href;
+  if (!action || typeof action.href !== 'string') return;
+
+  try {
+    const url = new URL(action.href, typeof window !== 'undefined' ? window.location.origin : 'http://localhost');
+    const allowedProtocols = ['http:', 'https:', 'tel:', 'mailto:'];
+
+    if (!allowedProtocols.includes(url.protocol)) {
+      console.warn(`Blocked attempt to open URL with unsafe protocol: ${url.protocol}`);
+      return;
+    }
+
+    if (action.external) {
+      window.open(action.href, '_blank', 'noopener,noreferrer');
+    } else {
+      window.location.href = action.href;
+    }
+  } catch (err) {
+    console.error('Invalid URL provided to openAction:', err);
   }
 }
 

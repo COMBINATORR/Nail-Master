@@ -125,7 +125,7 @@ function AppContent() {
     return () => {
       cancelled = true;
       window.removeEventListener('load', onLoad);
-      clearTimeout(timerId);
+      if (timerId) clearTimeout(timerId);
     };
   }, [leafletLoaded]);
 
