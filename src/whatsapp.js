@@ -8,8 +8,6 @@ export const generateWhatsAppText = (options = {}) => {
   nailShape,
   nailShapes = [],
   needsNailShape,
-  /** @deprecated use needsNailShape; kept for older call sites/tests */
-  activeCategory,
   /** @deprecated multi-category cart no longer uses single catObj */
   catObj,
   visitMode,
@@ -37,7 +35,7 @@ export const generateWhatsAppText = (options = {}) => {
 
   for (let i = 0; i < selectedServices.length; i++) {
     const svc = selectedServices[i];
-    const catId = svc.categoryId || catObj?.id || activeCategory || 'service';
+    const catId = svc.categoryId || catObj?.id || 'service';
     const nameKey = svc.categoryNameKey || catObj?.nameKey;
     const group = ensureGroup(catId, nameKey);
     const val = safeT(svc.nameKey);
@@ -48,7 +46,7 @@ export const generateWhatsAppText = (options = {}) => {
   for (let i = 0; i < selectedOptionsArray.length; i++) {
     const o = optionsById[selectedOptionsArray[i]];
     if (!o) continue;
-    const catId = o.categoryId || catObj?.id || activeCategory || 'service';
+    const catId = o.categoryId || catObj?.id || 'service';
     const nameKey = o.categoryNameKey || catObj?.nameKey;
     const group = ensureGroup(catId, nameKey);
     const val = safeT(o.nameKey);
@@ -83,10 +81,7 @@ export const generateWhatsAppText = (options = {}) => {
   }
   const allServicesText = serviceParts.join('; ');
 
-  const shapeNeeded =
-    typeof needsNailShape === 'boolean'
-      ? needsNailShape
-      : activeCategory !== 'sugaring';
+  const shapeNeeded = typeof needsNailShape === 'boolean' ? needsNailShape : true;
 
   const shapeObj = nailShapes.find((s) => s.id === nailShape);
   const shapeText = shapeNeeded
