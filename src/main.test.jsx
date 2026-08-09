@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import App from './App.jsx';
+import { TactileProvider } from './hooks/useTactileFeedback.jsx';
 
 // Mock react-dom/client to observe createRoot and render calls
 vi.mock('react-dom/client', () => {
@@ -45,9 +46,10 @@ describe('main.jsx', () => {
     // We expect the argument to be a React element of type StrictMode
     expect(renderArg.type).toBe(React.StrictMode);
 
-    // Check its children
-    const child = renderArg.props.children;
-    expect(child.type).toBe(App);
+    // Check its children (TactileProvider -> App)
+    const provider = renderArg.props.children;
+    expect(provider.type).toBe(TactileProvider);
+    expect(provider.props.children.type).toBe(App);
 
     // Cleanup
     document.body.removeChild(rootElement);

@@ -12,6 +12,15 @@ vi.mock('./Logo3D', () => ({
   Logo3D: () => <div data-testid="logo-3d">Logo3D</div>,
 }));
 
+vi.mock('../hooks/useTactileFeedback', () => ({
+  useTactileFeedback: () => ({
+    soundEnabled: true,
+    toggleSound: vi.fn(),
+    triggerClick: vi.fn(),
+    triggerSuccess: vi.fn(),
+  }),
+}));
+
 vi.mock('@/components/ui/skiper-ui/skiper99', () => ({
   AnimatedMenuIcon: ({ open }) => (
     <div data-testid="animated-menu-icon" data-open={open}>

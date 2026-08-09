@@ -12,6 +12,16 @@ vi.mock('react-i18next', () => ({
 vi.mock('./Icons', () => ({
   PhoneIcon: () => <div data-testid="phone-icon" />,
   WhatsAppIcon: () => <div data-testid="whatsapp-icon" />,
+  GpsIcon: () => <div data-testid="gps-icon" />,
+}));
+
+vi.mock('../hooks/useTactileFeedback', () => ({
+  useTactileFeedback: () => ({
+    soundEnabled: true,
+    toggleSound: vi.fn(),
+    triggerClick: vi.fn(),
+    triggerSuccess: vi.fn(),
+  }),
 }));
 
 function makeLeafletMock(mapOverrides = {}) {
@@ -186,6 +196,33 @@ describe('LocationMap', () => {
     expect(console.error).toHaveBeenCalledWith(
       'Leaflet Map Initialization Error:',
       expect.any(Error)
+    );
+  });
+
+  it('renders routeFromLocation button and triggers geolocation click', () => {
+    const windowOpenSpy = vi.spyOn(window, 'open').mockImplementation(() => {});
+    const mockGetCurrentPosition = vi.fn().mockImplementation((success) => {
+      success({ coords: { latitude: 47.1, longitude: 51.9 } });
+    });
+
+    Object.defineProperty(global.navigator, 'geolocation', {
+      value: { getCurrentPosition: mockGetCurrentPosition },
+      writable: true,
+      configurable: true,
+    });
+
+    render(<LocationMap leafletLoaded={false} />);
+
+    const routeBtn = screen.getByText('routeFromLocation').closest('button');
+    expect(routeBtn).toBeInTheDocument();
+
+    routeBtn.click();
+
+    expect(mockGetCurrentPosition).toHaveBeenCalled();
+    expect(windowOpenSpy).toHaveBeenCalledWith(
+      expect.stringContaining('2gis.kz'),
+      '_blank',
+      'noopener,noreferrer'
     );
   });
 });

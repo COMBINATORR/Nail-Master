@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { PhoneIcon, WhatsAppIcon } from './Icons';
+import { PhoneIcon, WhatsAppIcon, GpsIcon } from './Icons';
+import { useTactileFeedback } from '../hooks/useTactileFeedback';
 
 const bgAlt = 'bg-[var(--bg-alt)]';
 const textPrimary = 'text-[var(--text-primary)]';
@@ -16,8 +17,38 @@ export const LocationMap = ({
   leafletLoaded
 }) => {
   const { t, i18n } = useTranslation();
+  const { triggerClick } = useTactileFeedback();
+  const [isLocating, setIsLocating] = useState(false);
   const lang = i18n.language || 'ru';
   const mapInstanceRef = useRef(null);
+
+  const handleRouteFromLocation = () => {
+    triggerClick();
+    if (typeof window === 'undefined') return;
+
+    if (!navigator.geolocation) {
+      window.open('https://2gis.kz/atyrau/search/Shade%20%D0%90%D0%B7%D0%B0%D1%82%D1%82%D1%8B%D0%BA%2093', '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    setIsLocating(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setIsLocating(false);
+        const { latitude, longitude } = pos.coords;
+        // Open 2GIS route search from user's coordinates to studio location
+        const routeUrl = `https://2gis.kz/atyrau/routeSearch/rsType/ctx/from/${longitude},${latitude}/to/51.9168,47.1064`;
+        window.open(routeUrl, '_blank', 'noopener,noreferrer');
+      },
+      () => {
+        setIsLocating(false);
+        // Fallback on permission denied or error
+        window.open('https://2gis.kz/atyrau/search/Shade%20%D0%90%D0%B7%D0%B0%D1%82%D1%82%D1%8B%D0%BA%2093', '_blank', 'noopener,noreferrer');
+      },
+      { timeout: 8000, maximumAge: 60000 }
+    );
+  };
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.L) return;
@@ -169,13 +200,28 @@ export const LocationMap = ({
             </div>
 
             {/* CTA buttons */}
+            <button
+              type="button"
+              onClick={handleRouteFromLocation}
+              disabled={isLocating}
+              className="w-full flex items-center justify-center gap-2 btn-premium-tactile border-beam-active py-3.5 px-5 rounded-xl text-xs uppercase font-bold tracking-wider transition-all duration-300 cursor-pointer disabled:opacity-60"
+            >
+              {isLocating ? (
+                <span className="w-4 h-4 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin flex-shrink-0" />
+              ) : (
+                <GpsIcon className="w-4 h-4 text-bronze-400" />
+              )}
+              <span>{isLocating ? t('detectingLocation') : t('routeFromLocation')}</span>
+            </button>
+
             <a
               href="https://2gis.kz/atyrau/search/Shade%20%D0%90%D0%B7%D0%B0%D1%82%D1%82%D1%8B%D0%BA%2093"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 btn-premium-tactile py-3.5 px-5 rounded-xl text-xs uppercase transition-all"
+              onClick={triggerClick}
+              className="w-full liquid-glass flex items-center justify-center gap-2 text-[var(--text-primary)] hover:scale-[1.02] active:scale-95 hover:-translate-y-0.5 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all duration-300"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <svg className="w-4 h-4 text-bronze-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
               {t('openIn2Gis')}
             </a>
 
@@ -183,6 +229,7 @@ export const LocationMap = ({
               href="https://wa.me/77016698086?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9A%D0%B0%D0%BA%20%D0%B4%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BC%D0%B0%D0%BD%D0%B8%D0%BA%D1%8E%D1%80%3F"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={triggerClick}
               className="w-full liquid-glass flex items-center justify-center gap-2 text-[#25D366] hover:scale-[1.02] active:scale-95 hover:-translate-y-0.5 font-bold py-3.5 px-5 rounded-xl text-xs tracking-wider uppercase transition-all duration-300"
             >
               <WhatsAppIcon className="w-4 h-4" />

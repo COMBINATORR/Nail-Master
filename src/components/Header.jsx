@@ -6,8 +6,11 @@ import {
   WhatsAppIcon,
   SunIcon,
   MoonIcon,
+  VolumeOnIcon,
+  VolumeMuteIcon,
 } from './Icons';
 import { AnimatedMenuIcon } from '@/components/ui/skiper-ui/skiper99';
+import { useTactileFeedback } from '../hooks/useTactileFeedback';
 
 const textPrimary = 'text-[var(--text-primary)]';
 const textSecondary = 'text-[var(--text-secondary)]';
@@ -27,6 +30,7 @@ export const Header = ({
   handleLogoClick
 }) => {
   const { t, i18n } = useTranslation();
+  const { soundEnabled, toggleSound, triggerClick } = useTactileFeedback();
   const lang = i18n.language;
 
   const [showThemeMenu, setShowThemeMenu] = useState(false);
@@ -47,6 +51,7 @@ export const Header = ({
   const changeLanguage = (langCode) => {
     i18n.changeLanguage(langCode);
     setShowLangPopup(false);
+    triggerClick();
   };
 
   return (
@@ -55,7 +60,10 @@ export const Header = ({
         {/* Sandwich menu — Skiper99 animated hamburger */}
         <button
           type="button"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={() => {
+            setIsMobileMenuOpen(!isMobileMenuOpen);
+            triggerClick();
+          }}
           className="liquid-glass-icon-btn text-[var(--text-secondary)] hover:text-bronze-500 z-10 cursor-pointer"
           aria-label="Toggle menu"
           aria-expanded={isMobileMenuOpen}
@@ -93,6 +101,19 @@ export const Header = ({
             </a>
           </div>
           
+          {/* Sound Toggle Button */}
+          <button
+            onClick={() => {
+              toggleSound();
+              triggerClick();
+            }}
+            className="liquid-glass-icon-btn text-[var(--text-secondary)] hover:text-bronze-500"
+            title={soundEnabled ? t('soundEnabled') : t('soundMuted')}
+            aria-label={t('soundToggle')}
+          >
+            {soundEnabled ? <VolumeOnIcon className="w-4 h-4 text-bronze-400" /> : <VolumeMuteIcon className="w-4 h-4 text-neutral-400" />}
+          </button>
+
           {/* Appearance switch popover dropdown */}
           <div className="relative" ref={themePopupRef}>
             <button onClick={() => setShowThemeMenu(!showThemeMenu)}
